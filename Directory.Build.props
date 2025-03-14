@@ -1,0 +1,7 @@
+<Project>
+	<!-- Target Frameworks -->
+	<PropertyGroup>
+		<TargetFrameworkLatest>net9.0</TargetFrameworkLatest>
+		<TargetFrameworkForBenchmark>net6.0;net8.0;$(TargetFrameworkLatest)</TargetFrameworkForBenchmark>
+	</PropertyGroup>
+</Project>
