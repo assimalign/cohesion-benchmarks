@@ -170,7 +170,8 @@ public static class ReportGenerator
             Header(text, "Operation", ranked);
             foreach (var op in suite.GroupBy(e => e.Op.Operation).OrderBy(g => g.Key, StringComparer.Ordinal))
             {
-                var measured = op.Where(e => e.Run.Target.Ranked && !blocked.Contains(e.Run.Target.Id) &&
+                var failedTargets = op.Where(e => e.Op.Errors + e.Op.WarmupErrors > 0).Select(e => e.Run.Target.Id).ToHashSet(StringComparer.Ordinal);
+                var measured = op.Where(e => e.Run.Target.Ranked && !blocked.Contains(e.Run.Target.Id) && !failedTargets.Contains(e.Run.Target.Id) &&
                     e.Op.Support.Level != SupportLevel.Unsupported && e.Op.Errors == 0 && e.Op.WarmupErrors == 0 && e.Op.Successes > 0)
                     .GroupBy(e => e.Run.Target.Id).ToDictionary(g => g.Key, g => g.Select(e => e.Op).ToArray(), StringComparer.Ordinal);
                 var medians = measured.ToDictionary(g => g.Key, g => ReportStatistics.Median(g.Value.Select(o => throughput ? o.OperationsPerSecond : o.P50Us)));

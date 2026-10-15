@@ -32,9 +32,8 @@ public static class EnvironmentCapture
         long? memory = null;
         if (OperatingSystem.IsWindows())
         {
-            string? raw = await ProcessProbe.ReadAsync("powershell", ["-NoProfile", "-Command",
-                "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory"], token).ConfigureAwait(false);
-            if (long.TryParse(raw, out long bytes)) memory = bytes;
+            var status = new MemoryStatus { Length = (uint)Marshal.SizeOf<MemoryStatus>() };
+            if (GlobalMemoryStatusEx(ref status)) memory = checked((long)status.TotalPhysical);
         }
         else
         {
@@ -61,4 +60,12 @@ public static class EnvironmentCapture
         };
     }
     private static string? Read(string path) => File.Exists(path) ? File.ReadAllText(path).Trim() : null;
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MemoryStatus
+    {
+        public uint Length, Load;
+        public ulong TotalPhysical, AvailablePhysical, TotalPageFile, AvailablePageFile, TotalVirtual, AvailableVirtual, AvailableExtended;
+    }
+    [DllImport("kernel32.dll")] [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GlobalMemoryStatusEx(ref MemoryStatus status);
 }

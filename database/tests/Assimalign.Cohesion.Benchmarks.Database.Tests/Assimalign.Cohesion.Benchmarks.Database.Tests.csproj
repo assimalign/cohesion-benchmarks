@@ -7,4 +7,12 @@
 		<ProjectReference Include="..\..\src\Assimalign.Cohesion.Benchmarks.Database.Harness\Assimalign.Cohesion.Benchmarks.Database.Harness.csproj" />
 		<ProjectReference Include="..\..\src\Assimalign.Cohesion.Benchmarks.Database.Datasets\Assimalign.Cohesion.Benchmarks.Database.Datasets.csproj" />
 	</ItemGroup>
+	<!-- Temporary local overrides keep the dataset session's central test-package entries untouched.
+	     The orchestrator can remove the overrides when merging those entries. -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" VersionOverride="18.11.0" />
+		<PackageReference Include="xunit" VersionOverride="2.9.3" />
+		<PackageReference Include="xunit.runner.visualstudio" VersionOverride="4.0.1" PrivateAssets="all" />
+		<PackageReference Include="Shouldly" VersionOverride="4.3.0" />
+	</ItemGroup>
 </Project>
