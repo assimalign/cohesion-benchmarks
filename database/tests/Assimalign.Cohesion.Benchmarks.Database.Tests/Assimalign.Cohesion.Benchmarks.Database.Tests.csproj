@@ -4,6 +4,7 @@
 		<IsTestProject>true</IsTestProject>
 	</PropertyGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\..\src\Assimalign.Cohesion.Benchmarks.Database.Sql\Assimalign.Cohesion.Benchmarks.Database.Sql.csproj" />
 		<ProjectReference Include="..\..\src\Assimalign.Cohesion.Benchmarks.Database.Harness\Assimalign.Cohesion.Benchmarks.Database.Harness.csproj" />
 		<ProjectReference Include="..\..\src\Assimalign.Cohesion.Benchmarks.Database.Datasets\Assimalign.Cohesion.Benchmarks.Database.Datasets.csproj" />
 	</ItemGroup>
