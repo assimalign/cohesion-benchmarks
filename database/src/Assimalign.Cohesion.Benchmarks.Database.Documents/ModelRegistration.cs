@@ -1,10 +1,9 @@
-using Assimalign.Cohesion.Benchmarks.Database.Datasets;
 using Assimalign.Cohesion.Benchmarks.Database.Harness;
 
 namespace Assimalign.Cohesion.Benchmarks.Database.Documents;
 
-/// <summary>Model-owned registration; the workload implementation replaces this empty registration.</summary>
+/// <summary>Registers the marketplace document workload and its four access paths.</summary>
 public static class ModelRegistration
 {
-    public static IBenchmarkModel Create() => new EmptyBenchmarkModel("documents", DatasetModel.Documents);
+    public static IBenchmarkModel Create() => new DocumentsModel();
 }
