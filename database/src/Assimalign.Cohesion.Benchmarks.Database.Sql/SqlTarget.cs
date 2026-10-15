@@ -296,7 +296,8 @@ public sealed class SqlTarget : IBenchmarkTarget
         return Convert.ToInt64(await command.ExecuteScalarAsync(cancellationToken), CultureInfo.InvariantCulture);
     }
 
-    public ValueTask<IBenchmarkClient> OpenClientAsync(int clientIndex, CancellationToken cancellationToken) => throw new NotSupportedException("Operations are registered by the next implementation item.");
+    public async ValueTask<IBenchmarkClient> OpenClientAsync(int clientIndex, CancellationToken cancellationToken)
+        => new SqlBenchmarkClient(await OpenSessionAsync(cancellationToken), Dialect);
     public async ValueTask PingAsync(CancellationToken cancellationToken) { await using var session = await OpenSessionAsync(cancellationToken); }
     public async ValueTask DisposeAsync()
     {
