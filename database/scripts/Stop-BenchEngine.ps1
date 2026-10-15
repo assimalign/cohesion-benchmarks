@@ -8,7 +8,10 @@ if ($engine.kind -ne 'embedded') {
     if ($LASTEXITCODE -eq 0) {
         Assert-BenchOwner $name
         Invoke-Podman @('stop', '--time', '40', $name) | Out-Null
-        Invoke-Podman @('rm', $name) | Out-Null
+        $exitCode = Invoke-Podman @('inspect', '--format', '{{.State.ExitCode}}', $name)
+        Write-Host "STOPPED $name exit=$exitCode"
+        if ($Target -like 'cohesion-*-tcp') { & podman logs --tail 2 $name 2>&1 | Write-Host }
+        Invoke-Podman @('rm', '--volumes', $name) | Out-Null
         Write-Host "REMOVED $name"
     }
 }

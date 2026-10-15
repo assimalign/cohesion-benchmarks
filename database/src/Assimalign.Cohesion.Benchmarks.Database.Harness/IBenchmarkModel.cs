@@ -11,5 +11,6 @@ public interface IBenchmarkModel
     IReadOnlyList<OperationDescriptor> Operations { get; }
     IReadOnlyList<TargetDescriptor> Targets { get; }
     IBenchmarkTarget CreateTarget(string id, TargetOptions options);
-    IParameterStream CreateParameterStream(DatasetManifest manifest, ulong seed, string operation, int clientIndex);
+    IParameterStream CreateParameterStream(DatasetManifest manifest, ulong seed, string operation, int clientIndex,
+        ParameterStreamContext context);
 }

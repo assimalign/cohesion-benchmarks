@@ -26,7 +26,7 @@ public static class VerificationRunner
                 try
                 {
                     await using var client = await target.OpenClientAsync(0, token).ConfigureAwait(false);
-                    var parameters = model.CreateParameterStream(manifest, manifest.Seed, operation.Id, 0);
+                    var parameters = model.CreateParameterStream(manifest, manifest.Seed, operation.Id, 0, new("verify", 1, 1, false));
                     for (int i = 0; i < 100; i++)
                     {
                         using var digest = new VerificationDigest(operation.Ordered);

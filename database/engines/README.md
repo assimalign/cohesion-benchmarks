@@ -8,7 +8,8 @@ owner's decision of 2026-10-15. No real deployment secrets belong here.
 All containers get --cpus 3 --memory 6g --memory-swap 6g. Data lives in named volumes. :U initializes ownership
 for images that run as a non-root user. The scripts check a worktree ownership label before removal and never
 prune shared resources. -Recreate replaces only this worktree's labeled container. -RemoveData explicitly
-removes its volume, including the shared embedded/TCP Cohesion data when selected.
+removes its volume, including the shared embedded/TCP Cohesion data when selected. --image-volume ignore
+prevents image-declared auxiliary paths from allocating anonymous volumes; database data uses the explicit named mount.
 
 | Engine | Non-default/shared setting | Reason |
 |---|---|---|
@@ -63,7 +64,7 @@ Paths below are relative to COHESION_ROOT at bf20be5eb.
 | --data | SqlDatabaseEngineOptions.RootPath:196; GraphDatabaseEngineOptions.RootPath:164 |
 | --buffer-pool-mb | SQL BufferPoolCapacity:128; Graph BufferPoolCapacity:122; MiB converted to bytes |
 | --durability | SQL Durability:32; Graph Durability:28; StorageCommitDurability enum |
-| --port | SQL SqlDatabaseServerOptions.Listen(Uri); Graph TcpConnectionListenerOptions.EndPoint:21 |
+| --port | SQL SqlDatabaseServerOptionsExtensions.Listen(Uri):30; Graph TcpConnectionListenerOptions.EndPoint:16 |
 
 Engine option files are under resources/Database/Assimalign.Cohesion.Database.<model>/src/.
 TcpConnectionListenerOptions is under libraries/Connections/Assimalign.Cohesion.Connections.Tcp/src/.

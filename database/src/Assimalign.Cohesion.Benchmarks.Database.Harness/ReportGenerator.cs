@@ -55,7 +55,7 @@ public static class ReportGenerator
     }
 
     private static string Cohort(BenchmarkResult r)
-        => $"{r.DatasetManifestSha256}|seed={r.Seed}|engine={r.Budget.Cpus}/{r.Budget.MemoryBytes}|driver={r.Budget.DriverMemoryBytes}|official={r.Official}";
+        => $"{r.DatasetManifestSha256}|seed={r.Seed}|engine={r.Budget.Cpus}/{r.Budget.MemoryBytes}|official={r.Official}|benchmarks={r.Environment.BenchmarksCommit}|cohesion={string.Join(",", r.Environment.CohesionBuiltCommits)}";
 
     private static void Render(string cohort, BenchmarkResult[] rows, StringBuilder text, List<Finding> findings)
     {
@@ -95,6 +95,7 @@ public static class ReportGenerator
         text.AppendLine();
         foreach (var run in rows)
         {
+            if (run.SuiteBlockReason != null) text.AppendLine($"Suite blocked: {E(run.Target.Id)} / {E(run.Suite)}: {E(run.SuiteBlockReason)}\n");
             var high = run.Samples.Where(s => s.HostCpuPercent >= 80).ToArray();
             if (high.Length != 0) text.AppendLine($"Noise: {E(run.RunId)} repetition {run.Repetition}: host CPU ≥80% in {high.Length}/{run.Samples.Count} samples; max {N(high.Max(s => s.HostCpuPercent!.Value))}%.\n");
             if (run.Samples.Count == 0 || run.Samples.All(s => s.HostCpuPercent == null))

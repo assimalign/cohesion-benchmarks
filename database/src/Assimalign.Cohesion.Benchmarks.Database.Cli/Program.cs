@@ -148,7 +148,7 @@ internal static class Program
         if (a.Has("official"))
         {
             if (Environment.GetEnvironmentVariable("DBBENCH_NETWORK") != "1") throw new InvalidOperationException("Official runs require the driver container on the dbbench network.");
-            OptimizationGuard.RequireOptimized(environmentSnapshot.Optimization);
+            OfficialRunGuard.Validate(environmentSnapshot, entry.GetProperty("kind").GetString() == "embedded");
         }
         var engine = await targetInstance.DescribeAsync(token);
         VerificationFile? verification = a.Optional("verification") is { } verificationPath
@@ -163,6 +163,7 @@ internal static class Program
             RunId = runId, Model = selectedModel.Id, Target = targetInstance.Descriptor, Suite = suite, Repetition = repetition,
             Official = a.Has("official"), StartedUtc = started, FinishedUtc = finished, Engine = engine, Environment = environmentSnapshot,
             DatasetManifestSha256 = manifestHash, Scale = manifest.Scale, Seed = manifest.Seed, Verification = verification,
+            Budget = new ResourceBudget(DriverMemoryBytes: (entry.GetProperty("kind").GetString() == "embedded" ? 6L : 3L) * 1024 * 1024 * 1024),
         };
         string outputDirectory = a.Get("out", Path.Combine("database", "artifacts", "results"));
         if (a.Command == "load")
@@ -194,10 +195,11 @@ internal static class Program
         foreach (var pass in passes)
         {
             var result = Result(options.Suite, pass.Repetition, pass.StartedUtc, pass.FinishedUtc) with
-                { Mix = options.Suite == "mixed" ? options.Mix : null, Runner = options, Operations = pass.Operations, Samples = pass.Samples };
+                { Mix = options.Suite == "mixed" ? options.Mix : null, SuiteBlockReason = pass.BlockReason,
+                    Runner = options, Seed = options.Seed, Operations = pass.Operations, Samples = pass.Samples };
             await ResultFiles.WriteAsync(Path.Combine(outputDirectory, $"{runId}-{options.Suite}-{pass.Repetition}.json"), result, ResultJsonContext.Default.BenchmarkResult, token);
         }
-        return passes.SelectMany(p => p.Operations).Any(o => o.Errors + o.WarmupErrors > 0) ? 2 : 0;
+        return passes.Any(p => p.BlockReason != null) || passes.SelectMany(p => p.Operations).Any(o => o.Errors + o.WarmupErrors > 0) ? 2 : 0;
     }
 
     private static IBenchmarkModel Model(string id) => Array.Find(Models, m => m.Id == id) ?? throw new ArgumentException("Unknown model " + id);

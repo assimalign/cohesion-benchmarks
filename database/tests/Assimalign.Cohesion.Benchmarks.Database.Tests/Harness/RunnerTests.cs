@@ -12,6 +12,28 @@ namespace Assimalign.Cohesion.Benchmarks.Database.Tests.Harness;
 public sealed class RunnerTests
 {
     [Fact]
+    public void WriteId_WorkloadScopes_NeverCollidesAcrossPhasesAndRepetitions()
+    {
+        var ids = new HashSet<long>();
+        foreach (string suite in new[] { "verify", "latency", "throughput", "mixed/read-heavy", "mixed/balanced" })
+        foreach (int repetition in new[] { 1, 2, 100 })
+        foreach (int concurrency in new[] { 1, 8, 32 })
+        foreach (bool warmup in new[] { false, true })
+        for (int client = 0; client < concurrency; client++)
+            ids.Add(new ParameterStreamContext(suite, repetition, concurrency, warmup).WriteId(1000, client, 0)).ShouldBeTrue();
+    }
+    [Fact]
+    public async Task RunAsync_UnsupportedMixedMember_ReturnsBlockedEvidenceWithoutChangingMix()
+    {
+        var clock = new FakeClock(); var fake = new FakeWorkload(clock)
+        { Support = new Dictionary<string, OperationSupport> { ["op"] = new(SupportLevel.Unsupported, "No feature", "source.cs:1") } };
+        var pass = (await new BenchmarkRunner(clock).RunAsync(fake, fake, FakeWorkload.Manifest, fake.Operations,
+            new() { Suite = "mixed", Repeat = 1 }))[0];
+        pass.BlockReason.ShouldNotBeNull();
+        pass.Operations[0].Support.Level.ShouldBe(SupportLevel.Unsupported);
+        fake.Calls.ShouldBe(0);
+    }
+    [Fact]
     public async Task RunAsync_WarmupAndParameters_RecordsOnlyExecution()
     {
         var clock = new FakeClock();

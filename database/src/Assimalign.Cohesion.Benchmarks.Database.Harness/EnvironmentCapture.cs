@@ -25,6 +25,9 @@ public static class EnvironmentCapture
         var optimization = OptimizationGuard.Inspect();
         string? benchmarkCommit = await ProcessProbe.ReadAsync("git", ["rev-parse", "HEAD"], token).ConfigureAwait(false)
             ?? Environment.GetEnvironmentVariable("DBBENCH_BENCHMARKS_COMMIT");
+        string? benchmarkStatus = await ProcessProbe.ReadAsync("git", ["status", "--porcelain"], token).ConfigureAwait(false);
+        bool? benchmarkDirty = benchmarkStatus != null ? benchmarkStatus.Length != 0 :
+            bool.TryParse(Environment.GetEnvironmentVariable("DBBENCH_BENCHMARKS_DIRTY"), out bool dirty) ? dirty : null;
         string? cohesionCommit = cohesionRoot == null ? null :
             await ProcessProbe.ReadAsync("git", ["-C", cohesionRoot, "rev-parse", "HEAD"], token).ConfigureAwait(false);
         cohesionCommit ??= Environment.GetEnvironmentVariable("DBBENCH_COHESION_COMMIT");
@@ -52,10 +55,12 @@ public static class EnvironmentCapture
             Architecture = RuntimeInformation.ProcessArchitecture.ToString(), Cpu = cpu,
             LogicalProcessors = Environment.ProcessorCount, PhysicalMemoryBytes = memory,
             BenchmarksCommit = benchmarkCommit, CohesionCheckoutCommit = cohesionCommit,
+            BenchmarksDirty = benchmarkDirty,
             CohesionBuiltCommits = optimization.Select(a => a.InformationalVersion.Split('+').Last())
                 .Where(s => s.Length >= 9 && s.All(Uri.IsHexDigit)).Distinct().ToArray(),
             Optimization = optimization, Container = container, ContainerInspectJson = inspection, ImageDigest = digest,
             CgroupMemoryMax = Read("/sys/fs/cgroup/memory.max"), CgroupCpuMax = Read("/sys/fs/cgroup/cpu.max"),
+            CgroupSwapMax = Read("/sys/fs/cgroup/memory.swap.max"),
             Diagnostics = container != null && inspection == null ? "podman inspect unavailable in this process; supply the host-side snapshot for official runs." : null,
         };
     }

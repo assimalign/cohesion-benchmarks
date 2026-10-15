@@ -17,13 +17,14 @@ $volume = $engine.volume + $Suffix
 if ($LASTEXITCODE -ne 0) { Invoke-Podman @('network', 'create', '--label', 'dbbench.shared=true', 'dbbench') | Out-Null }
 & podman volume exists $volume
 if ($LASTEXITCODE -ne 0) { Invoke-Podman @('volume', 'create', '--label', "dbbench.owner=$script:Owner", $volume) | Out-Null }
+else { Assert-BenchOwner $volume -Volume }
 & podman container exists $name
 $exists = $LASTEXITCODE -eq 0
 if ($exists) {
     Assert-BenchOwner $name
     if (-not $Recreate) { throw "$name already exists; use -Recreate to replace this worktree's container." }
     Invoke-Podman @('stop', '--time', '40', $name) | Out-Null
-    Invoke-Podman @('rm', $name) | Out-Null
+    Invoke-Podman @('rm', '--volumes', $name) | Out-Null
 }
 $envValues = @{}
 foreach ($key in $engine.environment.Keys) { $envValues[$key] = Expand-BenchValue $engine.environment[$key] $engine }
@@ -50,7 +51,7 @@ if ($memoryMb -lt 6144) {
     }
 }
 $runArgs = [Collections.Generic.List[string]]::new()
-$runArgs.AddRange([string[]]@('run', '--detach', '--name', $name, '--network', 'dbbench', '--network-alias', ($engine.networkAlias + $Suffix),
+$runArgs.AddRange([string[]]@('run', '--detach', '--image-volume', 'ignore', '--name', $name, '--network', 'dbbench', '--network-alias', ($engine.networkAlias + $Suffix),
     '--cpus', $Cpus.ToString([Globalization.CultureInfo]::InvariantCulture), '--memory', $Memory, '--memory-swap', $Memory,
     '--label', "dbbench.owner=$script:Owner", '--label', "dbbench.profile=$profile", '--volume', "${volume}:$($engine.mountPath):U"))
 foreach ($port in $engine.ports) { $runArgs.AddRange([string[]]@('--publish', "127.0.0.1:$($port.published):$($port.internal)")) }
@@ -86,7 +87,7 @@ try {
                 $ready = $logs -match $engine.readiness.pattern
                 if ($ready) {
                     $tcp = [Net.Sockets.TcpClient]::new()
-                    try { $tcp.ConnectAsync('localhost', [int]$engine.ports[0].published).WaitAsync([TimeSpan]::FromSeconds(3)).GetAwaiter().GetResult() }
+                    try { $tcp.ConnectAsync('localhost', [int]$engine.ports[0].published).WaitAsync([TimeSpan]::FromSeconds(3)).GetAwaiter().GetResult() | Out-Null }
                     catch { $ready = $false }
                     finally { $tcp.Dispose() }
                 }
@@ -110,7 +111,7 @@ try {
     if ($created) {
         & podman logs --tail 60 $name 2>&1 | Write-Host
         & podman stop --time 40 $name | Out-Null
-        & podman rm $name | Out-Null
+        & podman rm --volumes $name | Out-Null
     }
     throw
 }

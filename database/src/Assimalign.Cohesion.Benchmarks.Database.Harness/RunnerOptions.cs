@@ -20,7 +20,7 @@ public sealed record RunnerOptions
     {
         if (Suite is not ("latency" or "throughput" or "mixed") || Mix is not ("read-heavy" or "balanced"))
             throw new ArgumentException("Unknown suite or mix.");
-        if (Repeat < 1 || Clients.Length == 0 || Array.Exists(Clients, n => n < 1) ||
+        if (Repeat is < 1 or > 100 || Clients.Length == 0 || Array.Exists(Clients, n => n is < 1 or > 1024) ||
             Warmup < TimeSpan.Zero || Duration <= TimeSpan.Zero || Iterations < 1 ||
             PointTimeout <= TimeSpan.Zero || AnalyticsTimeout <= TimeSpan.Zero)
             throw new ArgumentException("Invalid runner limits.");

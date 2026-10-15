@@ -25,8 +25,11 @@ $script:activeEngine = $null
 function Invoke-Driver {
     param([string[]]$Command, [hashtable]$Engine)
     $driverName = "dbbench-driver$Suffix"
+    & podman container exists $driverName
+    if ($LASTEXITCODE -eq 0) { throw "$driverName already exists; refusing to interrupt another invocation." }
+    $invocation = [guid]::NewGuid().ToString('N')
     $memory = if ($Engine -and $Engine.kind -eq 'embedded') { '6g' } else { '3g' }
-    $arguments = @('run','--rm','--name',$driverName,'--network','dbbench','--cpus','3','--memory',$memory,'--memory-swap',$memory,
+    $arguments = @('run','--rm','--name',$driverName,'--label',"dbbench.run=$invocation",'--network','dbbench','--cpus','3','--memory',$memory,'--memory-swap',$memory,
         '--volume',"${datasetVolume}:/data",'--volume',"${OutputDirectory}:/results")
     if ($Engine) { $arguments += @('--volume',"$($Engine.volume)$Suffix`:/engine-data") }
     $job = $null
@@ -40,7 +43,10 @@ function Invoke-Driver {
     finally {
         if ($job) { Stop-Job $job; Receive-Job $job; Remove-Job $job }
         & podman container exists $driverName
-        if ($LASTEXITCODE -eq 0) { & podman stop --time 40 $driverName | Out-Null; & podman rm $driverName | Out-Null }
+        if ($LASTEXITCODE -eq 0) {
+            $actual = & podman inspect --format '{{index .Config.Labels "dbbench.run"}}' $driverName
+            if ($actual -eq $invocation) { & podman stop --time 40 $driverName | Out-Null; & podman rm $driverName | Out-Null }
+        }
     }
 }
 # Only data files use named volumes. The result/telemetry directory is a host artifact bind.

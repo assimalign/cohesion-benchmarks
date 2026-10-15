@@ -12,6 +12,7 @@ public sealed record BenchmarkResult
     public required TargetDescriptor Target { get; init; }
     public required string Suite { get; init; }
     public string? Mix { get; init; }
+    public string? SuiteBlockReason { get; init; }
     public int Repetition { get; init; }
     public bool Official { get; init; }
     public DateTimeOffset StartedUtc { get; init; }

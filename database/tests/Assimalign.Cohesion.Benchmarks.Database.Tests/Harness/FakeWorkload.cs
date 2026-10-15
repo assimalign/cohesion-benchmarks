@@ -30,7 +30,8 @@ internal sealed class FakeWorkload(FakeClock clock) : IBenchmarkModel, IBenchmar
     public TargetDescriptor Descriptor { get; } = new("fake", "Fake", true, "Fake", "test");
     public IReadOnlyDictionary<string, OperationSupport> Support { get; set; } = new Dictionary<string, OperationSupport> { ["op"] = new(SupportLevel.Native) };
     public IBenchmarkTarget CreateTarget(string id, TargetOptions options) => this;
-    public IParameterStream CreateParameterStream(DatasetManifest manifest, ulong seed, string operation, int clientIndex)
+    public IParameterStream CreateParameterStream(DatasetManifest manifest, ulong seed, string operation, int clientIndex,
+        ParameterStreamContext context)
         => new Stream(clock, ParameterCost, seed, operation, clientIndex);
     public ValueTask ExecuteAsync(OperationDescriptor operation, object parameters, IVerificationSink? sink, CancellationToken cancellationToken)
     {

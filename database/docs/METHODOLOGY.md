@@ -47,8 +47,9 @@ magic 0x44424831, int64 exact maximum, int32 bucket count, then int64 counts. Pe
 upper bucket equivalents capped at the exact maximum. No coordinated-omission correction is applied to this
 closed-loop experiment.
 
-Mutation adapters must allocate unique IDs above the dataset maximum and isolate warm-up, verification,
-repetitions and suites. Restore the same logical baseline when mutations would change later queries. The
+ParameterStreamContext.WriteId allocates disjoint billion-key client ranges above the dataset maximum for
+warm-up, verification, repetitions, concurrency and suites. Mutation adapters must use this context (or prove
+equivalent deterministic disjoint ranges). Restore the same logical baseline when mutations would change later queries. The
 orchestration here is a skeleton: model integrations must prove their mutation isolation and fresh-load behavior
 before official mixed/write results are accepted. Do not treat a repeat that hits duplicate generated keys as a
 measurement of ordinary inserts.
@@ -88,6 +89,8 @@ Results include manifest hash/scale/seed, budgets, settings/version, image diges
 memory, repository commits and actual Cohesion assembly informational commits. The optimization guard examines
 DebuggableAttribute on loaded Cohesion assemblies and refuses official load/run with disabled JIT optimization.
 It does not infer optimization from a directory named Release.
+OfficialRunGuard also verifies the observed driver cgroup CPU/memory/swap limits and network engine inspect
+limits. Missing resource evidence or a development budget refuses the official label.
 
 Native runs sample Windows total CPU or Linux /proc/stat and named-container podman stats at one Hz. In official
 driver runs, Measure-BenchHost.ps1 supplies Windows CPU plus Podman CPU/memory through the artifact telemetry

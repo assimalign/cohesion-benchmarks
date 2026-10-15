@@ -17,8 +17,11 @@ public sealed class BenchmarkRunner(TimeProvider? clock = null)
     {
         options.Validate();
         if (operations.Count == 0) throw new ArgumentException("No operations selected.");
+        var operationIds = new HashSet<string>(StringComparer.Ordinal);
         foreach (var operation in operations)
         {
+            if (!operationIds.Add(operation.Id) || operation.ReadHeavyWeight < 0 || operation.BalancedWeight < 0)
+                throw new ArgumentException("Operation IDs must be unique and mix weights nonnegative.");
             if (!target.Support.TryGetValue(operation.Id, out var support))
                 throw new InvalidOperationException($"Target {target.Descriptor.Id} has no support declaration for {operation.Id}.");
             support.Validate();
@@ -29,6 +32,7 @@ public sealed class BenchmarkRunner(TimeProvider? clock = null)
             cancellationToken.ThrowIfCancellationRequested();
             var started = clock.GetUtcNow();
             var results = new List<OperationMeasurement>();
+            string? blockReason = null;
             var sampler = new ResourceSampler(options.Container);
             try
             {
@@ -42,14 +46,17 @@ public sealed class BenchmarkRunner(TimeProvider? clock = null)
                 }
                 if (options.Suite == "mixed")
                 {
-                    // Omitting an unsupported weighted operation would silently change the logical workload.
+                    // Preserve unsupported evidence while refusing to silently change the logical workload.
                     foreach (var operation in operations)
                         if (Weight(operation, options) > 0 && target.Support[operation.Id].Level == SupportLevel.Unsupported)
-                            throw new InvalidOperationException($"Mixed workload contains unsupported operation {operation.Id}; choose an explicit comparable subset.");
+                            blockReason = $"Mixed workload contains unsupported operation {operation.Id}; choose an explicit comparable subset.";
                     supported.RemoveAll(o => Weight(o, options) == 0);
-                    if (supported.Count == 0) throw new ArgumentException("The chosen mix has no weighted operations.");
-                    foreach (int clients in options.Clients)
-                        results.AddRange(await GroupAsync(model, target, manifest, supported, clients, options, cancellationToken).ConfigureAwait(false));
+                    if (blockReason == null)
+                    {
+                        if (supported.Count == 0) throw new ArgumentException("The chosen mix has no weighted operations.");
+                        foreach (int clients in options.Clients)
+                            results.AddRange(await GroupAsync(model, target, manifest, supported, clients, repetition, options, cancellationToken).ConfigureAwait(false));
+                    }
                 }
                 else
                 {
@@ -57,18 +64,18 @@ public sealed class BenchmarkRunner(TimeProvider? clock = null)
                     {
                         int[] counts = options.Suite == "latency" ? [1] : options.Clients;
                         foreach (int clients in counts)
-                            results.AddRange(await GroupAsync(model, target, manifest, [operation], clients, options, cancellationToken).ConfigureAwait(false));
+                            results.AddRange(await GroupAsync(model, target, manifest, [operation], clients, repetition, options, cancellationToken).ConfigureAwait(false));
                     }
                 }
             }
             finally { await sampler.DisposeAsync().ConfigureAwait(false); }
-            passes.Add(new(repetition, started, clock.GetUtcNow(), results, sampler.Samples));
+            passes.Add(new(repetition, started, clock.GetUtcNow(), results, sampler.Samples, blockReason));
         }
         return passes;
     }
 
     private async Task<List<OperationMeasurement>> GroupAsync(IBenchmarkModel model, IBenchmarkTarget target,
-        DatasetManifest manifest, IReadOnlyList<OperationDescriptor> operations, int clients, RunnerOptions options,
+        DatasetManifest manifest, IReadOnlyList<OperationDescriptor> operations, int clients, int repetition, RunnerOptions options,
         CancellationToken token)
     {
         bool latency = options.Suite == "latency";
@@ -105,8 +112,10 @@ public sealed class BenchmarkRunner(TimeProvider? clock = null)
                     {
                         var streams = new IParameterStream[operations.Count];
                         ulong seed = measured ? options.Seed : options.Seed ^ 0x8A5CD789635D2DFFUL;
+                        var context = new ParameterStreamContext(options.Suite == "mixed" ? "mixed/" + options.Mix : options.Suite,
+                            repetition, clients, !measured);
                         for (int i = 0; i < streams.Length; i++)
-                            streams[i] = model.CreateParameterStream(manifest, seed, operations[i].Id, index);
+                            streams[i] = model.CreateParameterStream(manifest, seed, operations[i].Id, index, context);
                         var selector = new DeterministicSequence(seed, "mix:" + options.Mix, index);
                         for (int iteration = 0; iteration < iterations && clock.GetElapsedTime(begun) < budget; iteration++)
                         {

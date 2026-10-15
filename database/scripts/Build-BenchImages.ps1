@@ -3,6 +3,7 @@ param([ValidatePattern('^[a-zA-Z0-9_.-]+$')][string]$Tag = 'dev')
 . (Join-Path $PSScriptRoot 'BenchEngine.Common.ps1')
 if (-not $env:COHESION_ROOT) { throw 'Set COHESION_ROOT to the pinned read-only Cohesion worktree.' }
 $benchmarkCommit = (& git -C $script:DatabaseRoot rev-parse HEAD).Trim()
+$benchmarkDirty = [string][bool](& git -C $script:DatabaseRoot status --porcelain)
 $cohesionCommit = (& git -C $env:COHESION_ROOT rev-parse HEAD).Trim()
 $buildRoot = Join-Path $script:DatabaseRoot 'artifacts/images'
 New-Item -ItemType Directory -Path $buildRoot -Force | Out-Null
@@ -20,6 +21,7 @@ try {
         }
         $imageName = if ($image.Name -eq 'driver') { 'driver' } else { 'cohesion-server' }
         Invoke-Podman @('build', '--tag', "localhost/dbbench-${imageName}:$Tag", '--build-arg', "BENCHMARKS_COMMIT=$benchmarkCommit",
+            '--build-arg', "BENCHMARKS_DIRTY=$benchmarkDirty",
             '--build-arg', "COHESION_COMMIT=$cohesionCommit", '--file', (Join-Path $script:DatabaseRoot "engines/$($image.Name)/Containerfile"), $context)
     }
 } finally { Pop-Location }

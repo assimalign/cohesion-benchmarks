@@ -14,6 +14,7 @@ public sealed record EnvironmentSnapshot
     public int LogicalProcessors { get; init; }
     public long? PhysicalMemoryBytes { get; init; }
     public string? BenchmarksCommit { get; init; }
+    public bool? BenchmarksDirty { get; init; }
     public string? CohesionCheckoutCommit { get; init; }
     public IReadOnlyList<string> CohesionBuiltCommits { get; init; } = [];
     public IReadOnlyList<OptimizationAssembly> Optimization { get; init; } = [];
@@ -22,5 +23,6 @@ public sealed record EnvironmentSnapshot
     public string? ImageDigest { get; init; }
     public string? CgroupMemoryMax { get; init; }
     public string? CgroupCpuMax { get; init; }
+    public string? CgroupSwapMax { get; init; }
     public string? Diagnostics { get; init; }
 }

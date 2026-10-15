@@ -13,6 +13,7 @@ public sealed class EmptyBenchmarkModel(string id, DatasetModel datasetModel) : 
     public IReadOnlyList<TargetDescriptor> Targets => [];
     public IBenchmarkTarget CreateTarget(string id, TargetOptions options)
         => throw new NotSupportedException($"Model {Id} has no workload adapters yet (requested {id}).");
-    public IParameterStream CreateParameterStream(DatasetManifest manifest, ulong seed, string operation, int clientIndex)
+    public IParameterStream CreateParameterStream(DatasetManifest manifest, ulong seed, string operation, int clientIndex,
+        ParameterStreamContext context)
         => throw new NotSupportedException($"Model {Id} has no parameter streams yet.");
 }
