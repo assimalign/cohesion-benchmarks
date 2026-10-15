@@ -1,0 +1,17 @@
+{
+  "settings": [
+    {
+      "name": "protocol",
+      "value": "https",
+      "reason": ".NET SDK requires HTTPS; trust the local emulator certificate in the functional adapter."
+    },
+    {
+      "name": "ConnectionMode",
+      "value": "Gateway",
+      "reason": "Only supported emulator connection mode."
+    }
+  ],
+  "development": {
+    "reason": "Readiness smoke only; budgets below 6 GiB scale cache settings in Start-BenchEngine.ps1. Not official measurements."
+  }
+}

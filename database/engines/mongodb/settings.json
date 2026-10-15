@@ -1,0 +1,17 @@
+{
+  "settings": [
+    {
+      "name": "wiredTigerCacheSizeGB",
+      "value": "2.5",
+      "reason": "DESIGN §8 shared 6 GiB host guidance."
+    },
+    {
+      "name": "writeConcern",
+      "value": "w:1,j:true",
+      "reason": "Adapter must require journal acknowledgement on every write."
+    }
+  ],
+  "development": {
+    "reason": "Readiness smoke only; budgets below 6 GiB scale cache settings in Start-BenchEngine.ps1. Not official measurements."
+  }
+}

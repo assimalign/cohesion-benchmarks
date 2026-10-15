@@ -25,6 +25,19 @@ public sealed class ResourceSampler : IAsyncDisposable
         {
             while (await timer.WaitForNextTickAsync(stop.Token).ConfigureAwait(false))
             {
+                string? telemetry = Environment.GetEnvironmentVariable("DBBENCH_HOST_TELEMETRY");
+                if (telemetry != null)
+                {
+                    try
+                    {
+                        var sample = JsonSerializer.Deserialize(File.ReadAllText(telemetry), ResultJsonContext.Default.ResourceSample);
+                        if (sample != null && (DateTimeOffset.UtcNow - sample.Timestamp).TotalSeconds < 10)
+                        { samples.Add(sample); continue; }
+                    }
+                    catch (Exception ex) when (ex is IOException or JsonException) { }
+                    samples.Add(new(DateTimeOffset.UtcNow, null, null, null, "Host telemetry unavailable or stale."));
+                    continue;
+                }
                 var current = Cpu();
                 double? host = previous is { } p && current is { } c && c.Total > p.Total
                     ? 100d * (1d - (double)(c.Idle - p.Idle) / (c.Total - p.Total)) : null;

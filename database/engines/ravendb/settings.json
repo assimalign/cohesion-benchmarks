@@ -1,0 +1,32 @@
+{
+  "settings": [
+    {
+      "name": "Setup.Mode",
+      "value": "None",
+      "reason": "Disable interactive setup wizard for repeatable local startup."
+    },
+    {
+      "name": "License.Eula.Accepted",
+      "value": "true",
+      "reason": "Owner decision 2026-10-15."
+    },
+    {
+      "name": "Security.UnsecuredAccessAllowed",
+      "value": "PublicNetwork",
+      "reason": "Local isolated Podman development network and loopback published ports; no certificate ceremony."
+    },
+    {
+      "name": "ServerUrl",
+      "value": "http://0.0.0.0:8080",
+      "reason": "Accept driver network connections."
+    },
+    {
+      "name": "indexes",
+      "value": "wait for non-stale",
+      "reason": "Adapter must await index catch-up before measurement."
+    }
+  ],
+  "development": {
+    "reason": "Readiness smoke only; budgets below 6 GiB scale cache settings in Start-BenchEngine.ps1. Not official measurements."
+  }
+}

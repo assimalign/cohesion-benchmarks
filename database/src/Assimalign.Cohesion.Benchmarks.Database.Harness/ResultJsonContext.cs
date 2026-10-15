@@ -13,4 +13,5 @@ namespace Assimalign.Cohesion.Benchmarks.Database.Harness;
 [JsonSerializable(typeof(EnvironmentSnapshot))]
 [JsonSerializable(typeof(DatasetManifest))]
 [JsonSerializable(typeof(List<Finding>))]
+[JsonSerializable(typeof(ResourceSample))]
 public partial class ResultJsonContext : JsonSerializerContext;

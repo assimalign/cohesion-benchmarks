@@ -16,15 +16,29 @@ public static class ReportGenerator
     public static async Task<IReadOnlyList<Finding>> GenerateAsync(string input, string output, CancellationToken token = default)
     {
         var results = new List<BenchmarkResult>();
+        var verificationFiles = new List<VerificationFile>();
         foreach (string path in Directory.EnumerateFiles(input, "*.json", SearchOption.AllDirectories).Order(StringComparer.Ordinal))
         {
             using var file = JsonDocument.Parse(await File.ReadAllTextAsync(path, token).ConfigureAwait(false));
-            if (!file.RootElement.TryGetProperty("runId", out _)) continue;
+            if (file.RootElement.ValueKind != JsonValueKind.Object) continue;
+            if (!file.RootElement.TryGetProperty("runId", out _))
+            {
+                if (file.RootElement.ValueKind == JsonValueKind.Object && file.RootElement.TryGetProperty("parameterCount", out _))
+                    verificationFiles.Add(await ResultFiles.ReadAsync(path, ResultJsonContext.Default.VerificationFile, token).ConfigureAwait(false));
+                continue;
+            }
             var result = await ResultFiles.ReadAsync(path, ResultJsonContext.Default.BenchmarkResult, token).ConfigureAwait(false);
             if (result.SchemaVersion != 1) throw new InvalidDataException($"Unsupported result schema in {path}.");
             results.Add(result);
         }
         if (results.Count == 0) throw new InvalidDataException("No benchmark result JSON files found.");
+        for (int i = 0; i < results.Count; i++)
+        {
+            var result = results[i];
+            if (result.Verification == null)
+                results[i] = result with { Verification = verificationFiles.FirstOrDefault(v => v.Target == result.Target.Id &&
+                    v.Model == result.Model && v.DatasetManifestSha256 == result.DatasetManifestSha256 && v.Seed == result.Seed) };
+        }
         Directory.CreateDirectory(output);
         var findings = new List<Finding>();
         foreach (var model in results.GroupBy(r => r.Model).OrderBy(g => g.Key, StringComparer.Ordinal))

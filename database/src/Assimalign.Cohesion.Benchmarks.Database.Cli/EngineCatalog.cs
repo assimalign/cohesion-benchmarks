@@ -39,6 +39,7 @@ internal sealed class EngineCatalog : IDisposable
     {
         var settings = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var field in Find(target).GetProperty("environment").EnumerateObject()) settings[field.Name] = field.Value.GetString()!;
+        foreach (var field in Find(target).GetProperty("credentials").EnumerateObject()) settings[field.Name] = field.Value.GetString()!;
         return settings;
     }
     public void Print()
