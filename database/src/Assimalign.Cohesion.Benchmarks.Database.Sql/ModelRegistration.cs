@@ -6,5 +6,5 @@ namespace Assimalign.Cohesion.Benchmarks.Database.Sql;
 /// <summary>Model-owned registration; the workload implementation replaces this empty registration.</summary>
 public static class ModelRegistration
 {
-    public static IBenchmarkModel Create() => new EmptyBenchmarkModel("sql", DatasetModel.Sql);
+    public static IBenchmarkModel Create() => new SqlModel();
 }
