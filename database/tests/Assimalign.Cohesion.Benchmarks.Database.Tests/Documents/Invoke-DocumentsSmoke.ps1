@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory)][ValidateSet('cohesion-documents-embedded','mongodb','ravendb','cosmos-emulator')][string]$Target,
+    [Parameter(Mandatory)][ValidateSet('cohesion-documents-embedded','mongodb','ravendb')][string]$Target,
     [string]$Root = 'database/artifacts/documents-r3-smoke',
     [string]$Suffix = '-r3',
     [switch]$Driver,
@@ -32,7 +32,7 @@ try {
     do {
         $allRunning = @(& podman ps --format '{{.Names}}')
         if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect the Podman engine slot.' }
-        $ownedNames = @('dbbench-mongodb', 'dbbench-ravendb', 'dbbench-cosmos-emulator', 'dbbench-driver-documents') | ForEach-Object { $_ + $Suffix }
+        $ownedNames = @('dbbench-mongodb', 'dbbench-ravendb', 'dbbench-driver-documents') | ForEach-Object { $_ + $Suffix }
         $running = @($allRunning | Where-Object { $_ -in $ownedNames })
         if ($allRunning.Count -gt 0 -and $previousWait -eq '') {
             "Other session containers observed: $($allRunning -join ', ')" | Add-Content -LiteralPath $logPath
@@ -85,7 +85,7 @@ cp /canonical-manifest.json /data/documents/sf0.01/manifest.json
                 & podman $resource[0] exists $resource[1]
                 if ($LASTEXITCODE -eq 0) { throw "Refusing pre-existing $($resource[0]) $($resource[1])." }
             }
-            $memory = if ($Target -eq 'cosmos-emulator') { '3g' } else { '2g' }
+            $memory = '2g'
             $createdEngine = $true
             & ./database/scripts/Start-BenchEngine.ps1 -Target $Target -Memory $memory -Suffix $Suffix
         }

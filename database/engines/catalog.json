@@ -290,48 +290,6 @@
       ]
     },
     {
-      "id": "cosmos-emulator",
-      "model": "documents",
-      "kind": "container",
-      "image": "mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:vnext-preview",
-      "containerName": "dbbench-cosmos-emulator",
-      "networkAlias": "dbbench-cosmos-emulator",
-      "ports": [
-        {
-          "internal": 8081,
-          "published": 58081
-        }
-      ],
-      "endpointTemplate": "https://{host}:{port}",
-      "credentials": {
-        "accountKey": "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw=="
-      },
-      "environment": {},
-      "volume": "dbbench-cosmos-emulator-data",
-      "mountPath": "/data",
-      "arguments": [
-        "--protocol",
-        "https"
-      ],
-      "readiness": {
-        "kind": "log",
-        "pattern": "System is now fully ready to accept requests"
-      },
-      "settings": [
-        {
-          "name": "protocol",
-          "value": "https",
-          "reason": ".NET SDK requires HTTPS; trust the local emulator certificate in the functional adapter."
-        },
-        {
-          "name": "ConnectionMode",
-          "value": "Gateway",
-          "reason": "Only supported emulator connection mode."
-        }
-      ],
-      "ranked": false
-    },
-    {
       "id": "neo4j",
       "model": "graph",
       "kind": "container",

@@ -27,12 +27,12 @@ public sealed class ReportTests
         {
             var cohesion = ResultTests.Result("cohesion-sql-tcp", 200);
             await Write("c", cohesion); await Write("p", ResultTests.Result("postgresql", 100));
-            await Write("u", ResultTests.Result("cosmos-emulator", 1, false));
+            await Write("u", ResultTests.Result("synthetic-unranked", 1, false));
             var findings = await ReportGenerator.GenerateAsync(path, Path.Combine(path, "out"));
             var performance = findings.Single(f => f.Kind == "performance");
             performance.Ratio.ShouldBe(2); performance.BestTarget.ShouldBe("postgresql");
             string markdown = await File.ReadAllTextAsync(Path.Combine(path, "out", "sql.md"));
-            markdown.ShouldContain("cosmos-emulator");
+            markdown.ShouldContain("synthetic-unranked");
             markdown.ShouldContain("200 [200–200]");
             async Task Write(string name, BenchmarkResult value)
                 => await ResultFiles.WriteAsync(Path.Combine(path, name + ".json"), value, ResultJsonContext.Default.BenchmarkResult);

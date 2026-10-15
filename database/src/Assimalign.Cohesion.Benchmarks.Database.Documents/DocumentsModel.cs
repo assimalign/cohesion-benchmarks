@@ -15,7 +15,6 @@ internal sealed class DocumentsModel : IBenchmarkModel
         new("cohesion-documents-embedded", "Cohesion Documents", true, "in-process", "cohesion"),
         new("mongodb", "MongoDB 8.0", true, "MongoDB.Driver", "mongodb"),
         new("ravendb", "RavenDB 7.1", true, "static indexes, non-stale", "ravendb"),
-        new("cosmos-emulator", "Cosmos DB emulator", false, "functional parity only; gateway", "cosmos-emulator")
     };
     public IBenchmarkTarget CreateTarget(string id, TargetOptions options)
     {
@@ -27,7 +26,6 @@ internal sealed class DocumentsModel : IBenchmarkModel
             "cohesion-documents-embedded" => new CohesionDocumentsTarget(descriptor, options),
             "mongodb" => new MongoDocumentsTarget(descriptor, options),
             "ravendb" => new RavenDocumentsTarget(descriptor, options),
-            "cosmos-emulator" => new CosmosDocumentsTarget(descriptor, options),
             _ => throw new ArgumentException("Unknown document target: " + id)
         };
     }

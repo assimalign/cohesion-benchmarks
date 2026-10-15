@@ -42,11 +42,6 @@ internal static class DocumentWorkload
         }
         if (target == "ravendb")
             Emulated("revenue-by-category-30d", "Static date index selects orders; client unwinds items and aggregates.", "RQL selects the bounded 30-day range; database/docs/DOCUMENTS.md");
-        if (target == "cosmos-emulator")
-        {
-            Emulated("orders-status-range", "Engine selects and orders range; client counts and takes 25.", "Cosmos SQL has no count-plus-page result operator; database/docs/DOCUMENTS.md");
-            Emulated("revenue-by-category-30d", "Engine groups selected items; client orders category totals.", "Cosmos SQL GROUP BY cannot be combined with ORDER BY; database/docs/DOCUMENTS.md");
-        }
         return result;
     }
 }

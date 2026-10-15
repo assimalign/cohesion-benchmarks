@@ -107,7 +107,7 @@ shows min–max spreads. Latency ratios use median p50 / best ranked p50; throug
 target ops/s. Load ratios use full ingest + index/statistics/compaction metrics, excluding IsSample wire metrics.
 Adapters must include every timed finalization phase in those metrics.
 
-The best ranked engine sets 1×. Cosmos emulator appears in functional verification/support/error tables only.
+The best ranked engine sets 1×. Unranked targets appear in functional verification/support/error tables only.
 Cohesion findings include ratios >=2 for operations, >=1.5 for load, all unsupported/emulated operations,
 errors (including warm-up) and verification failures. findings.json includes triggering numbers and evidence.
 Any failed repetition prevents the operation's successful repetitions from being selectively ranked.
