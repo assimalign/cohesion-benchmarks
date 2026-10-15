@@ -95,7 +95,7 @@ public static class GraphMapping
         foreach (var pair in properties)
         {
             if (text.Length > 1) text.Append(',');
-            text.Append('`').Append(pair.Key.Replace("`", "``", StringComparison.Ordinal)).Append("`:").Append(Literal(pair.Value));
+            text.Append('"').Append(pair.Key.Replace("\"", "\"\"", StringComparison.Ordinal)).Append("\":").Append(Literal(pair.Value));
         }
         return text.Append('}').ToString();
     }
