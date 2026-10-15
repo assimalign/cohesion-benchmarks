@@ -17,6 +17,7 @@ public interface IBenchmarkTarget : IAsyncDisposable
         IProgress<LoadProgress>? progress, CancellationToken cancellationToken);
     ValueTask<IReadOnlyList<LoadMetric>> FinalizeLoadAsync(CancellationToken cancellationToken);
     ValueTask<EngineDescription> DescribeAsync(CancellationToken cancellationToken);
+    /// <summary>Allocated data and index bytes, or -1 when the engine cannot report a trustworthy size.</summary>
     ValueTask<long> MeasureStorageAsync(CancellationToken cancellationToken);
     ValueTask<IBenchmarkClient> OpenClientAsync(int clientIndex, CancellationToken cancellationToken);
     /// <summary>A real handshake, plus a trivial statement only where the dialect supports it.</summary>

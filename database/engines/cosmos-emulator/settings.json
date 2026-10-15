@@ -1,6 +1,21 @@
 {
   "settings": [
     {
+      "name": "AllowBulkExecution",
+      "value": "true for load; false for individual measured operations",
+      "reason": "Concurrent raw item creation uses the SDK bulk path. Individual operations use the ordinary gateway client to avoid bulk batching delays; emulator remains unranked."
+    },
+    {
+      "name": "PartitionKeyPath",
+      "value": "/id",
+      "reason": "One partition per base64url transport identity; key retains the original marketplace collection/n identity."
+    },
+    {
+      "name": "IndexingPolicy",
+      "value": "Explicit scalar, array and composite paths requested after ingestion",
+      "reason": "Record returned mode and progress. The emulator can accept policy updates without applying them; never infer physical index creation from HTTP success."
+    },
+    {
       "name": "protocol",
       "value": "https",
       "reason": ".NET SDK requires HTTPS; trust the local emulator certificate in the functional adapter."

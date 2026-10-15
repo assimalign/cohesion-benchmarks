@@ -182,9 +182,9 @@ internal static class Program
             finally { await sampler.DisposeAsync(); }
             long storage = await targetInstance.MeasureStorageAsync(token);
             engine = await targetInstance.DescribeAsync(token);
-            var result = Result("load", 1, started, DateTimeOffset.UtcNow) with { Load = metrics, StorageBytes = storage, Samples = sampler.Samples };
+            var result = Result("load", 1, started, DateTimeOffset.UtcNow) with { Load = metrics, StorageBytes = storage < 0 ? null : storage, Samples = sampler.Samples };
             await ResultFiles.WriteAsync(Path.Combine(outputDirectory, runId + "-load.json"), result, ResultJsonContext.Default.BenchmarkResult, token);
-            Console.WriteLine($"LOAD {id}: full={metrics.Where(m => !m.IsSample).Sum(m => m.Seconds):0.###} seconds; samples={metrics.Where(m => m.IsSample).Sum(m => m.Seconds):0.###} seconds; {storage} stored bytes.");
+            Console.WriteLine($"LOAD {id}: full={metrics.Where(m => !m.IsSample).Sum(m => m.Seconds):0.###} seconds; samples={metrics.Where(m => m.IsSample).Sum(m => m.Seconds):0.###} seconds; {(storage < 0 ? "storage unavailable" : storage + " stored bytes")}.");
             return 0;
         }
         var options = new RunnerOptions { Suite = a.Get("suite", "latency"), Mix = a.Get("mix", "read-heavy"),
