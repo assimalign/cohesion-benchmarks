@@ -32,8 +32,13 @@ internal sealed class Neo4jTarget : IBenchmarkTarget
     }
     public async ValueTask<IReadOnlyList<LoadMetric>> LoadAsync(DatasetManifest manifest, string directory, IProgress<LoadProgress>? progress, CancellationToken cancellationToken)
     {
+        // Community has one user database. Measure the unchanged sample on the empty
+        // database first; offline import then replaces its stores with the full baseline.
+        await FinalizeLoadAsync(cancellationToken);
+        var metrics = await Neo4jIngest.SampleAsync(Driver, database, manifest, directory, options.BatchSize, cancellationToken);
         if (driver is not null) { await driver.DisposeAsync(); driver = null; }
-        var metrics = await Neo4jOfflineImport.RunAsync(options, manifest, directory, cancellationToken);
+        metrics.AddRange(await Neo4jOfflineImport.RunAsync(options, manifest, directory, cancellationToken));
+        indexesBuilt = false;
         Exception? last = null;
         for (int i = 0; i < 90; i++)
         {
@@ -42,7 +47,6 @@ internal sealed class Neo4jTarget : IBenchmarkTarget
         }
         if (last is not null) throw new InvalidOperationException("Neo4j did not restart after import.", last);
         metrics.AddRange(await FinalizeLoadAsync(cancellationToken));
-        metrics.AddRange(await Neo4jIngest.SampleAsync(Driver, database, manifest, directory, options.BatchSize, cancellationToken));
         return metrics;
     }
     private bool indexesBuilt;

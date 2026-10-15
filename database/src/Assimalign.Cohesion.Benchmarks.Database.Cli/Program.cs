@@ -163,7 +163,7 @@ internal static class Program
             RunId = runId, Model = selectedModel.Id, Target = targetInstance.Descriptor, Suite = suite, Repetition = repetition,
             Official = a.Has("official"), StartedUtc = started, FinishedUtc = finished, Engine = engine, Environment = environmentSnapshot,
             DatasetManifestSha256 = manifestHash, Scale = manifest.Scale, Seed = manifest.Seed, Verification = verification,
-            Budget = new ResourceBudget(DriverMemoryBytes: (entry.GetProperty("kind").GetString() == "embedded" ? 6L : 3L) * 1024 * 1024 * 1024),
+            Budget = ObservedBudget(environmentSnapshot, entry.GetProperty("kind").GetString() == "embedded"),
         };
         string outputDirectory = a.Get("out", Path.Combine("database", "artifacts", "results"));
         if (a.Command == "load")
@@ -200,6 +200,28 @@ internal static class Program
             await ResultFiles.WriteAsync(Path.Combine(outputDirectory, $"{runId}-{options.Suite}-{pass.Repetition}.json"), result, ResultJsonContext.Default.BenchmarkResult, token);
         }
         return passes.Any(p => p.BlockReason != null) || passes.SelectMany(p => p.Operations).Any(o => o.Errors + o.WarmupErrors > 0) ? 2 : 0;
+    }
+
+    private static ResourceBudget ObservedBudget(EnvironmentSnapshot snapshot, bool embedded)
+    {
+        // Zero records an unknown/unbounded native limit; never label a development container as the default 6 GiB.
+        long.TryParse(snapshot.CgroupMemoryMax, CultureInfo.InvariantCulture, out long driverMemory);
+        double cpus = 0;
+        long engineMemory = embedded ? driverMemory : 0;
+        if (embedded)
+        {
+            string[] quota = (snapshot.CgroupCpuMax ?? "").Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (quota.Length == 2 && double.TryParse(quota[0], CultureInfo.InvariantCulture, out double amount) &&
+                double.TryParse(quota[1], CultureInfo.InvariantCulture, out double period) && period > 0) cpus = amount / period;
+        }
+        else if (snapshot.ContainerInspectJson is { } inspection)
+        {
+            using var json = System.Text.Json.JsonDocument.Parse(inspection);
+            var config = json.RootElement[0].GetProperty("HostConfig");
+            engineMemory = config.GetProperty("Memory").GetInt64();
+            cpus = config.GetProperty("NanoCpus").GetInt64() / 1_000_000_000d;
+        }
+        return new(cpus, engineMemory, driverMemory);
     }
 
     private static IBenchmarkModel Model(string id) => Array.Find(Models, m => m.Id == id) ?? throw new ArgumentException("Unknown model " + id);

@@ -15,7 +15,7 @@ internal static class Neo4jIngest
         string directory, int batchSize, CancellationToken token)
     {
         var metrics = new List<LoadMetric>();
-        // Community has one user database. Negative ids isolate the same-schema sample; cleanup is outside timing.
+        // PrepareAsync established an empty database. Keep every source property unchanged.
         try
         {
             foreach (var node in SocialSchema.Nodes)
@@ -26,12 +26,11 @@ internal static class Neo4jIngest
                 var rows = new List<Dictionary<string, object?>>(batchSize);
                 foreach (var properties in GraphData.Nodes(manifest, directory, node, node.Label == "Post" ? GraphData.SamplePosts : long.MaxValue, token))
                 {
-                    properties["id"] = -(long)properties["id"]!;
                     rows.Add(properties);
                     if (rows.Count == batchSize) await FlushAsync();
                 }
                 if (rows.Count > 0) await FlushAsync();
-                if (node.Label == "Post") metrics.Add(new(node.File, "online-ingest", "UNWIND $rows CREATE; negative-id sample", count, GraphData.SourceBytes(manifest, node.File, count), watch.Elapsed.TotalSeconds, true));
+                if (node.Label == "Post") metrics.Add(new(node.File, "online-ingest", "UNWIND $rows CREATE; isolated pre-import sample", count, GraphData.SourceBytes(manifest, node.File, count), watch.Elapsed.TotalSeconds, true));
                 async Task FlushAsync()
                 {
                     await RunAsync(driver, database, $"UNWIND $rows AS row CREATE (n:{node.Label}) SET n = row", new() { ["rows"] = rows }, token);
@@ -46,7 +45,7 @@ internal static class Neo4jIngest
                 var rows = new List<Dictionary<string, object?>>(batchSize);
                 foreach (var edge in GraphData.Edges(manifest, directory, relation, true, token))
                 {
-                    rows.Add(new() { ["src"] = -edge.Source, ["dst"] = -edge.Target, ["properties"] = edge.Properties });
+                    rows.Add(new() { ["src"] = edge.Source, ["dst"] = edge.Target, ["properties"] = edge.Properties });
                     if (rows.Count == batchSize) await FlushAsync();
                 }
                 if (rows.Count > 0) await FlushAsync();
@@ -60,12 +59,12 @@ internal static class Neo4jIngest
         }
         finally
         {
-            // Batches keep cleanup transactions bounded; these ids are exclusively owned by this sample.
+            // Only the sample exists in this initially empty database. Cleanup is untimed.
             foreach (string label in new[] { "Post", "Person", "Tag" })
             {
                 while (true)
                 {
-                    var result = await driver.ExecutableQuery($"MATCH (n:{label}) WHERE n.id < 0 WITH n LIMIT 1000 DETACH DELETE n RETURN count(*) AS removed")
+                    var result = await driver.ExecutableQuery($"MATCH (n:{label}) WITH n LIMIT 1000 DETACH DELETE n RETURN count(*) AS removed")
                         .WithConfig(new QueryConfig(database: database)).ExecuteAsync(CancellationToken.None);
                     if (result.Result[0]["removed"].As<long>() == 0) break;
                 }

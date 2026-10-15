@@ -21,6 +21,13 @@ internal sealed class CohesionBenchmarkClient : IBenchmarkClient
     public async ValueTask ExecuteAsync(OperationDescriptor operation, object parameters, IVerificationSink? sink, CancellationToken cancellationToken)
     {
         var p = (GraphParameters)parameters;
+        // A canceled path exchange discards its connection. Reconnect for the next logical operation,
+        // never retry the failed request or substitute a smaller graph pattern.
+        if (connection is not null && !connection.IsOpen)
+        {
+            await connection.DisposeAsync();
+            connection = await tcp!.ConnectAsync(cancellationToken);
+        }
         if (p.CleanupGql is not null) cleanup.Add(p.CleanupGql);
         var rows = new List<object?[]>();
         GraphDatabaseTransaction? transaction = null;

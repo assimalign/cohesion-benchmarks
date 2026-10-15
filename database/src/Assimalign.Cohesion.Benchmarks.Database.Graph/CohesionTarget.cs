@@ -51,7 +51,7 @@ internal sealed class CohesionTarget : IBenchmarkTarget
         await EnsureAsync(cancellationToken);
         if (network) return;
         await using var session = await store!.Database.CreateSessionAsync(cancellationToken);
-        await using var result = (QueryResultSet)await session.ExecuteAsync("MATCH (p:Person) RETURN p.id", cancellationToken: cancellationToken);
+        await using var result = (QueryResultSet)await session.ExecuteAsync("MATCH (n) RETURN n.id", cancellationToken: cancellationToken);
         await foreach (var _ in result.GetRowsAsync(cancellationToken)) throw new InvalidOperationException("Full load requires an empty graph volume.");
     }
     public async ValueTask<IReadOnlyList<LoadMetric>> LoadAsync(DatasetManifest manifest, string directory, IProgress<LoadProgress>? progress, CancellationToken cancellationToken)
@@ -97,8 +97,11 @@ internal sealed class CohesionTarget : IBenchmarkTarget
     public ValueTask<long> MeasureStorageAsync(CancellationToken cancellationToken)
     {
         long bytes = 0;
-        if (Directory.Exists(options.StorageDirectory))
-        foreach (string file in Directory.EnumerateFiles(options.StorageDirectory, "*", SearchOption.AllDirectories))
+        // The documented storage-name mapping is invariant lower case under RootPath.
+        // Exclude the separate TCP-ingest sample database from the baseline's footprint.
+        string directory = Path.Combine(options.StorageDirectory, options.Database.ToLowerInvariant());
+        if (Directory.Exists(directory))
+        foreach (string file in Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories))
         { cancellationToken.ThrowIfCancellationRequested(); bytes += new FileInfo(file).Length; }
         return ValueTask.FromResult(bytes);
     }
