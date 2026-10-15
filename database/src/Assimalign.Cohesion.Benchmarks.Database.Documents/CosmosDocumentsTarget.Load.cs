@@ -24,7 +24,7 @@ internal sealed partial class CosmosDocumentsTarget
         foreach (var table in manifest.Tables)
         {
             var watch = Stopwatch.StartNew();
-            var container = database.GetContainer(table.Name);
+            var container = bulkClient.GetContainer(Options.Database, table.Name);
             await Parallel.ForEachAsync(Lines(DatasetFiles.EnumerateParts(directory, manifest, table.Name)),
                 new ParallelOptions { MaxDegreeOfParallelism = 16, CancellationToken = cancellationToken }, async (bytes, token) =>
                 {

@@ -13,16 +13,17 @@ internal sealed partial class CosmosDocumentsTarget
 {
     private async Task<JsonDocument> ReadAsync(string collection, string id, CancellationToken token)
     {
-        using var response = await database.GetContainer(collection).ReadItemStreamAsync(id, new PartitionKey(id), cancellationToken: token);
+        using var response = await containers[collection].ReadItemStreamAsync(id, new PartitionKey(id), cancellationToken: token);
         response.EnsureSuccessStatusCode();
         return await JsonDocument.ParseAsync(response.Content, cancellationToken: token);
     }
     public override async ValueTask<IBenchmarkClient> OpenClientAsync(int clientIndex, CancellationToken cancellationToken)
     {
         foreach (string name in new[] { "orders", "products", "customers" })
+        foreach (bool warmup in new[] { false, true })
         {
             using var source = await ReadAsync(name, DocumentJson.CosmosId(name + "/1"), cancellationToken);
-            string key = DocumentParameterStream.Fixture("write_" + name, clientIndex);
+            string key = DocumentParameterStream.Fixture("write_" + name, clientIndex, warmup);
             using var stream = new MemoryStream(DocumentJson.Rewrite(System.Text.Encoding.UTF8.GetBytes(source.RootElement.GetRawText()), key, cosmos: true), writable: false);
             using var response = await database.GetContainer("write_" + name).UpsertItemStreamAsync(stream, new PartitionKey(DocumentJson.CosmosId(key)), cancellationToken: cancellationToken);
             response.EnsureSuccessStatusCode();
@@ -31,10 +32,11 @@ internal sealed partial class CosmosDocumentsTarget
     }
     private sealed class Client(CosmosDocumentsTarget target) : IBenchmarkClient
     {
+        private readonly QueryRequestOptions queryOptions = new() { MaxItemCount = 1000 };
         public async ValueTask ExecuteAsync(OperationDescriptor operation, object parameters, IVerificationSink? sink, CancellationToken cancellationToken)
         {
             var p = (DocumentParameters)parameters;
-            var container = target.database.GetContainer(p.Collection);
+            var container = target.containers[p.Collection];
             if (operation.Id == "doc.order-by-id")
             {
                 using var result = await target.ReadAsync(p.Collection, p.CosmosKey, cancellationToken);
@@ -55,7 +57,7 @@ internal sealed partial class CosmosDocumentsTarget
                 if (sink != null) { using var stored = await target.ReadAsync(p.Collection, p.CosmosKey, cancellationToken); DocumentRows.Mutation(operation.Id, stored.RootElement, sink); }
                 return;
             }
-            using var iterator = container.GetItemQueryStreamIterator(p.CosmosQuery, requestOptions: new QueryRequestOptions { MaxItemCount = 1000 });
+            using var iterator = container.GetItemQueryStreamIterator(p.CosmosQuery, requestOptions: queryOptions);
             var totals = operation.Id == "doc.revenue-by-category-30d" ? new SortedDictionary<string, decimal>(StringComparer.Ordinal) : null;
             long count = 0; var page = new List<JsonElement>();
             while (iterator.HasMoreResults)

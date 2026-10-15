@@ -44,8 +44,12 @@ internal sealed partial class CohesionDocumentsTarget
     {
         var metrics = new List<LoadMetric>();
         var sample = new List<byte[][]>();
-        foreach (byte[][] batch in Batches(DatasetFiles.EnumerateParts(directory, manifest, "customers"), Options.BatchSize))
-        { sample.Add(batch); if (sample.Count == 8) break; }
+        foreach (var table in manifest.Tables)
+        {
+            foreach (byte[][] batch in Batches(DatasetFiles.EnumerateParts(directory, manifest, table.Name), Options.BatchSize))
+            { sample.Add(batch); if (sample.Count == 8) break; }
+            if (sample.Count == 8) break;
+        }
         int selected = 1; double best = double.MaxValue;
         foreach (int workers in new[] { 1, 4 })
         {
@@ -58,7 +62,7 @@ internal sealed partial class CohesionDocumentsTarget
                 await PutBatchesAsync(probe, "customers", sample, workers, cancellationToken);
                 double elapsed = watch.Elapsed.TotalSeconds;
                 long rows = 0, bytes = 0; foreach (var batch in sample) foreach (var doc in batch) { rows++; bytes += doc.Length; }
-                metrics.Add(new("customers", "loader-probe", $"{workers} concurrent sessions; explicit transactions of {Options.BatchSize}; selection only", rows, bytes, elapsed, IsSample: true));
+                metrics.Add(new("*", "loader-probe", $"Up to {workers} concurrent sessions over {sample.Count} representative batches; transactions of at most {Options.BatchSize}; selection only", rows, bytes, elapsed, IsSample: true));
                 if (elapsed < best) { selected = workers; best = elapsed; }
             }
             finally { await engine.DropDatabaseAsync(name, CancellationToken.None); }

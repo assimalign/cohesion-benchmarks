@@ -13,9 +13,10 @@ internal sealed partial class RavenDocumentsTarget
     public override async ValueTask<IBenchmarkClient> OpenClientAsync(int clientIndex, CancellationToken cancellationToken)
     {
         foreach (string name in new[] { "orders", "products", "customers" })
+        foreach (bool warmup in new[] { false, true })
         {
             using var source = await SendAsync(HttpMethod.Get, databasePath + "/docs?id=" + Uri.EscapeDataString(name + "/1"), null, cancellationToken);
-            string key = DocumentParameterStream.Fixture("write_" + name, clientIndex);
+            string key = DocumentParameterStream.Fixture("write_" + name, clientIndex, warmup);
             byte[] bytes = DocumentJson.Rewrite(Encoding.UTF8.GetBytes(source.RootElement.GetProperty("Results")[0].GetRawText()), key, "write_" + name);
             using var response = await SendAsync(HttpMethod.Put, databasePath + "/docs?id=" + Uri.EscapeDataString(key), bytes, cancellationToken);
         }

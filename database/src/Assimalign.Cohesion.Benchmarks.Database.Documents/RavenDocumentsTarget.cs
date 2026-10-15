@@ -25,6 +25,7 @@ internal sealed partial class RavenDocumentsTarget : DocumentsTarget
     internal RavenDocumentsTarget(TargetDescriptor descriptor, TargetOptions options) : base(descriptor, options)
     {
         store = new DocumentStore { Urls = [options.Endpoint!], Database = options.Database };
+        store.Conventions.DisableTopologyUpdates = true;
         store.Conventions.BulkInsert.TrySerializeEntityToJsonStream = (entity, metadata, writer) =>
         {
             if (entity is not string raw) return false;
@@ -37,6 +38,16 @@ internal sealed partial class RavenDocumentsTarget : DocumentsTarget
     }
     private async Task<JsonDocument> SendAsync(HttpMethod method, string path, byte[]? body, CancellationToken token)
     {
+        if (path.StartsWith(databasePath, StringComparison.Ordinal))
+        {
+            var executor = store.GetRequestExecutor();
+            using (executor.ContextPool.AllocateOperationContext(out Sparrow.Json.JsonOperationContext context))
+            {
+                var command = new RavenJsonCommand(method, path, body, token);
+                await executor.ExecuteAsync(command, context, token: token).ConfigureAwait(false);
+                return command.Result;
+            }
+        }
         using var request = new HttpRequestMessage(method, path);
         if (body != null) { request.Content = new ByteArrayContent(body); request.Content.Headers.ContentType = new("application/json"); }
         using var response = await http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token).ConfigureAwait(false);
@@ -46,10 +57,9 @@ internal sealed partial class RavenDocumentsTarget : DocumentsTarget
     }
     public override async ValueTask PrepareAsync(DatasetManifest manifest, CancellationToken cancellationToken)
     {
-        using (var response = await http.GetAsync(databasePath + "/stats", cancellationToken))
-            if (response.IsSuccessStatusCode)
-                await store.Maintenance.Server.SendAsync(new DeleteDatabasesOperation(Options.Database, hardDelete: true), cancellationToken);
-            else if (response.StatusCode != HttpStatusCode.NotFound) response.EnsureSuccessStatusCode();
+        var existing = await store.Maintenance.Server.SendAsync(new GetDatabaseRecordOperation(Options.Database), cancellationToken);
+        if (existing != null)
+            await store.Maintenance.Server.SendAsync(new DeleteDatabasesOperation(Options.Database, hardDelete: true), cancellationToken);
         await store.Maintenance.Server.SendAsync(new CreateDatabaseOperation(new DatabaseRecord(Options.Database)), cancellationToken);
     }
     private static IndexDefinition Index(string collection, string suffix, string map, params string[] exact)
@@ -103,7 +113,8 @@ internal sealed partial class RavenDocumentsTarget : DocumentsTarget
         using var version = await SendAsync(HttpMethod.Get, "/build/version", null, cancellationToken);
         return new(version.RootElement.GetProperty("FullVersion").GetString()!, new Dictionary<string, string>
         { ["indexes"] = "Explicit static indexes; exact strings; WaitForNonStaleResults", ["storage"] = "RavenDB durable defaults",
-            ["mutationIsolation"] = "write_* collections in the same database", ["client"] = "RavenDB.Client 7.1.12 BulkInsert and maintenance; raw RQL HTTP without response caching" });
+            ["mutationIsolation"] = "write_* collections in the same database", ["client"] = "RavenDB.Client 7.1.12; raw JSON RavenCommand, no response caching",
+            ["DisableTopologyUpdates"] = "true: single local endpoint, including Windows port relay" });
     }
     public override async ValueTask<long> MeasureStorageAsync(CancellationToken cancellationToken)
     {

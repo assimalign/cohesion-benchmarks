@@ -19,7 +19,7 @@ internal sealed class DocumentParameterStream : IParameterStream
     internal DocumentParameterStream(DatasetManifest manifest, ulong seed, string operation, int client, ParameterStreamContext context)
     { data = new(manifest); random = new(seed, operation, client); this.operation = operation; this.client = client; this.context = context; }
     private long Pick(long count) => 1 + (long)(random.Next() % (ulong)count);
-    internal static string Fixture(string collection, int client) => collection + "/fixture/" + client.ToString(CultureInfo.InvariantCulture);
+    internal static string Fixture(string collection, int client, bool warmup = false) => collection + "/fixture/" + (warmup ? "warmup/" : "") + client.ToString(CultureInfo.InvariantCulture);
     internal static string Timestamp(DateTime value) => value.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
     public object Next()
     {
@@ -56,11 +56,11 @@ internal sealed class DocumentParameterStream : IParameterStream
             p.Collection = "write_orders"; p.Key = MarketplaceDescriptor.Key("orders", context.WriteId(data.Orders, client, step));
             p.Json = NewOrder(p, product, orderInfo.Customer);
         }
-        if (operation == "doc.patch-order-status") { p.Collection = "write_orders"; p.Key = Fixture(p.Collection, client); p.Status = step % 2 == 0 ? "paid" : "shipped"; }
-        if (operation == "doc.adjust-variant-stock") { p.Collection = "write_products"; p.Key = Fixture(p.Collection, client); }
+        if (operation == "doc.patch-order-status") { p.Collection = "write_orders"; p.Key = Fixture(p.Collection, client, context.Warmup); p.Status = step % 2 == 0 ? "paid" : "shipped"; }
+        if (operation == "doc.adjust-variant-stock") { p.Collection = "write_products"; p.Key = Fixture(p.Collection, client, context.Warmup); }
         if (operation == "doc.replace-customer")
         {
-            p.Collection = "write_customers"; p.Key = Fixture(p.Collection, client);
+            p.Collection = "write_customers"; p.Key = Fixture(p.Collection, client, context.Warmup);
             var identity = data.Customer(Pick(data.Customers));
             var root = new JsonObject { ["id"] = p.Key, ["firstName"] = identity.First, ["lastName"] = identity.Last,
                 ["email"] = identity.Email, ["createdAt"] = "2021-01-01T00:00:00Z", ["phone"] = "+1-555-1234567",

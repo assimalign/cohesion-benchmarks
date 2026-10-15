@@ -21,9 +21,10 @@ internal sealed partial class CohesionDocumentsTarget
             foreach (string name in DocumentWorkload.Collections)
                 collections[name] = await session.GetCollectionAsync(name, cancellationToken) ?? throw new InvalidOperationException("Missing " + name);
             foreach (string name in new[] { "orders", "products", "customers" })
+            foreach (bool warmup in new[] { false, true })
             {
                 var source = await collections[name].GetAsync(session, name + "/1", cancellationToken) ?? throw new InvalidOperationException("Missing fixture source.");
-                string key = DocumentParameterStream.Fixture("write_" + name, clientIndex);
+                string key = DocumentParameterStream.Fixture("write_" + name, clientIndex, warmup);
                 await collections["write_" + name].PutAsync(session, key, DocumentJson.Rewrite(source.Content, key), cancellationToken: cancellationToken);
             }
             return new Client(session, collections);

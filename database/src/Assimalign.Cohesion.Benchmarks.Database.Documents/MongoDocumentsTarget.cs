@@ -14,6 +14,7 @@ internal sealed partial class MongoDocumentsTarget : DocumentsTarget
 {
     private readonly MongoClient client;
     private readonly IMongoDatabase database;
+    private readonly Dictionary<string, IMongoCollection<BsonDocument>> collections = new(StringComparer.Ordinal);
     internal MongoDocumentsTarget(TargetDescriptor descriptor, TargetOptions options) : base(descriptor, options)
     {
         var settings = MongoClientSettings.FromConnectionString(options.Endpoint);
@@ -22,6 +23,7 @@ internal sealed partial class MongoDocumentsTarget : DocumentsTarget
         settings.WriteConcern = WriteConcern.W1.With(journal: true);
         settings.ReadPreference = ReadPreference.Primary;
         client = new MongoClient(settings); database = client.GetDatabase(options.Database);
+        foreach (string name in DocumentWorkload.Collections) collections[name] = database.GetCollection<BsonDocument>(name);
     }
     public override async ValueTask PrepareAsync(DatasetManifest manifest, CancellationToken cancellationToken)
     {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Assimalign.Cohesion.Benchmarks.Database.Harness;
@@ -12,19 +13,20 @@ internal sealed partial class MongoDocumentsTarget
     public override async ValueTask<IBenchmarkClient> OpenClientAsync(int clientIndex, CancellationToken cancellationToken)
     {
         foreach (string name in new[] { "orders", "products", "customers" })
+        foreach (bool warmup in new[] { false, true })
         {
             var source = await database.GetCollection<BsonDocument>(name).Find(new BsonDocument("_id", name + "/1")).SingleAsync(cancellationToken);
-            string key = DocumentParameterStream.Fixture("write_" + name, clientIndex);
+            string key = DocumentParameterStream.Fixture("write_" + name, clientIndex, warmup);
             source["_id"] = key; source["id"] = key;
             await database.GetCollection<BsonDocument>("write_" + name).ReplaceOneAsync(new BsonDocument("_id", key), source, new ReplaceOptions { IsUpsert = true }, cancellationToken);
         }
-        return new Client(database);
+        return new Client(collections);
     }
-    private sealed class Client(IMongoDatabase database) : IBenchmarkClient
+    private sealed class Client(Dictionary<string, IMongoCollection<BsonDocument>> collections) : IBenchmarkClient
     {
         public async ValueTask ExecuteAsync(OperationDescriptor operation, object parameters, IVerificationSink? sink, CancellationToken cancellationToken)
         {
-            var p = (DocumentParameters)parameters; var collection = database.GetCollection<BsonDocument>(p.Collection);
+            var p = (DocumentParameters)parameters; var collection = collections[p.Collection];
             if (operation.Id == "doc.order-by-id")
             {
                 using var cursor = await collection.FindAsync(p.MongoFilter, cancellationToken: cancellationToken);

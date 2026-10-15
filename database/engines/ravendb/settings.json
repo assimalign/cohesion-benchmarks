@@ -1,6 +1,16 @@
 {
   "settings": [
     {
+      "name": "client.DisableTopologyUpdates",
+      "value": "true",
+      "reason": "Adapter uses exactly the catalog endpoint for the single local server, including Windows port relay. Timed RavenCommand requests disable response caching."
+    },
+    {
+      "name": "FieldIndexing",
+      "value": "Exact for predicate strings and key ties",
+      "reason": "Preserve case-sensitive ordinal workload semantics; explicit static indexes only."
+    },
+    {
       "name": "Setup.Mode",
       "value": "None",
       "reason": "Disable interactive setup wizard for repeatable local startup."
