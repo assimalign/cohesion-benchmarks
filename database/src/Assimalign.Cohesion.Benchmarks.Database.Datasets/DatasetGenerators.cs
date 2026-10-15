@@ -14,6 +14,7 @@ public static class DatasetGenerators
     {
         if (model == DatasetModel.Sql) return new CommerceGenerator();
         if (model == DatasetModel.Documents) return new MarketplaceGenerator();
-        throw new NotImplementedException($"The {model} dataset generator is not implemented yet.");
+        if (model == DatasetModel.Graph) return new SocialGenerator();
+        throw new ArgumentOutOfRangeException(nameof(model));
     }
 }
