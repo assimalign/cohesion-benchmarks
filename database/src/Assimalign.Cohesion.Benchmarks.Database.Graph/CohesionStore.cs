@@ -57,6 +57,7 @@ internal sealed class CohesionStore : IAsyncDisposable
             var node = await sample.CreateNodeAsync(session, ["Post"], new Dictionary<string, object?> { ["id"] = 0L }, token);
             await sample.DeleteNodeAsync(session, node.Id, token);
             await GraphSchema.Open(sample, session).CreateIndexAsync("Post", "sample_post_id", "id", token);
+            await GraphSchema.Open(sample, session).CreateIndexAsync("Post", "sample_post_created", "creationDate", token);
         }
         await sample.DisposeAsync();
         return metrics;

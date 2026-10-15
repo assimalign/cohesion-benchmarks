@@ -6,6 +6,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Assimalign.Cohesion.Benchmarks.Database.Harness\Assimalign.Cohesion.Benchmarks.Database.Harness.csproj" />
 		<ProjectReference Include="..\..\src\Assimalign.Cohesion.Benchmarks.Database.Datasets\Assimalign.Cohesion.Benchmarks.Database.Datasets.csproj" />
+		<ProjectReference Include="..\..\src\Assimalign.Cohesion.Benchmarks.Database.Graph\Assimalign.Cohesion.Benchmarks.Database.Graph.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="xunit" />

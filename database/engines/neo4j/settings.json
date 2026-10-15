@@ -21,6 +21,11 @@
       "reason": "Deterministic local authentication; transaction log flushing remains default."
     }
   ],
+  "offlineImport": {
+    "heap": "25% of the observed container memory limit",
+    "maxOffHeapMemory": "50% of the observed container memory limit",
+    "reason": "Offline importer uses the server's CPU, memory and swap limits; leaves 25% for native overhead. Dates are converted to epoch-millisecond longs before import."
+  },
   "development": {
     "reason": "Readiness smoke only; budgets below 6 GiB scale cache settings in Start-BenchEngine.ps1. Not official measurements."
   }

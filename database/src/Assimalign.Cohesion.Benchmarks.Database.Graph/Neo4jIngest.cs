@@ -31,7 +31,7 @@ internal static class Neo4jIngest
                     if (rows.Count == batchSize) await FlushAsync();
                 }
                 if (rows.Count > 0) await FlushAsync();
-                if (node.Label == "Post") metrics.Add(new(node.File, "online-ingest", "UNWIND $rows CREATE; negative-id sample", count, 0, watch.Elapsed.TotalSeconds, true));
+                if (node.Label == "Post") metrics.Add(new(node.File, "online-ingest", "UNWIND $rows CREATE; negative-id sample", count, GraphData.SourceBytes(manifest, node.File, count), watch.Elapsed.TotalSeconds, true));
                 async Task FlushAsync()
                 {
                     await RunAsync(driver, database, $"UNWIND $rows AS row CREATE (n:{node.Label}) SET n = row", new() { ["rows"] = rows }, token);
@@ -50,7 +50,7 @@ internal static class Neo4jIngest
                     if (rows.Count == batchSize) await FlushAsync();
                 }
                 if (rows.Count > 0) await FlushAsync();
-                metrics.Add(new(relation.File, "online-ingest", "UNWIND $rows MATCH endpoints CREATE", count, 0, watch.Elapsed.TotalSeconds, true));
+                metrics.Add(new(relation.File, "online-ingest", "UNWIND $rows MATCH endpoints CREATE", count, GraphData.SourceBytes(manifest, relation.File, count), watch.Elapsed.TotalSeconds, true));
                 async Task FlushAsync()
                 {
                     await RunAsync(driver, database, $"UNWIND $rows AS row MATCH (a:{relation.SourceLabel} {{id:row.src}}), (b:{relation.DestinationLabel} {{id:row.dst}}) CREATE (a)-[r:{relation.Type}]->(b) SET r = row.properties", new() { ["rows"] = rows }, token);

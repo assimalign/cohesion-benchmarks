@@ -12,7 +12,7 @@ public static class GraphQueries
         long date = checked(1_900_000_000_000L + inserted);
         string content = "Benchmark 'post' \\ " + inserted.ToString(CultureInfo.InvariantCulture);
         var values = new Dictionary<string, object?> { ["person"] = person, ["other"] = other, ["post"] = post,
-            ["tag"] = tag, ["name"] = name, ["id"] = inserted, ["date"] = date, ["content"] = content };
+            ["tag"] = tag, ["name"] = name, ["id"] = inserted, ["date"] = date, ["content"] = content, ["length"] = (long)content.Length };
         string p = "(p:Person {id:" + GraphMapping.Literal(person) + "})";
         const string messageProjection = "CASE WHEN m:Post THEN 'Post' ELSE 'Comment' END AS kind, m.id AS id, m.creationDate AS created, a.id AS author, m.content AS content";
         const string messageOrder = " ORDER BY created DESC, id DESC, kind ASC";
@@ -28,17 +28,17 @@ public static class GraphQueries
                 gql = ["MATCH " + p + "-[:IS_LOCATED_IN]->(c:Place {type:'City'}) RETURN " + profile]; break;
             case "graph.person-recent-messages":
                 cypher = "MATCH (a:Person {id:$person})<-[:HAS_CREATOR]-(m:Post|Comment) RETURN " + messageProjection + messageOrder + " LIMIT 10";
-                gql = ["MATCH path=" + p + "<-[:HAS_CREATOR]-(m:Post|Comment) RETURN path"]; paths = true; break;
+                gql = ["MATCH route=" + p + "<-[:HAS_CREATOR]-(m:Post|Comment) RETURN route"]; paths = true; break;
             case "graph.person-friends":
                 cypher = "MATCH (p:Person {id:$person})-[r:KNOWS]-(f:Person) RETURN f.id AS id,f.firstName,f.lastName,r.creationDate AS created ORDER BY created DESC,id ASC";
                 gql = ["MATCH " + p + "-[r:KNOWS]-(f:Person) RETURN f.id,f.firstName,f.lastName,r.creationDate"]; break;
             case "graph.friends-recent-posts":
                 cypher = "MATCH (p:Person {id:$person})-[:KNOWS]-(a:Person)<-[:HAS_CREATOR]-(m:Post) RETURN DISTINCT " + messageProjection + messageOrder + " LIMIT 20";
-                gql = ["MATCH path=" + p + "-[:KNOWS]-(a:Person)<-[:HAS_CREATOR]-(m:Post) RETURN path"]; paths = true; break;
+                gql = ["MATCH route=" + p + "-[:KNOWS]-(a:Person)<-[:HAS_CREATOR]-(m:Post) RETURN route"]; paths = true; break;
             case "graph.fof-recent-messages":
                 cypher = "MATCH (p:Person {id:$person})-[:KNOWS*1..2]-(a:Person)<-[:HAS_CREATOR]-(m:Post|Comment) WHERE a.id <> p.id RETURN DISTINCT " + messageProjection + messageOrder + " LIMIT 20";
-                gql = ["MATCH path=" + p + "-[:KNOWS]-(a:Person)<-[:HAS_CREATOR]-(m:Post|Comment) WHERE a.id <> p.id RETURN path",
-                    "MATCH path=" + p + "-[:KNOWS]-(:Person)-[:KNOWS]-(a:Person)<-[:HAS_CREATOR]-(m:Post|Comment) WHERE a.id <> p.id RETURN path"];
+                gql = ["MATCH route=" + p + "-[:KNOWS]-(a:Person)<-[:HAS_CREATOR]-(m:Post|Comment) WHERE a.id <> p.id RETURN route",
+                    "MATCH route=" + p + "-[:KNOWS]-(:Person)-[:KNOWS]-(a:Person)<-[:HAS_CREATOR]-(m:Post|Comment) WHERE a.id <> p.id RETURN route"];
                 paths = true; break;
             case "graph.friends-within-3-by-name":
                 cypher = "MATCH path=(p:Person {id:$person})-[:KNOWS*1..3]-(f:Person {firstName:$name}) WHERE f.id <> p.id WITH f,min(length(path)) AS distance RETURN f.id AS id,f.firstName,f.lastName,distance ORDER BY distance,id LIMIT 20";
@@ -60,11 +60,12 @@ public static class GraphQueries
                 cypher = "MATCH (p:Person {id:$person})-[:KNOWS]-(f:Person)<-[:HAS_CREATOR]-(m:Post)-[:HAS_TAG]->(t:Tag {id:$tag}), (m)-[:HAS_TAG]->(u:Tag) WHERE u.id <> t.id WITH u,count(DISTINCT m) AS frequency RETURN u.id AS id,u.name,frequency ORDER BY frequency DESC,id";
                 gql = ["MATCH " + p + "-[:KNOWS]-(f:Person)<-[:HAS_CREATOR]-(m:Post)-[:HAS_TAG]->(t:Tag {id:" + GraphMapping.Literal(tag) + "}), (m)-[:HAS_TAG]->(u:Tag) WHERE u.id <> t.id RETURN u.id,u.name,m.id"]; break;
             case "graph.country-person-count":
-                cypher = "MATCH (p:Person)-[:IS_LOCATED_IN]->(:Place {type:'City'})-[:IS_PART_OF]->(c:Place {type:'Country'}) RETURN c.id AS id,c.name,count(p) AS persons ORDER BY id";
+                cypher = "MATCH (p:Person)-[:IS_LOCATED_IN]->(:Place {type:'City'})-[:IS_PART_OF]->(c:Place {type:'Country'}) RETURN c.id AS id,c.name,count(DISTINCT p) AS persons ORDER BY id";
                 gql = ["MATCH (p:Person)-[:IS_LOCATED_IN]->(:Place {type:'City'})-[:IS_PART_OF]->(c:Place {type:'Country'}) RETURN c.id,c.name,p.id"]; break;
             case "graph.add-post":
-                cypher = "MATCH (a:Person {id:$person}),(t:Tag {id:$tag}) CREATE (m:Post {id:$id,creationDate:$date,content:$content})-[:HAS_CREATOR]->(a),(m)-[:HAS_TAG]->(t) RETURN m.id,m.creationDate,a.id,t.id";
-                gql = ["MATCH (a:Person {id:" + GraphMapping.Literal(person) + "}),(t:Tag {id:" + GraphMapping.Literal(tag) + "}) INSERT (m:Post " + GraphMapping.Properties(new Dictionary<string, object?> { ["id"] = inserted, ["creationDate"] = date, ["content"] = content }) + ")-[:HAS_CREATOR]->(a),(m)-[:HAS_TAG]->(t) RETURN m.id,m.creationDate,a.id,t.id"];
+                cypher = "MATCH (a:Person {id:$person}),(t:Tag {id:$tag}) CREATE (m:Post {id:$id,creationDate:$date,content:$content,locationIP:'127.0.0.1',browserUsed:'dbbench',language:'en',length:$length})-[:HAS_CREATOR]->(a),(m)-[:HAS_TAG]->(t) RETURN m.id,m.creationDate,a.id,t.id";
+                gql = ["MATCH (a:Person {id:" + GraphMapping.Literal(person) + "}),(t:Tag {id:" + GraphMapping.Literal(tag) + "}) INSERT (m:Post " + GraphMapping.Properties(new Dictionary<string, object?> { ["id"] = inserted, ["creationDate"] = date, ["content"] = content,
+                    ["locationIP"] = "127.0.0.1", ["browserUsed"] = "dbbench", ["language"] = "en", ["length"] = (long)content.Length }) + ")-[:HAS_CREATOR]->(a),(m)-[:HAS_TAG]->(t) RETURN m.id,m.creationDate,a.id,t.id"];
                 cleanupCypher = "MATCH (m:Post {id:$id}) DETACH DELETE m";
                 cleanupGql = "MATCH (m:Post {id:" + GraphMapping.Literal(inserted) + "}) DETACH DELETE m"; break;
             case "graph.add-like":

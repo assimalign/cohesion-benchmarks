@@ -28,7 +28,7 @@ internal static class TcpIngest
                 if (pending == batchSize) await FlushAsync();
             }
             if (pending != 0) await FlushAsync();
-            metrics.Add(new(node.File, "tcp-ingest", "inlined multi-path INSERT; isolated sample database", count, 0, watch.Elapsed.TotalSeconds, true));
+            metrics.Add(new(node.File, "tcp-ingest", "inlined multi-path INSERT; isolated sample database", count, GraphData.SourceBytes(manifest, node.File, count), watch.Elapsed.TotalSeconds, true));
             async Task FlushAsync()
             {
                 await connection.ExecuteAsync(text.ToString(), cancellationToken: token);
@@ -47,7 +47,7 @@ internal static class TcpIngest
                 if (rows.Count == batchSize) await FlushAsync();
             }
             if (rows.Count != 0) await FlushAsync();
-            metrics.Add(new(relation.File, "tcp-ingest", "inlined MATCH / multi-path INSERT; isolated sample database", count, 0, watch.Elapsed.TotalSeconds, true));
+            metrics.Add(new(relation.File, "tcp-ingest", "inlined MATCH / multi-path INSERT; isolated sample database", count, GraphData.SourceBytes(manifest, relation.File, count), watch.Elapsed.TotalSeconds, true));
             async Task FlushAsync()
             {
                 await connection.ExecuteAsync(CohesionIngest.EdgeStatement(relation, rows), cancellationToken: token);

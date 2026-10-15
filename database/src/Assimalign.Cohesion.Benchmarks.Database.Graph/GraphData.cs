@@ -12,6 +12,13 @@ internal static class GraphData
     internal const long SamplePersons = 100_000;
     internal const long SamplePosts = 100_000;
 
+    internal static long SourceBytes(DatasetManifest manifest, string file, long rows)
+    {
+        foreach (var table in manifest.Tables)
+            if (table.Name == file) return table.Rows == rows ? table.Bytes : 0;
+        throw new ArgumentException("Unknown dataset table.", nameof(file));
+    }
+
     internal static IEnumerable<Dictionary<string, object?>> Nodes(DatasetManifest manifest, string directory, SchemaNode node, long maximum, CancellationToken token)
     {
         foreach (string part in DatasetFiles.EnumerateParts(directory, manifest, node.File))

@@ -33,13 +33,13 @@ internal static class CohesionIngest
             if (batch.Count != 0) await FlushNodesAsync();
             watch.Stop();
             if (!sample || !prerequisite) metrics.Add(new(node.File, sample ? "candidate-ingest" : "ingest",
-                gql ? "multi-path INSERT; explicit transactions" : "CreateNodeAsync; explicit transactions", rows, 0, watch.Elapsed.TotalSeconds, sample));
+                gql ? "multi-path INSERT; explicit transactions" : "CreateNodeAsync; explicit transactions", rows, GraphData.SourceBytes(manifest, node.File, rows), watch.Elapsed.TotalSeconds, sample));
             progress?.Report(new(node.File, rows, 0));
 
             async Task FlushNodesAsync()
             {
                 await using var transaction = await session.BeginTransactionAsync(token);
-                if (gql && !prerequisite)
+                if (gql && (!sample || !prerequisite))
                 {
                     var statement = new StringBuilder("INSERT ");
                     for (int i = 0; i < batch.Count; i++)
@@ -71,7 +71,9 @@ internal static class CohesionIngest
             // Sample setup is excluded for both candidate paths. Identical lookup indexes are present.
             var schema = GraphSchema.Open(db, session);
             await schema.CreateIndexAsync("Person", "sample_person_id", "id", token);
+            await schema.CreateIndexAsync("Person", "sample_person_name", "firstName", token);
             await schema.CreateIndexAsync("Tag", "sample_tag_id", "id", token);
+            await schema.CreateIndexAsync("Tag", "sample_tag_name", "name", token);
             if (prerequisitesOnly) return metrics;
             await schema.CreateIndexAsync("Post", "sample_post_id", "id", token);
         }
@@ -89,7 +91,7 @@ internal static class CohesionIngest
             if (batch.Count != 0) await FlushEdgesAsync();
             watch.Stop();
             metrics.Add(new(relation.File, sample ? "candidate-ingest" : "ingest",
-                gql ? "MATCH / multi-path INSERT; explicit transactions" : "CreateRelationshipAsync; explicit transactions", rows, 0, watch.Elapsed.TotalSeconds, sample));
+                gql ? "MATCH / multi-path INSERT; explicit transactions" : "CreateRelationshipAsync; explicit transactions", rows, GraphData.SourceBytes(manifest, relation.File, rows), watch.Elapsed.TotalSeconds, sample));
             progress?.Report(new(relation.File, rows, 0));
 
             async Task FlushEdgesAsync()

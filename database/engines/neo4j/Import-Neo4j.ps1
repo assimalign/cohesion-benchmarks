@@ -1,7 +1,8 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory)][ValidatePattern('^dbbench-neo4j(-[a-z0-9-]+)?$')][string]$Container,
-    [Parameter(Mandatory)][string]$InputDirectory
+    [Parameter(Mandatory)][string]$InputDirectory,
+    [string]$CancellationFile
 )
 # Invoked by Neo4jOfflineImport after it has checked that the database is empty.
 . (Join-Path $PSScriptRoot '../../scripts/BenchEngine.Common.ps1')
@@ -20,21 +21,27 @@ if ($LASTEXITCODE -eq 0) { throw "Input volume already exists: $inputVolume" }
 $created = $false
 $stopped = $false
 try {
+    if ($CancellationFile -and (Test-Path -LiteralPath $CancellationFile)) { throw 'Import canceled.' }
     Invoke-Podman @('stop', '--time', '40', $Container) | Out-Null
     $stopped = $true
     Invoke-Podman @('volume', 'create', '--label', "dbbench.owner=$script:Owner", $inputVolume) | Out-Null
     $created = $true
     $memory = [string]$info.HostConfig.Memory
+    $heapSize = [string][long]([long]$memory / 4)
+    $importArguments += "--max-off-heap-memory=$([long]([long]$memory / 2))"
     $cpus = ([double]$info.HostConfig.NanoCpus / 1000000000).ToString([Globalization.CultureInfo]::InvariantCulture)
     Invoke-Podman @('run', '-d', '--name', $helper, '--label', "dbbench.owner=$script:Owner", '--network', 'none',
         '--cpus', $cpus, '--memory', $memory, '--memory-swap', $memory, '--image-volume', 'ignore',
-        '--user', 'root', '-e', 'HEAP_SIZE=512m', '-v', "$($mount[0].Name):/data", '-v', "${inputVolume}:/import",
+        '--user', 'root', '-e', "HEAP_SIZE=$heapSize", '-v', "$($mount[0].Name):/data", '-v', "${inputVolume}:/import",
         '--entrypoint', 'sleep', $info.ImageName, 'infinity') | Out-Null
+    $stagingWatch = [Diagnostics.Stopwatch]::StartNew()
     Invoke-Podman @('cp', ((Resolve-Path -LiteralPath $InputDirectory).Path + '/.'), "${helper}:/import/") | Out-Null
+    $stagingWatch.Stop()
+    if ($CancellationFile -and (Test-Path -LiteralPath $CancellationFile)) { throw 'Import canceled.' }
     $watch = [Diagnostics.Stopwatch]::StartNew()
     Invoke-Podman (@('exec', '--user', 'neo4j', $helper, 'neo4j-admin') + $importArguments)
     $watch.Stop()
-    @{seconds=$watch.Elapsed.TotalSeconds; path='neo4j-admin database import full'} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $InputDirectory 'receipt.json')
+    @{seconds=$watch.Elapsed.TotalSeconds; stagingSeconds=$stagingWatch.Elapsed.TotalSeconds; path='neo4j-admin database import full'} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $InputDirectory 'receipt.json')
 } finally {
     & podman container exists $helper
     if ($LASTEXITCODE -eq 0) { Invoke-Podman @('rm', '-f', $helper) | Out-Null }

@@ -19,8 +19,11 @@ internal static class Neo4jOfflineImport
         if (!OperatingSystem.IsWindows()) throw new NotSupportedException("Full Neo4j import is host-orchestrated: run dbbench load on the Podman host, then use the network driver for verification/runs.");
         string output = Path.Combine(Path.GetFullPath(directory), ".neo4j-import");
         Directory.CreateDirectory(output);
+        string cancellationFile = Path.Combine(output, "cancel-import");
+        if (File.Exists(cancellationFile)) File.Delete(cancellationFile);
         var watch = Stopwatch.StartNew();
-        var arguments = new List<string> { "database", "import", "full", "--overwrite-destination=true", "--id-type=integer", "--multiline-fields=true", "--max-off-heap-memory=512m" };
+        var arguments = new List<string> { "database", "import", "full", options.Database == "benchmark" ? "neo4j" : options.Database,
+            "--overwrite-destination=true", "--id-type=integer", "--multiline-fields=true" };
         long count = 0, bytes = 0;
         foreach (var node in SocialSchema.Nodes)
         {
@@ -53,23 +56,35 @@ internal static class Neo4jOfflineImport
             bytes += new FileInfo(path).Length;
             arguments.Add($"--relationships={relation.Type}=/import/{relation.File}.header.csv,/import/{relation.File}.csv");
         }
-        arguments.Add(options.Database == "benchmark" ? "neo4j" : options.Database);
         await File.WriteAllTextAsync(Path.Combine(output, "arguments.json"), JsonSerializer.Serialize(arguments), token);
         watch.Stop();
         var metrics = new List<LoadMetric> { new("social", "import-conversion", "SocialSchema typed CSV; epoch milliseconds", count, bytes, watch.Elapsed.TotalSeconds) };
         string script = Path.Combine("database", "engines", "neo4j", "Import-Neo4j.ps1");
         var start = new ProcessStartInfo("pwsh") { UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true };
-        foreach (string argument in new[] { "-NoProfile", "-File", script, "-Container", options.Container ?? throw new ArgumentException("Neo4j import needs --container."), "-InputDirectory", output }) start.ArgumentList.Add(argument);
+        foreach (string argument in new[] { "-NoProfile", "-File", script, "-Container", options.Container ?? throw new ArgumentException("Neo4j import needs --container."), "-InputDirectory", output, "-CancellationFile", cancellationFile }) start.ArgumentList.Add(argument);
         using var process = Process.Start(start) ?? throw new InvalidOperationException("Could not launch offline importer.");
-        var stdout = process.StandardOutput.ReadToEndAsync(token);
-        var stderr = process.StandardError.ReadToEndAsync(token);
-        // The script owns cleanup and restart, including an import failure. Let it quiesce before returning.
-        await process.WaitForExitAsync(CancellationToken.None);
+        // Drain output even during cancellation so the script can always reach its cleanup/restart finally.
+        var stdout = process.StandardOutput.ReadToEndAsync();
+        var stderr = process.StandardError.ReadToEndAsync();
+        try { await process.WaitForExitAsync(token); }
+        catch (OperationCanceledException) when (token.IsCancellationRequested)
+        {
+            await File.WriteAllTextAsync(cancellationFile, "cancel", CancellationToken.None);
+            var stop = new ProcessStartInfo("podman") { UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true };
+            foreach (string argument in new[] { "stop", "--time", "5", options.Container!.Replace("dbbench-neo4j", "dbbench-neo4j-import", StringComparison.Ordinal) }) stop.ArgumentList.Add(argument);
+            using var stopper = Process.Start(stop)!;
+            var stopOutput = stopper.StandardOutput.ReadToEndAsync();
+            var stopError = stopper.StandardError.ReadToEndAsync();
+            await stopper.WaitForExitAsync(CancellationToken.None);
+            await stopOutput; await stopError;
+            await process.WaitForExitAsync(CancellationToken.None);
+        }
         string log = await stdout + await stderr;
         await File.WriteAllTextAsync(Path.Combine(output, "import.log"), log, CancellationToken.None);
-        if (process.ExitCode != 0) throw new InvalidOperationException("Offline import failed: " + log);
         token.ThrowIfCancellationRequested();
+        if (process.ExitCode != 0) throw new InvalidOperationException("Offline import failed: " + log);
         using var receipt = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(output, "receipt.json"), token));
+        metrics.Add(new("social", "import-staging", "copy converted CSV into named dataset volume", count, bytes, receipt.RootElement.GetProperty("stagingSeconds").GetDouble()));
         metrics.Add(new("social", "ingest", "neo4j-admin database import full; named volumes", count, bytes, receipt.RootElement.GetProperty("seconds").GetDouble()));
         return metrics;
     }
