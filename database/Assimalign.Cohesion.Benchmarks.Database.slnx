@@ -13,5 +13,6 @@
   </Folder>
   <Folder Name="/docs/">
     <File Path="docs/DESIGN.md" />
+    <File Path="docs/COHESION-CAPABILITIES.md" />
   </Folder>
 </Solution>

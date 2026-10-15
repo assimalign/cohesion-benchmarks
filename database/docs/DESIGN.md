@@ -182,7 +182,23 @@ Text content of posts and comments (20–2,000 chars, long-tailed) is the bulk o
 
 Every operation has an id, a category, exact semantics, a parameter distribution and, for ordered results, a total
 order (ties broken by key) so result digests are comparable. Each target implements each operation in its native
-language; a target that cannot returns `unsupported` with reason and evidence.
+language and declares, per operation, one **support level**:
+
+- **native** — one request in the engine's own query language or API produces the exact result. A semantically
+  identical rewrite counts as native (for example a prefix match written as the range `name >= 'abc' AND name < 'abd'`).
+- **emulated** — the engine produces a correct superset or the parts of the result, and the client completes it
+  with a documented, bounded step. Allowed completions only: client-side ORDER BY/LIMIT/OFFSET over the rows the
+  engine selected; client-side aggregation over the rows the engine selected; a loop of point reads for a multi-get;
+  read-modify-write for a partial update; several statements in one transaction where one statement would be
+  native elsewhere (for example the two halves of a UNION). Never allowed: client-side joins across tables or
+  labels, client-side filtering of rows the engine could not filter (the selective predicate must run in the
+  engine), or schema changes made to compensate for a missing feature. Emulated measurements are reported and
+  compared, always marked as emulated, and every emulation is a Cohesion finding in itself.
+- **unsupported** — the engine cannot express the operation within those rules. The result carries the reason and
+  the evidence (a Cohesion `file:line`, the documentation line, or the engine's error).
+
+`docs/COHESION-CAPABILITIES.md` records what the pinned Cohesion commit can and cannot express, with citations; the
+targets use it to choose a support level, and the hardening analysis starts from it.
 
 ### 6.1 SQL operations
 
@@ -190,7 +206,8 @@ language; a target that cannot returns `unsupported` with reason and evidence.
 |---|---|---|
 | `sql.customer-by-id` | point read | customer row by PK |
 | `sql.customer-by-email` | point read | customer row by unique secondary key |
-| `sql.order-detail` | join read | order + its lines + product names, ordered by line_no |
+| `sql.order-lines` | join read | one order joined to its lines (2 tables), ordered by line_no |
+| `sql.order-detail` | join read | order + its lines + product names (3 tables), ordered by line_no |
 | `sql.customer-recent-orders` | range read | a customer's 20 most recent orders (order_date desc, order_id desc) |
 | `sql.product-review-summary` | aggregate read | COUNT and AVG(rating) of one product's reviews |
 | `sql.product-latest-reviews` | top-N read | 5 most recent reviews of a product |
@@ -198,10 +215,11 @@ language; a target that cannot returns `unsupported` with reason and evidence.
 | `sql.tx.place-order` | write txn | insert order + 1–6 lines + payment + history, decrement inventory rows, commit |
 | `sql.tx.ship-order` | write txn | update order status, insert shipment + history, commit |
 | `sql.update-customer` | write | single-row update by PK |
-| `sql.a.revenue-by-month` | analytics | one year of orders grouped by year, month, channel |
+| `sql.a.revenue-by-channel` | analytics | one quarter of non-cancelled orders grouped by channel (no date functions) |
+| `sql.a.revenue-by-month` | analytics | one year of orders grouped by year, month, channel (EXTRACT or equivalent) |
 | `sql.a.top-products-in-category` | analytics | 3-way join, one category, one quarter, top 20 by revenue |
 | `sql.a.repeat-customers` | analytics | customers with ≥ 5 orders in a year (GROUP BY/HAVING), top 100 |
-| `sql.a.reorder-report` | analytics | inventory below reorder point in a warehouse, joined to product and supplier |
+| `sql.a.reorder-report` | analytics | inventory below reorder point in a warehouse joined to its product (2 tables) |
 | `sql.a.brand-ratings` | analytics | review count and average by brand, HAVING count ≥ 100 |
 | `sql.a.unshipped-orders` | analytics | paid orders older than a cutoff with NOT EXISTS shipment |
 | `sql.a.orders-full-aggregate` | scan | COUNT/SUM/AVG over all orders |
@@ -311,7 +329,15 @@ and its reason lives in `engines/README.md`.
   builders where hosting adds nothing to the measurement). It is published self-contained for `linux-arm64` and
   run in the `dbbench-cohesion-<model>` container with the shared budget.
 - **Embedded targets** create the engine in the driver process with the same options.
+- **One load per Cohesion model.** The embedded target loads the dataset into the model's data volume through the
+  fastest public in-process path; the TCP target then serves those same files through `CohesionServer`. The TCP
+  ingest path (multi-row `INSERT` statements over the wire) is measured on a fixed sample of each table and
+  reported as its own load metric. Graph indexes can only be created through the C# API
+  (`GraphSchema.CreateIndexAsync`), so they are created in-process before the TCP server opens the data.
 - **Schemas** are created with ad-hoc DDL statements; no compiled schema.
+- **No parameters in GQL.** The Graph language has no parameters at the pinned commit, so the Cohesion graph targets
+  inline generated literals (escaped) into statement text; every statement is parsed and planned per call anyway
+  (no plan cache in any Cohesion model).
 
 ## 10. Analysis and hardening
 
