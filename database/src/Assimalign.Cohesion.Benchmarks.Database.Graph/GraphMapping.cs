@@ -78,8 +78,15 @@ public static class GraphMapping
     {
         var schema = GraphSchema.Open(database, session);
         foreach (var node in SocialSchema.Nodes)
-        foreach (var index in node.Indexes)
-            await schema.CreateIndexAsync(node.Label, index.Name, index.Columns[0], token).ConfigureAwait(false);
+        {
+            var existing = await schema.GetIndexesAsync(node.Label, token).ConfigureAwait(false);
+            foreach (var index in node.Indexes)
+            {
+                bool found = false;
+                foreach (var item in existing) if (item.Name == index.Name) { found = true; break; }
+                if (!found) await schema.CreateIndexAsync(node.Label, index.Name, index.Columns[0], token).ConfigureAwait(false);
+            }
+        }
     }
 
     public static string Properties(IReadOnlyDictionary<string, object?> properties)
