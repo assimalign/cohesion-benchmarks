@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Assimalign.Cohesion.Benchmarks.Database.Harness</RootNamespace>
+		<Description>Workload runner, latency histograms, result model, verification digests, environment capture and reporting.</Description>
+	</PropertyGroup>
+</Project>

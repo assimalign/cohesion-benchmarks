@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Assimalign.Cohesion.Benchmarks.Database.Graph</RootNamespace>
+		<Description>Graph model: social-network dataset, loaders, operations and targets (Cohesion Graph embedded and TCP, Neo4j).</Description>
+		<UsesCohesionSource>true</UsesCohesionSource>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Assimalign.Cohesion.Benchmarks.Database.Harness\Assimalign.Cohesion.Benchmarks.Database.Harness.csproj" />
+		<ProjectReference Include="..\Assimalign.Cohesion.Benchmarks.Database.Datasets\Assimalign.Cohesion.Benchmarks.Database.Datasets.csproj" />
+	</ItemGroup>
+	<ItemGroup Label="Cohesion engines (built from CohesionRoot)">
+		<ProjectReference Include="$(CohesionDatabaseRoot)Assimalign.Cohesion.Database.Graph/src/Assimalign.Cohesion.Database.Graph.csproj" />
+		<ProjectReference Include="$(CohesionDatabaseRoot)Assimalign.Cohesion.Database.Graph.Client/src/Assimalign.Cohesion.Database.Graph.Client.csproj" />
+		<ProjectReference Include="$(CohesionLibrariesRoot)Connections/Assimalign.Cohesion.Connections.Tcp/src/Assimalign.Cohesion.Connections.Tcp.csproj" />
+	</ItemGroup>
+</Project>

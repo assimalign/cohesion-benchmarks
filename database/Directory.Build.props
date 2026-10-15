@@ -1,0 +1,32 @@
+<Project>
+	<!--
+		The database suite stands alone: it deliberately does not import the repository-root scaffold
+		Directory.Build.props (which targets net6.0-net9.0 for the older micro-benchmarks).
+	-->
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<LangVersion>preview</LangVersion>
+		<EnablePreviewFeatures>true</EnablePreviewFeatures>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<InvariantGlobalization>true</InvariantGlobalization>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);CS1591</NoWarn>
+		<IsPackable>false</IsPackable>
+		<!-- Build output stays under database/artifacts (git-ignored). -->
+		<ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
+	</PropertyGroup>
+
+	<!--
+		CohesionRoot: the Cohesion source tree the engines are built from (a worktree of the Database integration
+		branch, pinned to one commit). Resolution order: -p:CohesionRoot=..., then the COHESION_ROOT environment
+		variable, then the sibling checkout ../cohesion next to this repository.
+	-->
+	<PropertyGroup>
+		<CohesionRoot Condition="'$(CohesionRoot)' == '' and '$(COHESION_ROOT)' != ''">$(COHESION_ROOT)</CohesionRoot>
+		<CohesionRoot Condition="'$(CohesionRoot)' == ''">$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '..', '..', 'cohesion'))</CohesionRoot>
+		<CohesionRoot>$([MSBuild]::EnsureTrailingSlash('$(CohesionRoot)'))</CohesionRoot>
+		<CohesionDatabaseRoot>$(CohesionRoot)resources/Database/</CohesionDatabaseRoot>
+		<CohesionLibrariesRoot>$(CohesionRoot)libraries/</CohesionLibrariesRoot>
+	</PropertyGroup>
+</Project>

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Assimalign.Cohesion.Benchmarks.Database.Sql</RootNamespace>
+		<Description>SQL model: commerce schema, loaders, operations and targets (Cohesion SQL embedded and TCP, PostgreSQL, SQL Server via Azure SQL Edge).</Description>
+		<UsesCohesionSource>true</UsesCohesionSource>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Assimalign.Cohesion.Benchmarks.Database.Harness\Assimalign.Cohesion.Benchmarks.Database.Harness.csproj" />
+		<ProjectReference Include="..\Assimalign.Cohesion.Benchmarks.Database.Datasets\Assimalign.Cohesion.Benchmarks.Database.Datasets.csproj" />
+	</ItemGroup>
+	<ItemGroup Label="Cohesion engines (built from CohesionRoot)">
+		<ProjectReference Include="$(CohesionDatabaseRoot)Assimalign.Cohesion.Database.Sql/src/Assimalign.Cohesion.Database.Sql.csproj" />
+		<ProjectReference Include="$(CohesionDatabaseRoot)Assimalign.Cohesion.Database.Sql.Client/src/Assimalign.Cohesion.Database.Sql.Client.csproj" />
+		<ProjectReference Include="$(CohesionLibrariesRoot)Connections/Assimalign.Cohesion.Connections.Tcp/src/Assimalign.Cohesion.Connections.Tcp.csproj" />
+	</ItemGroup>
+</Project>

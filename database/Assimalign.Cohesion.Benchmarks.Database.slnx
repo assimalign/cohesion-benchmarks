@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Assimalign.Cohesion.Benchmarks.Database.Harness/Assimalign.Cohesion.Benchmarks.Database.Harness.csproj" />
+    <Project Path="src/Assimalign.Cohesion.Benchmarks.Database.Datasets/Assimalign.Cohesion.Benchmarks.Database.Datasets.csproj" />
+    <Project Path="src/Assimalign.Cohesion.Benchmarks.Database.Sql/Assimalign.Cohesion.Benchmarks.Database.Sql.csproj" />
+    <Project Path="src/Assimalign.Cohesion.Benchmarks.Database.Documents/Assimalign.Cohesion.Benchmarks.Database.Documents.csproj" />
+    <Project Path="src/Assimalign.Cohesion.Benchmarks.Database.Graph/Assimalign.Cohesion.Benchmarks.Database.Graph.csproj" />
+    <Project Path="src/Assimalign.Cohesion.Benchmarks.Database.Cli/Assimalign.Cohesion.Benchmarks.Database.Cli.csproj" />
+    <Project Path="src/Assimalign.Cohesion.Benchmarks.Database.CohesionServer/Assimalign.Cohesion.Benchmarks.Database.CohesionServer.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Assimalign.Cohesion.Benchmarks.Database.Tests/Assimalign.Cohesion.Benchmarks.Database.Tests.csproj" />
+  </Folder>
+  <Folder Name="/docs/">
+    <File Path="docs/DESIGN.md" />
+  </Folder>
+</Solution>

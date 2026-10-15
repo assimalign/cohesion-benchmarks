@@ -1,0 +1,8 @@
+<Project>
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- Package versions for the suite are pinned here (central package management). -->
+	</ItemGroup>
+</Project>

@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Assimalign.Cohesion.Benchmarks.Database.Datasets</RootNamespace>
+		<Description>Deterministic, counter-based dataset generators and streaming readers for the commerce (SQL), marketplace (documents) and social (graph) datasets.</Description>
+	</PropertyGroup>
+</Project>

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>Assimalign.Cohesion.Benchmarks.Database.CohesionServer</RootNamespace>
+		<AssemblyName>cohesion-db-server</AssemblyName>
+		<Description>Hosts one Cohesion database model (SQL or Graph) behind its TCP server for the benchmark.</Description>
+		<ServerGarbageCollection>true</ServerGarbageCollection>
+		<UsesCohesionSource>true</UsesCohesionSource>
+	</PropertyGroup>
+	<ItemGroup Label="Cohesion engines (built from CohesionRoot)">
+		<ProjectReference Include="$(CohesionDatabaseRoot)Assimalign.Cohesion.Database.Sql/src/Assimalign.Cohesion.Database.Sql.csproj" />
+		<ProjectReference Include="$(CohesionDatabaseRoot)Assimalign.Cohesion.Database.Sql.Tcp/src/Assimalign.Cohesion.Database.Sql.Tcp.csproj" />
+		<ProjectReference Include="$(CohesionDatabaseRoot)Assimalign.Cohesion.Database.Graph/src/Assimalign.Cohesion.Database.Graph.csproj" />
+		<ProjectReference Include="$(CohesionLibrariesRoot)Connections/Assimalign.Cohesion.Connections.Tcp/src/Assimalign.Cohesion.Connections.Tcp.csproj" />
+	</ItemGroup>
+</Project>
