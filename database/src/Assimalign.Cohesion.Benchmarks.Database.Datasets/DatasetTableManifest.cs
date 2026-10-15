@@ -22,4 +22,3 @@ public sealed class DatasetTableManifest
     /// <summary>The part files, in order.</summary>
     public required IReadOnlyList<DatasetPartManifest> Parts { get; init; }
 }
-

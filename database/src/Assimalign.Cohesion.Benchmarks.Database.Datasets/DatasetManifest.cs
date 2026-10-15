@@ -29,4 +29,3 @@ public sealed class DatasetManifest
     /// <summary>Every table, collection or graph file, in load order.</summary>
     public required IReadOnlyList<DatasetTableManifest> Tables { get; init; }
 }
-
