@@ -32,5 +32,5 @@ internal sealed class DocumentsModel : IBenchmarkModel
         };
     }
     public IParameterStream CreateParameterStream(DatasetManifest manifest, ulong seed, string operation,
-        int clientIndex, ParameterStreamContext context) => throw new NotImplementedException("Parameter streams land with operations.");
+        int clientIndex, ParameterStreamContext context) => new DocumentParameterStream(manifest, seed, operation, clientIndex, context);
 }
