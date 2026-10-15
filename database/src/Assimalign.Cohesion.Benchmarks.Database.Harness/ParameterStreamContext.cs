@@ -6,7 +6,7 @@ namespace Assimalign.Cohesion.Benchmarks.Database.Harness;
 public sealed record ParameterStreamContext(string Suite, int Repetition, int Concurrency, bool Warmup)
 {
     /// <summary>Reserves a billion keys per logical client and scope, above the generated maximum.
-    /// Independent of execution order and target speed. Reusing a complete run requires restoring the baseline.</summary>
+    /// Independent of execution order and target speed. Reusing a complete write scope requires a fresh working store.</summary>
     public long WriteId(long datasetMaximum, int clientIndex, long sequence)
     {
         if (Repetition is < 1 or > 100 || Concurrency is < 1 or > 1024 || clientIndex < 0 || clientIndex >= Concurrency ||

@@ -52,6 +52,7 @@ function Invoke-Driver {
 # Only data files use named volumes. The result/telemetry directory is a host artifact bind.
 & podman run --rm --name "dbbench-dataset-check$Suffix" --volume "${datasetVolume}:/data" --entrypoint /bin/sh $image -c "test -f '$data/manifest.json'"
 if ($LASTEXITCODE -ne 0) { Invoke-Driver @('generate','--model',$Model,'--scale',$scaleText,'--out','/data') }
+$plan = (Invoke-Driver @('list','--model',$Model,'--json') | Out-String) | ConvertFrom-Json
 $loaded = @{}
 foreach ($id in $Targets) {
     $engine = Get-BenchTarget $id $Suffix
@@ -83,11 +84,19 @@ foreach ($id in $Targets) {
         Invoke-Driver (@('load') + $common + @('--official','--out','/results') + $environmentArgs) $engine
         $loaded[$id] = $true
         Invoke-Driver (@('verify') + $common + @('--out',"/results/$id.verify.json")) $engine
-        foreach ($suite in $Suites) {
-            $mixes = if ($suite -eq 'mixed') { @('read-heavy','balanced') } else { @('read-heavy') }
-            foreach ($mix in $mixes) {
-                Invoke-Driver (@('run') + $common + @('--suite',$suite,'--mix',$mix,'--repeat',[string]$Repeat,
-                    '--verification',"/results/$id.verify.json",'--official','--out','/results') + $environmentArgs) $engine
+        # Operation classes come from the compiled model descriptors, never name prefixes.
+        foreach ($access in @('Read','Write','Mixed')) {
+            $passes = if ($access -eq 'Mixed') { @('mixed') } else { @('latency','throughput') }
+            $operationArgs = if ($access -eq 'Mixed') { @() } else {
+                @('--ops', (@($plan.operations | Where-Object access -eq $access | ForEach-Object id) -join ','))
+            }
+            foreach ($suite in $passes) {
+                if ($suite -notin $Suites) { continue }
+                $mixes = if ($suite -eq 'mixed') { @('read-heavy','balanced') } else { @('read-heavy') }
+                foreach ($mix in $mixes) {
+                    Invoke-Driver (@('run') + $common + @('--suite',$suite,'--mix',$mix,'--repeat',[string]$Repeat,
+                        '--verification',"/results/$id.verify.json",'--official','--out','/results') + $operationArgs + $environmentArgs) $engine
+                }
             }
         }
     } finally {

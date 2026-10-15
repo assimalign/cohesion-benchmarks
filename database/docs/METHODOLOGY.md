@@ -49,10 +49,21 @@ closed-loop experiment.
 
 ParameterStreamContext.WriteId allocates disjoint billion-key client ranges above the dataset maximum for
 warm-up, verification, repetitions, concurrency and suites. Mutation adapters must use this context (or prove
-equivalent deterministic disjoint ranges). Restore the same logical baseline when mutations would change later queries. The
-orchestration here is a skeleton: model integrations must prove their mutation isolation and fresh-load behavior
-before official mixed/write results are accepted. Do not treat a repeat that hits duplicate generated keys as a
-measurement of ordinary inserts.
+equivalent deterministic disjoint ranges). SQL shipment-history sequence columns are BIGINT on every target,
+so the same namespace also covers history rows; generated values and indexes are unchanged.
+
+The official order is verification, all read latency passes, all read throughput passes, all write latency
+passes, all write throughput passes, then read-heavy and balanced mixed passes. OperationDescriptor.Access
+classifies reads and writes. SQL and Graph perform no inverse statements on client disposal. Writes remain
+durable, and engines may finish with different data because their completed operation counts differ.
+No subsequent read-only performance measurement may use that changed store. A partial read rerun needs a
+pristine store. Verification writes use a disposable copy; Cohesion TCP must receive the embedded-loaded
+pristine store, never an embedded-mutated store. Copy/open costs stay outside operation timing and are logged.
+
+Documents' write_orders, write_products and write_customers are equivalent isolation: write fixtures have
+the same shapes/indexes but are never queried by baseline reads. Keep those collections, even with the same
+read-before-write schedule. Reusing a completed write namespace requires a fresh working store; duplicate-key
+errors must never be treated as insert measurements.
 
 ## Verification
 

@@ -137,7 +137,7 @@ public sealed class GraphAdapterTests
     [InlineData("graph.add-post")]
     [InlineData("graph.add-like")]
     [InlineData("graph.add-friendship")]
-    public async Task Execute_Write_ReturnsPersistedValuesAndRestoresBaseline(string operation)
+    public async Task Execute_Write_PersistsAfterClientDisposal(string operation)
     {
         await using var engine = GraphDatabaseEngine.Create("write-test", new());
         var db = await engine.CreateDatabaseAsync("test");
@@ -152,9 +152,9 @@ public sealed class GraphAdapterTests
             await client.ExecuteAsync(model.Operations.Single(o => o.Id == operation), GraphQueries.Create(operation, 1, 3, 1, 1, "Bob", 999), sink, CancellationToken.None);
             sink.Values.Count.ShouldBe(1);
         }
-        (await RowsAsync(setup, "MATCH (n:Post {id:999}) RETURN n.id")).ShouldBeEmpty();
-        (await RowsAsync(setup, "MATCH (p:Person)-[r:LIKES]->(m:Post) RETURN r.creationDate")).ShouldBeEmpty();
-        (await RowsAsync(setup, baseline)).Count.ShouldBe(before);
+        (await RowsAsync(setup, "MATCH (n:Post {id:999}) RETURN n.id")).Count.ShouldBe(operation == "graph.add-post" ? 1 : 0);
+        (await RowsAsync(setup, "MATCH (p:Person)-[r:LIKES]->(m:Post) RETURN r.creationDate")).Count.ShouldBe(operation == "graph.add-like" ? 1 : 0);
+        (await RowsAsync(setup, baseline)).Count.ShouldBe(before + (operation == "graph.add-friendship" ? 2 : 0));
     }
 
     [Fact]

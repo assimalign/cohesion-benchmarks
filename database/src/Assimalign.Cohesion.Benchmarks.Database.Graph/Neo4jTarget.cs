@@ -63,7 +63,7 @@ internal sealed class Neo4jTarget : IBenchmarkTarget
     public async ValueTask<EngineDescription> DescribeAsync(CancellationToken cancellationToken)
     {
         var result = await Driver.ExecutableQuery("CALL dbms.components() YIELD versions RETURN versions[0] AS version").WithConfig(new QueryConfig(database: database)).ExecuteAsync(cancellationToken);
-        var settings = new Dictionary<string, string> { ["database"] = database, ["temporalRepresentation"] = "int64 epoch milliseconds UTC", ["retries"] = "disabled", ["mutationIsolation"] = "client cleanup outside timed operation" };
+        var settings = new Dictionary<string, string> { ["database"] = database, ["temporalRepresentation"] = "int64 epoch milliseconds UTC", ["retries"] = "disabled", ["mutationIsolation"] = "reads precede persistent writes and mixed passes" };
         var observed = await Driver.ExecutableQuery("SHOW SETTINGS YIELD name,value WHERE name IN ['server.memory.heap.initial_size','server.memory.heap.max_size','server.memory.pagecache.size','db.tx_log.preallocate'] RETURN name,value")
             .WithConfig(new QueryConfig(database: database)).ExecuteAsync(cancellationToken);
         foreach (var record in observed.Result) settings.Add(record["name"].As<string>(), record["value"].As<string>());

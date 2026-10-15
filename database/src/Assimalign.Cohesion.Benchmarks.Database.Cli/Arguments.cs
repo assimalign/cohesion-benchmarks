@@ -17,7 +17,7 @@ internal sealed class Arguments
             string key = args[i];
             if (!key.StartsWith("--", StringComparison.Ordinal)) throw new ArgumentException($"Expected an option, got {key}.");
             key = key[2..];
-            string value = key is "official" or "overwrite" or "smoke" ? "true" :
+            string value = key is "official" or "overwrite" or "smoke" or "json" ? "true" :
                 ++i < args.Length && !args[i].StartsWith("--", StringComparison.Ordinal) ? args[i] :
                 throw new ArgumentException($"Missing value for --{key}.");
             if (!values.TryAdd(key, value)) throw new ArgumentException($"Repeated option --{key}.");

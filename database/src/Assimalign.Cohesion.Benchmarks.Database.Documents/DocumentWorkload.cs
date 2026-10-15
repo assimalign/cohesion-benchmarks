@@ -15,10 +15,10 @@ internal static class DocumentWorkload
         new("doc.orders-status-range", "index query", true, TimeoutClass.Point, 10, 5),
         new("doc.products-name-prefix", "index query", true, TimeoutClass.Point, 8, 4),
         new("doc.revenue-by-category-30d", "aggregation", true, TimeoutClass.Analytics, 2, 1),
-        new("doc.insert-order", "write", true, TimeoutClass.Point, 4, 20),
-        new("doc.patch-order-status", "write", true, TimeoutClass.Point, 3, 15),
-        new("doc.adjust-variant-stock", "write", true, TimeoutClass.Point, 2, 10),
-        new("doc.replace-customer", "write", true, TimeoutClass.Point, 1, 5)
+        new("doc.insert-order", "write", true, TimeoutClass.Point, 4, 20, OperationAccess.Write),
+        new("doc.patch-order-status", "write", true, TimeoutClass.Point, 3, 15, OperationAccess.Write),
+        new("doc.adjust-variant-stock", "write", true, TimeoutClass.Point, 2, 10, OperationAccess.Write),
+        new("doc.replace-customer", "write", true, TimeoutClass.Point, 1, 5, OperationAccess.Write)
     ];
     internal static readonly string[] Collections = ["customers", "products", "orders", "reviews", "write_customers", "write_products", "write_orders"];
     internal static Dictionary<string, OperationSupport> Support(string target)

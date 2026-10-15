@@ -77,7 +77,7 @@ internal sealed class CohesionTarget : IBenchmarkTarget
     {
         await EnsureAsync(cancellationToken);
         var settings = new Dictionary<string, string> { ["temporalRepresentation"] = "int64 epoch milliseconds UTC",
-            ["indexes"] = "equality only; id uniqueness not enforced", ["Durability"] = "Synchronous", ["mutationIsolation"] = "client cleanup of uniquely identified writes outside timed operation" };
+            ["indexes"] = "equality only; id uniqueness not enforced", ["Durability"] = "Synchronous", ["mutationIsolation"] = "reads precede persistent writes and mixed passes" };
         if (!network)
         {
             settings["BufferPoolCapacity"] = options.BufferPoolBytes.ToString(CultureInfo.InvariantCulture);

@@ -132,8 +132,8 @@ engine. Ship history uses unused sequence numbers above the generated maximum;
 place-order writes 1-6 lines, payment and history and decrements actual inventory
 rows. The two txn operations explicitly BEGIN and COMMIT. Update-customer is one
 autocommitted UPDATE. Verification reads committed write state in fixed statement
-and row order. After a client pass, inverse mutations restore baseline data;
-they run outside the measured interval. Cohesion UPDATE/DELETE scans and durable
+and row order. R5 removes post-pass inverse mutations: all read measurements precede writes and mixed passes.
+History seq is widened to BIGINT identically on all engines for disjoint cross-pass write namespaces. Cohesion UPDATE/DELETE scans and durable
 commits are used normally, with no retry or index-based workaround.
 
 ### Load paths and limits

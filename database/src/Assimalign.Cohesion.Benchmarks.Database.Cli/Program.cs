@@ -40,7 +40,7 @@ internal static class Program
                 dbbench report --in DIR --out DIR
                 dbbench env [--container NAME] [--out FILE]
                 dbbench ping --target ID [--endpoint URI] [--database benchmark] [--suffix -r1a] [--smoke]
-                dbbench list [--model M] [--catalog FILE]
+                dbbench list [--model M] [--json] [--catalog FILE]
                 Common target options: --endpoint, --database, --storage, --container, --catalog, --suffix
                 """);
             return 0;
@@ -81,7 +81,13 @@ internal static class Program
         }
         if (a.Command == "list")
         {
-            a.Allow("model", "catalog");
+            a.Allow("model", "catalog", "json");
+            if (a.Has("json"))
+            {
+                var model = Model(a.Required("model"));
+                Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(new BenchmarkPlan(model.Id, model.Targets, model.Operations), ResultJsonContext.Default.BenchmarkPlan));
+                return 0;
+            }
             if (a.Has("model")) _ = Model(a.Required("model"));
             foreach (var model in Models.Where(m => !a.Has("model") || m.Id == a.Required("model")))
             {

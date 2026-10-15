@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Assimalign.Cohesion.Benchmarks.Database.Graph;
 
-/// <summary>Exact Cypher and GQL projections, predicates, total orders, and reversible write fixtures.</summary>
+/// <summary>Exact Cypher and GQL projections, predicates, total orders, and persistent writes.</summary>
 public static class GraphQueries
 {
     public static GraphParameters Create(string operation, long person, long other, long post, long tag, string name, long inserted)
@@ -20,7 +20,6 @@ public static class GraphQueries
         string cypher;
         string[] gql;
         bool paths = false;
-        string? cleanupCypher = null, cleanupGql = null;
         switch (operation)
         {
             case "graph.person-profile":
@@ -66,8 +65,7 @@ public static class GraphQueries
                 cypher = "MATCH (a:Person {id:$person}),(t:Tag {id:$tag}) CREATE (m:Post {id:$id,creationDate:$date,content:$content,locationIP:'127.0.0.1',browserUsed:'dbbench',language:'en',length:$length})-[:HAS_CREATOR]->(a),(m)-[:HAS_TAG]->(t) RETURN m.id,m.creationDate,a.id,t.id";
                 gql = ["MATCH (a:Person {id:" + GraphMapping.Literal(person) + "}),(t:Tag {id:" + GraphMapping.Literal(tag) + "}) INSERT (m:Post " + GraphMapping.Properties(new Dictionary<string, object?> { ["id"] = inserted, ["creationDate"] = date, ["content"] = content,
                     ["locationIP"] = "127.0.0.1", ["browserUsed"] = "dbbench", ["language"] = "en", ["length"] = (long)content.Length }) + ")-[:HAS_CREATOR]->(a),(m)-[:HAS_TAG]->(t) RETURN m.id,m.creationDate,a.id,t.id"];
-                cleanupCypher = "MATCH (m:Post {id:$id}) DETACH DELETE m";
-                cleanupGql = "MATCH (m:Post {id:" + GraphMapping.Literal(inserted) + "}) DETACH DELETE m"; break;
+                break;
             case "graph.add-like":
             case "graph.add-friendship":
                 string type = operation == "graph.add-like" ? "LIKES" : "KNOWS";
@@ -76,10 +74,9 @@ public static class GraphQueries
                 string targetValue = GraphMapping.Literal(type == "LIKES" ? post : other);
                 cypher = $"MATCH (a:Person {{id:$person}}),(b:{label} {{id:{targetParameter}}}) CREATE (a)-[r:{type} {{creationDate:$date}}]->(b) RETURN a.id,b.id,r.creationDate";
                 gql = [$"MATCH (a:Person {{id:{GraphMapping.Literal(person)}}}),(b:{label} {{id:{targetValue}}}) INSERT (a)-[r:{type} {{creationDate:{GraphMapping.Literal(date)}}}]->(b) RETURN a.id,b.id,r.creationDate"];
-                cleanupCypher = $"MATCH (a:Person {{id:$person}})-[r:{type} {{creationDate:$date}}]->(b:{label} {{id:{targetParameter}}}) DELETE r";
-                cleanupGql = $"MATCH (a:Person {{id:{GraphMapping.Literal(person)}}})-[r:{type} {{creationDate:{GraphMapping.Literal(date)}}}]->(b:{label} {{id:{targetValue}}}) DELETE r"; break;
+                break;
             default: throw new ArgumentException("Unknown graph operation: " + operation, nameof(operation));
         }
-        return new(cypher, values, gql, paths, cleanupCypher, cleanupGql);
+        return new(cypher, values, gql, paths);
     }
 }

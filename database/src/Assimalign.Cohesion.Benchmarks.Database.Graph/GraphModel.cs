@@ -21,9 +21,9 @@ internal sealed class GraphModel : IBenchmarkModel
         new("graph.friend-recommendation", "pattern + aggregate", true, TimeoutClass.Analytics, 5, 3),
         new("graph.tag-cooccurrence", "pattern + aggregate", true, TimeoutClass.Analytics, 5, 3),
         new("graph.country-person-count", "aggregate", true, TimeoutClass.Analytics, 2, 3),
-        new("graph.add-post", "write", true, TimeoutClass.Point, 4, 20),
-        new("graph.add-like", "write", true, TimeoutClass.Point, 4, 20),
-        new("graph.add-friendship", "write", true, TimeoutClass.Point, 2, 10)
+        new("graph.add-post", "write", true, TimeoutClass.Point, 4, 20, OperationAccess.Write),
+        new("graph.add-like", "write", true, TimeoutClass.Point, 4, 20, OperationAccess.Write),
+        new("graph.add-friendship", "write", true, TimeoutClass.Point, 2, 10, OperationAccess.Write)
     };
     public IReadOnlyList<TargetDescriptor> Targets { get; } = new TargetDescriptor[]
     {
