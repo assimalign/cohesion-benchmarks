@@ -30,7 +30,7 @@ public sealed class CommerceGenerator : IDatasetGenerator
                 new DateOnly(1950,1,1).AddDays(r.Int(0,20000)),c.City.CountryCode,c.City.Name,DatasetTime.Sample(ref r),
                 r.Chance(0.1)?"gold":r.Chance(0.3)?"silver":"standard",r.Chance(0.62),r.Decimal(0,25000));
         });
-        await Table("customer_addresses",values.Addresses,750000,(w,id) => {
+        await Table("customer_addresses",values.Addresses,1000000,(w,id) => {
             long customer = values.AddressCustomer(id); var c = values.Customer(customer); var r = values.Random("commerce.address",id);
             w.WriteRow(id,customer,id<=values.Customers?"home":"work",r.Int(1,9999)+" "+DatasetText.Pick(DatasetText.LastNames,ref r)+" Street",
                 r.Chance(0.2)?"Unit "+r.Int(1,200):null,c.City.Name,c.City.Name+" Region",r.Int(10000,99999).ToString(System.Globalization.CultureInfo.InvariantCulture),c.City.CountryCode,id<=values.Customers);
@@ -41,18 +41,18 @@ public sealed class CommerceGenerator : IDatasetGenerator
                 DatasetText.Paragraph(ref r,50,1000,230),values.ProductCategory(id),p.Supplier,values.ProductBrand(id),p.Price,
                 CommerceDescriptor.Money(p.Price*r.Decimal(0.35m,0.8m)),r.Int(20,15000),DatasetTime.Sample(ref r),r.Chance(0.96));
         });
-        await session.Ranges(values.Products,400000,(part,start,end) => {
+        await session.Ranges(values.Products,500000,(part,start,end) => {
             using var output = session.Csv("inventory",part,CommerceSchema.Table("inventory").Header());
             for(long id=start;id<=end;id++) {
                 Check(id,cancellationToken); var r=values.Random("commerce.inventory",id);
                 for(int slot=0;slot<4;slot++) output.Csv.WriteRow(1+(id+slot*5)%20,id,r.Int(0,2000),r.Int(10,150),DatasetTime.Sample(ref r));
             }
         },cancellationToken);
-        await session.Ranges(values.Orders,400000,(part,start,end) => WriteOrders(session,values,part,start,end,cancellationToken),cancellationToken);
+        await session.Ranges(values.Orders,1000000,(part,start,end) => WriteOrders(session,values,part,start,end,cancellationToken),cancellationToken);
         await Table("reviews",values.Reviews,150000,(w,id) => {
             var r = values.Random("commerce.review",id);
             w.WriteRow(id,values.PopularProduct(ref r),values.PopularCustomer(ref r),CommerceDescriptor.Ratings.Sample(ref r)+1,
-                DatasetText.Paragraph(ref r,10,100,32),DatasetText.Paragraph(ref r,100,2000,330),DatasetTime.Sample(ref r),r.Int(0,200));
+                DatasetText.Paragraph(ref r,10,100,32),DatasetText.Paragraph(ref r,100,2000,650),DatasetTime.Sample(ref r),r.Int(0,200));
         });
         return session.Finish(Name,CommerceSchema.LoadOrder,values.MaximumIds());
 

@@ -29,7 +29,8 @@ public sealed class SocialDescriptor
     {
         DescriptorValidation.Scale(scale); Scale=scale;
         Seed=seed; Persons=GenerationSession.Count(scale,30000); Forums=Math.Min(Persons,GenerationSession.Count(scale,1000));
-        Posts=GenerationSession.Count(scale,1200000); Comments=GenerationSession.Count(scale,3000000); Likes=GenerationSession.Count(scale,6000000);
+        Posts=GenerationSession.Count(scale,1200000); Comments=GenerationSession.Count(scale,3000000);
+        Likes=(long)Math.Min(GenerationSession.Count(scale,6000000),(decimal)Persons*(Posts+Comments));
         PersonIds=new(Persons,seed,CounterRandom.Stream("social.person.ids"));
         MessagePopularity=new(Posts+Comments,1.08); MessageIds=new(Posts+Comments,seed,CounterRandom.Stream("social.message.popularity"));
     }
@@ -39,6 +40,14 @@ public sealed class SocialDescriptor
     public City City(long personId) => DatasetText.Cities[PersonCity(personId)-1];
     public string FirstName(long id) { DescriptorValidation.Id(id,Persons); var r=Random("person.name",id); return DatasetText.Pick(DatasetText.FirstNames,ref r); }
     public string LastName(long id) { DescriptorValidation.Id(id,Persons); var r=Random("person.last",id); return DatasetText.Pick(DatasetText.LastNames,ref r); }
+    /// <summary>Canonical pair event time; likes by friends occur after this time as well as after their message.</summary>
+    public DateTime FriendshipDate(long first,long second)
+    {
+        DescriptorValidation.Id(first,Persons); DescriptorValidation.Id(second,Persons);
+        if(first==second) throw new ArgumentException("Friendship requires distinct persons.");
+        var r=new EntityRandom(Seed,CounterRandom.Value(Seed,CounterRandom.Stream("social.friendship.date"),Math.Min(first,second)),Math.Max(first,second));
+        return DatasetTime.Sample(ref r,10);
+    }
     public static string TagName(long id) { DescriptorValidation.Id(id,Tags); return DatasetText.Topics[(id-1)%DatasetText.Topics.Length]+"-"+id.ToString(CultureInfo.InvariantCulture); }
     internal long PostCreatorRank(long id) => 1+(id-1)%Persons;
     internal long PersonForum(long rank) => 1+(rank-1)%Forums;

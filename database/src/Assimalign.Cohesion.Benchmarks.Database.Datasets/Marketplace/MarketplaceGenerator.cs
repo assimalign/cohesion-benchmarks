@@ -84,7 +84,7 @@ public sealed class MarketplaceGenerator : IDatasetGenerator
     {
         var p=v.Product(id); var r=v.Random("product.details",id);
         w.WriteString("name",p.Name); w.WriteString("category",p.Category); w.WriteString("brand",DatasetText.Pick(DatasetText.Brands,ref r));
-        w.WriteString("description",DatasetText.Paragraph(ref r,300,12000,1350));
+        w.WriteString("description",DatasetText.Paragraph(ref r,300,12000,2200));
         JsonLinesWriter.Timestamp(w,"createdAt",DatasetTime.Sample(ref r)); w.WriteBoolean("active",r.Chance(0.96));
         switch(p.Category)
         {

@@ -12,12 +12,14 @@ public sealed class JsonLinesReader : IDisposable
     private readonly byte[] input = ArrayPool<byte>.Shared.Rent(65536);
     private byte[] line = ArrayPool<byte>.Shared.Rent(4096);
     private int position, available, length;
+    private bool disposed;
     public ReadOnlyMemory<byte> Current => line.AsMemory(0, length);
 
     public JsonLinesReader(Stream stream, bool leaveOpen = false) { this.stream = stream; this.leaveOpen = leaveOpen; }
 
     public bool Read()
     {
+        ObjectDisposedException.ThrowIf(disposed, this);
         length = 0;
         while (true)
         {
@@ -44,5 +46,11 @@ public sealed class JsonLinesReader : IDisposable
         }
     }
 
-    public void Dispose() { ArrayPool<byte>.Shared.Return(input); ArrayPool<byte>.Shared.Return(line); if (!leaveOpen) stream.Dispose(); }
+    public void Dispose()
+    {
+        if (disposed) return;
+        disposed = true;
+        ArrayPool<byte>.Shared.Return(input); ArrayPool<byte>.Shared.Return(line);
+        if (!leaveOpen) stream.Dispose();
+    }
 }

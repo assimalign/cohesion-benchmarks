@@ -15,7 +15,7 @@ public static class DatasetFiles
     };
 
     public static string DirectoryPath(DatasetGenerationOptions options) => Path.GetFullPath(Path.Combine(
-        options.OutputDirectory, ModelDirectory(options.Model), "sf" + options.Scale.ToString("0.################", CultureInfo.InvariantCulture)));
+        options.OutputDirectory, ModelDirectory(options.Model), "sf" + options.Scale.ToString("R", CultureInfo.InvariantCulture)));
 
     public static IEnumerable<string> EnumerateParts(string directory, DatasetManifest manifest, string tableName)
     {

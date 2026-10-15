@@ -36,6 +36,8 @@ public static class DatasetText
 
     public static string Paragraph(ref EntityRandom random, int minimum, int maximum, double median, double sigma = 0.8)
     {
+        if (minimum < 1 || maximum < minimum || !double.IsFinite(median) || median <= 0 || !double.IsFinite(sigma) || sigma < 0)
+            throw new ArgumentOutOfRangeException(nameof(minimum));
         int length = random.LogNormalLength(minimum, maximum, median, sigma);
         var text = new StringBuilder(length);
         int sentenceWords = 0;
@@ -58,6 +60,7 @@ public static class DatasetText
         if (text.Length > 0 && char.IsWhiteSpace(text[^1])) text.Length--;
         text.Append('.');
         while (text.Length < minimum) text.Append(" Good.");
+        if (text.Length > maximum) { text.Length = maximum; text[^1] = '.'; }
         return text.ToString();
     }
 }

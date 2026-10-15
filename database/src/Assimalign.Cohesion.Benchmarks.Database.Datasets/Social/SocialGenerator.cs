@@ -21,9 +21,9 @@ public sealed class SocialGenerator : IDatasetGenerator
         WriteTags(session);
         await session.Ranges(values.Persons,200000,(part,start,end)=>WritePeople(session,values,part,start,end,cancellationToken),cancellationToken);
         await session.Ranges(values.Forums,300000,(part,start,end)=>WriteForums(session,values,part,start,end,cancellationToken),cancellationToken);
-        await session.Ranges(values.Posts,500000,(part,start,end)=>WritePosts(session,values,part,start,end,cancellationToken),cancellationToken);
-        await session.Ranges(values.Comments,700000,(part,start,end)=>WriteComments(session,values,part,start,end,cancellationToken),cancellationToken);
-        await session.Ranges(values.Persons,20000,(part,start,end)=>WriteLikes(session,values,part,start,end,cancellationToken),cancellationToken);
+        await session.Ranges(values.Posts,6000000,(part,start,end)=>WritePosts(session,values,part,start,end,cancellationToken),cancellationToken);
+        await session.Ranges(values.Comments,17500000,(part,start,end)=>WriteComments(session,values,part,start,end,cancellationToken),cancellationToken);
+        await session.Ranges(values.Persons,40000,(part,start,end)=>WriteLikes(session,values,part,start,end,cancellationToken),cancellationToken);
         return session.Finish(Name,SocialSchema.LoadOrder,values.MaximumIds());
     }
 
@@ -91,7 +91,7 @@ public sealed class SocialGenerator : IDatasetGenerator
             foreach(long friendRank in v.FriendRanks(rank))
             {
                 long friend=v.PersonIds.Permute(friendRank);
-                p["person_knows_person"].WriteRow(Math.Min(id,friend),Math.Max(id,friend),DatasetTime.Start.AddSeconds(1));
+                p["person_knows_person"].WriteRow(Math.Min(id,friend),Math.Max(id,friend),v.FriendshipDate(id,friend));
             }
         }
     }
@@ -112,12 +112,13 @@ public sealed class SocialGenerator : IDatasetGenerator
 
     private static void WritePosts(GenerationSession session,SocialDescriptor v,int part,long start,long end,CancellationToken token)
     {
-        using var p=new SocialPart(session,part,"post","post_hascreator_person","post_islocatedin_place","post_hastag_tag","forum_containerof_post");
+        using var p=new SocialPart(session,part,"post_hascreator_person","post_islocatedin_place","post_hastag_tag","forum_containerof_post");
+        using var nodes=new SocialNodeParts(session,"post",500000);
         for(long id=start;id<=end;id++)
         {
             Check(id,token); var r=v.Random("post.text",id); long rank=v.PostCreatorRank(id);
-            string content=DatasetText.Paragraph(ref r,20,2000,45,1.05);
-            p["post"].WriteRow(id,r.Chance(0.1)?Url("images",id)+".jpg":null,v.PostDate(id),Ip(id),r.Chance(0.6)?"Browser A":"Browser B","en",content,content.Length);
+            string content=DatasetText.Paragraph(ref r,20,2000,70,1.05);
+            nodes.Writer(id).WriteRow(id,r.Chance(0.1)?Url("images",id)+".jpg":null,v.PostDate(id),Ip(id),r.Chance(0.6)?"Browser A":"Browser B","en",content,content.Length);
             p["post_hascreator_person"].WriteRow(id,v.PersonIds.Permute(rank));
             p["post_islocatedin_place"].WriteRow(id,v.CityByRank(rank));
             p["forum_containerof_post"].WriteRow(v.PostForum(id),id);
@@ -128,12 +129,13 @@ public sealed class SocialGenerator : IDatasetGenerator
 
     private static void WriteComments(GenerationSession session,SocialDescriptor v,int part,long start,long end,CancellationToken token)
     {
-        using var p=new SocialPart(session,part,"comment","comment_hascreator_person","comment_islocatedin_place","comment_hastag_tag","comment_replyof_post","comment_replyof_comment");
+        using var p=new SocialPart(session,part,"comment_hascreator_person","comment_islocatedin_place","comment_hastag_tag","comment_replyof_post","comment_replyof_comment");
+        using var nodes=new SocialNodeParts(session,"comment",700000);
         for(long id=start;id<=end;id++)
         {
             Check(id,token); var r=v.Random("comment.text",id); var c=v.Comment(id);
-            string content=DatasetText.Paragraph(ref r,20,2000,30,1.05);
-            p["comment"].WriteRow(id,c.Date,Ip(id),r.Chance(0.6)?"Browser A":"Browser B",content,content.Length);
+            string content=DatasetText.Paragraph(ref r,20,2000,48,1.05);
+            nodes.Writer(id).WriteRow(id,c.Date,Ip(id),r.Chance(0.6)?"Browser A":"Browser B",content,content.Length);
             p["comment_hascreator_person"].WriteRow(id,c.Creator);
             p["comment_islocatedin_place"].WriteRow(id,v.PersonCity(c.Creator));
             p[c.ToComment?"comment_replyof_comment":"comment_replyof_post"].WriteRow(id,c.Parent);
@@ -165,7 +167,14 @@ public sealed class SocialGenerator : IDatasetGenerator
                 } while(!seen.Add(message));
                 bool post=message<=v.Posts;
                 long target=post?message:message-v.Posts;
-                DateTime date=post?v.PostDate(target):v.Comment(target).Date;
+                DateTime date; long creator;
+                if(post) { date=v.PostDate(target); creator=v.PersonIds.Permute(v.PostCreatorRank(target)); }
+                else { var comment=v.Comment(target); date=comment.Date; creator=comment.Creator; }
+                if(creator!=person)
+                {
+                    DateTime affinity=v.FriendshipDate(person,creator);
+                    if(affinity>date) date=affinity;
+                }
                 date=DatasetTime.After(date,ref r,604800);
                 p[post?"person_likes_post":"person_likes_comment"].WriteRow(person,target,date);
             }
