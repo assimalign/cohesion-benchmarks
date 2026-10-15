@@ -399,7 +399,12 @@ authorized new Npgsql/SqlClient entries, not a broader transitive package policy
 
 `Build-BenchImages.ps1 -Tag r2` passed twice during smoke development
 (`sql-images.log`, `sql-images-2.log`). The second build included the globalization
-fix. A local, uncommitted audit helper exported the query text below and checked
+fix. A third, final `Build-BenchImages.ps1 -Tag r2` passed after all adapter fixes
+(`sql-images-final.log`), building both driver and server against the same pinned
+Cohesion commit. `podman run --rm --name dbbench-cohesion-sql-r2 --cpus 3 --memory 2g
+--memory-swap 2g localhost/dbbench-driver:r2 list --model sql` then exited 0 and
+listed four targets / 24 operations (`sql-image-final-list.log`); its container
+was automatically removed. A local, uncommitted audit helper exported the query text below and checked
 budget metadata. Its first three builds failed with CS5001 (the `artifacts`
 source exclusion) and CA2252 (preview assembly annotation); after adding the
 explicit Compile item and annotation, builds 4 and 5 passed. Those scratch
@@ -424,7 +429,7 @@ SQL reference, moving CLI engine description after load preparation (the databas
 does not exist beforehand), CLI/driver globalization configuration, observed
 resource-budget metadata and separate full/sample LOAD console totals. The SQL
 Edge catalog command change addresses shutdown and is documented separately in
-the engine's shutdown note. Dataset generation, result normalization, operation
+the engine's [shutdown note](../engines/sqlserver/shutdown.md). Dataset generation, result normalization, operation
 timers, report scoring and other model adapters were not changed.
 
 ## Statements and total orders

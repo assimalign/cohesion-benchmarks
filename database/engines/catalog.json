@@ -141,7 +141,7 @@
       },
       "volume": "dbbench-sqlserver-data",
       "mountPath": "/var/opt/mssql",
-      "arguments": [],
+      "arguments": ["/opt/mssql/bin/sqlservr"],
       "readiness": {
         "kind": "log",
         "pattern": "SQL Server is now ready for client connections"
