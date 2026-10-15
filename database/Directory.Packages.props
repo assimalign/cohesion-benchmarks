@@ -8,5 +8,6 @@
 		<PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
 		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
 		<PackageVersion Include="Shouldly" Version="4.3.0" />
+		<PackageVersion Include="Neo4j.Driver" Version="5.28.3" />
 	</ItemGroup>
 </Project>
