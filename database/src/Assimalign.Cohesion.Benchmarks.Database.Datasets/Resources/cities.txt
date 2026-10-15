@@ -1,0 +1,72 @@
+New York|US
+Seattle|US
+Austin|US
+Boston|US
+Denver|US
+Chicago|US
+Portland|US
+Miami|US
+Toronto|CA
+Vancouver|CA
+Montreal|CA
+Calgary|CA
+London|GB
+Bristol|GB
+Manchester|GB
+Edinburgh|GB
+Paris|FR
+Lyon|FR
+Berlin|DE
+Munich|DE
+Hamburg|DE
+Madrid|ES
+Barcelona|ES
+Rome|IT
+Milan|IT
+Amsterdam|NL
+Utrecht|NL
+Stockholm|SE
+Oslo|NO
+Copenhagen|DK
+Helsinki|FI
+Dublin|IE
+Lisbon|PT
+Warsaw|PL
+Prague|CZ
+Vienna|AT
+Zurich|CH
+Athens|GR
+Tokyo|JP
+Osaka|JP
+Seoul|KR
+Busan|KR
+Sydney|AU
+Melbourne|AU
+Auckland|NZ
+Wellington|NZ
+Singapore|SG
+Mumbai|IN
+Delhi|IN
+Bengaluru|IN
+Bangkok|TH
+Hanoi|VN
+Jakarta|ID
+Kuala Lumpur|MY
+Mexico City|MX
+Monterrey|MX
+Sao Paulo|BR
+Rio de Janeiro|BR
+Buenos Aires|AR
+Santiago|CL
+Bogota|CO
+Lima|PE
+Cape Town|ZA
+Johannesburg|ZA
+Nairobi|KE
+Lagos|NG
+Accra|GH
+Cairo|EG
+Casablanca|MA
+Tunis|TN
+Istanbul|TR
+Ankara|TR
