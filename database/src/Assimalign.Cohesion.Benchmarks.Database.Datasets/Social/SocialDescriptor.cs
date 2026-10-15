@@ -4,11 +4,14 @@ using System.Globalization;
 
 namespace Assimalign.Cohesion.Benchmarks.Database.Datasets;
 
-internal sealed class SocialValues
+/// <summary>Pure social node names, places and message parameters, shared with generation.</summary>
+public sealed class SocialDescriptor
 {
-    internal readonly ulong Seed;
-    internal readonly long Persons,Forums,Posts,Comments,Likes;
-    internal const int Tags=1000,TagClasses=20;
+    public ulong Seed { get; }
+    public double Scale { get; }
+    public readonly long Persons,Forums,Posts,Comments,Likes;
+    public const int Tags=1000,TagClasses=20;
+    public IReadOnlyList<DatasetTableManifest>? GeneratedTables { get; }
     internal readonly IdPermutation PersonIds;
     private readonly ZipfDistribution degrees=new(400,1.5);
     internal readonly ZipfDistribution MessagePopularity;
@@ -16,8 +19,15 @@ internal sealed class SocialValues
     internal static readonly string[] Countries=BuildCountries();
     internal static readonly string[] Continents=["Africa","Asia","Europe","North America","Oceania","South America"];
 
-    internal SocialValues(ulong seed,double scale)
+    public SocialDescriptor(DatasetManifest manifest) : this(manifest.Seed,manifest.Scale)
     {
+        DescriptorValidation.Manifest(manifest,DatasetModel.Graph);
+        GeneratedTables=manifest.Tables;
+    }
+
+    public SocialDescriptor(ulong seed,double scale)
+    {
+        DescriptorValidation.Scale(scale); Scale=scale;
         Seed=seed; Persons=GenerationSession.Count(scale,30000); Forums=Math.Min(Persons,GenerationSession.Count(scale,1000));
         Posts=GenerationSession.Count(scale,1200000); Comments=GenerationSession.Count(scale,3000000); Likes=GenerationSession.Count(scale,6000000);
         PersonIds=new(Persons,seed,CounterRandom.Stream("social.person.ids"));
@@ -25,14 +35,15 @@ internal sealed class SocialValues
     }
     internal EntityRandom Random(string stream,long id) => new(Seed,"social."+stream,id);
     internal long CityByRank(long rank) => 1+(rank-1)%DatasetText.Cities.Length;
-    internal long PersonCity(long id) => CityByRank(PersonIds.Invert(id));
-    internal string FirstName(long id) { var r=Random("person.name",id); return DatasetText.Pick(DatasetText.FirstNames,ref r); }
-    internal string LastName(long id) { var r=Random("person.last",id); return DatasetText.Pick(DatasetText.LastNames,ref r); }
-    internal static string TagName(long id) => DatasetText.Topics[(id-1)%DatasetText.Topics.Length]+"-"+id.ToString(CultureInfo.InvariantCulture);
+    public long PersonCity(long id) => CityByRank(PersonIds.Invert(id));
+    public City City(long personId) => DatasetText.Cities[PersonCity(personId)-1];
+    public string FirstName(long id) { DescriptorValidation.Id(id,Persons); var r=Random("person.name",id); return DatasetText.Pick(DatasetText.FirstNames,ref r); }
+    public string LastName(long id) { DescriptorValidation.Id(id,Persons); var r=Random("person.last",id); return DatasetText.Pick(DatasetText.LastNames,ref r); }
+    public static string TagName(long id) { DescriptorValidation.Id(id,Tags); return DatasetText.Topics[(id-1)%DatasetText.Topics.Length]+"-"+id.ToString(CultureInfo.InvariantCulture); }
     internal long PostCreatorRank(long id) => 1+(id-1)%Persons;
     internal long PersonForum(long rank) => 1+(rank-1)%Forums;
     internal long PostForum(long id) => PersonForum(PostCreatorRank(id));
-    internal DateTime PostDate(long id) { var r=Random("post.date",id); return DatasetTime.Sample(ref r,100); }
+    public DateTime PostDate(long id) { DescriptorValidation.Id(id,Posts); var r=Random("post.date",id); DateTime date=DatasetTime.Sample(ref r,100); return date<DatasetTime.Start.AddSeconds(2)?DatasetTime.Start.AddSeconds(2):date; }
     internal long CommentPost(long id) => 1+(id-1)%Posts;
     internal (bool ToComment,long Parent,long Creator,DateTime Date) Comment(long id)
     {
@@ -78,7 +89,8 @@ internal sealed class SocialValues
         "US" or "CA" or "MX"=>3, "AU" or "NZ"=>4, "BR" or "AR" or "CL" or "CO" or "PE"=>5, _=>2
     };
     private static string[] BuildCountries() { var list=new List<string>(); foreach(City c in DatasetText.Cities) if(!list.Contains(c.CountryCode)) list.Add(c.CountryCode); return list.ToArray(); }
-    internal Dictionary<string,long> MaximumIds()
+    public EntityIdRange IdRange(string file) { long max=MaximumIds()[file]; return new(max==0?0:1,max); }
+    public Dictionary<string,long> MaximumIds()
     {
         var values=new Dictionary<string,long>(StringComparer.Ordinal) {
             ["place"]=PlaceCount,["organisation"]=DatasetText.Cities.Length*2,["tagclass"]=TagClasses,["tag"]=Tags,

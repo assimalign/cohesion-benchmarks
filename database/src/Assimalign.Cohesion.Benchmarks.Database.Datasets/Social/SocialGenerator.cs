@@ -16,7 +16,7 @@ public sealed class SocialGenerator : IDatasetGenerator
     {
         cancellationToken.ThrowIfCancellationRequested();
         var session=new GenerationSession(options,Model,progress);
-        var values=new SocialValues(options.Seed,options.Scale);
+        var values=new SocialDescriptor(options.Seed,options.Scale);
         WritePlaces(session,values);
         WriteTags(session);
         await session.Ranges(values.Persons,200000,(part,start,end)=>WritePeople(session,values,part,start,end,cancellationToken),cancellationToken);
@@ -31,7 +31,7 @@ public sealed class SocialGenerator : IDatasetGenerator
     private static string Url(string kind,long id) => "https://social.example.test/"+kind+"/"+id.ToString(CultureInfo.InvariantCulture);
     private static string Ip(long id) => "192.0.2."+((id-1)%254+1).ToString(CultureInfo.InvariantCulture);
 
-    private static void WritePlaces(GenerationSession session,SocialValues v)
+    private static void WritePlaces(GenerationSession session,SocialDescriptor v)
     {
         using var p=new SocialPart(session,0,"place","place_ispartof_place","organisation","organisation_islocatedin_place");
         for(int i=0;i<DatasetText.Cities.Length;i++)
@@ -45,35 +45,35 @@ public sealed class SocialGenerator : IDatasetGenerator
             p["organisation"].WriteRow(company,"Company",DatasetText.Brands[i%DatasetText.Brands.Length]+" "+city.Name,Url("organisation",company));
             p["organisation_islocatedin_place"].WriteRow(company,id);
         }
-        for(int i=0;i<SocialValues.Countries.Length;i++)
+        for(int i=0;i<SocialDescriptor.Countries.Length;i++)
         {
-            long id=DatasetText.Cities.Length+i+1; string country=SocialValues.Countries[i];
+            long id=DatasetText.Cities.Length+i+1; string country=SocialDescriptor.Countries[i];
             p["place"].WriteRow(id,country,Url("place",id),"Country");
-            p["place_ispartof_place"].WriteRow(id,DatasetText.Cities.Length+SocialValues.Countries.Length+SocialValues.Continent(country)+1);
+            p["place_ispartof_place"].WriteRow(id,DatasetText.Cities.Length+SocialDescriptor.Countries.Length+SocialDescriptor.Continent(country)+1);
         }
-        for(int i=0;i<SocialValues.Continents.Length;i++)
+        for(int i=0;i<SocialDescriptor.Continents.Length;i++)
         {
-            long id=DatasetText.Cities.Length+SocialValues.Countries.Length+i+1;
-            p["place"].WriteRow(id,SocialValues.Continents[i],Url("place",id),"Continent");
+            long id=DatasetText.Cities.Length+SocialDescriptor.Countries.Length+i+1;
+            p["place"].WriteRow(id,SocialDescriptor.Continents[i],Url("place",id),"Continent");
         }
     }
 
     private static void WriteTags(GenerationSession session)
     {
         using var p=new SocialPart(session,0,"tag","tagclass","tag_hastype_tagclass","tagclass_ispartof_tagclass");
-        for(int id=1;id<=SocialValues.TagClasses;id++)
+        for(int id=1;id<=SocialDescriptor.TagClasses;id++)
         {
             p["tagclass"].WriteRow(id,DatasetText.Topics[id-1]+" topics",Url("tagclass",id));
             if(id>1) p["tagclass_ispartof_tagclass"].WriteRow(id,1+(id-2)/5);
         }
-        for(int id=1;id<=SocialValues.Tags;id++)
+        for(int id=1;id<=SocialDescriptor.Tags;id++)
         {
-            p["tag"].WriteRow(id,SocialValues.TagName(id),Url("tag",id));
-            p["tag_hastype_tagclass"].WriteRow(id,1+(id-1)%SocialValues.TagClasses);
+            p["tag"].WriteRow(id,SocialDescriptor.TagName(id),Url("tag",id));
+            p["tag_hastype_tagclass"].WriteRow(id,1+(id-1)%SocialDescriptor.TagClasses);
         }
     }
 
-    private static void WritePeople(GenerationSession session,SocialValues v,int part,long start,long end,CancellationToken token)
+    private static void WritePeople(GenerationSession session,SocialDescriptor v,int part,long start,long end,CancellationToken token)
     {
         using var p=new SocialPart(session,part,"person","person_islocatedin_place","person_studyat_organisation",
             "person_workat_organisation","person_hasinterest_tag","person_knows_person");
@@ -86,8 +86,8 @@ public sealed class SocialGenerator : IDatasetGenerator
             p["person_islocatedin_place"].WriteRow(id,city);
             if(r.Chance(0.8)) p["person_studyat_organisation"].WriteRow(id,city,Math.Min(2025,birth.Year+22));
             if(r.Chance(0.85)) p["person_workat_organisation"].WriteRow(id,city+DatasetText.Cities.Length,Math.Min(2025,birth.Year+24));
-            int offset=r.Int(0,SocialValues.Tags-1),interests=r.Int(1,5);
-            for(int i=0;i<interests;i++) p["person_hasinterest_tag"].WriteRow(id,1+(offset+i)%SocialValues.Tags);
+            int offset=r.Int(0,SocialDescriptor.Tags-1),interests=r.Int(1,5);
+            for(int i=0;i<interests;i++) p["person_hasinterest_tag"].WriteRow(id,1+(offset+i)%SocialDescriptor.Tags);
             foreach(long friendRank in v.FriendRanks(rank))
             {
                 long friend=v.PersonIds.Permute(friendRank);
@@ -96,7 +96,7 @@ public sealed class SocialGenerator : IDatasetGenerator
         }
     }
 
-    private static void WriteForums(GenerationSession session,SocialValues v,int part,long start,long end,CancellationToken token)
+    private static void WriteForums(GenerationSession session,SocialDescriptor v,int part,long start,long end,CancellationToken token)
     {
         using var p=new SocialPart(session,part,"forum","forum_hasmoderator_person","forum_hasmember_person","forum_hastag_tag");
         for(long id=start;id<=end;id++)
@@ -105,12 +105,12 @@ public sealed class SocialGenerator : IDatasetGenerator
             p["forum"].WriteRow(id,DatasetText.Pick(DatasetText.Topics,ref r)+" discussion "+id,DatasetTime.Start);
             p["forum_hasmoderator_person"].WriteRow(id,v.PersonIds.Permute(id));
             for(long rank=id;rank<=v.Persons;rank+=v.Forums) p["forum_hasmember_person"].WriteRow(id,v.PersonIds.Permute(rank),DatasetTime.Start.AddSeconds(1));
-            int tag=r.Int(1,SocialValues.Tags); p["forum_hastag_tag"].WriteRow(id,tag);
-            p["forum_hastag_tag"].WriteRow(id,1+tag%SocialValues.Tags);
+            int tag=r.Int(1,SocialDescriptor.Tags); p["forum_hastag_tag"].WriteRow(id,tag);
+            p["forum_hastag_tag"].WriteRow(id,1+tag%SocialDescriptor.Tags);
         }
     }
 
-    private static void WritePosts(GenerationSession session,SocialValues v,int part,long start,long end,CancellationToken token)
+    private static void WritePosts(GenerationSession session,SocialDescriptor v,int part,long start,long end,CancellationToken token)
     {
         using var p=new SocialPart(session,part,"post","post_hascreator_person","post_islocatedin_place","post_hastag_tag","forum_containerof_post");
         for(long id=start;id<=end;id++)
@@ -121,12 +121,12 @@ public sealed class SocialGenerator : IDatasetGenerator
             p["post_hascreator_person"].WriteRow(id,v.PersonIds.Permute(rank));
             p["post_islocatedin_place"].WriteRow(id,v.CityByRank(rank));
             p["forum_containerof_post"].WriteRow(v.PostForum(id),id);
-            int tag=r.Int(1,SocialValues.Tags); p["post_hastag_tag"].WriteRow(id,tag);
-            if(r.Chance(0.4)) p["post_hastag_tag"].WriteRow(id,1+tag%SocialValues.Tags);
+            int tag=r.Int(1,SocialDescriptor.Tags); p["post_hastag_tag"].WriteRow(id,tag);
+            if(r.Chance(0.4)) p["post_hastag_tag"].WriteRow(id,1+tag%SocialDescriptor.Tags);
         }
     }
 
-    private static void WriteComments(GenerationSession session,SocialValues v,int part,long start,long end,CancellationToken token)
+    private static void WriteComments(GenerationSession session,SocialDescriptor v,int part,long start,long end,CancellationToken token)
     {
         using var p=new SocialPart(session,part,"comment","comment_hascreator_person","comment_islocatedin_place","comment_hastag_tag","comment_replyof_post","comment_replyof_comment");
         for(long id=start;id<=end;id++)
@@ -137,11 +137,11 @@ public sealed class SocialGenerator : IDatasetGenerator
             p["comment_hascreator_person"].WriteRow(id,c.Creator);
             p["comment_islocatedin_place"].WriteRow(id,v.PersonCity(c.Creator));
             p[c.ToComment?"comment_replyof_comment":"comment_replyof_post"].WriteRow(id,c.Parent);
-            if(r.Chance(0.3)) p["comment_hastag_tag"].WriteRow(id,r.Int(1,SocialValues.Tags));
+            if(r.Chance(0.3)) p["comment_hastag_tag"].WriteRow(id,r.Int(1,SocialDescriptor.Tags));
         }
     }
 
-    private static void WriteLikes(GenerationSession session,SocialValues v,int part,long start,long end,CancellationToken token)
+    private static void WriteLikes(GenerationSession session,SocialDescriptor v,int part,long start,long end,CancellationToken token)
     {
         using var p=new SocialPart(session,part,"person_likes_post","person_likes_comment");
         for(long rank=start;rank<=end;rank++)
