@@ -13,4 +13,8 @@
 		<ProjectReference Include="$(CohesionDatabaseRoot)Assimalign.Cohesion.Database.Sql.Client/src/Assimalign.Cohesion.Database.Sql.Client.csproj" />
 		<ProjectReference Include="$(CohesionLibrariesRoot)Connections/Assimalign.Cohesion.Connections.Tcp/src/Assimalign.Cohesion.Connections.Tcp.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Npgsql" />
+		<PackageReference Include="Microsoft.Data.SqlClient" />
+	</ItemGroup>
 </Project>

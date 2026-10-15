@@ -150,7 +150,8 @@ internal static class Program
             if (Environment.GetEnvironmentVariable("DBBENCH_NETWORK") != "1") throw new InvalidOperationException("Official runs require the driver container on the dbbench network.");
             OfficialRunGuard.Validate(environmentSnapshot, entry.GetProperty("kind").GetString() == "embedded");
         }
-        var engine = await targetInstance.DescribeAsync(token);
+        var engine = a.Command == "load" ? new EngineDescription("pending preparation", new Dictionary<string, string>())
+            : await targetInstance.DescribeAsync(token);
         VerificationFile? verification = a.Optional("verification") is { } verificationPath
             ? await ResultFiles.ReadAsync(verificationPath, ResultJsonContext.Default.VerificationFile, token) : null;
         if (verification != null && (verification.Target != id || verification.DatasetManifestSha256 != manifestHash || verification.Seed != manifest.Seed))
@@ -180,6 +181,7 @@ internal static class Program
             }
             finally { await sampler.DisposeAsync(); }
             long storage = await targetInstance.MeasureStorageAsync(token);
+            engine = await targetInstance.DescribeAsync(token);
             var result = Result("load", 1, started, DateTimeOffset.UtcNow) with { Load = metrics, StorageBytes = storage, Samples = sampler.Samples };
             await ResultFiles.WriteAsync(Path.Combine(outputDirectory, runId + "-load.json"), result, ResultJsonContext.Default.BenchmarkResult, token);
             Console.WriteLine($"LOAD {id}: {metrics.Sum(m => m.Seconds):0.###} seconds; {storage} stored bytes.");
