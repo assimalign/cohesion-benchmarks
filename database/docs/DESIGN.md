@@ -19,7 +19,6 @@ statement path.
 | documents | `cohesion-documents-embedded` | Cohesion Documents | engine in the driver process | in-process session API | yes, labeled in-process |
 | documents | `mongodb` | MongoDB 8.0 | `docker.io/library/mongo:8.0` | MongoDB.Driver | yes |
 | documents | `ravendb` | RavenDB 7.1 (unlicensed) | `docker.io/ravendb/ravendb:7.1-latest` | RavenDB.Client | yes |
-| documents | `cosmos-emulator` | Azure Cosmos DB emulator | `mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:vnext-preview` | Microsoft.Azure.Cosmos | **no** — functional parity only |
 | graph | `cohesion-graph-tcp` | Cohesion Graph | `CohesionServer` app, built from source (§9) | Cohesion Graph client over TCP | yes |
 | graph | `cohesion-graph-embedded` | Cohesion Graph | engine in the driver process | in-process session API | yes, separate column |
 | graph | `neo4j` | Neo4j 5 Community | `docker.io/library/neo4j:5-community` | Neo4j.Driver (Bolt) | yes |
@@ -29,8 +28,9 @@ Owner decisions of 2026-10-15 behind this table:
 - SQL Server ships no ARM64 build; this machine is Windows on ARM64. Azure SQL Edge (retired by Microsoft in
   September 2025, still published for linux/arm64) is the only native ARM64 build of the SQL Server engine. Its
   results are always labeled "SQL Server engine via Azure SQL Edge".
-- The Cosmos DB emulator is not representative of Cosmos DB performance. It runs the document workload to prove
-  the operations are expressible and correct, and never appears in a ranking.
+- Cosmos DB is out of scope. The only local option, the vnext-preview Linux emulator, is not the engine that runs
+  in the Azure service, so its results say nothing about Cosmos DB, functionally or for performance. The emulator
+  target was first kept as an unranked parity check, then removed entirely (owner decision, later on 2026-10-15).
 - Cohesion Documents has no network server or client yet (issue #190; `Database.Documents.Client` has no
   source). It runs in-process. Cohesion SQL and Graph run both in-process and over TCP, so the cost of the
   protocol is measured rather than guessed, and the Documents in-process numbers can be read in that light.
@@ -55,8 +55,8 @@ Windows host (ARM64, 12 cores, 32 GB) — owner's parallel work runs here too
   Windows port relay in the path). **Development smoke runs** may run the CLI on Windows against host-published
   ports at tiny scale; their numbers are never reported.
 
-Published development ports (host side): PostgreSQL 55432, SQL Edge 51433, MongoDB 57017, RavenDB 58080, Cosmos
-emulator 58081, Neo4j 57687 (Bolt) and 57474 (HTTP), Cohesion SQL 55740, Cohesion Graph 55741.
+Published development ports (host side): PostgreSQL 55432, SQL Edge 51433, MongoDB 57017, RavenDB 58080,
+Neo4j 57687 (Bolt) and 57474 (HTTP), Cohesion SQL 55740, Cohesion Graph 55741.
 
 ## 3. Repository layout
 
@@ -70,7 +70,7 @@ database/
 ├── docs/DATASETS.md                      schemas, distributions, sizes per scale factor
 ├── engines/                              engine catalog + per-engine config files and their rationale
 │   ├── catalog.json                      image, ports, env, volume, health check, settings per target
-│   ├── postgresql/, sqlserver/, mongodb/, ravendb/, cosmos-emulator/, neo4j/, cohesion/, driver/
+│   ├── postgresql/, sqlserver/, mongodb/, ravendb/, neo4j/, cohesion/, driver/
 │   └── README.md                         every non-default setting and why
 ├── scripts/                              PowerShell 7 orchestration
 │   ├── Start-BenchEngine.ps1 / Stop-BenchEngine.ps1
@@ -314,7 +314,6 @@ and its reason lives in `engines/README.md`.
 | RavenDB 7.1 | defaults (memory-mapped storage within the container limit), unsecured local setup, EULA accepted per owner decision, waits for non-stale indexes before measuring |
 | Neo4j 5 | heap 1.5 GB (initial = max), page cache 3 GB, default transaction log flushing |
 | Cohesion (all models) | buffer pool 3 GiB, `StorageCommitDurability` synchronous, other options default |
-| Cosmos emulator | defaults (unranked) |
 
 ## 9. Cohesion integration
 
