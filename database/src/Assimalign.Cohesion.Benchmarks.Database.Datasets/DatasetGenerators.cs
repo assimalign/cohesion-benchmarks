@@ -12,7 +12,9 @@ public static class DatasetGenerators
     /// </summary>
     public static IDatasetGenerator Get(DatasetModel model)
     {
-        // Placeholder: the generators are implemented by the datasets work item.
-        throw new NotImplementedException($"The {model} dataset generator is not implemented yet.");
+        if (model == DatasetModel.Sql) return new CommerceGenerator();
+        if (model == DatasetModel.Documents) return new MarketplaceGenerator();
+        if (model == DatasetModel.Graph) return new SocialGenerator();
+        throw new ArgumentOutOfRangeException(nameof(model));
     }
 }

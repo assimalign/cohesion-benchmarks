@@ -7,4 +7,10 @@
 		<ProjectReference Include="..\..\src\Assimalign.Cohesion.Benchmarks.Database.Harness\Assimalign.Cohesion.Benchmarks.Database.Harness.csproj" />
 		<ProjectReference Include="..\..\src\Assimalign.Cohesion.Benchmarks.Database.Datasets\Assimalign.Cohesion.Benchmarks.Database.Datasets.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="xunit" />
+		<PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="Shouldly" />
+	</ItemGroup>
 </Project>
