@@ -13,6 +13,7 @@ public static class DatasetGenerators
     public static IDatasetGenerator Get(DatasetModel model)
     {
         if (model == DatasetModel.Sql) return new CommerceGenerator();
+        if (model == DatasetModel.Documents) return new MarketplaceGenerator();
         throw new NotImplementedException($"The {model} dataset generator is not implemented yet.");
     }
 }
