@@ -59,12 +59,14 @@ public sealed class SqlModel : IBenchmarkModel
             OperationSupport support = new(SupportLevel.Native);
             if (target.StartsWith("cohesion-", StringComparison.Ordinal)) support = operation.Id switch
             {
-                "sql.order-detail" or "sql.a.top-products-in-category" or "sql.a.country-category-revenue" => new(SupportLevel.Unsupported,
+                "sql.order-detail" or "sql.a.top-products-in-category" => new(SupportLevel.Unsupported,
                     "More than two joined relations; client joins are forbidden.", "Sql.Language/docs/DIALECT.md:55,616-618; COHDBL001: The SQL JOIN surface supports exactly two tables; additional JOIN clauses are not supported."),
-                "sql.a.category-rank-window" => new(SupportLevel.Unsupported, "Window ranking and CTEs are not executable.", "Sql.Language/docs/DIALECT.md:61-63; COHDBL001: The OVER clause is not supported by the SQL surface of this database model."),
-                "sql.a.above-country-average" => new(SupportLevel.Unsupported, "Correlated subquery; a client join of country aggregates is forbidden.", "Sql.Language/docs/DIALECT.md:971-990; COHDBL001"),
+                "sql.a.country-category-revenue" => new(SupportLevel.Unsupported, "Five joined relations and a category-hierarchy CTE; client joins are forbidden.",
+                    "Sql.Language/docs/DIALECT.md:55,61-63; COHDBL001: The WITH clause is not supported by the SQL surface of this database model. A direct multi-table rewrite also exceeds the two-table join limit."),
+                "sql.a.category-rank-window" => new(SupportLevel.Unsupported, "Window ranking and CTEs are not executable.", "Sql.Language/docs/DIALECT.md:61-63; COHDBL001: The WITH clause is not supported by the SQL surface of this database model. Isolated window probe: The OVER clause is not supported by the SQL surface of this database model."),
+                "sql.a.above-country-average" => new(SupportLevel.Unsupported, "Correlated subquery; a client join of country aggregates is forbidden.", "Sql.Language/docs/DIALECT.md:971-990; COHDBL001: Correlated SQL subqueries are not supported: reference 'c.country_code' is outside the subquery's local FROM/JOIN scope."),
                 "sql.a.revenue-by-month" or "sql.a.monthly-growth-cte" => new(SupportLevel.Emulated,
-                    "Engine selects the half-open year range; client groups selected rows into at most 48 month/channel groups and computes growth.", "Sql.Language/docs/DIALECT.md:853-860,1572-1581; EXTRACT is not executable; DESIGN section 6 permits selected-row aggregation."),
+                    "Engine selects the half-open year range; client groups selected rows into at most 48 month/channel groups and computes growth.", "Sql.Language/docs/DIALECT.md:853-860,1572-1581; Function 'EXTRACT' is not supported by the executor yet. Standard EXTRACT(YEAR FROM ...) also returns SQL0003: Expected ')' after the EXTRACT arguments but found 'FROM'. DESIGN section 6 permits selected-row aggregation."),
                 _ => support
             };
             result.Add(operation.Id, support);

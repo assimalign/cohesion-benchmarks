@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
+		<!-- SqlClient requires culture data even when every workload comparison uses binary collation. -->
+		<InvariantGlobalization>false</InvariantGlobalization>
 		<RootNamespace>Assimalign.Cohesion.Benchmarks.Database.Cli</RootNamespace>
 		<AssemblyName>dbbench</AssemblyName>
 		<Description>The dbbench command line: generate, load, verify, run, report, env.</Description>

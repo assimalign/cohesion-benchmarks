@@ -164,7 +164,7 @@ internal static class Program
             RunId = runId, Model = selectedModel.Id, Target = targetInstance.Descriptor, Suite = suite, Repetition = repetition,
             Official = a.Has("official"), StartedUtc = started, FinishedUtc = finished, Engine = engine, Environment = environmentSnapshot,
             DatasetManifestSha256 = manifestHash, Scale = manifest.Scale, Seed = manifest.Seed, Verification = verification,
-            Budget = new ResourceBudget(DriverMemoryBytes: (entry.GetProperty("kind").GetString() == "embedded" ? 6L : 3L) * 1024 * 1024 * 1024),
+            Budget = ResourceBudget.Observe(environmentSnapshot, entry.GetProperty("kind").GetString() == "embedded"),
         };
         string outputDirectory = a.Get("out", Path.Combine("database", "artifacts", "results"));
         if (a.Command == "load")
@@ -184,7 +184,7 @@ internal static class Program
             engine = await targetInstance.DescribeAsync(token);
             var result = Result("load", 1, started, DateTimeOffset.UtcNow) with { Load = metrics, StorageBytes = storage, Samples = sampler.Samples };
             await ResultFiles.WriteAsync(Path.Combine(outputDirectory, runId + "-load.json"), result, ResultJsonContext.Default.BenchmarkResult, token);
-            Console.WriteLine($"LOAD {id}: {metrics.Sum(m => m.Seconds):0.###} seconds; {storage} stored bytes.");
+            Console.WriteLine($"LOAD {id}: full={metrics.Where(m => !m.IsSample).Sum(m => m.Seconds):0.###} seconds; samples={metrics.Where(m => m.IsSample).Sum(m => m.Seconds):0.###} seconds; {storage} stored bytes.");
             return 0;
         }
         var options = new RunnerOptions { Suite = a.Get("suite", "latency"), Mix = a.Get("mix", "read-heavy"),

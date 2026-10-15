@@ -6,6 +6,7 @@ using Assimalign.Cohesion.Database.Sql;
 using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
+using BenchSql = Assimalign.Cohesion.Benchmarks.Database.Sql;
 
 namespace Assimalign.Cohesion.Benchmarks.Database.Tests.Sql;
 
@@ -28,9 +29,15 @@ public sealed class CohesionCapabilityTests(ITestOutputHelper output)
         {
             "SELECT a.id FROM a INNER JOIN b ON a.id = b.id INNER JOIN c ON a.id = c.id",
             "SELECT EXTRACT(YEAR FROM happened) FROM a",
+            "SELECT EXTRACT('year', happened) FROM a",
             "SELECT id FROM a WHERE id > (SELECT AVG(b.id) FROM b WHERE b.id = a.id)",
             "SELECT RANK() OVER (PARTITION BY id ORDER BY happened) FROM a",
-            "WITH x AS (SELECT id FROM a) SELECT id FROM x"
+            "WITH x AS (SELECT id FROM a) SELECT id FROM x",
+            BenchSql.SqlQueries.Text("sql.order-detail", BenchSql.SqlDialect.Cohesion),
+            BenchSql.SqlQueries.Text("sql.a.top-products-in-category", BenchSql.SqlDialect.Cohesion),
+            BenchSql.SqlQueries.Text("sql.a.country-category-revenue", BenchSql.SqlDialect.Cohesion),
+            BenchSql.SqlQueries.Text("sql.a.category-rank-window", BenchSql.SqlDialect.Cohesion),
+            BenchSql.SqlQueries.Text("sql.a.above-country-average", BenchSql.SqlDialect.Cohesion)
         })
         {
             string evidence;

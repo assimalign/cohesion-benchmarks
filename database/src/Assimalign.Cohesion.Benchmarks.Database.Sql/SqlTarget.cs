@@ -214,7 +214,10 @@ public sealed class SqlTarget : IBenchmarkTarget
 
         async Task ConsumeAsync()
         {
-            await using var session = await OpenSessionAsync(cancel.Token, scratch);
+            SqlSession opened;
+            try { opened = await OpenSessionAsync(cancel.Token, scratch); }
+            catch { await cancel.CancelAsync(); throw; }
+            await using var session = opened;
             bool transaction = false;
             try
             {
@@ -261,8 +264,12 @@ public sealed class SqlTarget : IBenchmarkTarget
             version = session.Ado.ServerVersion;
             if (Dialect == SqlDialect.PostgreSql)
             {
-                foreach (string key in new[] { "lc_collate", "lc_ctype", "shared_buffers", "work_mem", "maintenance_work_mem", "synchronous_commit", "fsync" })
+                foreach (string key in new[] { "shared_buffers", "work_mem", "maintenance_work_mem", "synchronous_commit", "fsync" })
                 { await using var command = session.Ado.CreateCommand(); command.CommandText = "SHOW " + key; settings[key] = Convert.ToString(await command.ExecuteScalarAsync(cancellationToken), CultureInfo.InvariantCulture)!; }
+                await using var locale = session.Ado.CreateCommand();
+                locale.CommandText = "SELECT datcollate, datctype FROM pg_database WHERE datname = current_database()";
+                await using var reader = await locale.ExecuteReaderAsync(cancellationToken);
+                if (await reader.ReadAsync(cancellationToken)) { settings["lc_collate"] = reader.GetString(0); settings["lc_ctype"] = reader.GetString(1); }
             }
             else
             {
@@ -285,9 +292,19 @@ public sealed class SqlTarget : IBenchmarkTarget
     {
         if (Dialect == SqlDialect.Cohesion)
         {
-            if (IsTcp) return 0; // Host-side volume inspection records the served baseline's storage.
+            string root = Path.Combine(options.StorageDirectory, options.Database.ToLowerInvariant());
+            if (IsTcp && !Directory.Exists(root))
+            {
+                // The wire has no filesystem metric; a host driver can inspect its owned server volume.
+                string? sizes = options.Container == null ? null : await ProcessProbe.ReadAsync("podman",
+                    ["exec", options.Container, "find", "/data/" + options.Database.ToLowerInvariant(), "-type", "f", "-printf", "%s\\n"], cancellationToken);
+                if (sizes == null) throw new InvalidOperationException("TCP storage measurement requires host Podman or the served volume mounted at --storage.");
+                long total = 0;
+                foreach (string size in sizes.Split('\n', StringSplitOptions.RemoveEmptyEntries)) total += long.Parse(size, CultureInfo.InvariantCulture);
+                return total;
+            }
             long bytes = 0;
-            foreach (string file in Directory.EnumerateFiles(Path.Combine(options.StorageDirectory, options.Database.ToLowerInvariant()), "*", SearchOption.AllDirectories)) bytes += new FileInfo(file).Length;
+            foreach (string file in Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)) bytes += new FileInfo(file).Length;
             return bytes;
         }
         await using var session = await OpenSessionAsync(cancellationToken);
