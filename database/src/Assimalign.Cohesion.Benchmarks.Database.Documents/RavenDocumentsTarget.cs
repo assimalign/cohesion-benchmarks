@@ -25,6 +25,12 @@ internal sealed partial class RavenDocumentsTarget : DocumentsTarget
     internal RavenDocumentsTarget(TargetDescriptor descriptor, TargetOptions options) : base(descriptor, options)
     {
         store = new DocumentStore { Urls = [options.Endpoint!], Database = options.Database };
+        store.Conventions.BulkInsert.TrySerializeEntityToJsonStream = (entity, metadata, writer) =>
+        {
+            if (entity is not string raw) return false;
+            writer.Write(raw);
+            return true;
+        };
         store.Initialize();
         http = new HttpClient { BaseAddress = new Uri(options.Endpoint!), Timeout = Timeout.InfiniteTimeSpan };
         databasePath = "/databases/" + Uri.EscapeDataString(options.Database);
