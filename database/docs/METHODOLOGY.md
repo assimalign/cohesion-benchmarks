@@ -23,22 +23,27 @@ operation keys and SplitMix64 are available as DeterministicSequence. Generate p
 literals, and build command objects before entering ExecuteAsync. Never cache results in the driver.
 
 Latency uses one client per operation. Point defaults: 10 seconds warm-up, then the first of 30 seconds or
-5,000 attempts. Analytics defaults: one warm-up and five attempts. Throughput uses closed-loop clients at
-1, 8, 32 for 60 seconds after 15 seconds warm-up. Mixed uses configured descriptor weights at 8 and 32 clients,
+5,000 attempts. Analytics defaults: one warm-up and three attempts. Throughput uses closed-loop clients at
+1, 8, 32 for 30 seconds after 10 seconds warm-up. Mixed uses configured descriptor weights at 8 and 32 clients,
 with separate read-heavy (90/10) and balanced (50/50) mixes. The model owns the exact read/write weight totals.
-An unsupported weighted operation blocks that mix; do not silently renormalize it. Explicit --ops permits a
-documented comparable subset.
+An unsupported weighted operation blocks an unfiltered mix. The official script logs and explicitly selects
+the common supported subset across every registered target, retaining a 90/10 or 50/50 read/write ratio and
+descriptor proportions within each class. Explicit --ops permits a documented comparable subset.
 
 All clients finish warm-up before a shared measured start. Connection establishment and disposal are excluded.
 Per-operation latency measures exactly ExecuteAsync; wall throughput also includes driver parameter preparation
 and accounting. A request in flight at the duration boundary is allowed to finish and its completion extends the
 wall denominator, so no work disappears. The runner merges client histograms and records both successes and
-failed attempts. Defaults repeat each pass three times.
+failed attempts. The first full pass uses one repetition; --repeat remains configurable.
 
 Deadlines are 30 seconds for point operations and 600 seconds for analytics. Adapters MUST propagate the token
 through all I/O and return only once cancellation has quiesced their operation. A canceled, failed or late
 completion is an error, never a histogram sample. Outer cancellation aborts the pass and drains client cleanup.
-Warm-up failures are counted separately and invalidate that operation's performance comparison.
+Warm-up failures are counted separately and invalidate that operation's performance comparison. A timeout on
+the first measured execution stops further iterations of that group; in-flight peers drain. A mixed group stops
+too, since dropping a member would change its distribution. Loads have no wall-clock deadline and print
+progress every 30 seconds. Official engine startup also waits without a wall deadline while the container
+remains running, with readiness progress; exited containers fail immediately.
 
 The HDR layout tracks integer microseconds from 1 to 3,600,000,000, with 2,048 sub-buckets, giving three
 significant decimal digits. Values below one microsecond round up; values above one hour are errors.
@@ -49,10 +54,21 @@ closed-loop experiment.
 
 ParameterStreamContext.WriteId allocates disjoint billion-key client ranges above the dataset maximum for
 warm-up, verification, repetitions, concurrency and suites. Mutation adapters must use this context (or prove
-equivalent deterministic disjoint ranges). Restore the same logical baseline when mutations would change later queries. The
-orchestration here is a skeleton: model integrations must prove their mutation isolation and fresh-load behavior
-before official mixed/write results are accepted. Do not treat a repeat that hits duplicate generated keys as a
-measurement of ordinary inserts.
+equivalent deterministic disjoint ranges). SQL shipment-history sequence columns are BIGINT on every target,
+so the same namespace also covers history rows; generated values and indexes are unchanged.
+
+The official order is verification, all read latency passes, all read throughput passes, all write latency
+passes, all write throughput passes, then read-heavy and balanced mixed passes. OperationDescriptor.Access
+classifies reads and writes. SQL and Graph perform no inverse statements on client disposal. Writes remain
+durable, and engines may finish with different data because their completed operation counts differ.
+No subsequent read-only performance measurement may use that changed store. A partial read rerun needs a
+pristine store. Verification writes use a disposable copy; Cohesion TCP must receive the embedded-loaded
+pristine store, never an embedded-mutated store. Copy/open costs stay outside operation timing and are logged.
+
+Documents' write_orders, write_products and write_customers are equivalent isolation: write fixtures have
+the same shapes/indexes but are never queried by baseline reads. Keep those collections, even with the same
+read-before-write schedule. Reusing a completed write namespace requires a fresh working store; duplicate-key
+errors must never be treated as insert measurements.
 
 ## Verification
 
@@ -90,7 +106,8 @@ memory, repository commits and actual Cohesion assembly informational commits. T
 DebuggableAttribute on loaded Cohesion assemblies and refuses official load/run with disabled JIT optimization.
 It does not infer optimization from a directory named Release.
 OfficialRunGuard also verifies the observed driver cgroup CPU/memory/swap limits and network engine inspect
-limits. Missing resource evidence or a development budget refuses the official label.
+limits. Missing resource evidence or a development budget refuses the official label. Report budget columns
+use observed limits, including development runs; absent evidence is unknown rather than an assumed 6 GiB.
 
 Native runs sample Windows total CPU or Linux /proc/stat and named-container podman stats at one Hz. In official
 driver runs, Measure-BenchHost.ps1 supplies Windows CPU plus Podman CPU/memory through the artifact telemetry
@@ -107,8 +124,10 @@ shows min–max spreads. Latency ratios use median p50 / best ranked p50; throug
 target ops/s. Load ratios use full ingest + index/statistics/compaction metrics, excluding IsSample wire metrics.
 Adapters must include every timed finalization phase in those metrics.
 
-The best ranked engine sets 1×. Cosmos emulator appears in functional verification/support/error tables only.
+The best ranked engine sets 1×. Unranked targets appear in functional verification/support/error tables only.
 Cohesion findings include ratios >=2 for operations, >=1.5 for load, all unsupported/emulated operations,
 errors (including warm-up) and verification failures. findings.json includes triggering numbers and evidence.
 Any failed repetition prevents the operation's successful repetitions from being selectively ranked.
-Missing verification blocks performance even for apparently fast results.
+Missing verification blocks performance even for apparently fast results. Orchestration failures appear even
+when a fatal process produced no result JSON. Repeated copies of identical verification evidence are counted
+once; conflicting evidence still fails. A rendered report is not a successful verification verdict.

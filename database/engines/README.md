@@ -27,20 +27,13 @@ prevents image-declared auxiliary paths from allocating anonymous volumes; datab
 | RavenDB 7.1 | Wait for non-stale indexes in adapter | Include index build/catch-up in load finalization |
 | Neo4j 5 Community | heap initial=max=1536m; pagecache=3g | Fixed heap and cache under the 6 GiB limit |
 | Cohesion SQL/Graph/Documents | BufferPoolCapacity=3 GiB; Durability=Synchronous | Shared cache and durable commit policy; other engine options remain defaults |
-| Cosmos emulator | protocol=https; client Gateway mode | .NET SDK requires HTTPS; the emulator supports gateway mode only; unranked |
 
 Neo4j's environment names follow its [Docker configuration mapping](https://neo4j.com/docs/operations-manual/current/docker/configuration/).
 RavenDB's [Setup.Mode documentation](https://docs.ravendb.net/7.1/server/configuration/core-configuration)
 defines None as disabling startup setup.
-Cosmos retains the requested vnext-preview image; [Microsoft's vNext documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/emulator-linux)
-now demonstrates vnext-latest, but confirms HTTPS is needed for .NET. The catalog uses the documented
-[well-known emulator key](https://learn.microsoft.com/en-us/azure/cosmos-db/emulator).
-The functional adapter must trust only this development emulator's certificate and use gateway mode.
-Its readiness log is retained for compatibility with the pinned preview image; the current newer image
-also documents an HTTP health endpoint on port 8080.
 
 Readiness: pg_isready; SQL Edge readiness log plus a TCP connection; authenticated mongosh ping; RavenDB
-/build/version; Cosmos readiness log plus a TCP connection; authenticated Neo4j RETURN 1; Cohesion's READY line
+/build/version; authenticated Neo4j RETURN 1; Cohesion's READY line
 followed by an actual client handshake in the driver image. These are startup tests, not load/verification
 substitutes.
 
@@ -49,7 +42,7 @@ substitutes.
 When -Memory is below 6g, Start-BenchEngine labels the container development and reduces startup allocations:
 PostgreSQL shared_buffers=25%, effective_cache_size=50%, maintenance_work_mem=max(64 MiB,12.5%), work_mem=16MB;
 SQL Edge memory limit=75%; MongoDB cache=max(0.25 GiB,40%); Neo4j heap=18.75% and page cache=25%;
-Cohesion buffer pool=50%. Durability stays unchanged. RavenDB and Cosmos keep their defaults.
+Cohesion buffer pool=50%. Durability stays unchanged. RavenDB keeps its defaults.
 The small profile is only for readiness and tiny protocol smoke; official runs use the exact table above.
 
 ## Cohesion server option mapping

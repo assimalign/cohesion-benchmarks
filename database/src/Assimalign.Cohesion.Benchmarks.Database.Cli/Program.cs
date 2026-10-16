@@ -22,7 +22,12 @@ internal static class Program
         Console.CancelKeyPress += (_, e) => { e.Cancel = true; stop.Cancel(); };
         try { return await ExecuteAsync(new Arguments(args), stop.Token); }
         catch (OperationCanceledException) { Console.Error.WriteLine("dbbench: canceled."); return 130; }
-        catch (Exception ex) { Console.Error.WriteLine($"dbbench: {ex.GetType().Name}: {ex.Message}"); return 1; }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"dbbench: {ex.GetType().Name}: {ex.Message}");
+            if (Environment.GetEnvironmentVariable("DBBENCH_DIAGNOSTIC_STACKS") == "1") Console.Error.WriteLine(ex);
+            return 1;
+        }
     }
 
     private static async Task<int> ExecuteAsync(Arguments a, CancellationToken token)
@@ -35,12 +40,13 @@ internal static class Program
                 dbbench verify --model M --target ID --data DIR --out FILE
                 dbbench verify --compare DIR [--out FILE]
                 dbbench run --model M --target ID --data DIR --suite latency|throughput|mixed --out DIR
-                  [--clients 1,8,32] [--duration 60s] [--warmup 15s] [--iterations N] [--repeat 3]
+                  [--clients 1,8,32] [--duration 30s] [--warmup 10s] [--iterations 5000] [--repeat 1]
+                  [--analytics-warmup 1] [--analytics-iterations 3] [--point-timeout 30s] [--analytics-timeout 600s]
                   [--ops a,b] [--mix read-heavy|balanced] [--verification FILE] [--official]
                 dbbench report --in DIR --out DIR
                 dbbench env [--container NAME] [--out FILE]
                 dbbench ping --target ID [--endpoint URI] [--database benchmark] [--suffix -r1a] [--smoke]
-                dbbench list [--model M] [--catalog FILE]
+                dbbench list [--model M] [--json] [--catalog FILE]
                 Common target options: --endpoint, --database, --storage, --container, --catalog, --suffix
                 """);
             return 0;
@@ -81,7 +87,21 @@ internal static class Program
         }
         if (a.Command == "list")
         {
-            a.Allow("model", "catalog");
+            a.Allow("model", "catalog", "json");
+            if (a.Has("json"))
+            {
+                var model = Model(a.Required("model"));
+                using var planCatalog = new EngineCatalog(a.Optional("catalog"));
+                var support = new Dictionary<string, IReadOnlyDictionary<string, OperationSupport>>(StringComparer.Ordinal);
+                foreach (var descriptor in model.Targets)
+                {
+                    await using var target = model.CreateTarget(descriptor.Id, new TargetOptions
+                        { Endpoint = planCatalog.Endpoint(descriptor.Id, ""), Settings = planCatalog.Settings(descriptor.Id) });
+                    support.Add(descriptor.Id, target.Support);
+                }
+                Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(new BenchmarkPlan(model.Id, model.Targets, model.Operations, support), ResultJsonContext.Default.BenchmarkPlan));
+                return 0;
+            }
             if (a.Has("model")) _ = Model(a.Required("model"));
             foreach (var model in Models.Where(m => !a.Has("model") || m.Id == a.Required("model")))
             {
@@ -105,7 +125,7 @@ internal static class Program
         if (a.Command is not ("load" or "verify" or "run" or "ping")) throw new ArgumentException("Unknown command " + a.Command);
         a.Allow("model", "target", "data", "endpoint", "database", "storage", "container", "catalog", "suffix", "out",
             "batch", "official", "suite", "clients", "duration", "warmup", "iterations", "repeat", "ops", "mix",
-            "point-timeout", "analytics-timeout", "verification", "seed", "smoke", "buffer-pool-mb", "sample-rows", "environment");
+            "point-timeout", "analytics-timeout", "analytics-warmup", "analytics-iterations", "verification", "seed", "smoke", "buffer-pool-mb", "sample-rows", "environment");
         string id = a.Required("target");
         using var engines = new EngineCatalog(a.Optional("catalog"));
         var entry = engines.Find(id);
@@ -134,7 +154,7 @@ internal static class Program
         var operations = SelectOperations(selectedModel, a.Optional("ops"));
         if (a.Command == "verify")
         {
-            var verified = await VerificationRunner.VerifyAsync(selectedModel, targetInstance, manifest, manifestHash, operations, token);
+            var verified = await VerificationRunner.VerifyAsync(selectedModel, targetInstance, manifest, manifestHash, operations, token, message => Console.WriteLine($"{DateTimeOffset.UtcNow:O} {message}"));
             await ResultFiles.WriteAsync(a.Required("out"), verified, ResultJsonContext.Default.VerificationFile, token);
             return VerificationRunner.Compare([verified]).Count == 0 ? 0 : 2;
         }
@@ -156,8 +176,8 @@ internal static class Program
             ? await ResultFiles.ReadAsync(verificationPath, ResultJsonContext.Default.VerificationFile, token) : null;
         if (verification != null && (verification.Target != id || verification.DatasetManifestSha256 != manifestHash || verification.Seed != manifest.Seed))
             throw new ArgumentException("Verification belongs to a different target, dataset or seed.");
-        if (a.Command == "run" && a.Has("official") && (verification == null || VerificationRunner.Compare([verification]).Count != 0))
-            throw new InvalidOperationException("Official run requires a complete successful --verification file.");
+        if (a.Command == "run" && a.Has("official") && verification == null)
+            throw new InvalidOperationException("Official run requires --verification evidence. Failed verification blocks report rankings, not diagnostic execution.");
         string runId = DateTimeOffset.UtcNow.ToString("yyyyMMddTHHmmssfffffffZ", CultureInfo.InvariantCulture) + "-" + id;
         BenchmarkResult Result(string suite, int repetition, DateTimeOffset started, DateTimeOffset finished) => new()
         {
@@ -172,6 +192,8 @@ internal static class Program
             var started = DateTimeOffset.UtcNow;
             var metrics = new List<LoadMetric>();
             var sampler = new ResourceSampler(targetOptions.Container);
+            using var heartbeatStop = CancellationTokenSource.CreateLinkedTokenSource(token);
+            var heartbeat = LoadHeartbeatAsync(id, started, heartbeatStop.Token);
             try
             {
                 await targetInstance.PrepareAsync(manifest, token);
@@ -179,7 +201,7 @@ internal static class Program
                     new Progress<LoadProgress>(p => Console.WriteLine($"{p.Table}: {p.Rows} rows")), token));
                 metrics.AddRange(await targetInstance.FinalizeLoadAsync(token));
             }
-            finally { await sampler.DisposeAsync(); }
+            finally { await heartbeatStop.CancelAsync(); await heartbeat; await sampler.DisposeAsync(); }
             long storage = await targetInstance.MeasureStorageAsync(token);
             engine = await targetInstance.DescribeAsync(token);
             var result = Result("load", 1, started, DateTimeOffset.UtcNow) with { Load = metrics, StorageBytes = storage < 0 ? null : storage, Samples = sampler.Samples };
@@ -190,10 +212,11 @@ internal static class Program
         var options = new RunnerOptions { Suite = a.Get("suite", "latency"), Mix = a.Get("mix", "read-heavy"),
             Clients = a.Get("clients", a.Get("suite", "latency") == "mixed" ? "8,32" : "1,8,32").Split(',').Select(s => int.Parse(s, CultureInfo.InvariantCulture)).ToArray(),
             Duration = a.Duration("duration"), Warmup = a.Duration("warmup"), Iterations = a.Has("iterations") ? a.Int("iterations", 0) : null,
-            Repeat = a.Int("repeat", 3), Seed = a.Has("seed") ? a.Seed : manifest.Seed,
+            Repeat = a.Int("repeat", 1), AnalyticsWarmupIterations = a.Int("analytics-warmup", 1),
+            AnalyticsIterations = a.Int("analytics-iterations", 3), Seed = a.Has("seed") ? a.Seed : manifest.Seed,
             PointTimeout = a.Duration("point-timeout") ?? TimeSpan.FromSeconds(30),
             AnalyticsTimeout = a.Duration("analytics-timeout") ?? TimeSpan.FromSeconds(600), Container = targetOptions.Container };
-        var passes = await new BenchmarkRunner().RunAsync(selectedModel, targetInstance, manifest, operations, options, token);
+        var passes = await new BenchmarkRunner(progress: message => Console.WriteLine($"{DateTimeOffset.UtcNow:O} {message}")).RunAsync(selectedModel, targetInstance, manifest, operations, options, token);
         foreach (var pass in passes)
         {
             var result = Result(options.Suite, pass.Repetition, pass.StartedUtc, pass.FinishedUtc) with
@@ -202,6 +225,17 @@ internal static class Program
             await ResultFiles.WriteAsync(Path.Combine(outputDirectory, $"{runId}-{options.Suite}-{pass.Repetition}.json"), result, ResultJsonContext.Default.BenchmarkResult, token);
         }
         return passes.Any(p => p.BlockReason != null) || passes.SelectMany(p => p.Operations).Any(o => o.Errors + o.WarmupErrors > 0) ? 2 : 0;
+    }
+
+    private static async Task LoadHeartbeatAsync(string target, DateTimeOffset started, CancellationToken token)
+    {
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(30));
+        try
+        {
+            while (await timer.WaitForNextTickAsync(token))
+                Console.WriteLine($"{DateTimeOffset.UtcNow:O} LOAD PROGRESS {target} elapsed={(DateTimeOffset.UtcNow - started).TotalSeconds:F0}s; no load deadline");
+        }
+        catch (OperationCanceledException) when (token.IsCancellationRequested) { }
     }
 
     private static IBenchmarkModel Model(string id) => Array.Find(Models, m => m.Id == id) ?? throw new ArgumentException("Unknown model " + id);

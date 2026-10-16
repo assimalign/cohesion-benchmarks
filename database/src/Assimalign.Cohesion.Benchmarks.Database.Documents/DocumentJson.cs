@@ -1,6 +1,5 @@
 using System;
 using System.Buffers;
-using System.Text;
 using System.Text.Json;
 using MongoDB.Bson;
 
@@ -10,8 +9,7 @@ internal static class DocumentJson
 {
     internal static string Key(ReadOnlyMemory<byte> bytes)
     { using var json = JsonDocument.Parse(bytes); return json.RootElement.GetProperty("id").GetString()!; }
-    internal static string CosmosId(string key) => Convert.ToBase64String(Encoding.UTF8.GetBytes(key)).TrimEnd('=').Replace('+', '-').Replace('/', '_');
-    internal static byte[] Rewrite(ReadOnlyMemory<byte> bytes, string? key = null, string? ravenCollection = null, bool cosmos = false)
+    internal static byte[] Rewrite(ReadOnlyMemory<byte> bytes, string? key = null, string? ravenCollection = null)
     {
         using var json = JsonDocument.Parse(bytes);
         var buffer = new ArrayBufferWriter<byte>(bytes.Length + 128);
@@ -19,10 +17,9 @@ internal static class DocumentJson
         {
             writer.WriteStartObject();
             string identity = key ?? json.RootElement.GetProperty("id").GetString()!;
-            writer.WriteString("id", cosmos ? CosmosId(identity) : identity);
-            if (cosmos) writer.WriteString("key", identity);
+            writer.WriteString("id", identity);
             foreach (var property in json.RootElement.EnumerateObject())
-                if (property.Name is not ("id" or "key" or "@metadata" or "_id") && !property.Name.StartsWith('_')) property.WriteTo(writer);
+                if (property.Name is not ("id" or "@metadata" or "_id") && !property.Name.StartsWith('_')) property.WriteTo(writer);
             if (ravenCollection != null)
             { writer.WriteStartObject("@metadata"); writer.WriteString("@collection", ravenCollection); writer.WriteEndObject(); }
             writer.WriteEndObject();

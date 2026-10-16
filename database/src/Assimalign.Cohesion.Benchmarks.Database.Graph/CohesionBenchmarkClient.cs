@@ -14,7 +14,6 @@ internal sealed class CohesionBenchmarkClient : IBenchmarkClient
     private readonly GraphDatabaseSession? session;
     private readonly GraphClient? tcp;
     private GraphConnection? connection;
-    private readonly List<string> cleanup = new();
     internal CohesionBenchmarkClient(GraphDatabaseSession session) => this.session = session;
     internal CohesionBenchmarkClient(GraphClient tcp, GraphConnection connection) { this.tcp = tcp; this.connection = connection; }
 
@@ -28,7 +27,6 @@ internal sealed class CohesionBenchmarkClient : IBenchmarkClient
             await connection.DisposeAsync();
             connection = await tcp!.ConnectAsync(cancellationToken);
         }
-        if (p.CleanupGql is not null) cleanup.Add(p.CleanupGql);
         var rows = new List<object?[]>();
         GraphDatabaseTransaction? transaction = null;
         try
@@ -73,7 +71,7 @@ internal sealed class CohesionBenchmarkClient : IBenchmarkClient
                 }
             }
             if (transaction is not null) await transaction.CommitAsync(cancellationToken);
-            if (p.CleanupGql is not null && rows.Count != 1) throw new InvalidOperationException("Graph write did not return exactly one affected logical row.");
+            if (operation.Access == OperationAccess.Write && rows.Count != 1) throw new InvalidOperationException("Graph write did not return exactly one affected logical row.");
             GraphCompletion.Emit(operation.Id, rows, sink);
             cancellationToken.ThrowIfCancellationRequested();
         }
@@ -92,23 +90,7 @@ internal sealed class CohesionBenchmarkClient : IBenchmarkClient
 
     public async ValueTask DisposeAsync()
     {
-        try
-        {
-            if (connection is not null && !connection.IsOpen && cleanup.Count != 0)
-            {
-                await connection.DisposeAsync();
-                connection = await tcp!.ConnectAsync(CancellationToken.None);
-            }
-            foreach (string text in cleanup)
-            {
-                if (session is not null) await session.ExecuteAsync(text, cancellationToken: CancellationToken.None);
-                else await connection!.ExecuteAsync(text, cancellationToken: CancellationToken.None);
-            }
-        }
-        finally
-        {
-            if (session is not null) await session.DisposeAsync();
-            if (connection is not null) await connection.DisposeAsync();
-        }
+        if (session is not null) await session.DisposeAsync();
+        if (connection is not null) await connection.DisposeAsync();
     }
 }

@@ -95,17 +95,15 @@ internal sealed partial class RavenDocumentsTarget : DocumentsTarget
     }
     private async Task WaitForIndexesAsync(CancellationToken token)
     {
-        using var deadline = CancellationTokenSource.CreateLinkedTokenSource(token);
-        deadline.CancelAfter(TimeSpan.FromMinutes(10));
         while (true)
         {
-            var statistics = await store.Maintenance.SendAsync(new GetStatisticsOperation(), deadline.Token);
+            var statistics = await store.Maintenance.SendAsync(new GetStatisticsOperation(), token);
             foreach (var index in statistics.Indexes)
                 if (index.Name.StartsWith("Auto/", StringComparison.Ordinal)) throw new InvalidOperationException("Unexpected auto-index: " + index.Name);
-            var errors = await store.Maintenance.SendAsync(new GetIndexErrorsOperation(), deadline.Token);
+            var errors = await store.Maintenance.SendAsync(new GetIndexErrorsOperation(), token);
             foreach (var index in errors) if (index.Errors.Length != 0) throw new InvalidOperationException("Index failed: " + index.Name + ": " + index.Errors[0].Error);
             if (statistics.StaleIndexes.Length == 0) return;
-            await Task.Delay(100, deadline.Token);
+            await Task.Delay(100, token);
         }
     }
     public override async ValueTask<EngineDescription> DescribeAsync(CancellationToken cancellationToken)

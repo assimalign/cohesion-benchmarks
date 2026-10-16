@@ -26,4 +26,15 @@ public sealed class SchemaTests
 
     [Fact]
     public void Identifier_StatementInjection_RejectsInput() => Should.Throw<ArgumentException>(() => SqlSchema.Identifier("x; DROP DATABASE x"));
+
+    [Theory]
+    [InlineData(SqlDialect.Cohesion)]
+    [InlineData(SqlDialect.PostgreSql)]
+    [InlineData(SqlDialect.SqlServer)]
+    public void CreateTable_PersistentHistory_AcceptsDisjointWriteNamespaces(SqlDialect dialect)
+    {
+        string sql = SqlSchema.CreateTable(CommerceSchema.Table("order_status_history"), dialect);
+        sql.ShouldContain("seq BIGINT NOT NULL");
+        sql.ShouldContain("PRIMARY KEY (order_id, seq)");
+    }
 }

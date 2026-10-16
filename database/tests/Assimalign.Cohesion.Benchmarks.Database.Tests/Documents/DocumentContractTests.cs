@@ -20,8 +20,7 @@ public sealed class DocumentContractTests
     public void Registration_AllOperations_DeclaresExplicitSupportAndMixes()
     {
         var model = ModelRegistration.Create();
-        model.Operations.Count.ShouldBe(11); model.Targets.Count.ShouldBe(4);
-        model.Targets.Single(t => t.Id == "cosmos-emulator").Ranked.ShouldBeFalse();
+        model.Operations.Count.ShouldBe(11); model.Targets.Count.ShouldBe(3);
         foreach (var target in model.Targets)
         {
             var support = DocumentWorkload.Support(target.Id); support.Count.ShouldBe(11);
@@ -47,7 +46,7 @@ public sealed class DocumentContractTests
                 var x = (DocumentParameters)first.Next(); var y = (DocumentParameters)second.Next();
                 x.Key.ShouldBe(y.Key); x.Keys.ShouldBe(y.Keys); x.RavenQuery.ShouldBe(y.RavenQuery);
                 x.MongoPipeline.Select(v => v.ToJson()).ShouldBe(y.MongoPipeline.Select(v => v.ToJson()));
-                x.Json.ShouldBe(y.Json); x.CosmosJson.ShouldBe(y.CosmosJson);
+                x.Json.ShouldBe(y.Json);
             }
         }
         var keys = new HashSet<string>(StringComparer.Ordinal);
@@ -70,9 +69,9 @@ public sealed class DocumentContractTests
         var bson = DocumentJson.Mongo(bytes);
         bson["price"].BsonType.ShouldBe(BsonType.Decimal128);
         using var mongo = DocumentRows.MongoJson(bson); mongo.RootElement.GetProperty("price").GetDecimal().ShouldBe(0.10m);
-        using var cosmos = JsonDocument.Parse(DocumentJson.Rewrite(bytes, cosmos: true));
-        cosmos.RootElement.GetProperty("id").GetString()!.ShouldNotContain('/');
-        DocumentRows.Key(cosmos.RootElement).ShouldBe("products/7");
-        cosmos.RootElement.GetProperty("price").GetDecimal().ShouldBe(0.10m);
+        using var raven = JsonDocument.Parse(DocumentJson.Rewrite(bytes, ravenCollection: "products"));
+        DocumentRows.Key(raven.RootElement).ShouldBe("products/7");
+        raven.RootElement.GetProperty("price").GetDecimal().ShouldBe(0.10m);
+        raven.RootElement.GetProperty("@metadata").GetProperty("@collection").GetString().ShouldBe("products");
     }
 }

@@ -53,13 +53,13 @@ public sealed class RunnerTests
         fake.Calls.ShouldBe(10);
     }
     [Fact]
-    public async Task RunAsync_AnalyticsDefaults_PerformsOneWarmupAndFiveSamples()
+    public async Task RunAsync_AnalyticsDefaults_PerformsOneWarmupAndThreeSamples()
     {
         var clock = new FakeClock(); var fake = new FakeWorkload(clock);
         var passes = await new BenchmarkRunner(clock).RunAsync(fake, fake, FakeWorkload.Manifest,
             [new("op", "analytics", true, TimeoutClass.Analytics)], new() { Repeat = 1 });
         passes[0].Operations[0].WarmupAttempts.ShouldBe(1);
-        passes[0].Operations[0].Successes.ShouldBe(5);
+        passes[0].Operations[0].Successes.ShouldBe(3);
     }
     [Fact]
     public async Task RunAsync_TimeoutsAndFailures_NeverRecordsSamples()
@@ -67,14 +67,44 @@ public sealed class RunnerTests
         var clock = new FakeClock(); var fake = new FakeWorkload(clock) { ExecutionCost = TimeSpan.FromMilliseconds(2) };
         var options = new RunnerOptions { Repeat = 1, Warmup = TimeSpan.Zero, Iterations = 3, PointTimeout = TimeSpan.FromMilliseconds(1) };
         var pass = (await new BenchmarkRunner(clock).RunAsync(fake, fake, FakeWorkload.Manifest, fake.Operations, options))[0];
-        pass.Operations[0].Errors.ShouldBe(3);
-        pass.Operations[0].Timeouts.ShouldBe(3);
+        pass.Operations[0].Errors.ShouldBe(1);
+        pass.Operations[0].Timeouts.ShouldBe(1);
+        fake.Calls.ShouldBe(1);
         pass.Operations[0].Successes.ShouldBe(0);
         fake.Fail = true;
         pass = (await new BenchmarkRunner(clock).RunAsync(fake, fake, FakeWorkload.Manifest, fake.Operations,
             options with { PointTimeout = TimeSpan.FromSeconds(30) }))[0];
         pass.Operations[0].Errors.ShouldBe(3);
         pass.Operations[0].Timeouts.ShouldBe(0);
+    }
+    [Fact]
+    public async Task RunAsync_AnalyticsOverrides_IgnorePointWallWindows()
+    {
+        var clock = new FakeClock(); var fake = new FakeWorkload(clock);
+        var passes = await new BenchmarkRunner(clock).RunAsync(fake, fake, FakeWorkload.Manifest,
+            [new("op", "analytics", true, TimeoutClass.Analytics)],
+            new() { Warmup = TimeSpan.FromSeconds(2), Duration = TimeSpan.FromSeconds(5),
+                AnalyticsWarmupIterations = 2, AnalyticsIterations = 1 });
+        passes[0].Operations[0].WarmupAttempts.ShouldBe(2);
+        passes[0].Operations[0].Successes.ShouldBe(1);
+        fake.Calls.ShouldBe(3);
+    }
+    [Theory]
+    [InlineData("read-heavy", .90)]
+    [InlineData("balanced", .50)]
+    public async Task RunAsync_ExplicitMixedSubset_PreservesReadWriteRatio(string mix, double expected)
+    {
+        var clock = new FakeClock(); var fake = new FakeWorkload(clock)
+        {
+            Support = new Dictionary<string, OperationSupport>
+                { ["op"] = new(SupportLevel.Native), ["write"] = new(SupportLevel.Native) }
+        };
+        var passes = await new BenchmarkRunner(clock).RunAsync(fake, fake, FakeWorkload.Manifest,
+            [new("op", "read", true, TimeoutClass.Point, 20, 10),
+             new("write", "write", true, TimeoutClass.Point, 10, 50, OperationAccess.Write)],
+            new() { Suite = "mixed", Mix = mix, Clients = [1], Warmup = TimeSpan.Zero, Duration = TimeSpan.FromSeconds(10) });
+        var read = passes[0].Operations[0]; var write = passes[0].Operations[1];
+        ((double)read.Successes / (read.Successes + write.Successes)).ShouldBe(expected, .02);
     }
     [Fact]
     public async Task RunAsync_Throughput_UsesDurationWithoutLatencyIterationCap()

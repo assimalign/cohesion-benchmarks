@@ -7,6 +7,7 @@ namespace Assimalign.Cohesion.Benchmarks.Database.Harness;
 /// <summary>Source-generated serialization; reflection is not used for results, environment or manifests.</summary>
 [JsonSourceGenerationOptions(WriteIndented = true, PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
     PropertyNameCaseInsensitive = true, UseStringEnumConverter = true)]
+[JsonSerializable(typeof(BenchmarkPlan))]
 [JsonSerializable(typeof(BenchmarkResult))]
 [JsonSerializable(typeof(VerificationFile))]
 [JsonSerializable(typeof(List<VerificationMismatch>))]

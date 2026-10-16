@@ -1,5 +1,7 @@
 # R1a execution record (2026-10-15)
 
+Historical note: the Cosmos DB emulator target was removed later on 2026-10-15; the execution record below is unchanged.
+
 Base: 24d372a. Cohesion source: bf20be5eb452fa57363f412bdcff36b2dc2e7edd.
 The Cohesion worktree remained unchanged. No dataset-owned source or central test-package entry was edited.
 

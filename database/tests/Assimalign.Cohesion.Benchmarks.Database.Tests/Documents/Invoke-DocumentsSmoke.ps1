@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory)][ValidateSet('cohesion-documents-embedded','mongodb','ravendb','cosmos-emulator')][string]$Target,
+    [Parameter(Mandatory)][ValidateSet('cohesion-documents-embedded','mongodb','ravendb')][string]$Target,
     [string]$Root = 'database/artifacts/documents-r3-smoke',
     [string]$Suffix = '-r3',
     [switch]$Driver,
@@ -32,7 +32,7 @@ try {
     do {
         $allRunning = @(& podman ps --format '{{.Names}}')
         if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect the Podman engine slot.' }
-        $ownedNames = @('dbbench-mongodb', 'dbbench-ravendb', 'dbbench-cosmos-emulator', 'dbbench-driver-documents') | ForEach-Object { $_ + $Suffix }
+        $ownedNames = @('dbbench-mongodb', 'dbbench-ravendb', 'dbbench-driver-documents') | ForEach-Object { $_ + $Suffix }
         $running = @($allRunning | Where-Object { $_ -in $ownedNames })
         if ($allRunning.Count -gt 0 -and $previousWait -eq '') {
             "Other session containers observed: $($allRunning -join ', ')" | Add-Content -LiteralPath $logPath
@@ -62,15 +62,8 @@ try {
             '--cpus','3','--memory','6g','--memory-swap','6g','--volume',"${dataVolume}:/data",'--volume',"${engineVolume}:/engine-data",'--volume',"${outputPath}:/results",'localhost/dbbench-driver:r3')
         function Invoke-Bench([string[]]$Arguments) { Invoke-Checked podman ($driverArgs + $Arguments) }
         Invoke-Bench @('generate','--model','documents','--scale','0.01','--threads','2','--out','/data')
-        # The foundation serializer uses platform newlines in manifests. Assert identical metadata and
-        # generated part hashes before distributing the exact same manifest bytes to every target.
-        $manifestCommand = @'
-set -eu
-tr -d '\r' < /canonical-manifest.json | cmp - /data/documents/sf0.01/manifest.json
-cp /canonical-manifest.json /data/documents/sf0.01/manifest.json
-'@
-        $manifestCommand = $manifestCommand.Replace("`r`n", "`n")
-        $manifestArgs = $driverArgs[0..($driverArgs.Length - 2)] + @('--volume',"${canonicalManifest}:/canonical-manifest.json:ro",'--entrypoint','/bin/sh',$driverArgs[-1],'-c',$manifestCommand)
+        # Compare bytes directly: the manifest writer is platform-independent.
+        $manifestArgs = $driverArgs[0..($driverArgs.Length - 2)] + @('--volume',"${canonicalManifest}:/canonical-manifest.json:ro",'--entrypoint','cmp',$driverArgs[-1],'/canonical-manifest.json','/data/documents/sf0.01/manifest.json')
         Invoke-Checked podman $manifestArgs
         $dataPath = '/data/documents/sf0.01'; $resultPath = '/results'; $storagePath = '/engine-data'
     } else {
@@ -85,7 +78,7 @@ cp /canonical-manifest.json /data/documents/sf0.01/manifest.json
                 & podman $resource[0] exists $resource[1]
                 if ($LASTEXITCODE -eq 0) { throw "Refusing pre-existing $($resource[0]) $($resource[1])." }
             }
-            $memory = if ($Target -eq 'cosmos-emulator') { '3g' } else { '2g' }
+            $memory = '2g'
             $createdEngine = $true
             & ./database/scripts/Start-BenchEngine.ps1 -Target $Target -Memory $memory -Suffix $Suffix
         }

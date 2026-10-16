@@ -14,7 +14,10 @@ public static class SqlSchema
         var sql = new StringBuilder("CREATE TABLE ").Append(Identifier(name ?? table.Name)).Append(" (");
         foreach (SchemaColumn column in table.Columns)
         {
-            sql.Append(column.Name).Append(' ').Append(Type(column, dialect));
+            // Persistent write passes need a full deterministic namespace for shipment history.
+            // Widen identically on all engines; generated SMALLINT values still load unchanged.
+            string type = table.Name == "order_status_history" && column.Name == "seq" ? "BIGINT" : Type(column, dialect);
+            sql.Append(column.Name).Append(' ').Append(type);
             if (column.Type is LogicalType.VarChar or LogicalType.Text)
                 sql.Append(dialect switch { SqlDialect.PostgreSql => " COLLATE \"C\"", SqlDialect.SqlServer => " COLLATE Latin1_General_100_BIN2_UTF8", _ => " COLLATE binary" });
             sql.Append(column.Nullable ? " NULL, " : " NOT NULL, ");

@@ -39,28 +39,12 @@ function Initialize-DatasetVolume {
             '--memory','2g','--memory-swap','2g','--image-volume','ignore','-v',"${datasetVolume}:/data",
             "localhost/dbbench-driver:$Tag",'generate','--model','graph','--scale','0.01','--out','/data')
     }
-    $volumeManifest = Invoke-Podman @('run','--rm','--name',$name,'--cpus','1','--memory','256m','--memory-swap','256m',
-        '--image-volume','ignore','-v',"${datasetVolume}:/data:ro",'--entrypoint','/usr/bin/cat',
+    $hash = Invoke-Podman @('run','--rm','--name',$name,'--cpus','1','--memory','256m','--memory-swap','256m',
+        '--image-volume','ignore','-v',"${datasetVolume}:/data:ro",'--entrypoint','sha256sum',
         "localhost/dbbench-driver:$Tag",'/data/graph/sf0.01/manifest.json')
-    # JSON indentation uses the platform newline; compare every manifest field,
-    # including all data-part SHA256 hashes, rather than the JSON file's bytes.
-    $volumeJson = ($volumeManifest -join "`n") | ConvertFrom-Json | ConvertTo-Json -Depth 100 -Compress
-    $hostJson = Get-Content -Raw -LiteralPath (Join-Path $data 'manifest.json') | ConvertFrom-Json | ConvertTo-Json -Depth 100 -Compress
-    if ($volumeJson -cne $hostJson) {
-        throw 'Host and named-volume dataset manifests differ.'
+    if (($hash -split '\s+')[0] -ne (Get-FileHash -LiteralPath (Join-Path $data 'manifest.json') -Algorithm SHA256).Hash.ToLowerInvariant()) {
+        throw 'Host and named-volume manifest bytes differ; regenerate stale datasets with the current writer.'
     }
-    # Verification records the manifest file's hash. Preserve the exact host file
-    # after checking that its contents describe the identical generated parts.
-    Invoke-Podman @('run','-d','--name',$name,'--label',"dbbench.owner=$script:Owner",'--cpus','1',
-        '--memory','256m','--memory-swap','256m','--image-volume','ignore','-v',"${datasetVolume}:/data",
-        '--entrypoint','/usr/bin/sleep',"localhost/dbbench-driver:$Tag",'infinity') | Out-Null
-    try {
-        Invoke-Podman @('cp',(Join-Path $data 'manifest.json'),"${name}:/data/graph/sf0.01/manifest.json") | Out-Null
-        $hash = Invoke-Podman @('exec',$name,'sha256sum','/data/graph/sf0.01/manifest.json')
-        if (($hash -split '\s+')[0] -ne (Get-FileHash -LiteralPath (Join-Path $data 'manifest.json') -Algorithm SHA256).Hash.ToLowerInvariant()) {
-            throw 'Manifest byte copy failed.'
-        }
-    } finally { Invoke-Podman @('rm','-f',$name) | Out-Null }
 }
 function Invoke-Driver([string]$Target, [string]$Command, [string[]]$Extra = @(), [switch]$RecordFatal) {
     $embedded = $Target -eq 'cohesion-graph-embedded'

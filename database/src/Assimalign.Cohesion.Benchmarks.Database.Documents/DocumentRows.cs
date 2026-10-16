@@ -10,7 +10,7 @@ namespace Assimalign.Cohesion.Benchmarks.Database.Documents;
 
 internal static class DocumentRows
 {
-    internal static string Key(JsonElement doc) => doc.TryGetProperty("key", out var key) ? key.GetString()! : doc.GetProperty("id").GetString()!;
+    internal static string Key(JsonElement doc) => doc.GetProperty("id").GetString()!;
     internal static DateTimeOffset Date(string value) => DateTimeOffset.Parse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
     internal static void Order(JsonElement doc, IVerificationSink sink)
     {
@@ -44,7 +44,7 @@ internal static class DocumentRows
         {
             var properties = new List<JsonProperty>();
             foreach (var property in value.EnumerateObject())
-                if (property.Name != "@metadata" && !property.Name.StartsWith('_') && property.Name != "key") properties.Add(property);
+                if (property.Name != "@metadata" && !property.Name.StartsWith('_')) properties.Add(property);
             properties.Sort((x, y) => StringComparer.Ordinal.Compare(x.Name, y.Name));
             foreach (var property in properties)
             {

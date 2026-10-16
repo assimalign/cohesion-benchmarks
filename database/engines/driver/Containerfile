@@ -1,4 +1,6 @@
 FROM mcr.microsoft.com/dotnet/runtime-deps:10.0
+# Npgsql probes GSS on connection open even with the catalog's password credentials.
+RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -o Acquire::ForceIPv4=true install -y --no-install-recommends libgssapi-krb5-2 && rm -rf /var/lib/apt/lists/*
 ARG BENCHMARKS_COMMIT
 ARG BENCHMARKS_DIRTY
 ARG COHESION_COMMIT

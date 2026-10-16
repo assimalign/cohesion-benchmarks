@@ -1,5 +1,9 @@
 # Graph suite: Cohesion Graph and Neo4j
 
+R5 official commands and resume behavior are in [RUNBOOK.md](RUNBOOK.md); the SF 0.1 evidence, memory
+diagnostics and SF10 planning estimates are in [REHEARSAL-R5.md](REHEARSAL-R5.md). The R2/R3/R4 execution
+records below describe their original runs.
+
 R4 implements the social workload against Cohesion **bf20be5eb452fa57363f412bdcff36b2dc2e7edd**
 and Neo4j 5 Community. The benchmark base is **87afd6d**. The model registers all thirteen operations;
 unsupported operations remain visible in verification, runs, mixed-workload blocking, and reports.
@@ -131,10 +135,11 @@ Baseline storage accounting includes only the `benchmark/` file set, excluding t
 
 Normal writes use `ParameterStreamContext.WriteId`, with post ids above the generated maximum. Their date is
 the deterministic synthetic epoch-millisecond value `1900000000000 + write id`, also uniquely identifying
-new edges. Each client retains cleanup statements prepared outside timing and removes its own inserted posts
-or edges on disposal. These are durable inserts followed by untimed cleanup. Verification and subsequent
-operation passes regain the logical baseline; physical tombstones/history may remain. Fresh volume snapshots
-remain appropriate for official repetitions. The harness refuses mixed workloads containing unsupported operations.
+new edges. R5 removes client cleanup statements: inserted posts and edges persist after disposal. All read latency
+and throughput passes precede writes and mixed passes. Verification writes use a disposable store; TCP
+serves the pristine embedded-loaded baseline. No later read-only measurement uses the changed working store.
+An unfiltered mix containing unsupported operations is refused; the official script explicitly selects and
+logs the common supported subset for every target.
 
 ## Validation and development smoke
 

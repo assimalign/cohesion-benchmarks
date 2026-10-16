@@ -17,21 +17,34 @@ public static class ReportGenerator
     {
         var results = new List<BenchmarkResult>();
         var verificationFiles = new List<VerificationFile>();
+        var failures = new List<OrchestrationFailure>();
         foreach (string path in Directory.EnumerateFiles(input, "*.json", SearchOption.AllDirectories).Order(StringComparer.Ordinal))
         {
             using var file = JsonDocument.Parse(await File.ReadAllTextAsync(path, token).ConfigureAwait(false));
             if (file.RootElement.ValueKind != JsonValueKind.Object) continue;
             if (!file.RootElement.TryGetProperty("runId", out _))
             {
+                if (Path.GetFileName(path) == "phase.status.json" &&
+                    file.RootElement.TryGetProperty("status", out var status) && status.GetString() == "failed")
+                {
+                    string phaseModel = file.RootElement.TryGetProperty("model", out var id) ? id.GetString()!
+                        : Directory.GetParent(Path.GetDirectoryName(path)!)?.Parent?.Name ?? "unknown";
+                    failures.Add(new(phaseModel, file.RootElement.GetProperty("target").GetString()!,
+                        file.RootElement.GetProperty("phase").GetString()!, file.RootElement.GetProperty("error").GetString() ?? "Phase failed.",
+                        file.RootElement.GetProperty("seconds").GetDouble()));
+                }
                 if (file.RootElement.ValueKind == JsonValueKind.Object && file.RootElement.TryGetProperty("parameterCount", out _))
                     verificationFiles.Add(await ResultFiles.ReadAsync(path, ResultJsonContext.Default.VerificationFile, token).ConfigureAwait(false));
                 continue;
             }
             var result = await ResultFiles.ReadAsync(path, ResultJsonContext.Default.BenchmarkResult, token).ConfigureAwait(false);
             if (result.SchemaVersion != 1) throw new InvalidDataException($"Unsupported result schema in {path}.");
-            results.Add(result);
+            // Older smoke files carried a nominal 6 GiB label. The recorded inspection/cgroup
+            // evidence is authoritative for report cohorts too; missing limits stay unknown.
+            results.Add(result with { Budget = ResourceBudget.Observe(result.Environment,
+                result.Target.Id.EndsWith("-embedded", StringComparison.Ordinal)) });
         }
-        if (results.Count == 0) throw new InvalidDataException("No benchmark result JSON files found.");
+        if (results.Count == 0 && failures.Count == 0) throw new InvalidDataException("No benchmark result JSON files or failed phase receipts found.");
         for (int i = 0; i < results.Count; i++)
         {
             var result = results[i];
@@ -41,19 +54,37 @@ public static class ReportGenerator
         }
         Directory.CreateDirectory(output);
         var findings = new List<Finding>();
-        foreach (var model in results.GroupBy(r => r.Model).OrderBy(g => g.Key, StringComparer.Ordinal))
+        foreach (string model in results.Select(r => r.Model).Concat(failures.Select(f => f.Model)).Distinct().Order(StringComparer.Ordinal))
         {
-            var text = new StringBuilder($"# {model.Key} benchmark\n\n");
+            var text = new StringBuilder($"# {model} benchmark\n\n");
             text.AppendLine("Median across repetitions; brackets show min–max. Latency units: microseconds. † = emulated.");
             text.AppendLine("Only verified, error-free, ranked targets enter performance tables and ratios. Missing verification blocks performance.\n");
-            foreach (var cohort in model.GroupBy(Cohort))
+            var modelRows = results.Where(r => r.Model == model).ToArray();
+            RenderFailures(model, failures.Where(f => f.Model == model).ToArray(), text, findings);
+            if (modelRows.Length == 0) text.AppendLine("No benchmark metrics were produced. This is failed execution evidence, not a performance result.\n");
+            foreach (var cohort in modelRows.GroupBy(Cohort))
                 Render(cohort.Key, cohort.ToArray(), text, findings);
-            await File.WriteAllTextAsync(Path.Combine(output, model.Key + ".md"), text.ToString(), token).ConfigureAwait(false);
+            await File.WriteAllTextAsync(Path.Combine(output, model + ".md"), text.ToString(), token).ConfigureAwait(false);
         }
         await ResultFiles.WriteAsync(Path.Combine(output, "findings.json"), findings, ResultJsonContext.Default.ListFinding, token).ConfigureAwait(false);
         return findings;
     }
 
+    private sealed record OrchestrationFailure(string Model, string Target, string Phase, string Error, double Seconds);
+    private static void RenderFailures(string model, OrchestrationFailure[] failures, StringBuilder text, List<Finding> findings)
+    {
+        if (failures.Length == 0) return;
+        text.AppendLine("## Failed orchestration phases\n");
+        text.AppendLine("These phases may have terminated before producing result JSON. See the phase console log and receipt for details.\n");
+        text.AppendLine("| Target | Phase | Seconds | Error |");
+        text.AppendLine("|---|---|---:|---|");
+        foreach (var failure in failures)
+        {
+            text.AppendLine($"| {E(failure.Target)} | {E(failure.Phase)} | {N(failure.Seconds)} | {E(failure.Error)} |");
+            findings.Add(new(model, "orchestration", failure.Target, "phase-error", failure.Phase, failure.Error, failure.Seconds));
+        }
+        text.AppendLine();
+    }
     private static string Cohort(BenchmarkResult r)
         => $"{r.DatasetManifestSha256}|seed={r.Seed}|engine={r.Budget.Cpus}/{r.Budget.MemoryBytes}|official={r.Official}|benchmarks={r.Environment.BenchmarksCommit}|cohesion={string.Join(",", r.Environment.CohesionBuiltCommits)}";
 
@@ -62,8 +93,16 @@ public static class ReportGenerator
         string model = rows[0].Model;
         text.AppendLine($"## Dataset {rows[0].DatasetManifestSha256}, SF {N(rows[0].Scale)}\n");
         text.AppendLine($"Budget: {N(rows[0].Budget.Cpus)} CPUs / {rows[0].Budget.MemoryBytes} bytes; official: {rows[0].Official}.\n");
+        text.AppendLine("Observed container limits (0 = unknown or unbounded):\n");
+        text.AppendLine("| Target | Engine CPUs | Engine bytes | Driver bytes |");
+        text.AppendLine("|---|---:|---:|---:|");
+        foreach (var run in rows.DistinctBy(r => r.Target.Id))
+            text.AppendLine($"| {E(run.Target.Id)} | {N(run.Budget.Cpus)} | {run.Budget.MemoryBytes} | {run.Budget.DriverMemoryBytes} |");
+        text.AppendLine();
         var targets = rows.Select(r => r.Target).DistinctBy(t => t.Id).OrderBy(t => t.Id, StringComparer.Ordinal).ToArray();
-        var verification = rows.Where(r => r.Verification != null).Select(r => r.Verification!).ToArray();
+        // Suites embed the same verification file; compare identical evidence once, retaining conflicting attempts.
+        var verification = rows.Where(r => r.Verification != null).Select(r => r.Verification!)
+            .DistinctBy(v => JsonSerializer.Serialize(v, ResultJsonContext.Default.VerificationFile)).ToArray();
         var mismatches = VerificationRunner.Compare(verification);
         var blocked = new HashSet<string>(StringComparer.Ordinal);
         foreach (var target in targets)

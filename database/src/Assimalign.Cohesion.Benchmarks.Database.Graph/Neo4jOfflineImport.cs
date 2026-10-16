@@ -16,8 +16,10 @@ internal static class Neo4jOfflineImport
 {
     internal static async Task<List<LoadMetric>> RunAsync(TargetOptions options, DatasetManifest manifest, string directory, CancellationToken token)
     {
-        if (!OperatingSystem.IsWindows()) throw new NotSupportedException("Full Neo4j import is host-orchestrated: run dbbench load on the Podman host, then use the network driver for verification/runs.");
-        string output = Path.Combine(Path.GetFullPath(directory), ".neo4j-import");
+        string? control = Environment.GetEnvironmentVariable("DBBENCH_IMPORT_CONTROL");
+        string output = Environment.GetEnvironmentVariable("DBBENCH_IMPORT_DIRECTORY") ?? Path.Combine(Path.GetFullPath(directory), ".neo4j-import");
+        if (!OperatingSystem.IsWindows() && control is null)
+            throw new InvalidOperationException("Neo4j offline import requires the official host bridge and a writable named import volume.");
         Directory.CreateDirectory(output);
         string cancellationFile = Path.Combine(output, "cancel-import");
         if (File.Exists(cancellationFile)) File.Delete(cancellationFile);
@@ -59,6 +61,18 @@ internal static class Neo4jOfflineImport
         await File.WriteAllTextAsync(Path.Combine(output, "arguments.json"), JsonSerializer.Serialize(arguments), token);
         watch.Stop();
         var metrics = new List<LoadMetric> { new("social", "import-conversion", "SocialSchema typed CSV; epoch milliseconds", count, bytes, watch.Elapsed.TotalSeconds) };
+        if (control is not null)
+        {
+            Directory.CreateDirectory(control);
+            await File.WriteAllTextAsync(Path.Combine(control, "import.request.json"), "{\"ready\":true}", token);
+            string receiptPath = Path.Combine(control, "import.receipt.json");
+            Console.WriteLine("NEO4J IMPORT: converted dataset; waiting for host offline import (no deadline).");
+            while (!File.Exists(receiptPath)) await Task.Delay(1000, token);
+            using var bridge = JsonDocument.Parse(await File.ReadAllTextAsync(receiptPath, token));
+            if (bridge.RootElement.TryGetProperty("error", out var error)) throw new InvalidOperationException("Offline import failed: " + error.GetString());
+            metrics.Add(new("social", "ingest", "neo4j-admin database import full; dataset and converted CSV in named volumes", count, bytes, bridge.RootElement.GetProperty("seconds").GetDouble()));
+            return metrics;
+        }
         string script = Path.Combine("database", "engines", "neo4j", "Import-Neo4j.ps1");
         var start = new ProcessStartInfo("pwsh") { UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true };
         foreach (string argument in new[] { "-NoProfile", "-File", script, "-Container", options.Container ?? throw new ArgumentException("Neo4j import needs --container."), "-InputDirectory", output, "-CancellationFile", cancellationFile }) start.ArgumentList.Add(argument);

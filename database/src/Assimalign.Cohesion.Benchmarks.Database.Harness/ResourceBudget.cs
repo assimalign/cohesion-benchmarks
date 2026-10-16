@@ -5,8 +5,7 @@ using System.Text.Json;
 namespace Assimalign.Cohesion.Benchmarks.Database.Harness;
 
 /// <summary>Resource budget attached to a run; observed container limits are captured independently.</summary>
-public sealed record ResourceBudget(double Cpus = 3, long MemoryBytes = 6L * 1024 * 1024 * 1024,
-    long DriverMemoryBytes = 3L * 1024 * 1024 * 1024)
+public sealed record ResourceBudget(double Cpus = 0, long MemoryBytes = 0, long DriverMemoryBytes = 0)
 {
     /// <summary>Records actual limits for development as well as official runs. Zero means unbounded or unobserved.</summary>
     public static ResourceBudget Observe(EnvironmentSnapshot snapshot, bool embedded)

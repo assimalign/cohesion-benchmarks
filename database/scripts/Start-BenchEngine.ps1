@@ -5,14 +5,16 @@ param(
     [ValidatePattern('^[1-9][0-9]*[mg]$')][string]$Memory = '6g',
     [string]$Suffix = '',
     [switch]$Recreate,
-    [ValidateRange(5, 1800)][int]$TimeoutSeconds = 180,
-    [string]$Tag = 'dev'
+    # Zero permits large stores to finish opening without a wall-clock deadline.
+    [ValidateRange(0, 86400)][int]$TimeoutSeconds = 180,
+    [string]$Tag = 'dev',
+    [ValidatePattern('^dbbench-[a-z0-9-]+$')][string]$DataVolume
 )
 . (Join-Path $PSScriptRoot 'BenchEngine.Common.ps1')
 $engine = Get-BenchTarget $Target $Suffix
 if ($engine.kind -eq 'embedded') { Write-Output "embedded:$($engine.volume)$Suffix"; return }
 $name = $engine.containerName + $Suffix
-$volume = $engine.volume + $Suffix
+$volume = if ($DataVolume) { $DataVolume } else { $engine.volume + $Suffix }
 & podman network exists dbbench
 if ($LASTEXITCODE -ne 0) { Invoke-Podman @('network', 'create', '--label', 'dbbench.shared=true', 'dbbench') | Out-Null }
 & podman volume exists $volume
@@ -65,6 +67,8 @@ try {
     Invoke-Podman $runArgs.ToArray() | Out-Null
     $created = $true
     $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+    $watch = [Diagnostics.Stopwatch]::StartNew()
+    $nextProgress = 30
     do {
         $state = Invoke-Podman @('inspect', '--format', '{{.State.Status}}', $name)
         if ($state -ne 'running') { throw "$name is $state." }
@@ -104,8 +108,12 @@ try {
             Write-Output $endpoint
             return
         }
+        if ($watch.Elapsed.TotalSeconds -ge $nextProgress) {
+            Write-Host "$([DateTimeOffset]::UtcNow.ToString('O')) WAITING $name readiness elapsed=$([int]$watch.Elapsed.TotalSeconds)s (container is running)"
+            $nextProgress = $watch.Elapsed.TotalSeconds + 30
+        }
         Start-Sleep -Seconds 1
-    } while ([DateTime]::UtcNow -lt $deadline)
+    } while ($TimeoutSeconds -eq 0 -or [DateTime]::UtcNow -lt $deadline)
     throw "$name readiness timed out after $TimeoutSeconds seconds."
 } catch {
     if ($created) {

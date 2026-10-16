@@ -68,12 +68,11 @@ internal sealed class SqlParameterStream : IParameterStream
     private SqlWorkloadParameters UpdateCustomer()
     {
         long id = Partitioned(commerce.Customers);
-        var parameters = P(("id", id), ("city", "Benchmark City " + random.Int(1, 20)), ("original", commerce.Customer(id).City.Name));
+        var parameters = P(("id", id), ("city", "Benchmark City " + random.Int(1, 20)));
         return new()
         {
             Statements = [new("UPDATE customers SET city = @city WHERE customer_id = @id", parameters)],
-            Verification = [new("SELECT customer_id, city FROM customers WHERE customer_id = @id", parameters)],
-            Restore = [new("UPDATE customers SET city = @original WHERE customer_id = @id", parameters)]
+            Verification = [new("SELECT customer_id, city FROM customers WHERE customer_id = @id", parameters)]
         };
     }
 
@@ -84,9 +83,9 @@ internal sealed class SqlParameterStream : IParameterStream
         long slots = (commerce.Orders - 1 - client) / context.Concurrency + 1;
         long order = client + 1 + context.Concurrency * (seq % slots);
         long shipment = context.WriteId(maximum["shipments"], client, seq);
-        short history = checked((short)(6 + seq / slots + (context.Warmup ? 15000 : 0)));
+        long history = context.WriteId(5, client, seq);
         var parameters = P(("id", order), ("shipment", shipment), ("seq", history), ("warehouse", (long)random.Int(1, 20)),
-            ("time", DatasetTime.End.AddDays(1).AddSeconds(seq % 86400)), ("original", commerce.Order(order).Status),
+            ("time", DatasetTime.End.AddDays(1).AddSeconds(seq % 86400)),
             ("tracking", "BENCH-" + shipment.ToString(CultureInfo.InvariantCulture)));
         return new()
         {
@@ -102,12 +101,6 @@ internal sealed class SqlParameterStream : IParameterStream
                 new("SELECT order_id, status FROM orders WHERE order_id = @id", parameters),
                 new("SELECT * FROM shipments WHERE shipment_id = @shipment", parameters),
                 new("SELECT * FROM order_status_history WHERE order_id = @id AND seq = @seq", parameters)
-            ],
-            Restore =
-            [
-                new("DELETE FROM shipments WHERE shipment_id = @shipment", parameters),
-                new("DELETE FROM order_status_history WHERE order_id = @id AND seq = @seq", parameters),
-                new("UPDATE orders SET status = @original WHERE order_id = @id", parameters)
             ]
         };
     }
@@ -122,7 +115,6 @@ internal sealed class SqlParameterStream : IParameterStream
         decimal subtotal = 0;
         var inserts = new List<SqlStatement>();
         var updates = new List<SqlStatement>();
-        var restore = new List<SqlStatement>();
         for (short line = 1; line <= lines; line++)
         {
             long product = Partitioned(commerce.Products), warehouse = 1 + product % 20;
@@ -132,7 +124,6 @@ internal sealed class SqlParameterStream : IParameterStream
             var item = P(("id", id), ("line", line), ("product", product), ("quantity", quantity), ("price", price), ("total", total), ("warehouse", warehouse));
             inserts.Add(new("INSERT INTO order_items (order_id,line_no,product_id,quantity,unit_price,discount,line_total) VALUES (@id,@line,@product,@quantity,@price,0,@total)", item));
             updates.Add(new("UPDATE inventory SET quantity_on_hand = quantity_on_hand - @quantity WHERE warehouse_id = @warehouse AND product_id = @product", item));
-            restore.Add(new("UPDATE inventory SET quantity_on_hand = quantity_on_hand + @quantity WHERE warehouse_id = @warehouse AND product_id = @product", item));
         }
         decimal tax = decimal.Round(subtotal * 0.07m, 2, MidpointRounding.AwayFromZero);
         var p = P(("id", id), ("customer", customer), ("time", time), ("subtotal", subtotal), ("tax", tax),
@@ -145,10 +136,9 @@ internal sealed class SqlParameterStream : IParameterStream
         statements.Add(new("INSERT INTO payments (payment_id,order_id,method,amount,status,paid_at,provider_ref) VALUES (@payment,@id,'card',@total,'succeeded',@time,@reference)", p));
         statements.Add(new("INSERT INTO order_status_history (order_id,seq,status,occurred_at,note) VALUES (@id,1,'paid',@time,NULL)", p));
         statements.AddRange(updates);
-        foreach (string table in new[] { "order_items", "payments", "order_status_history", "orders" }) restore.Add(new("DELETE FROM " + table + " WHERE order_id = @id", p));
         return new()
         {
-            Transaction = true, Statements = statements.ToArray(), Restore = restore.ToArray(),
+            Transaction = true, Statements = statements.ToArray(),
             Verification =
             [
                 new("SELECT * FROM orders WHERE order_id = @id", p),

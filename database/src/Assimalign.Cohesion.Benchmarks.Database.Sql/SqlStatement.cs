@@ -21,8 +21,8 @@ public sealed class SqlStatement : IDisposable
     {
         Text = text;
         Parameters = parameters ?? Empty;
-        PostgreSql = new(postgresql ?? text) { CommandTimeout = 600 };
-        SqlServer = new(tsql ?? text) { CommandTimeout = 600 };
+        PostgreSql = new(postgresql ?? text) { CommandTimeout = 0 };
+        SqlServer = new(tsql ?? text) { CommandTimeout = 0 };
         Cohesion = new(text);
         foreach (var pair in Parameters)
         {

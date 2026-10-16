@@ -1,7 +1,10 @@
 # Marketplace Documents benchmark
 
-R3 compares `cohesion-documents-embedded`, `mongodb`, `ravendb`, and the unranked
-`cosmos-emulator`. Cohesion source is pinned to `bf20be5eb`; benchmark foundation is
+R5 official commands and resume behavior are in [RUNBOOK.md](RUNBOOK.md); the SF 0.1 evidence, memory
+diagnostics and SF10 planning estimates are in [REHEARSAL-R5.md](REHEARSAL-R5.md). The R2/R3/R4 execution
+records below describe their original runs.
+
+R3 compares `cohesion-documents-embedded`, `mongodb`, and `ravendb`. Cohesion source is pinned to `bf20be5eb`; benchmark foundation is
 `87afd6d`. Cohesion Documents runs only in process. Its source worktree is read-only.
 
 ## Semantics and support
@@ -18,19 +21,19 @@ Date intervals are `[start, end)`. Revenue is `sum(item.quantity * item.price)`,
 all statuses, over a fixed 30-day interval; the first interval ends at 2026-01-01T00:00:00Z,
 and later cases step back in 30-day increments. Monetary values remain decimal.
 
-| Operation | Output and total order | Cohesion | MongoDB | RavenDB | Cosmos emulator |
-|---|---|---|---|---|---|
-| doc.order-by-id | O; at most one | native | native | native | native |
-| doc.products-multiget | P; id ASC | emulated | native | native | native |
-| doc.customer-recent-orders | O; placedAt DESC, id ASC; 20 | emulated | native | native | native |
-| doc.products-by-category-price | P; id ASC; 50; category AND any variant price <= bound | unsupported | native | native | native |
-| doc.orders-status-range | `("count", count)` then O; placedAt ASC, id ASC; 25 | emulated | native | native | emulated |
-| doc.products-name-prefix | P; name ASC, id ASC; 50 | emulated | native | native | native |
-| doc.revenue-by-category-30d | `(category, revenue)`; category ASC | emulated | native | emulated | emulated |
-| doc.insert-order | O read back during verification | native | native | native | native |
-| doc.patch-order-status | id, status, history length, last status, last occurredAt | emulated | native | native | native |
-| doc.adjust-variant-stock | id, variant index 0, sku, stock | emulated | native | native | native |
-| doc.replace-customer | every scalar leaf, sorted property paths; array lengths and indexed leaves | native | native | native | native |
+| Operation | Output and total order | Cohesion | MongoDB | RavenDB |
+|---|---|---|---|---|
+| doc.order-by-id | O; at most one | native | native | native |
+| doc.products-multiget | P; id ASC | emulated | native | native |
+| doc.customer-recent-orders | O; placedAt DESC, id ASC; 20 | emulated | native | native |
+| doc.products-by-category-price | P; id ASC; 50; category AND any variant price <= bound | unsupported | native | native |
+| doc.orders-status-range | `("count", count)` then O; placedAt ASC, id ASC; 25 | emulated | native | native |
+| doc.products-name-prefix | P; name ASC, id ASC; 50 | emulated | native | native |
+| doc.revenue-by-category-30d | `(category, revenue)`; category ASC | emulated | native | emulated |
+| doc.insert-order | O read back during verification | native | native | native |
+| doc.patch-order-status | id, status, history length, last status, last occurredAt | emulated | native | native |
+| doc.adjust-variant-stock | id, variant index 0, sku, stock | emulated | native | native |
+| doc.replace-customer | every scalar leaf, sorted property paths; array lengths and indexed leaves | native | native | native |
 
 Read-back checks for writes run only when a verification sink is supplied; the measured operation
 ends after its durable write acknowledgment and response consumption. Engine metadata is never
@@ -54,9 +57,7 @@ Evidence for Cohesion, relative to `COHESION_ROOT/resources/Database/`:
   nonunique indexes; no compound, multikey, unique or expression indexes.
 
 RavenDB revenue performs the same allowed aggregation completion over an explicitly indexed
-date selection. Cosmos status-range counts and pages the engine-selected, ordered rows.
-Cosmos revenue performs SUM/GROUP BY on the server, then orders the category groups in the client.
-Those completions are included in measured time and marked emulated.
+date selection. This completion is included in measured time and marked emulated.
 
 ## Queries and mutation requests
 
@@ -164,51 +165,11 @@ Exact string index fields plus `exact(startsWith(...))` prevent lowercase analys
 vendor's [starts-with semantics](https://ravendb.net/docs/article-page/7.0/Csharp/client-api/session/querying/text-search/starts-with-query)
 and [raw bulk serializer convention](https://ravendb.net/docs/article-page/7.1/Csharp/client-api/configuration/serialization).
 
-### Cosmos emulator SQL / API
-
-Each collection has its own container and partition key `/id`. Cosmos cannot reliably address
-IDs containing `/`; the original key is stored as `key`, and transport `id` is reversible
-base64url. All result projections return `key AS id`. This is a transport representation change,
-not a flattened-array or query-predicate workaround. See Microsoft's
-[invalid ID guidance](https://learn.microsoft.com/en-us/azure/cosmos-db/troubleshoot-not-found).
-
-Bulk mode is enabled on the loader's gateway client. Individual workload operations use a
-separate ordinary gateway client, so their latency does not include SDK bulk batching delays.
-This follows the vendor's [bulk-mode guidance](https://learn.microsoft.com/en-us/azure/cosmos-db/performance-tips-dotnet-sdk-v3).
-
-```text
-order-by-id: ReadItemStreamAsync(encodedKey, PartitionKey(encodedKey))
-products-multiget:
- SELECT P FROM c WHERE c.key IN (@id0,...,@id9) ORDER BY c.key
-customer-recent-orders:
- SELECT O FROM c WHERE c.customer.id = @customer
- ORDER BY c.placedAt DESC, c.key ASC OFFSET 0 LIMIT 20
-products-by-category-price:
- SELECT P FROM c WHERE c.category = @category
- AND EXISTS(SELECT VALUE v FROM v IN c.variants WHERE v.price <= @price)
- ORDER BY c.key OFFSET 0 LIMIT 50
-orders-status-range:
- SELECT O FROM c WHERE c.status = @status AND c.placedAt >= @start AND c.placedAt < @end
- ORDER BY c.placedAt, c.key
- (client counts and takes 25)
-products-name-prefix:
- SELECT P FROM c WHERE STARTSWITH(c.name, @prefix, false)
- ORDER BY c.name, c.key OFFSET 0 LIMIT 50
-revenue-by-category-30d:
- SELECT i.category, SUM(i.quantity * i.price) AS revenue FROM c JOIN i IN c.items
- WHERE c.placedAt >= @start AND c.placedAt < @end GROUP BY i.category
- (client orders groups)
-insert-order: CreateItemStreamAsync
-replace-customer: ReplaceItemStreamAsync
-patch-order-status: Patch(Set /status, Add /statusHistory/-)
-adjust-variant-stock: Patch(Increment /variants/0/stock)
-```
-
 ## Indexes, durability, and load paths
 
 The required marketplace secondary indexes are present with these explicit differences. All
 engines also get a standalone placedAt index for the revenue selection. The write collections
-receive the same supported definitions. Id/key tie-breaker fields in Raven/Cosmos indexes allow
+receive the same supported definitions. Id/key tie-breaker fields in RavenDB indexes allow
 the required server-side total order. No inferred/automatic Raven indexes are allowed.
 
 | Engine | Definitions / physical differences | Load path |
@@ -216,26 +177,22 @@ the required server-side total order. No inferred/automatic Raven indexes are al
 | Cohesion | `CREATE INDEX ix_customer_id ON orders(customer.id)`, `ix_placedAt ON orders(placedAt)`, `ix_status ON orders(status)`; products(category), products(name); reviews(productId), reviews(createdAt). Single-path alternatives to compounds; no variant-price array index. | JSONL bytes, PutAsync in explicit transactions of up to `--batch` docs. Representative disposable-database probes compare 1 and up to 4 concurrent sessions with the same batch size. Use faster result; report both probes as samples. OQL indexes after ingest. |
 | MongoDB | orders(customer.id ASC, placedAt DESC), orders(status ASC, placedAt ASC), orders(placedAt ASC); products(category ASC, variants.price ASC) multikey; products(name ASC); reviews(productId ASC, createdAt ASC). | Direct JSONL-to-BSON conversion; unordered InsertMany batches; up to four concurrent parts. Indexes after ingest. |
 | RavenDB | Explicit CustomerDate, StatusDate, Date, CategoryPrice, Name, ProductDate map indexes; string keys/category/name/status indexed Exact; Prices is variants.Select(v=>v.price). | One BulkInsert per active part worker, up to four; raw JSON into explicit @collection. Index submission and non-stale wait timed separately. Index errors/Auto indexes fail load. |
-| Cosmos emulator | Explicit scalar and array paths, order/date/name composites and key ties; category and array-price indexes are separate because composite indexes cannot contain an array path. | Gateway, bulk enabled, 16 concurrent CreateItemStreamAsync calls. Request consistent indexing after load and record the returned policy/progress; the emulator may ignore the update. No silent manifest truncation. |
 
-Full policies live in `engines/{mongodb,ravendb,cosmos-emulator}/INDEXES.md` and the target source.
-The emulator accepts custom index policies but does not optimize queries with them, according
-to its [feature support documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/emulator-linux).
-Its timings and index-build behavior therefore cannot represent the service.
+Full policies live in `engines/{mongodb,ravendb}/INDEXES.md` and the target source.
 
 Cohesion uses `BufferPoolCapacity=3221225472`, `StorageCommitDurability.Synchronous`, and other
 defaults. Mongo uses `w:1,j:true` and simple collation. Raven keeps its durable storage defaults.
-Smoke Mongo/Raven containers have 3 CPUs, 2 GiB and equal memory-swap; Cosmos uses 3 GiB.
+Smoke Mongo/Raven containers have 3 CPUs, 2 GiB and equal memory-swap.
 The embedded Linux driver has 3 CPUs, 6 GiB and equal memory-swap. Windows runs are development
 smokes without cgroup limits; do not treat their timings as comparable official results.
-The generic report's budget header remains the harness's nominal 6 GiB budget; the actual
-development limits are recorded in each server's container inspection and in this document.
+R5 reports budgets from observed cgroup/container limits, including older smoke records; unknown limits
+remain zero rather than inheriting the official 6 GiB default.
 
 Storage is measured immediately after finalization: Cohesion sums its database directory
 (including its log files), Mongo reports `dbStats.storageSize + indexSize`, and Raven reports
 `SizeOnDisk.SizeInBytes`. These engine-reported quantities have different allocation, journal,
 compression, and checkpoint accounting. They are diagnostic sizes, not a storage-efficiency
-ranking. The emulator cannot supply a trustworthy size, as detailed below.
+ranking.
 
 ## Mutation isolation and repeatability
 
@@ -266,7 +223,6 @@ $smoke = './database/tests/Assimalign.Cohesion.Benchmarks.Database.Tests/Documen
 & $smoke -Target cohesion-documents-embedded
 & $smoke -Target mongodb
 & $smoke -Target ravendb
-& $smoke -Target cosmos-emulator
 & $smoke -Target cohesion-documents-embedded -Driver
 ```
 
@@ -277,11 +233,8 @@ and volumes in finally. Latency and throughput each use one repetition. Linux dr
 reports live in separate artifact directories. Raw datasets/results/logs are not committed.
 The script records other sessions' containers at startup without stopping them. Any overlap and
 host CPU noise make these development observations unsuitable for official rankings.
-The Linux driver independently regenerates the JSONL data, checks its complete manifest
-against the Windows manifest after removing only CR from the latter, and then uses the exact
-Windows manifest bytes. This checks identical metadata and part hashes before loading. It
-avoids the foundation serializer's platform-newline difference without changing any recorded
-result digest, normalizer, or comparator.
+The Linux driver independently regenerates the JSONL data and compares manifest bytes directly. R5 fixes
+the writer to emit LF on every platform; it no longer copies or normalizes Windows manifests.
 
 ## SF0.01 smoke record — 2026-10-15
 
@@ -292,17 +245,16 @@ Seed `20261015`; 1,500 customers, 1,000 products, 2,500 orders, 1,500 reviews: 6
 The executable build was `60040cc7a2fcb75d0aafad275beb1f6839e83d7e`, with only this document and
 the smoke script uncommitted at image-build time. Cohesion binaries identify
 `bf20be5eb452fa57363f412bdcff36b2dc2e7edd`. Windows was ARM64, Windows 10.0.28000; the Linux
-driver was ARM64, Ubuntu 24.04.5. Server versions were MongoDB 8.0.34, RavenDB 7.1.12, and the
-catalog-pinned Cosmos `vnext-preview` with SDK 3.63.2. Driver image ID:
+driver was ARM64, Ubuntu 24.04.5. Server versions were MongoDB 8.0.34 and RavenDB 7.1.12. Driver image ID:
 `b847f85d6612c8e2b3bcd48708a27db7881edd2e6833a26042739a3baaa102ff`.
 
-All five paths verified: 1,000 cases on each Cohesion platform, and 1,100 on each other engine,
-5,300 total. The combined comparison returned **0 mismatches**. Each engine returned zero rows
+The retained four paths verified: 1,000 cases on each Cohesion platform, and 1,100 on each other engine,
+4,200 total across the retained paths. The combined comparison returned **0 mismatches**. Each engine returned zero rows
 for all 25 uppercase prefix probes. The unsupported Cohesion array-price operation was reported
 as unsupported, never as an empty successful result.
 
 The Linux result captures `memory.max=6442450944`, `cpu.max=300000 100000`, and `memory.swap.max=0`.
-The Windows target results capture the servers' actual 2 GiB limits (3 GiB for Cosmos), while
+The Windows target results capture the servers' actual 2 GiB limits, while
 embedded Windows remains uncapped. Other sessions' Graph containers overlapped some passes.
 These are functional development smokes with one repetition and 20 latency samples per operation,
 not publishable performance rankings. The original Linux run, retained separately, also had
@@ -317,39 +269,38 @@ below was required for cross-platform comparison, not selected by speed.
 | Cohesion Linux | 0.559 | 0.479 | 1.038 | 26928736 |
 | MongoDB | 0.930 | 0.199 | 1.129 | 479232 |
 | RavenDB | 0.980 | 4.353 | 5.333 | 138944512 |
-| Cosmos emulator (unranked) | 44.406 | 0.085 | 44.491 | unavailable |
 
 ### Latency p50, microseconds
 
-| Operation | Cohesion Windows | Cohesion Linux | MongoDB | RavenDB | Cosmos emulator (unranked) |
-|---|---:|---:|---:|---:|---:|
-| doc.order-by-id | 474 | 1001 | 542 | 514 | 2101 |
-| doc.products-multiget | 4027 | 20223 | 1590 | 1572 | 94399 |
-| doc.customer-recent-orders | 1479 | 10463 | 417 | 691 | 74175 |
-| doc.products-by-category-price | unsupported | unsupported | 916 | 1640 | 28399 |
-| doc.orders-status-range | 76543 | 146175 | 4347 | 3871 | 149375 |
-| doc.products-name-prefix | 509 | 12463 | 330 | 440 | 23599 |
-| doc.revenue-by-category-30d | 1386 | 39071 | 393 | 1559 | 75647 |
-| doc.insert-order | 470 | 15367 | 1680 | 3173 | 3453 |
-| doc.patch-order-status | 1318 | 19279 | 863 | 3653 | 11231 |
-| doc.adjust-variant-stock | 1088 | 16367 | 856 | 3451 | 33695 |
-| doc.replace-customer | 494 | 9015 | 6219 | 1586 | 24751 |
+| Operation | Cohesion Windows | Cohesion Linux | MongoDB | RavenDB |
+|---|---:|---:|---:|---:|
+| doc.order-by-id | 474 | 1001 | 542 | 514 |
+| doc.products-multiget | 4027 | 20223 | 1590 | 1572 |
+| doc.customer-recent-orders | 1479 | 10463 | 417 | 691 |
+| doc.products-by-category-price | unsupported | unsupported | 916 | 1640 |
+| doc.orders-status-range | 76543 | 146175 | 4347 | 3871 |
+| doc.products-name-prefix | 509 | 12463 | 330 | 440 |
+| doc.revenue-by-category-30d | 1386 | 39071 | 393 | 1559 |
+| doc.insert-order | 470 | 15367 | 1680 | 3173 |
+| doc.patch-order-status | 1318 | 19279 | 863 | 3653 |
+| doc.adjust-variant-stock | 1088 | 16367 | 856 | 3451 |
+| doc.replace-customer | 494 | 9015 | 6219 | 1586 |
 
 ### Throughput operations/second, clients 1 / 8
 
-| Operation | Cohesion Windows | Cohesion Linux | MongoDB | RavenDB | Cosmos emulator (unranked) |
-|---|---:|---:|---:|---:|---:|
-| doc.order-by-id | 2583.2 / 2568.8 | 128.2 / 43.7 | 2350.8 / 19617.0 | 2685.7 / 11256.1 | 108.2 / 677.4 |
-| doc.products-multiget | 289.8 / 269.8 | 10.8 / 37.6 | 2277.6 / 9321.3 | 667.9 / 3184.4 | 5.7 / 13.1 |
-| doc.customer-recent-orders | 287.0 / 1358.2 | 171.2 / 233.5 | 643.5 / 6215.1 | 1049.6 / 3734.6 | 11.1 / 30.2 |
-| doc.products-by-category-price | unsupported | unsupported | 624.3 / 4687.2 | 497.8 / 390.9 | 18.8 / 94.8 |
-| doc.orders-status-range | 11.9 / 43.1 | 27.4 / 48.1 | 1654.7 / 11140.3 | 141.7 / 426.1 | 7.4 / 18.2 |
-| doc.products-name-prefix | 1553.3 / 2502.0 | 656.9 / 66.7 | 2536.4 / 19920.8 | 519.7 / 3803.7 | 26.1 / 32.1 |
-| doc.revenue-by-category-30d | 496.3 / 2299.9 | 51.0 / 277.2 | 1704.1 / 9371.3 | 394.2 / 917.4 | 7.2 / 25.8 |
-| doc.insert-order | 1974.7 / 1797.2 | 123.8 / 440.9 | 620.7 / 1183.7 | 41.8 / 312.4 | 231.3 / 614.0 |
-| doc.patch-order-status | 131.2 / 296.3 | 23.5 / 20.6 | 355.1 / 1696.9 | 27.4 / 72.6 | 107.5 / 347.9 |
-| doc.adjust-variant-stock | 254.7 / 478.3 | 39.6 / 219.6 | 704.3 / 3608.9 | 13.6 / 65.7 | 45.1 / 354.6 |
-| doc.replace-customer | 348.0 / 651.7 | 19.8 / 49.0 | 403.3 / 2100.0 | 52.5 / 325.8 | 224.5 / 358.3 |
+| Operation | Cohesion Windows | Cohesion Linux | MongoDB | RavenDB |
+|---|---:|---:|---:|---:|
+| doc.order-by-id | 2583.2 / 2568.8 | 128.2 / 43.7 | 2350.8 / 19617.0 | 2685.7 / 11256.1 |
+| doc.products-multiget | 289.8 / 269.8 | 10.8 / 37.6 | 2277.6 / 9321.3 | 667.9 / 3184.4 |
+| doc.customer-recent-orders | 287.0 / 1358.2 | 171.2 / 233.5 | 643.5 / 6215.1 | 1049.6 / 3734.6 |
+| doc.products-by-category-price | unsupported | unsupported | 624.3 / 4687.2 | 497.8 / 390.9 |
+| doc.orders-status-range | 11.9 / 43.1 | 27.4 / 48.1 | 1654.7 / 11140.3 | 141.7 / 426.1 |
+| doc.products-name-prefix | 1553.3 / 2502.0 | 656.9 / 66.7 | 2536.4 / 19920.8 | 519.7 / 3803.7 |
+| doc.revenue-by-category-30d | 496.3 / 2299.9 | 51.0 / 277.2 | 1704.1 / 9371.3 | 394.2 / 917.4 |
+| doc.insert-order | 1974.7 / 1797.2 | 123.8 / 440.9 | 620.7 / 1183.7 | 41.8 / 312.4 |
+| doc.patch-order-status | 131.2 / 296.3 | 23.5 / 20.6 | 355.1 / 1696.9 | 27.4 / 72.6 |
+| doc.adjust-variant-stock | 254.7 / 478.3 | 39.6 / 219.6 | 704.3 / 3608.9 | 13.6 / 65.7 |
+| doc.replace-customer | 348.0 / 651.7 | 19.8 / 49.0 | 403.3 / 2100.0 | 52.5 / 325.8 |
 
 ### Execution checks
 
@@ -359,7 +310,6 @@ below was required for cross-platform comparison, not selected by speed.
 | Cohesion Linux | 1000 | 200 | 27114 | 0 / 0 / 0 |
 | MongoDB | 1100 | 220 | 1027703 | 0 / 0 / 0 |
 | RavenDB | 1100 | 220 | 305983 | 0 / 0 / 0 |
-| Cosmos emulator (unranked) | 1100 | 220 | 33802 | 0 / 0 / 0 |
 
 ### Recorded high host CPU samples (at least 80%)
 
@@ -369,7 +319,6 @@ below was required for cross-platform comparison, not selected by speed.
 | Cohesion Linux | 0/2 | 0/19 | 0/254 |
 | MongoDB | unavailable | 7/13 | 89/243 |
 | RavenDB | 0/6 | 0/12 | 149/228 |
-| Cosmos emulator (unranked) | 6/44 | 2/20 | 141/231 |
 
 The Cohesion loader probes compared one versus four sessions over the same 6,500 documents:
 Windows 1.120 / 1.026 seconds; Linux 0.731 / 0.695 seconds. Both selected four sessions.
@@ -378,8 +327,7 @@ speedup. Console LOAD totals include the probes (Windows 4.441 seconds, Linux 2.
 whereas the load table and report ratios exclude their `IsSample=true` metrics.
 
 Raven finalization separates 3.887 seconds submitting static indexes from 0.465 seconds waiting
-for all indexes to become non-stale. Cosmos's 0.085 seconds is an index-policy request and
-observation, not proof of physical index construction.
+for all indexes to become non-stale.
 
 The Windows report contains 28 Cohesion findings: seven emulations, one unsupported operation,
 one load deficit, and 19 performance-threshold findings. The separate Linux report contains
@@ -397,7 +345,7 @@ repeat on an otherwise idle machine before attributing the regressions.
 
 Artifacts are under `database/artifacts/documents-r3-smoke/`: exact expanded command lines in
 `windows/*.commands.log` and `container/*.commands.log`; result JSON and verification files
-beside them; Markdown reports and findings in each `report/`; five-file comparison in
+beside them; Markdown reports and findings in each `report/`; historical comparison in
 `parity/comparison.json`. Artifacts and generated data are intentionally untracked.
 
 ### Cohesion status-range planning
@@ -416,38 +364,14 @@ selective. That is a source-supported explanation to investigate for the observe
 not a profiled attribution of all elapsed time. The adapter retains both required indexes and
 the correct query. No Cohesion wrong-result case was observed.
 
-### Emulator policy reproduction (pinned local preview image)
-
-On an empty database, `new ContainerProperties("probe", "/id")` with a consistent indexing
-policy, excluded path `/*`, and included paths `/key/?` and `/id/?` fails with HTTP 400:
-`The indexing policy is invalid or not supported by the Cosmos index engine (0x800A0B00)`.
-Removing the redundant `/id/?` path makes create and replace succeed; identity uses its built-in index.
-
-With `/key/?` and `/variants/[]/price/?` included, creating the container directly returns
-HTTP 500: `Database query failed: PostgresError(SqlState(E42601), None)`. Creating that container
-with indexing `None`, then replacing it with the identical consistent policy returns HTTP 200.
-The adapter follows the specified indexes-after-load path. `/variants/*` and `/variants/[]/*`
-also succeed on direct creation, but the adapter does not substitute those broader definitions.
-The source requests, responses and activity IDs are in the ignored policy-probe logs under
-`database/artifacts/documents-r3-cosmos-policy-probe*.log`. This is an emulator API discrepancy,
-not a claim about the Azure service.
-
-After loading 2,500 orders, `ReadContainerAsync(PopulateQuotaInfo=true)` returns
-`documentsSize=0;documentsCount=0;collectionSize=0`. The adapter therefore reports storage as
-unavailable. The harness already has nullable result storage, but its target contract returned
-only `long`; the minimal shared fix documents `-1` as unavailable and maps it to `null` in the
-CLI. A false zero is never used as a measured size. The exact header is preserved in
-`database/artifacts/documents-r3-cosmos-quota-probe.log`.
-
 ## Integration and earlier diagnostic attempts
 
 Shared changes are limited to the tests project's reference to the Documents model and the
 storage-unavailable contract/CLI mapping. All adapter, parameter, query, index and loader work
 lives in the owned Documents paths. Cohesion source remains unmodified.
 
-The transport key encoding for Cosmos, closest supported secondary indexes, additional shared
-placedAt index, and mutation fixture collections are explicit above. No result normalizer was
-changed. The emulator took all SF0.01 data at 3 GiB; no larger capacity limit is claimed.
+The closest supported secondary indexes, additional shared placedAt index, and mutation fixture
+collections are explicit above. No result normalizer was changed.
 
 Earlier diagnostic attempts are retained in ignored `database/artifacts/documents-*.log`:
 
@@ -455,14 +379,9 @@ Earlier diagnostic attempts are retained in ignored `database/artifacts/document
   and absence of QueryRow.GetDecimal. Those compile errors were fixed; subsequent Release
   builds passed with zero warnings and errors.
 - A generate command preceded completion of the first CLI build and failed to find dbbench;
-  it passed after awaiting the build. A later build overlapped this session's emulator load
-  and hit MSB3027/MSB3021 on its locked adapter DLL. Only that owned load was stopped; the
-  build and a fresh load then passed. Later build/run phases were kept sequential.
+  it passed after awaiting the build. Later build/run phases were kept sequential.
 - The first Raven prepare used GET /stats to discover a missing database and received HTTP
   503. It now uses GetDatabaseRecordOperation; load and all verification cases passed.
-- The first emulator finalization hit the explicit /id index rejection reproduced above.
-  The corrected policy passed. The standalone policy probe initially needed an explicit
-  Compile Include because the repository excludes artifacts from default source globs.
 - The first Windows Cohesion smoke completed verification, latency and throughput, then the
   script tried a cross-target compare with only one verification file. The CLI correctly
   rejected that comparison. The script now compares when at least two files exist; a report
@@ -473,12 +392,13 @@ Earlier diagnostic attempts are retained in ignored `database/artifacts/document
   `3b49219b7fff9b7f8e7d7667f9707288bce4f39c5f85ba4e14bed2a7352542eb`.
   Replacing CRLF with LF made the entire texts identical. The source is the default newline
   in `Datasets/IO/DatasetJsonContext.cs:6`, used by `DatasetManifestFile.cs:23`.
-  The owned smoke script now distributes one byte-identical manifest after checking metadata,
+  The R3 smoke distributed one byte-identical manifest after checking metadata,
   and the complete Linux pass was rerun. The original run is retained separately under
   `database/artifacts/documents-r3-linux-manifest-original`; no result file was rewritten.
   The helper's first attempt also exposed CRLF in the PowerShell here-string passed to
   `/bin/sh` (`set: Illegal option -`); converting that command text to LF fixed it, and its
-  finally block removed both temporary volumes before retrying.
+  finally block removed both temporary volumes before retrying. R5 replaces this workaround with explicit
+  LF JSON-writer newlines and verifies independently generated Windows/Linux manifest bytes.
 
 No tests were weakened or removed. The only skipped suite test is the pre-existing opt-in
 SF1 generation measurement, `Generate_ScaleOne_ReportsActualSizesAndCounts`.
@@ -498,21 +418,20 @@ The smoke script logs every expanded load, verify, run, compare, report, and dri
 | Same test command with `--filter FullyQualifiedName~Documents` (with and without `--no-build`) | First 7/0/0, then 8/0/0 after isolation coverage; final focused run 8/0/0. Logs: `documents-item4-tests*.log`, `documents-r3-verification-tests.log`. |
 | `./database/scripts/Build-BenchImages.ps1 -Tag r3` | Both image builds passed; final driver and server images embed the pinned Cohesion commit and optimized Release assemblies. Logs: `documents-r3-images-initial.log`, `documents-r3-images-final.log`. |
 | `CLI generate --model documents --scale 0.01 --threads 2 --out <artifact-root>/data` | 6,500 rows, 9,644,294 bytes; deterministic part hashes on both platforms. The first invocation ran before CLI build completion and was retried successfully. |
-| `Invoke-DocumentsSmoke.ps1 -Target mongodb`, `ravendb`, `cosmos-emulator` with `-Root database/artifacts/documents-r3-verification -VerifyOnly` | Real-engine load and 100-case verification passed for all supported operations; four-target comparison 0 mismatches after the fixes described above. Cohesion's earlier manual load/verify supplied the fourth file. |
-| `Invoke-DocumentsSmoke.ps1 -Target cohesion-documents-embedded`, `mongodb`, `ravendb`, `cosmos-emulator` | All final load, verify, latency, and throughput phases passed. Latency: 20 iterations, 1-second warm-up; throughput: clients 1 and 8, 10 seconds each, 1-second warm-up. The initial one-file compare guard was corrected without discarding measured results. |
+| `Invoke-DocumentsSmoke.ps1 -Target mongodb`, `ravendb` with `-Root database/artifacts/documents-r3-verification -VerifyOnly` | Real-engine load and 100-case verification passed for all supported operations; comparison 0 mismatches after the fixes described above. Cohesion's earlier manual load/verify supplied its file. |
+| `Invoke-DocumentsSmoke.ps1 -Target cohesion-documents-embedded`, `mongodb`, `ravendb` | All final load, verify, latency, and throughput phases passed. Latency: 20 iterations, 1-second warm-up; throughput: clients 1 and 8, 10 seconds each, 1-second warm-up. The initial one-file compare guard was corrected without discarding measured results. |
 | `Invoke-DocumentsSmoke.ps1 -Target cohesion-documents-embedded -Driver` | Original functional pass passed; metadata comparison exposed platform newlines. Canonical-input repeat passed all phases after the helper's CRLF fix. 3 CPUs, 6 GiB, zero swap. |
 | `CLI verify --compare database/artifacts/documents-r3-smoke/parity --out database/artifacts/documents-r3-smoke/parity/comparison.json` | Final: `VERIFY COMPARE: 0 mismatches.` Five files, 5,300 cases. First comparison rejected four dataset-hash pairs before canonical input was distributed. |
 | `CLI report --in database/artifacts/documents-r3-smoke/windows --out database/artifacts/documents-r3-smoke/windows/report` | Rendered `documents.md` and `findings.json`: 28 Cohesion findings, zero error/verification findings. |
 | Same report command with `container` in place of `windows` | Rendered both files: eight Cohesion support findings, zero error/verification findings. |
-| `dotnet run --project database/artifacts/cosmos-policy-probe/Probe.csproj -c Release -p:ShouldUnsetParentConfigurationAndPlatform=false` | Scratch build fixed after CS5001; probes reproduced the emulator policy and false-quota responses above. No production Cosmos account was used. |
-| Start/Stop engine scripts with `-Suffix -r3`, Mongo/Raven `-Memory 2g`, Cosmos `-Memory 3g`; stop with `-RemoveData` | Every owned server stopped with exit 0 and was removed with its volume. Driver containers used `--rm`; their two private volumes were removed in finally. Pulled/built images remain. |
+| Start/Stop engine scripts with `-Suffix -r3`, Mongo/Raven `-Memory 2g`; stop with `-RemoveData` | Every owned server stopped with exit 0 and was removed with its volume. Driver containers used `--rm`; their two private volumes were removed in finally. Pulled/built images remain. |
 
 The host's default SDK was an 11.0 preview targeting net10.0. The explicit MSBuild Release
 propagation property prevents referenced Cohesion projects from falling back to Debug. Every
 captured Cohesion assembly had `optimized=true`; no engine assembly was silently measured in Debug.
 
-Owner follow-ups: fix the shared manifest serializer's cross-platform newline contract; prioritize
+R5 fixes the shared manifest serializer's cross-platform newline contract. Owner follow-ups: prioritize
 Cohesion LIMIT, array predicates, compound/multivalue indexes, batch/patch APIs and selectivity-aware
 planning; investigate the Linux concurrency observations on an idle machine. Official larger-scale
 comparisons need matched resource budgets, isolated runs, more samples/repetitions, and consistent
-storage accounting. No emulator capacity beyond SF0.01 was tested.
+storage accounting.
