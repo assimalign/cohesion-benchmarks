@@ -1,5 +1,9 @@
 # Marketplace Documents benchmark
 
+R5 official commands and resume behavior are in [RUNBOOK.md](RUNBOOK.md); the SF 0.1 evidence, memory
+diagnostics and SF10 planning estimates are in [REHEARSAL-R5.md](REHEARSAL-R5.md). The R2/R3/R4 execution
+records below describe their original runs.
+
 R3 compares `cohesion-documents-embedded`, `mongodb`, and `ravendb`. Cohesion source is pinned to `bf20be5eb`; benchmark foundation is
 `87afd6d`. Cohesion Documents runs only in process. Its source worktree is read-only.
 
@@ -393,7 +397,8 @@ Earlier diagnostic attempts are retained in ignored `database/artifacts/document
   `database/artifacts/documents-r3-linux-manifest-original`; no result file was rewritten.
   The helper's first attempt also exposed CRLF in the PowerShell here-string passed to
   `/bin/sh` (`set: Illegal option -`); converting that command text to LF fixed it, and its
-  finally block removed both temporary volumes before retrying.
+  finally block removed both temporary volumes before retrying. R5 replaces this workaround with explicit
+  LF JSON-writer newlines and verifies independently generated Windows/Linux manifest bytes.
 
 No tests were weakened or removed. The only skipped suite test is the pre-existing opt-in
 SF1 generation measurement, `Generate_ScaleOne_ReportsActualSizesAndCounts`.

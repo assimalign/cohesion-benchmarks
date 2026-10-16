@@ -26,8 +26,9 @@ Latency uses one client per operation. Point defaults: 10 seconds warm-up, then 
 5,000 attempts. Analytics defaults: one warm-up and three attempts. Throughput uses closed-loop clients at
 1, 8, 32 for 30 seconds after 10 seconds warm-up. Mixed uses configured descriptor weights at 8 and 32 clients,
 with separate read-heavy (90/10) and balanced (50/50) mixes. The model owns the exact read/write weight totals.
-An unsupported weighted operation blocks an unfiltered mix. The official script logs and explicitly selects the common supported subset across every registered target, retaining a 90/10 or 50/50 read/write ratio and descriptor proportions within each class. Explicit --ops permits a
-documented comparable subset.
+An unsupported weighted operation blocks an unfiltered mix. The official script logs and explicitly selects
+the common supported subset across every registered target, retaining a 90/10 or 50/50 read/write ratio and
+descriptor proportions within each class. Explicit --ops permits a documented comparable subset.
 
 All clients finish warm-up before a shared measured start. Connection establishment and disposal are excluded.
 Per-operation latency measures exactly ExecuteAsync; wall throughput also includes driver parameter preparation
@@ -38,7 +39,11 @@ failed attempts. The first full pass uses one repetition; --repeat remains confi
 Deadlines are 30 seconds for point operations and 600 seconds for analytics. Adapters MUST propagate the token
 through all I/O and return only once cancellation has quiesced their operation. A canceled, failed or late
 completion is an error, never a histogram sample. Outer cancellation aborts the pass and drains client cleanup.
-Warm-up failures are counted separately and invalidate that operation's performance comparison. A timeout on the first measured execution stops further iterations of that group; in-flight peers drain. A mixed group stops too, since dropping a member would change its distribution. Loads have no wall-clock deadline and print progress every 30 seconds.
+Warm-up failures are counted separately and invalidate that operation's performance comparison. A timeout on
+the first measured execution stops further iterations of that group; in-flight peers drain. A mixed group stops
+too, since dropping a member would change its distribution. Loads have no wall-clock deadline and print
+progress every 30 seconds. Official engine startup also waits without a wall deadline while the container
+remains running, with readiness progress; exited containers fail immediately.
 
 The HDR layout tracks integer microseconds from 1 to 3,600,000,000, with 2,048 sub-buckets, giving three
 significant decimal digits. Values below one microsecond round up; values above one hour are errors.
@@ -101,7 +106,8 @@ memory, repository commits and actual Cohesion assembly informational commits. T
 DebuggableAttribute on loaded Cohesion assemblies and refuses official load/run with disabled JIT optimization.
 It does not infer optimization from a directory named Release.
 OfficialRunGuard also verifies the observed driver cgroup CPU/memory/swap limits and network engine inspect
-limits. Missing resource evidence or a development budget refuses the official label.
+limits. Missing resource evidence or a development budget refuses the official label. Report budget columns
+use observed limits, including development runs; absent evidence is unknown rather than an assumed 6 GiB.
 
 Native runs sample Windows total CPU or Linux /proc/stat and named-container podman stats at one Hz. In official
 driver runs, Measure-BenchHost.ps1 supplies Windows CPU plus Podman CPU/memory through the artifact telemetry
@@ -122,4 +128,6 @@ The best ranked engine sets 1×. Unranked targets appear in functional verificat
 Cohesion findings include ratios >=2 for operations, >=1.5 for load, all unsupported/emulated operations,
 errors (including warm-up) and verification failures. findings.json includes triggering numbers and evidence.
 Any failed repetition prevents the operation's successful repetitions from being selectively ranked.
-Missing verification blocks performance even for apparently fast results.
+Missing verification blocks performance even for apparently fast results. Orchestration failures appear even
+when a fatal process produced no result JSON. Repeated copies of identical verification evidence are counted
+once; conflicting evidence still fails. A rendered report is not a successful verification verdict.

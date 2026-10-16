@@ -1,5 +1,9 @@
 # SQL commerce benchmark
 
+R5 official commands and resume behavior are in [RUNBOOK.md](RUNBOOK.md); the SF 0.1 evidence, memory
+diagnostics and SF10 planning estimates are in [REHEARSAL-R5.md](REHEARSAL-R5.md). The R2/R3/R4 execution
+records below describe their original runs.
+
 ## Contract, implementation and support
 
 The adapter is registered by [ModelRegistration](../src/Assimalign.Cohesion.Benchmarks.Database.Sql/ModelRegistration.cs)
@@ -353,7 +357,8 @@ approximately ten-second measured windows. Post-pass inverse UPDATE/DELETE scans
 restore committed writes outside measurement and explain much of the remaining
 time. The final TCP digest comparison checks the resulting baseline, rather than
 assuming cleanup succeeded. No scan or durable commit was bypassed in a timed
-write operation.
+write operation. R5 removes these inverse scans and uses the pass order and pristine checkpoints described
+in [METHODOLOGY.md](METHODOLOGY.md).
 
 ## Build and test ledger
 
@@ -638,7 +643,9 @@ UPDATE inventory SET quantity_on_hand = quantity_on_hand - @quantity WHERE wareh
 COMMIT;
 ```
 
-The verification path reads committed state back; post-pass inverse mutations restore the baseline outside measurement. For place-order the line INSERT and inventory UPDATE repeat for each of 1–6 lines.
+The verification path reads committed state back in its disposable store. Measured writes persist; all
+read latency and throughput passes run first. Place-order repeats its line INSERT and inventory UPDATE for each
+of 1–6 lines.
 
 ### `sql.tx.ship-order`
 
@@ -672,7 +679,8 @@ INSERT INTO order_status_history (order_id,seq,status,occurred_at,note) VALUES (
 COMMIT;
 ```
 
-The verification path reads committed state back; post-pass inverse mutations restore the baseline outside measurement. For place-order the line INSERT and inventory UPDATE repeat for each of 1–6 lines.
+The verification path reads committed state back in its disposable store. Measured writes persist; all
+read latency and throughput passes run first.
 
 ### `sql.update-customer`
 
@@ -694,7 +702,8 @@ UPDATE customers SET city = @city WHERE customer_id = @id;
 UPDATE customers SET city = @city WHERE customer_id = @id;
 ```
 
-The verification path reads committed state back; post-pass inverse mutations restore the baseline outside measurement. For place-order the line INSERT and inventory UPDATE repeat for each of 1–6 lines.
+The verification path reads committed state back in its disposable store. Measured writes persist; all
+read latency and throughput passes run first.
 
 ### `sql.a.revenue-by-channel`
 
