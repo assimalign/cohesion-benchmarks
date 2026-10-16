@@ -12,6 +12,7 @@
     <Project Path="tests/Assimalign.Cohesion.Benchmarks.Database.Tests/Assimalign.Cohesion.Benchmarks.Database.Tests.csproj" />
   </Folder>
   <Folder Name="/docs/">
+    <File Path="docs/STATUS.md" />
     <File Path="docs/DESIGN.md" />
     <File Path="docs/COHESION-CAPABILITIES.md" />
   </Folder>

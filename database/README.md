@@ -1,5 +1,10 @@
 # Database benchmarks
 
+> **Paused before the full-scale runs (2026-10-16).** No SF10 benchmark has been run, and no number in this tree
+> is a result. Read **[STATUS](docs/STATUS.md)** first: it records what is built and verified, why the runs are on
+> hold (the Cohesion pin is 52 commits stale and the compiled-schema format moved to v6), and what has to be true
+> before they start.
+
 The suite targets .NET 10 and uses the pinned Cohesion source tree. Read [DESIGN](docs/DESIGN.md),
 [METHODOLOGY](docs/METHODOLOGY.md) and the [engine catalog notes](engines/README.md) before comparing results.
 
