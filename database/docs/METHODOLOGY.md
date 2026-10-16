@@ -23,22 +23,22 @@ operation keys and SplitMix64 are available as DeterministicSequence. Generate p
 literals, and build command objects before entering ExecuteAsync. Never cache results in the driver.
 
 Latency uses one client per operation. Point defaults: 10 seconds warm-up, then the first of 30 seconds or
-5,000 attempts. Analytics defaults: one warm-up and five attempts. Throughput uses closed-loop clients at
-1, 8, 32 for 60 seconds after 15 seconds warm-up. Mixed uses configured descriptor weights at 8 and 32 clients,
+5,000 attempts. Analytics defaults: one warm-up and three attempts. Throughput uses closed-loop clients at
+1, 8, 32 for 30 seconds after 10 seconds warm-up. Mixed uses configured descriptor weights at 8 and 32 clients,
 with separate read-heavy (90/10) and balanced (50/50) mixes. The model owns the exact read/write weight totals.
-An unsupported weighted operation blocks that mix; do not silently renormalize it. Explicit --ops permits a
+An unsupported weighted operation blocks an unfiltered mix. The official script logs and explicitly selects the common supported subset across every registered target, retaining a 90/10 or 50/50 read/write ratio and descriptor proportions within each class. Explicit --ops permits a
 documented comparable subset.
 
 All clients finish warm-up before a shared measured start. Connection establishment and disposal are excluded.
 Per-operation latency measures exactly ExecuteAsync; wall throughput also includes driver parameter preparation
 and accounting. A request in flight at the duration boundary is allowed to finish and its completion extends the
 wall denominator, so no work disappears. The runner merges client histograms and records both successes and
-failed attempts. Defaults repeat each pass three times.
+failed attempts. The first full pass uses one repetition; --repeat remains configurable.
 
 Deadlines are 30 seconds for point operations and 600 seconds for analytics. Adapters MUST propagate the token
 through all I/O and return only once cancellation has quiesced their operation. A canceled, failed or late
 completion is an error, never a histogram sample. Outer cancellation aborts the pass and drains client cleanup.
-Warm-up failures are counted separately and invalidate that operation's performance comparison.
+Warm-up failures are counted separately and invalidate that operation's performance comparison. A timeout on the first measured execution stops further iterations of that group; in-flight peers drain. A mixed group stops too, since dropping a member would change its distribution. Loads have no wall-clock deadline and print progress every 30 seconds.
 
 The HDR layout tracks integer microseconds from 1 to 3,600,000,000, with 2,048 sub-buckets, giving three
 significant decimal digits. Values below one microsecond round up; values above one hour are errors.

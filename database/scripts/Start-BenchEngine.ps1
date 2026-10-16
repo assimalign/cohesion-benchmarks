@@ -6,13 +6,14 @@ param(
     [string]$Suffix = '',
     [switch]$Recreate,
     [ValidateRange(5, 1800)][int]$TimeoutSeconds = 180,
-    [string]$Tag = 'dev'
+    [string]$Tag = 'dev',
+    [ValidatePattern('^dbbench-[a-z0-9-]+$')][string]$DataVolume
 )
 . (Join-Path $PSScriptRoot 'BenchEngine.Common.ps1')
 $engine = Get-BenchTarget $Target $Suffix
 if ($engine.kind -eq 'embedded') { Write-Output "embedded:$($engine.volume)$Suffix"; return }
 $name = $engine.containerName + $Suffix
-$volume = $engine.volume + $Suffix
+$volume = if ($DataVolume) { $DataVolume } else { $engine.volume + $Suffix }
 & podman network exists dbbench
 if ($LASTEXITCODE -ne 0) { Invoke-Podman @('network', 'create', '--label', 'dbbench.shared=true', 'dbbench') | Out-Null }
 & podman volume exists $volume

@@ -7,7 +7,7 @@ using Assimalign.Cohesion.Benchmarks.Database.Datasets;
 namespace Assimalign.Cohesion.Benchmarks.Database.Harness;
 
 /// <summary>Closed-loop suite executor. Only ExecuteAsync is timed; parameter construction, deadlines, and accounting are outside.</summary>
-public sealed class BenchmarkRunner(TimeProvider? clock = null)
+public sealed class BenchmarkRunner(TimeProvider? clock = null, Action<string>? progress = null)
 {
     private readonly TimeProvider clock = clock ?? TimeProvider.System;
 
@@ -80,12 +80,28 @@ public sealed class BenchmarkRunner(TimeProvider? clock = null)
     {
         bool latency = options.Suite == "latency";
         bool analytics = operations.Count == 1 && operations[0].TimeoutClass == TimeoutClass.Analytics;
-        TimeSpan warmup = options.Warmup ?? TimeSpan.FromSeconds(latency ? 10 : 15);
-        TimeSpan duration = options.Duration ?? (latency && analytics ? TimeSpan.MaxValue : TimeSpan.FromSeconds(latency ? 30 : 60));
-        int limit = latency ? options.Iterations ?? (analytics ? 5 : 5000) : int.MaxValue;
-        int warmupLimit = latency && analytics && options.Warmup == null ? 1 : int.MaxValue;
+        TimeSpan warmup = options.Warmup ?? TimeSpan.FromSeconds(10);
+        TimeSpan duration = latency && analytics ? TimeSpan.MaxValue : options.Duration ?? TimeSpan.FromSeconds(30);
+        int limit = latency ? (analytics ? options.AnalyticsIterations : options.Iterations ?? 5000) : int.MaxValue;
+        int warmupLimit = latency && analytics ? options.AnalyticsWarmupIterations : int.MaxValue;
+        if (latency && analytics) warmup = TimeSpan.MaxValue;
+        progress?.Invoke($"START {options.Suite} {string.Join(",", System.Linq.Enumerable.Select(operations, o => o.Id))} clients={clients} repetition={repetition}");
+        var firstMeasured = new int[operations.Count];
+        int firstTimeout = 0;
+        var weights = new int[operations.Count];
+        int reads = 0, writes = 0;
+        foreach (var operation in operations)
+            if (operation.Access == OperationAccess.Read) reads += Weight(operation, options); else writes += Weight(operation, options);
         int weightTotal = 0;
-        foreach (var operation in operations) weightTotal = checked(weightTotal + (options.Suite == "mixed" ? Weight(operation, options) : 1));
+        for (int i = 0; i < operations.Count; i++)
+        {
+            int weight = options.Suite == "mixed" ? Weight(operations[i], options) : 1;
+            if (options.Suite == "mixed" && reads > 0 && writes > 0)
+                weight = checked(weight * (operations[i].Access == OperationAccess.Read
+                    ? writes * (options.Mix == "balanced" ? 50 : 90) : reads * (options.Mix == "balanced" ? 50 : 10)));
+            weights[i] = weight;
+            weightTotal = checked(weightTotal + weight);
+        }
         var ready = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var start = new TaskCompletionSource<long>(TaskCreationOptions.RunContinuationsAsynchronously);
         int arrivals = 0;
@@ -120,14 +136,16 @@ public sealed class BenchmarkRunner(TimeProvider? clock = null)
                         for (int iteration = 0; iteration < iterations && clock.GetElapsedTime(begun) < budget; iteration++)
                         {
                             stop.Token.ThrowIfCancellationRequested();
+                            if (Volatile.Read(ref firstTimeout) != 0) break;
                             int selected = 0;
                             if (operations.Count > 1)
                             {
                                 int pick = (int)(selector.Next() % (ulong)weightTotal);
-                                while (pick >= Weight(operations[selected], options)) pick -= Weight(operations[selected++], options);
+                                while (pick >= weights[selected]) pick -= weights[selected++];
                             }
                             var operation = operations[selected];
                             var counters = stats[selected];
+                            bool first = measured && Interlocked.CompareExchange(ref firstMeasured[selected], 1, 0) == 0;
                             object parameters = streams[selected].Next();
                             TimeSpan timeout = operation.TimeoutClass == TimeoutClass.Point ? options.PointTimeout : options.AnalyticsTimeout;
                             using var deadline = CancellationTokenSource.CreateLinkedTokenSource(stop.Token);
@@ -165,6 +183,9 @@ public sealed class BenchmarkRunner(TimeProvider? clock = null)
                                 counters.Errors++;
                                 if (timedOut) counters.Timeouts++;
                             }
+                            // Stop this group after an operation's first measured timeout; drain in-flight peers.
+                            // A mixed group also stops: dropping one member would change its declared distribution.
+                            if (first && timedOut) Interlocked.Exchange(ref firstTimeout, 1);
                             if (!success && counters.Examples.Count < 3)
                                 counters.Examples.Add((measured ? "" : "warmup: ") + (timedOut ? "timeout: " : "") + (failure ?? "Deadline exceeded."));
                         }
@@ -222,6 +243,7 @@ public sealed class BenchmarkRunner(TimeProvider? clock = null)
                 P999Us = h.Percentile(99.9), MaxUs = h.Maximum, Histogram = h.Encode(), ErrorExamples = merged.Examples,
             });
         }
+        progress?.Invoke($"END {options.Suite} clients={clients} repetition={repetition} seconds={seconds:F3} firstMeasuredTimeout={firstTimeout != 0}");
         return result;
     }
 

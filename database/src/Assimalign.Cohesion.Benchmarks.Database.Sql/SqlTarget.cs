@@ -83,7 +83,7 @@ public sealed class SqlTarget : IBenchmarkTarget
         {
             var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
             { Host = endpoint.Host, Port = endpoint.Port, Username = username, Password = password,
-                Database = administrative ? "postgres" : options.Database, MaxPoolSize = 128, CommandTimeout = 600 }.ConnectionString);
+                Database = administrative ? "postgres" : options.Database, MaxPoolSize = 128, CommandTimeout = 0 }.ConnectionString);
             try { await connection.OpenAsync(token).ConfigureAwait(false); return new(connection); }
             catch { await connection.DisposeAsync().ConfigureAwait(false); throw; }
         }
@@ -154,7 +154,7 @@ public sealed class SqlTarget : IBenchmarkTarget
                     {
                         using var input = new CsvDataReader(File.OpenRead(file), CommerceSchema.Table(table.Name));
                         using var copy = new SqlBulkCopy((TsqlConnection)session.Ado!, SqlBulkCopyOptions.TableLock, null)
-                        { DestinationTableName = table.Name, BatchSize = Math.Max(10000, options.BatchSize), EnableStreaming = true, BulkCopyTimeout = 600 };
+                        { DestinationTableName = table.Name, BatchSize = Math.Max(10000, options.BatchSize), EnableStreaming = true, BulkCopyTimeout = 0 };
                         await copy.WriteToServerAsync(input, token);
                     }
                 });
