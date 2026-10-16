@@ -20,7 +20,9 @@ public static class DatasetManifestFile
     public static void Save(string path, DatasetManifest manifest)
     {
         using var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
-        JsonSerializer.Serialize(stream, manifest, DatasetJsonContext.Default.DatasetManifest);
+        using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true, NewLine = "\n" });
+        JsonSerializer.Serialize(writer, manifest, DatasetJsonContext.Default.DatasetManifest);
+        writer.Flush();
         stream.WriteByte((byte)'\n');
     }
 

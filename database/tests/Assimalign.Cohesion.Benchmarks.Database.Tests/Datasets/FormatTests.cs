@@ -13,6 +13,24 @@ namespace Assimalign.Cohesion.Benchmarks.Database.Tests.Datasets;
 public sealed class FormatTests
 {
     [Fact]
+    public void Save_Manifest_UsesLfBytesAndSingleFinalNewline()
+    {
+        string path = Path.GetTempFileName();
+        try
+        {
+            var manifest = new DatasetManifest { Model = DatasetModel.Documents, Name = "marketplace",
+                GeneratorVersion = 1, Scale = .1, Seed = 20261015, Tables = [] };
+            DatasetManifestFile.Save(path, manifest);
+            byte[] first = File.ReadAllBytes(path);
+            Array.IndexOf(first, (byte)'\r').ShouldBe(-1);
+            first[^1].ShouldBe((byte)'\n');
+            first[^2].ShouldBe((byte)'}');
+            DatasetManifestFile.Save(path, manifest);
+            File.ReadAllBytes(path).ShouldBe(first);
+        }
+        finally { File.Delete(path); }
+    }
+    [Fact]
     public void Csv_SpecialFields_RoundTripsNullEmptyAndEmbeddedNewlines()
     {
         string large=new('z',200000); string text="a,b \"quote\"\r\nnext\nline café 東京";

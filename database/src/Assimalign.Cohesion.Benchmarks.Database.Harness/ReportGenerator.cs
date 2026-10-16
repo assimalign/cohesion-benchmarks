@@ -29,7 +29,10 @@ public static class ReportGenerator
             }
             var result = await ResultFiles.ReadAsync(path, ResultJsonContext.Default.BenchmarkResult, token).ConfigureAwait(false);
             if (result.SchemaVersion != 1) throw new InvalidDataException($"Unsupported result schema in {path}.");
-            results.Add(result);
+            // Older smoke files carried a nominal 6 GiB label. The recorded inspection/cgroup
+            // evidence is authoritative for report cohorts too; missing limits stay unknown.
+            results.Add(result with { Budget = ResourceBudget.Observe(result.Environment,
+                result.Target.Id.EndsWith("-embedded", StringComparison.Ordinal)) });
         }
         if (results.Count == 0) throw new InvalidDataException("No benchmark result JSON files found.");
         for (int i = 0; i < results.Count; i++)
@@ -62,6 +65,12 @@ public static class ReportGenerator
         string model = rows[0].Model;
         text.AppendLine($"## Dataset {rows[0].DatasetManifestSha256}, SF {N(rows[0].Scale)}\n");
         text.AppendLine($"Budget: {N(rows[0].Budget.Cpus)} CPUs / {rows[0].Budget.MemoryBytes} bytes; official: {rows[0].Official}.\n");
+        text.AppendLine("Observed container limits (0 = unknown or unbounded):\n");
+        text.AppendLine("| Target | Engine CPUs | Engine bytes | Driver bytes |");
+        text.AppendLine("|---|---:|---:|---:|");
+        foreach (var run in rows.DistinctBy(r => r.Target.Id))
+            text.AppendLine($"| {E(run.Target.Id)} | {N(run.Budget.Cpus)} | {run.Budget.MemoryBytes} | {run.Budget.DriverMemoryBytes} |");
+        text.AppendLine();
         var targets = rows.Select(r => r.Target).DistinctBy(t => t.Id).OrderBy(t => t.Id, StringComparer.Ordinal).ToArray();
         var verification = rows.Where(r => r.Verification != null).Select(r => r.Verification!).ToArray();
         var mismatches = VerificationRunner.Compare(verification);

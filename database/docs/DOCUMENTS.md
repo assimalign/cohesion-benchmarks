@@ -181,8 +181,8 @@ defaults. Mongo uses `w:1,j:true` and simple collation. Raven keeps its durable 
 Smoke Mongo/Raven containers have 3 CPUs, 2 GiB and equal memory-swap.
 The embedded Linux driver has 3 CPUs, 6 GiB and equal memory-swap. Windows runs are development
 smokes without cgroup limits; do not treat their timings as comparable official results.
-The generic report's budget header remains the harness's nominal 6 GiB budget; the actual
-development limits are recorded in each server's container inspection and in this document.
+R5 reports budgets from observed cgroup/container limits, including older smoke records; unknown limits
+remain zero rather than inheriting the official 6 GiB default.
 
 Storage is measured immediately after finalization: Cohesion sums its database directory
 (including its log files), Mongo reports `dbStats.storageSize + indexSize`, and Raven reports
@@ -229,11 +229,8 @@ and volumes in finally. Latency and throughput each use one repetition. Linux dr
 reports live in separate artifact directories. Raw datasets/results/logs are not committed.
 The script records other sessions' containers at startup without stopping them. Any overlap and
 host CPU noise make these development observations unsuitable for official rankings.
-The Linux driver independently regenerates the JSONL data, checks its complete manifest
-against the Windows manifest after removing only CR from the latter, and then uses the exact
-Windows manifest bytes. This checks identical metadata and part hashes before loading. It
-avoids the foundation serializer's platform-newline difference without changing any recorded
-result digest, normalizer, or comparator.
+The Linux driver independently regenerates the JSONL data and compares manifest bytes directly. R5 fixes
+the writer to emit LF on every platform; it no longer copies or normalizes Windows manifests.
 
 ## SF0.01 smoke record — 2026-10-15
 
@@ -391,7 +388,7 @@ Earlier diagnostic attempts are retained in ignored `database/artifacts/document
   `3b49219b7fff9b7f8e7d7667f9707288bce4f39c5f85ba4e14bed2a7352542eb`.
   Replacing CRLF with LF made the entire texts identical. The source is the default newline
   in `Datasets/IO/DatasetJsonContext.cs:6`, used by `DatasetManifestFile.cs:23`.
-  The owned smoke script now distributes one byte-identical manifest after checking metadata,
+  The R3 smoke distributed one byte-identical manifest after checking metadata,
   and the complete Linux pass was rerun. The original run is retained separately under
   `database/artifacts/documents-r3-linux-manifest-original`; no result file was rewritten.
   The helper's first attempt also exposed CRLF in the PowerShell here-string passed to
@@ -428,7 +425,7 @@ The host's default SDK was an 11.0 preview targeting net10.0. The explicit MSBui
 propagation property prevents referenced Cohesion projects from falling back to Debug. Every
 captured Cohesion assembly had `optimized=true`; no engine assembly was silently measured in Debug.
 
-Owner follow-ups: fix the shared manifest serializer's cross-platform newline contract; prioritize
+R5 fixes the shared manifest serializer's cross-platform newline contract. Owner follow-ups: prioritize
 Cohesion LIMIT, array predicates, compound/multivalue indexes, batch/patch APIs and selectivity-aware
 planning; investigate the Linux concurrency observations on an idle machine. Official larger-scale
 comparisons need matched resource budgets, isolated runs, more samples/repetitions, and consistent

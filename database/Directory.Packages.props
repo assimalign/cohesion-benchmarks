@@ -1,8 +1,11 @@
 <Project>
 	<PropertyGroup>
 		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
 	</PropertyGroup>
 	<ItemGroup>
+		<!-- Patched for CVE-2026-84008 and CVE-2026-70162; includes transitive SQL client dependencies. -->
+		<PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
 		<PackageVersion Include="MongoDB.Driver" Version="3.12.0" />
 		<PackageVersion Include="RavenDB.Client" Version="7.1.12" />
 		<!-- Dataset test packages, pinned to the latest stable versions available on 2026-10-15. -->

@@ -62,15 +62,8 @@ try {
             '--cpus','3','--memory','6g','--memory-swap','6g','--volume',"${dataVolume}:/data",'--volume',"${engineVolume}:/engine-data",'--volume',"${outputPath}:/results",'localhost/dbbench-driver:r3')
         function Invoke-Bench([string[]]$Arguments) { Invoke-Checked podman ($driverArgs + $Arguments) }
         Invoke-Bench @('generate','--model','documents','--scale','0.01','--threads','2','--out','/data')
-        # The foundation serializer uses platform newlines in manifests. Assert identical metadata and
-        # generated part hashes before distributing the exact same manifest bytes to every target.
-        $manifestCommand = @'
-set -eu
-tr -d '\r' < /canonical-manifest.json | cmp - /data/documents/sf0.01/manifest.json
-cp /canonical-manifest.json /data/documents/sf0.01/manifest.json
-'@
-        $manifestCommand = $manifestCommand.Replace("`r`n", "`n")
-        $manifestArgs = $driverArgs[0..($driverArgs.Length - 2)] + @('--volume',"${canonicalManifest}:/canonical-manifest.json:ro",'--entrypoint','/bin/sh',$driverArgs[-1],'-c',$manifestCommand)
+        # Compare bytes directly: the manifest writer is platform-independent.
+        $manifestArgs = $driverArgs[0..($driverArgs.Length - 2)] + @('--volume',"${canonicalManifest}:/canonical-manifest.json:ro",'--entrypoint','cmp',$driverArgs[-1],'/canonical-manifest.json','/data/documents/sf0.01/manifest.json')
         Invoke-Checked podman $manifestArgs
         $dataPath = '/data/documents/sf0.01'; $resultPath = '/results'; $storagePath = '/engine-data'
     } else {
