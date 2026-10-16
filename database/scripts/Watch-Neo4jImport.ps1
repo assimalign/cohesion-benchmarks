@@ -2,15 +2,18 @@ param(
     [Parameter(Mandatory)][string]$Container,
     [Parameter(Mandatory)][string]$InputVolume,
     [Parameter(Mandatory)][string]$ControlDirectory,
-    [Parameter(Mandatory)][string]$Suffix
+    [Parameter(Mandatory)][string]$Suffix,
+    [Parameter(Mandatory)][string]$CommonScript
 )
-. (Join-Path $PSScriptRoot 'BenchEngine.Common.ps1')
+$ErrorActionPreference = 'Stop'
 $request = Join-Path $ControlDirectory 'import.request.json'
 $receipt = Join-Path $ControlDirectory 'import.receipt.json'
 $helper = "dbbench-neo4j-import$Suffix"
 $created = $false
 $stopped = $false
 try {
+    # Start-ThreadJob -FilePath does not supply PSScriptRoot; use the caller's resolved path.
+    . $CommonScript
     while (-not (Test-Path -LiteralPath $request)) { Start-Sleep -Seconds 1 }
     Assert-BenchOwner $Container
     Assert-BenchOwner $InputVolume -Volume

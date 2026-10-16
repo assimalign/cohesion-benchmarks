@@ -22,7 +22,12 @@ internal static class Program
         Console.CancelKeyPress += (_, e) => { e.Cancel = true; stop.Cancel(); };
         try { return await ExecuteAsync(new Arguments(args), stop.Token); }
         catch (OperationCanceledException) { Console.Error.WriteLine("dbbench: canceled."); return 130; }
-        catch (Exception ex) { Console.Error.WriteLine($"dbbench: {ex.GetType().Name}: {ex.Message}"); return 1; }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"dbbench: {ex.GetType().Name}: {ex.Message}");
+            if (Environment.GetEnvironmentVariable("DBBENCH_DIAGNOSTIC_STACKS") == "1") Console.Error.WriteLine(ex);
+            return 1;
+        }
     }
 
     private static async Task<int> ExecuteAsync(Arguments a, CancellationToken token)
@@ -35,7 +40,8 @@ internal static class Program
                 dbbench verify --model M --target ID --data DIR --out FILE
                 dbbench verify --compare DIR [--out FILE]
                 dbbench run --model M --target ID --data DIR --suite latency|throughput|mixed --out DIR
-                  [--clients 1,8,32] [--duration 60s] [--warmup 15s] [--iterations N] [--repeat 3]
+                  [--clients 1,8,32] [--duration 30s] [--warmup 10s] [--iterations 5000] [--repeat 1]
+                  [--analytics-warmup 1] [--analytics-iterations 3] [--point-timeout 30s] [--analytics-timeout 600s]
                   [--ops a,b] [--mix read-heavy|balanced] [--verification FILE] [--official]
                 dbbench report --in DIR --out DIR
                 dbbench env [--container NAME] [--out FILE]
@@ -148,7 +154,7 @@ internal static class Program
         var operations = SelectOperations(selectedModel, a.Optional("ops"));
         if (a.Command == "verify")
         {
-            var verified = await VerificationRunner.VerifyAsync(selectedModel, targetInstance, manifest, manifestHash, operations, token);
+            var verified = await VerificationRunner.VerifyAsync(selectedModel, targetInstance, manifest, manifestHash, operations, token, message => Console.WriteLine($"{DateTimeOffset.UtcNow:O} {message}"));
             await ResultFiles.WriteAsync(a.Required("out"), verified, ResultJsonContext.Default.VerificationFile, token);
             return VerificationRunner.Compare([verified]).Count == 0 ? 0 : 2;
         }

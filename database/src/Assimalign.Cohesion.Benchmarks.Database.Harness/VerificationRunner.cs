@@ -12,14 +12,17 @@ public static class VerificationRunner
 {
     public static async Task<VerificationFile> VerifyAsync(IBenchmarkModel model, IBenchmarkTarget target,
         DatasetManifest manifest, string manifestHash, IReadOnlyList<OperationDescriptor> operations,
-        CancellationToken token = default)
+        CancellationToken token = default, Action<string>? progress = null)
     {
         var results = new List<VerificationOperation>();
         foreach (var operation in operations)
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            progress?.Invoke($"START verify {operation.Id}");
             OperationSupport support = target.Support[operation.Id];
             support.Validate();
             var cases = new List<RowsDigest>();
+            double nextProgress = 30;
             string? error = null;
             if (support.Level != SupportLevel.Unsupported)
             {
@@ -36,12 +39,18 @@ public static class VerificationRunner
                         await client.ExecuteAsync(operation, parameter, digest, deadline.Token).ConfigureAwait(false);
                         deadline.Token.ThrowIfCancellationRequested();
                         cases.Add(digest.Complete());
+                        if (watch.Elapsed.TotalSeconds >= nextProgress)
+                        {
+                            progress?.Invoke($"PROGRESS verify {operation.Id} cases={cases.Count}/100 seconds={watch.Elapsed.TotalSeconds:F3}");
+                            nextProgress = watch.Elapsed.TotalSeconds + 30;
+                        }
                     }
                 }
                 catch (Exception ex) when (ex is not OutOfMemoryException && !token.IsCancellationRequested)
                 { error = ex.GetType().Name + ": " + ex.Message; }
             }
             results.Add(new(operation.Id, support, cases, error));
+            progress?.Invoke($"END verify {operation.Id} cases={cases.Count} seconds={watch.Elapsed.TotalSeconds:F3} error={error ?? "none"}");
         }
         return new() { Model = model.Id, Target = target.Descriptor.Id, DatasetManifestSha256 = manifestHash,
             Seed = manifest.Seed, Operations = results };

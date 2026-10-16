@@ -40,13 +40,16 @@ internal sealed class Neo4jTarget : IBenchmarkTarget
         if (driver is not null) { await driver.DisposeAsync(); driver = null; }
         metrics.AddRange(await Neo4jOfflineImport.RunAsync(options, manifest, directory, cancellationToken));
         indexesBuilt = false;
-        Exception? last = null;
-        for (int i = 0; i < 90; i++)
+        // A large imported store may need more than 90 seconds to open. Load has no wall deadline;
+        // retry only availability errors, so authentication/configuration failures still fail the phase.
+        while (true)
         {
-            try { await PingAsync(cancellationToken); last = null; break; }
-            catch (Exception ex) when (!cancellationToken.IsCancellationRequested) { last = ex; await Task.Delay(1000, cancellationToken); }
+            try { await PingAsync(cancellationToken); break; }
+            catch (Exception ex) when (!cancellationToken.IsCancellationRequested &&
+                (ex is ServiceUnavailableException or SessionExpiredException ||
+                 ex is TransientException transient && transient.Code == "Neo.TransientError.General.DatabaseUnavailable"))
+            { await Task.Delay(1000, cancellationToken); }
         }
-        if (last is not null) throw new InvalidOperationException("Neo4j did not restart after import.", last);
         metrics.AddRange(await FinalizeLoadAsync(cancellationToken));
         return metrics;
     }

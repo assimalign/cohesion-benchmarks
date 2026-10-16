@@ -31,6 +31,44 @@ public sealed class ReportTests
         }
         finally { Directory.Delete(path, true); }
     }
+    [Fact]
+    public async Task GenerateAsync_RepeatedVerificationEvidence_ReportsEachMismatchOnce()
+    {
+        string path = Directory.CreateTempSubdirectory("dbbench-report-dedup-").FullName;
+        try
+        {
+            var evidence = ResultTests.Verified("cohesion-sql-tcp") with
+            { Operations = [new("op", new(SupportLevel.Native), Enumerable.Repeat(new RowsDigest(2, "wrong"), 100).ToArray())] };
+            var result = ResultTests.Result("cohesion-sql-tcp", 200) with { Verification = evidence };
+            await ResultFiles.WriteAsync(Path.Combine(path, "first.json"), result, ResultJsonContext.Default.BenchmarkResult);
+            await ResultFiles.WriteAsync(Path.Combine(path, "second.json"), result with { Suite = "throughput" }, ResultJsonContext.Default.BenchmarkResult);
+            await ResultFiles.WriteAsync(Path.Combine(path, "other.json"), ResultTests.Result("postgresql", 100), ResultJsonContext.Default.BenchmarkResult);
+            var findings = await ReportGenerator.GenerateAsync(path, Path.Combine(path, "out"));
+            findings.Count(f => f.Kind == "verification").ShouldBe(100);
+            findings.Any(f => f.Kind == "performance").ShouldBeFalse();
+        }
+        finally { Directory.Delete(path, true); }
+    }
+    [Fact]
+    public async Task GenerateAsync_FatalPhaseWithoutResult_RetainsFailureEvidence()
+    {
+        string path = Directory.CreateTempSubdirectory("dbbench-report-fatal-").FullName;
+        try
+        {
+            await File.WriteAllTextAsync(Path.Combine(path, "phase.status.json"),
+                """{"model":"graph","target":"cohesion-graph-embedded","phase":"read-throughput","status":"failed","seconds":12.5,"error":"OutOfMemoryException"}""");
+            var findings = await ReportGenerator.GenerateAsync(path, Path.Combine(path, "out"));
+            var failure = findings.Single();
+            failure.Kind.ShouldBe("phase-error");
+            failure.Target.ShouldBe("cohesion-graph-embedded");
+            failure.Evidence.ShouldContain("OutOfMemoryException");
+            string markdown = await File.ReadAllTextAsync(Path.Combine(path, "out", "graph.md"));
+            markdown.ShouldContain("No benchmark metrics were produced");
+            markdown.ShouldContain("read-throughput");
+            markdown.ShouldContain("OutOfMemoryException");
+        }
+        finally { Directory.Delete(path, true); }
+    }
     [Theory]
     [InlineData(1.999, false, false)]
     [InlineData(2, false, true)]

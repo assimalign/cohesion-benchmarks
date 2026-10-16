@@ -69,7 +69,7 @@ function Invoke-Phase([string]$TargetId, [string]$Phase, [scriptblock]$Action) {
     catch { $failure = $_.Exception.Message; $script:Failures++; Write-RunLog "ERROR $TargetId $Phase $failure" }
     $watch.Stop()
     $status = if ($failure) { 'failed' } else { 'passed' }
-    $record = @{target=$TargetId;phase=$Phase;status=$status;startedUtc=$started.ToString('O');finishedUtc=[DateTimeOffset]::UtcNow.ToString('O');seconds=$watch.Elapsed.TotalSeconds;error=$failure}
+    $record = @{model=$Model;target=$TargetId;phase=$Phase;status=$status;startedUtc=$started.ToString('O');finishedUtc=[DateTimeOffset]::UtcNow.ToString('O');seconds=$watch.Elapsed.TotalSeconds;error=$failure}
     $record | ConvertTo-Json -Compress | Add-Content -LiteralPath $ledger
     $record | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $script:PhaseDirectory 'phase.status.json')
     Write-RunLog "END $TargetId $Phase status=$status duration=$($watch.Elapsed.TotalSeconds.ToString('F3', [Globalization.CultureInfo]::InvariantCulture))s"
@@ -93,7 +93,7 @@ function Stop-Engine {
 function Start-Engine([hashtable]$Engine, [string]$Volume) {
     Stop-Engine
     if ($Engine.kind -eq 'container') {
-        & (Join-Path $PSScriptRoot 'Start-BenchEngine.ps1') -Target $Engine.id -Suffix $Suffix -Tag $Tag -DataVolume $Volume -Cpus 3 -Memory 6g -TimeoutSeconds 600
+        & (Join-Path $PSScriptRoot 'Start-BenchEngine.ps1') -Target $Engine.id -Suffix $Suffix -Tag $Tag -DataVolume $Volume -Cpus 3 -Memory 6g -TimeoutSeconds 0
         $script:ActiveEngine = $Engine.id
     }
 }
@@ -113,10 +113,11 @@ function Invoke-Driver([string[]]$Command, [hashtable]$Engine, [string]$Volume, 
     if ($LASTEXITCODE -eq 0) { throw "$driverName already exists; refusing to interrupt it." }
     $memory = if ($Engine -and $Engine.kind -eq 'embedded') { '6g' } else { '3g' }
     $arguments = @('run','--rm','--name',$driverName,'--label',"dbbench.owner=$script:Owner",'--network','dbbench',
-        '--cpus','3','--memory',$memory,'--memory-swap',$memory,'--volume',"${DatasetVolume}:/data:ro",'--volume',"${OutputDirectory}:/results")
+        '--cpus','3','--memory',$memory,'--memory-swap',$memory,'--volume',"${OutputDirectory}:/results")
     $jobs = @()
     $inputVolume = "dbbench-neo4j-import-input$Suffix"
     if ($Engine) {
+        $arguments += @('--volume',"${DatasetVolume}:/data:ro")
         $mode = if ($Engine.kind -eq 'embedded') { '' } else { ':ro' }
         $arguments += @('--volume',"${Volume}:/engine-data$mode")
         if ($Engine.kind -eq 'container' -and $Command[0] -in @('load','run')) {
@@ -138,12 +139,12 @@ function Invoke-Driver([string[]]$Command, [hashtable]$Engine, [string]$Volume, 
         Ensure-Volume $inputVolume
         $arguments += @('--volume',"${inputVolume}:/import",'--env','DBBENCH_IMPORT_DIRECTORY=/import',
             '--env',('DBBENCH_IMPORT_CONTROL=' + (Container-Path $script:PhaseDirectory)))
-        $jobs += Start-ThreadJob -FilePath (Join-Path $PSScriptRoot 'Watch-Neo4jImport.ps1') -ArgumentList ($Engine.containerName + $Suffix),$inputVolume,$script:PhaseDirectory,$Suffix
+        $jobs += Start-ThreadJob -FilePath (Join-Path $PSScriptRoot 'Watch-Neo4jImport.ps1') -ArgumentList ($Engine.containerName + $Suffix),$inputVolume,$script:PhaseDirectory,$Suffix,(Join-Path $PSScriptRoot 'BenchEngine.Common.ps1')
     }
     Write-RunLog "COMMAND $driverName memory=$memory dbbench $($Command -join ' ')"
     try { Invoke-Podman ($arguments + @($image) + $Command) }
     finally {
-        foreach ($job in $jobs) { Stop-Job $job; Receive-Job $job; Remove-Job $job }
+        foreach ($job in $jobs) { Stop-Job $job; Receive-Job $job -ErrorAction Continue; Remove-Job $job }
         & podman container exists $driverName
         if ($LASTEXITCODE -eq 0) {
             Assert-BenchOwner $driverName
@@ -281,8 +282,10 @@ if ($plan) {
             }
         } finally { $null = Invoke-Phase $id 'stop' { Stop-Engine } }
     }
-    if ('compare' -in $Phases) { $null = Invoke-Phase '_model' 'compare' { Invoke-Driver @('verify','--compare',(Container-Path $modelDirectory),'--out',((Container-Path $script:PhaseDirectory)+'/mismatches.json')) } }
-    if ('report' -in $Phases) { $null = Invoke-Phase '_model' 'report' { Invoke-Driver @('report','--in',(Container-Path $modelDirectory),'--out',(Container-Path $script:PhaseDirectory)) } }
 }
+# Summary phases also preserve setup failures when no target plan could be obtained.
+if ('compare' -in $Phases) { $null = Invoke-Phase '_model' 'compare' { Invoke-Driver @('verify','--compare',(Container-Path $modelDirectory),'--out',((Container-Path $script:PhaseDirectory)+'/mismatches.json')) } }
+if ('report' -in $Phases) { $null = Invoke-Phase '_model' 'report' { Invoke-Driver @('report','--in',(Container-Path $modelDirectory),'--out',(Container-Path $script:PhaseDirectory)) } }
 Write-RunLog "MODEL END $Model failedPhases=$script:Failures results=$modelDirectory"
 if ($script:Failures) { exit 2 }
+exit 0
