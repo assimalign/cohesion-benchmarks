@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)Cache\Assimalign.Cohesion.Caching.InMemory\src\Assimalign.Cohesion.Caching.InMemory.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.Caching.InMemory" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

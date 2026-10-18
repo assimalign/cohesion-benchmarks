@@ -41,27 +41,48 @@ cohesion-benchmarks/
 
 ## Referencing Cohesion
 
-Suites build Cohesion **from source** so they can measure any checkout:
+Suites measure the **packages cohesion's CI publishes** to the Assimalign GitHub Packages feed, never a source
+checkout. cohesion's `ci-packages.yml` publishes the full release set for every `main` push
+(`10.0.0-preview.0.ci.<run>`) and every same-repository pull request commit (`10.0.0-preview.0.pr.<pr>.<run>`). A
+suite names the packages it measures; they resolve at one version for the whole repository:
 
 ```xml
-<ProjectReference Include="$(CohesionLibrariesRoot)Http\Assimalign.Cohesion.Http.Connections\src\Assimalign.Cohesion.Http.Connections.csproj" />
-<ProjectReference Include="$(CohesionResourcesRoot)Web\Assimalign.Cohesion.Web.Authentication.Bearer\src\Assimalign.Cohesion.Web.Authentication.Bearer.csproj" />
+<CohesionReference Include="Assimalign.Cohesion.Http.Connections" />
+<CohesionReference Include="Assimalign.Cohesion.Web.Authentication.Bearer" />
 ```
 
-`CohesionRoot` defaults to the sibling `../cohesion` checkout; `-p:CohesionRoot=<path>` measures another one (a
-worktree, a branch). A fresh cohesion checkout needs `dotnet build build/Tasks` once before anything references it.
+- **The pin.** `CohesionPackageVersion` in `Directory.Build.props` is the build every local run and every pull
+  request check uses; the Web harness's `global.json` pins its Cohesion SDKs to the same build.
+  `./scripts/Update-CohesionVersion.ps1` moves both to the newest `main` build (or `-Version <v>`). cohesion keeps
+  only the newest 20 `main` builds, so a pin older than that stops restoring; move it at least that often.
+- **Another build.** `-p:CohesionPackageVersion=<v>` (or `Invoke-Benchmarks.ps1 -CohesionVersion <v>`) measures any
+  build still on the feed. `./scripts/Resolve-CohesionVersion.ps1` finds one: the newest `main` build by default,
+  `-PullRequest <n>` for a cohesion pull request's newest build (an unmerged change: no checkout, no local pack; a
+  pull request's builds are deleted when it closes), `-Version <v>` for the commit behind a version. It reads
+  cohesion's public workflow history through the GitHub CLI.
+- **Credentials.** GitHub Packages needs a token with `read:packages` even to read. `nuget.config` holds no
+  credential; supply one through the environment, keyed by the source name:
+
+  ```powershell
+  gh auth refresh -h github.com -s read:packages      # once
+  $env:NuGetPackageSourceCredentials_assimalign = "Username=<github-user>;Password=$(gh auth token)"
+  ```
+
+  CI uses the workflow token, or the `COHESION_PACKAGES_TOKEN` secret when one is set.
+- Source-only test helpers (cohesion's test doubles, its test corpora) are not in the packages. A suite that needs
+  one carries its own copy (`Web.Benchmarks/src/Fixtures/BenchmarkHttpContext.cs`; the OpenAPI corpus, with its
+  `NOTICE.md`).
 
 Suites run **in-process** (BenchmarkDotNet's `InProcessEmitToolchain`): the measured code is what you built, with
-no child rebuild. BenchmarkDotNet's default toolchain rebuilds a suite in a generated child project, and cohesion's
-project graph does not rebuild reliably there (its analyzer and shared-source references build some projects twice
-under different global properties, and the instances race on output files). `--out-of-process` opts back in for a
-suite whose graph rebuilds cleanly, forwarding `CohesionRoot` to the child build.
+no rebuild of every suite in a generated child project, which keeps CI short. `--out-of-process` opts back into
+BenchmarkDotNet's default toolchain (for example to compare GC modes in separate processes) and forwards
+`CohesionPackageVersion` to the child build.
 
 Comparison packages (the non-Cohesion counterpart) are referenced without a version; the version lives in
 `Directory.Build.targets`.
 
-End-to-end harnesses that run a real Cohesion application (the Web harness) consume packed SDKs from the local feed
-instead; see their README.
+End-to-end harnesses that run a real Cohesion application (the Web harness) use the Cohesion SDKs from the same feed,
+pinned in their `global.json`; see their README.
 
 ## Writing a benchmark
 
@@ -112,7 +133,8 @@ field names as the database suite's engine catalog):
   running), or `command` (runs to completion; one run is the measured operation).
 - `readiness`: `tcp` (default when there is a port), `http` (any status below 500), `log` (a regex on its output),
   `exec` (a command that exits 0), `none`.
-- Placeholders: `{host}`, `{port}`, `{port:N}`, `{repoRoot}`, `{cohesionRoot}`, `{catalogDir}`, `{exe}`.
+- Placeholders: `{host}`, `{port}`, `{port:N}`, `{repoRoot}`, `{cohesionVersion}` (the measured cohesion package version),
+  `{catalogDir}`, `{exe}`.
 - `requires` (executables that must run, probed with `--version` or the given arguments) and `requiresFiles` (for
   example a published server) let a run skip a target this machine cannot start instead of failing.
   `COHESION_BENCHMARK_TARGETS=node,cohesion` restricts a run to those ids.
@@ -140,7 +162,7 @@ area's runner).
 ```powershell
 ./scripts/Invoke-Benchmarks.ps1 -Area ObjectPool                         # one area, local profile
 ./scripts/Invoke-Benchmarks.ps1 -Scope libraries -Profile dry             # does everything build and run?
-./scripts/Invoke-Benchmarks.ps1 -Area Http -Filter '*Cookie*' -CohesionRoot ..\coh-branch
+./scripts/Invoke-Benchmarks.ps1 -Area Http -Filter '*Cookie*' -CohesionVersion 10.0.0-preview.0.pr.1663.37
 dotnet run -c Release --project benchmarks/libraries/ObjectPool/benchmarks/Assimalign.Cohesion.ObjectPool.Benchmarks/src -- --list flat
 ```
 
@@ -148,11 +170,13 @@ Profiles (`--profile`, `-Profile`, or `COHESION_BENCHMARK_PROFILE`): `local` (Be
 investigations), `ci` (1 launch, 5 warmups, 20 iterations: bounded and comparable run to run), `dry` (one
 invocation: proves it runs). Results land in `.artifacts/results/<suite>/` (git-ignored).
 
-To compare two checkouts or two runs:
+To compare two cohesion builds (here `main` against a cohesion pull request) or two runs:
 
 ```powershell
-./scripts/Invoke-Benchmarks.ps1 -Area Http -Profile ci -CohesionRoot ..\cohesion -Output .artifacts\ab\before
-./scripts/Invoke-Benchmarks.ps1 -Area Http -Profile ci -CohesionRoot ..\coh-branch -Output .artifacts\ab\after
+$main = (./scripts/Resolve-CohesionVersion.ps1).Version
+$change = (./scripts/Resolve-CohesionVersion.ps1 -PullRequest 1700).Version
+./scripts/Invoke-Benchmarks.ps1 -Area Http -Profile ci -CohesionVersion $main -Output .artifacts\ab\before
+./scripts/Invoke-Benchmarks.ps1 -Area Http -Profile ci -CohesionVersion $change -Output .artifacts\ab\after
 ./scripts/Compare-Benchmarks.ps1 -Baseline .artifacts\ab\before -Current .artifacts\ab\after
 ```
 
@@ -160,13 +184,15 @@ To compare two checkouts or two runs:
 
 `.github/workflows/benchmarks.yml`:
 
-- **Pull requests** in this repository run every suite under the `dry` profile: a benchmark that no longer builds or
-  throws fails the check. No numbers are recorded.
-- **Nightly, on demand, and on `repository_dispatch` from cohesion** the `ci` profile runs every suite against
-  cohesion `main` (or a requested ref). Each result is converted to two series per benchmark, time (ns) and
-  allocated bytes, and appended to the history on the `gh-pages` branch with
-  [github-action-benchmark](https://github.com/benchmark-action/github-action-benchmark). Every data point records
-  the cohesion commit it measured.
+- **Pull requests** in this repository run every suite under the `dry` profile against the pinned build: a
+  benchmark that no longer builds or throws fails the check. No numbers are recorded.
+- **Nightly, on demand, and on `repository_dispatch` from cohesion** (`cohesion-main`, optional
+  `client_payload.version`) the `ci` profile runs every suite against the newest cohesion `main` build, or the build
+  the dispatch names (`workflow_dispatch` input `cohesion-version`: a version, `pinned`, or `#<pr>`). Each result is
+  converted to two series per benchmark, time (ns) and allocated bytes, and appended to the history on the
+  `gh-pages` branch with [github-action-benchmark](https://github.com/benchmark-action/github-action-benchmark).
+  Every data point records the cohesion package version and commit it measured. Only `main` builds are recorded; a
+  measured pull request build appears in the run summary and artifacts.
 - **Regressions**: compared with the previous run, a benchmark that got slower than the time threshold, or allocates
   more than the allocation threshold, comments on the commit and fails the run. Allocations are deterministic, so
   their threshold is tight; time on shared runners is noisy, so its threshold is loose. Both are workflow

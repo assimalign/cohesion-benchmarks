@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)Configuration\Assimalign.Cohesion.Configuration\src\Assimalign.Cohesion.Configuration.csproj" />
-		<ProjectReference Include="$(CohesionLibrariesRoot)Configuration\Assimalign.Cohesion.Configuration.Json\src\Assimalign.Cohesion.Configuration.Json.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.Configuration" />
+		<CohesionReference Include="Assimalign.Cohesion.Configuration.Json" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

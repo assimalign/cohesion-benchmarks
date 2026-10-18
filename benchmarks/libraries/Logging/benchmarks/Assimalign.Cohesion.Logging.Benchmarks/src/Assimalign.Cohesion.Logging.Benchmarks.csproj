@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)Logging\Assimalign.Cohesion.Logging\src\Assimalign.Cohesion.Logging.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.Logging" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

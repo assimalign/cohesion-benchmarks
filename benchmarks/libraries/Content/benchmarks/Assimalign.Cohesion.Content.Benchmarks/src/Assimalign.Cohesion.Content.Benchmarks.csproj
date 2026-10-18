@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)Content\Assimalign.Cohesion.Content.Binary\src\Assimalign.Cohesion.Content.Binary.csproj" />
-		<ProjectReference Include="$(CohesionLibrariesRoot)Content\Assimalign.Cohesion.Content.Bmff\src\Assimalign.Cohesion.Content.Bmff.csproj" />
-		<ProjectReference Include="$(CohesionLibrariesRoot)Content\Assimalign.Cohesion.Content.Markdown\src\Assimalign.Cohesion.Content.Markdown.csproj" />
-		<ProjectReference Include="$(CohesionLibrariesRoot)Content\Assimalign.Cohesion.Content.Yaml\src\Assimalign.Cohesion.Content.Yaml.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Binary" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Bmff" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Markdown" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Yaml" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

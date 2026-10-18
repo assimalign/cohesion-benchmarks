@@ -25,7 +25,7 @@ public enum ExternalTargetKind
 /// The field names follow the database suite's engine catalog (id, kind, image, ports, environment, arguments,
 /// readiness, endpointTemplate). String values may use placeholders, resolved at start:
 /// <c>{host}</c> (127.0.0.1), <c>{port}</c> (the first published port, a free port when the catalog says 0),
-/// <c>{port:N}</c> (the published port for internal port N), <c>{repoRoot}</c>, <c>{cohesionRoot}</c>,
+/// <c>{port:N}</c> (the published port for internal port N), <c>{repoRoot}</c>, <c>{cohesionVersion}</c> (the measured cohesion package version),
 /// <c>{catalogDir}</c>, and <c>{exe}</c> (".exe" on Windows, empty elsewhere).
 /// </remarks>
 public sealed class ExternalTarget

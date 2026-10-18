@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<!-- Counterpart: System.IO.Pipelines (in-box), the raw pipe pair the in-memory driver wraps. -->
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)Connections\Assimalign.Cohesion.Connections\src\Assimalign.Cohesion.Connections.csproj" />
-		<ProjectReference Include="$(CohesionLibrariesRoot)Connections\Assimalign.Cohesion.Connections.InMemory\src\Assimalign.Cohesion.Connections.InMemory.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.Connections" />
+		<CohesionReference Include="Assimalign.Cohesion.Connections.InMemory" />
 	</ItemGroup>
 </Project>

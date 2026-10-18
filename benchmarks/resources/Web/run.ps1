@@ -8,10 +8,13 @@
     then the runner starts one server process per scenario, checks its response, and measures it.
     Results land in results/<timestamp>/results.{md,json} unless -Output says otherwise.
 
-    The Cohesion packages come from the sibling cohesion checkout's local feed. Refresh it first when the
-    cohesion commit under test changes:
+    The Cohesion SDK and packages are the cohesion CI build pinned in global.json, restored from the Assimalign
+    GitHub Packages feed (repository nuget.config). Set the feed credential first:
 
-        pwsh ../../../../cohesion/installer/scripts/Install-Local.ps1 -Configuration Release
+        $env:NuGetPackageSourceCredentials_assimalign = "Username=<github-user>;Password=$(gh auth token)"
+
+    The token needs read:packages (gh auth refresh -h github.com -s read:packages). Move the pin with
+    ../../../scripts/Update-CohesionVersion.ps1.
 
     Arguments after the named parameters pass straight to the runner (see `-- --help`).
 
@@ -68,8 +71,15 @@ if (-not $SkipPublish) {
 & dotnet build $runnerProject -c Release --nologo -v quiet
 if ($LASTEXITCODE -ne 0) { throw 'Building the runner failed.' }
 
-$cohesionRepo = Join-Path $root '..' '..' '..' '..' 'cohesion'
-$commit = if (Test-Path (Join-Path $cohesionRepo '.git')) { (& git -C $cohesionRepo rev-parse --short HEAD).Trim() } else { $null }
+# The report records the cohesion commit behind the pinned CI build, when the GitHub CLI can look it up.
+$cohesionVersion = (Get-Content (Join-Path $root 'global.json') -Raw | ConvertFrom-Json).'msbuild-sdks'.'Assimalign.Cohesion.Sdk.Web'
+$commit = try {
+    (& (Join-Path $root '..' '..' '..' 'scripts' 'Resolve-CohesionVersion.ps1') -Version $cohesionVersion).Commit.Substring(0, 12)
+}
+catch {
+    Write-Warning "Could not look up the commit behind cohesion $($cohesionVersion): $($_.Exception.Message)"
+    $null
+}
 
 $runArgs = @(
     '--scenarios', $Scenarios,

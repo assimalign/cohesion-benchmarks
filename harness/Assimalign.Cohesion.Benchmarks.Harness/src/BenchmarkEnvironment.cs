@@ -7,14 +7,14 @@ namespace Assimalign.Cohesion.Benchmarks;
 
 /// <summary>
 /// Build-time facts a benchmark assembly carries (written by the repository's Directory.Build.props as
-/// <see cref="AssemblyMetadataAttribute"/>): which cohesion checkout it measures and where this repository is.
+/// <see cref="AssemblyMetadataAttribute"/>): which cohesion build it measures and where this repository is.
 /// </summary>
 public static class BenchmarkEnvironment
 {
-    /// <summary>The cohesion checkout the assembly was built against, with a trailing separator.</summary>
+    /// <summary>The cohesion package version the assembly was built against (a CI build such as 10.0.0-preview.0.ci.38).</summary>
     /// <param name="assembly">The benchmark assembly.</param>
-    /// <returns>The directory.</returns>
-    public static string GetCohesionRoot(Assembly assembly) => GetMetadata(assembly, "CohesionRoot");
+    /// <returns>The version.</returns>
+    public static string GetCohesionVersion(Assembly assembly) => GetMetadata(assembly, "CohesionPackageVersion");
 
     /// <summary>The root of this repository, with a trailing separator.</summary>
     /// <param name="assembly">The benchmark assembly.</param>

@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)OpenTelemetry\Assimalign.Cohesion.OpenTelemetry\src\Assimalign.Cohesion.OpenTelemetry.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.OpenTelemetry" />
 	</ItemGroup>
 </Project>

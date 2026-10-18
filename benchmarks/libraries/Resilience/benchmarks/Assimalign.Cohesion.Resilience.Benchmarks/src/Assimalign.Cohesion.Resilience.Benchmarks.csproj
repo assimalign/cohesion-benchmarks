@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)Resilience\Assimalign.Cohesion.Resilience.Retry\src\Assimalign.Cohesion.Resilience.Retry.csproj" />
-		<ProjectReference Include="$(CohesionLibrariesRoot)Resilience\Assimalign.Cohesion.Resilience.Timeout\src\Assimalign.Cohesion.Resilience.Timeout.csproj" />
-		<ProjectReference Include="$(CohesionLibrariesRoot)Resilience\Assimalign.Cohesion.Resilience.CircuitBreaker\src\Assimalign.Cohesion.Resilience.CircuitBreaker.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.Resilience.Retry" />
+		<CohesionReference Include="Assimalign.Cohesion.Resilience.Timeout" />
+		<CohesionReference Include="Assimalign.Cohesion.Resilience.CircuitBreaker" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

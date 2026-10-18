@@ -4,12 +4,15 @@
     <File Path="Directory.Build.props" />
     <File Path="Directory.Build.targets" />
     <File Path="global.json" />
+    <File Path="nuget.config" />
     <File Path="README.md" />
     <File Path=".github/workflows/benchmarks.yml" />
     <File Path="scripts/Invoke-Benchmarks.ps1" />
     <File Path="scripts/Compare-Benchmarks.ps1" />
     <File Path="scripts/ConvertTo-BenchmarkHistory.ps1" />
     <File Path="scripts/BenchmarkReports.psm1" />
+    <File Path="scripts/Resolve-CohesionVersion.ps1" />
+    <File Path="scripts/Update-CohesionVersion.ps1" />
   </Folder>
   <Folder Name="/harness/">
     <Project Path="harness/Assimalign.Cohesion.Benchmarks.Harness/src/Assimalign.Cohesion.Benchmarks.Harness.csproj" />

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)ObjectValidation\Assimalign.Cohesion.ObjectValidation\src\Assimalign.Cohesion.ObjectValidation.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.ObjectValidation" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

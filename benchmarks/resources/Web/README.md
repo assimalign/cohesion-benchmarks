@@ -52,16 +52,19 @@ What stands out:
 Prerequisites:
 
 - .NET SDK 10.0.300 or later.
-- The `cohesion` repository checked out beside `cohesion-benchmarks`, with its local feed packed.
-  The Cohesion server restores `Assimalign.Cohesion.*` from `../../../../cohesion/_out/packages`
-  (`nuget.config`) at `10.0.0-preview.1.local` (`global.json`):
+- A token that can read the Assimalign GitHub Packages feed. The Cohesion server restores its SDKs
+  and `Assimalign.Cohesion.*` packages from the cohesion CI build pinned in `global.json`, through
+  the repository's `nuget.config`; no cohesion checkout is needed:
 
   ```powershell
-  pwsh ../../../../cohesion/installer/scripts/Install-Local.ps1 -Configuration Release
+  gh auth refresh -h github.com -s read:packages      # once
+  $env:NuGetPackageSourceCredentials_assimalign = "Username=<github-user>;Password=$(gh auth token)"
   ```
 
-  Re-run it whenever the cohesion commit under test changes. The full pack is needed (not
-  `-SkipLibraries`): `Web.OpenApi` ships NuGet-only, outside the `App.Web` framework.
+  `../../../scripts/Update-CohesionVersion.ps1` moves the pin (here and for the BenchmarkDotNet
+  suites) to the newest cohesion `main` build, or `-Version <v>` to any build still on the feed,
+  such as a cohesion pull request's (`../../../scripts/Resolve-CohesionVersion.ps1 -PullRequest <n>`).
+  The report records the cohesion commit behind the pinned build.
 
 Then, from this folder:
 
@@ -209,8 +212,8 @@ Not covered yet, and why:
 ## BenchmarkDotNet suite
 
 `benchmarks/Assimalign.Cohesion.Web.Benchmarks` measures per-operation costs the end-to-end runner can only show
-in aggregate, following the repository conventions ([CONVENTIONS.md](../../../CONVENTIONS.md)). It builds Cohesion
-from source (`CohesionRoot`), not from the packed feed:
+in aggregate, following the repository conventions ([CONVENTIONS.md](../../../CONVENTIONS.md)). Like every suite, it
+measures the cohesion CI packages at the repository's `CohesionPackageVersion`:
 
 | Folder | Measures | Baseline |
 | --- | --- | --- |
@@ -231,7 +234,7 @@ the authentication rows of the 2026-10-17 results: the HTTP/1.1 request head was
 
 ```
 benchmarks/resources/Web/
-├── global.json, nuget.config          SDK pins and the local Cohesion feed (end-to-end harness)
+├── global.json                        SDK pins: .NET and the cohesion CI build (end-to-end harness)
 ├── shared/                            scenario names, payloads, keys: linked into every project
 │   ├── BenchmarkShared.cs
 │   └── wwwroot/hello-4k.txt

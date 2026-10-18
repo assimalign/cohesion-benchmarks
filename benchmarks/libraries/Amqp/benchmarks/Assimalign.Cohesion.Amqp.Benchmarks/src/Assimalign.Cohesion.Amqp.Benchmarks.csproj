@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)Amqp\Assimalign.Cohesion.Amqp.Connections\src\Assimalign.Cohesion.Amqp.Connections.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.Amqp.Connections" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

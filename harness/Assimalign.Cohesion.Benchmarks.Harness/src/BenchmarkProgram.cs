@@ -60,7 +60,7 @@ public static class BenchmarkProgram
         bool jobFromCommandLine = arguments.Any(argument => argument is "--job" or "-j" or "--runtimes" or "-r");
         IConfig config = BenchmarkProfiles.CreateConfig(profile, assembly, addProfileJob: !jobFromCommandLine, outOfProcess);
 
-        Console.WriteLine($"// Cohesion benchmarks: profile={profile}, {(outOfProcess ? "out-of-process" : "in-process")}, CohesionRoot={BenchmarkEnvironment.GetCohesionRoot(assembly)}");
+        Console.WriteLine($"// Cohesion benchmarks: profile={profile}, {(outOfProcess ? "out-of-process" : "in-process")}, cohesion={BenchmarkEnvironment.GetCohesionVersion(assembly)}");
 
         IEnumerable<Summary> summaries = BenchmarkSwitcher.FromAssembly(assembly).Run([.. arguments], config);
         return summaries.Any(Failed) ? 1 : 0;
