@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="$(CohesionLibrariesRoot)Hosting\Assimalign.Cohesion.Hosting\src\Assimalign.Cohesion.Hosting.csproj" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Hosting" />
+	</ItemGroup>
+</Project>

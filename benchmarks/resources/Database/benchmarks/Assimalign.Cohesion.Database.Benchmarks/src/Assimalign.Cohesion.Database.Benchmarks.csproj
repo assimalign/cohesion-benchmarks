@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="$(CohesionResourcesRoot)Database\Assimalign.Cohesion.Database.Sql\src\Assimalign.Cohesion.Database.Sql.csproj" />
+		<ProjectReference Include="$(CohesionResourcesRoot)Database\Assimalign.Cohesion.Database.KeyValuePair\src\Assimalign.Cohesion.Database.KeyValuePair.csproj" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Data.Sqlite" />
+	</ItemGroup>
+</Project>

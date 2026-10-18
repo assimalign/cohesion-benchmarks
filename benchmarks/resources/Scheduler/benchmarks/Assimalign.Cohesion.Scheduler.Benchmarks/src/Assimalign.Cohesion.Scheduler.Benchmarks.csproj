@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="$(CohesionResourcesRoot)Scheduler\Assimalign.Cohesion.Scheduler.Cron\src\Assimalign.Cohesion.Scheduler.Cron.csproj" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="Cronos" />
+	</ItemGroup>
+</Project>

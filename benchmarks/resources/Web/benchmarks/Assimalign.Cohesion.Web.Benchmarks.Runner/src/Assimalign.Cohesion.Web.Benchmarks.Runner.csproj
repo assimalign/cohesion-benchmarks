@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>Assimalign.Cohesion.Web.Benchmarks.Runner</RootNamespace>
+		<AssemblyName>web-bench</AssemblyName>
+		<!-- The load generator should spend its cores on sockets, not on a server GC's per-core heaps. -->
+		<ServerGarbageCollection>false</ServerGarbageCollection>
+		<ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
+		<TieredPGO>true</TieredPGO>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Include="$(BenchmarksSharedDirectory)BenchmarkShared.cs" Link="Shared\BenchmarkShared.cs" />
+	</ItemGroup>
+</Project>

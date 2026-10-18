@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="$(CohesionLibrariesRoot)FileSystem\Assimalign.Cohesion.FileSystem.Globbing\src\Assimalign.Cohesion.FileSystem.Globbing.csproj" />
+		<ProjectReference Include="$(CohesionLibrariesRoot)FileSystem\Assimalign.Cohesion.FileSystem.InMemory\src\Assimalign.Cohesion.FileSystem.InMemory.csproj" />
+		<ProjectReference Include="$(CohesionLibrariesRoot)FileSystem\Assimalign.Cohesion.FileSystem.Physical\src\Assimalign.Cohesion.FileSystem.Physical.csproj" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" />
+	</ItemGroup>
+</Project>

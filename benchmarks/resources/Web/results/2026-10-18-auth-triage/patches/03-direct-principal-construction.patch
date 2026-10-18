@@ -1,0 +1,63 @@
+diff --git a/resources/Web/Assimalign.Cohesion.Web.Authentication.Bearer/src/Internal/JwtClaimsPrincipalMapper.cs b/resources/Web/Assimalign.Cohesion.Web.Authentication.Bearer/src/Internal/JwtClaimsPrincipalMapper.cs
+index 5fdcb6c8e841fd35c25cfe3e58fd6bd9f25f5e77..e4b644da7fbc959d9fc211ca33c0a96d1249be04 100644
+--- a/resources/Web/Assimalign.Cohesion.Web.Authentication.Bearer/src/Internal/JwtClaimsPrincipalMapper.cs
++++ b/resources/Web/Assimalign.Cohesion.Web.Authentication.Bearer/src/Internal/JwtClaimsPrincipalMapper.cs
+@@ -1,4 +1,3 @@
+-using System.Collections.Generic;
+ using System.Security.Claims;
+ 
+ using Assimalign.Cohesion.IdentityModel;
+@@ -17,7 +16,7 @@ internal static class JwtClaimsPrincipalMapper
+     public static ClaimsPrincipal Map(JsonWebToken token, string authenticationType, JwtBearerOptions options)
+     {
+         string defaultIssuer = options.ClaimsIssuer ?? token.Issuer ?? ClaimsIdentity.DefaultIssuer;
+-        var claims = new List<Claim>(token.Claims.Count);
++        ClaimsIdentity identity = new(authenticationType, options.NameClaimType, options.RoleClaimType);
+ 
+         foreach (IIdentityClaim claim in token.Claims)
+         {
+@@ -30,27 +29,26 @@ internal static class JwtClaimsPrincipalMapper
+             {
+                 foreach (IdentityClaimValue element in value.AsArray())
+                 {
+-                    AddClaim(claims, claim.Type, element, issuer);
++                    AddClaim(identity, claim.Type, element, issuer);
+                 }
+             }
+             else
+             {
+-                AddClaim(claims, claim.Type, value, issuer);
++                AddClaim(identity, claim.Type, value, issuer);
+             }
+         }
+ 
+-        ClaimsIdentity identity = new(claims, authenticationType, options.NameClaimType, options.RoleClaimType);
+         return new ClaimsPrincipal(identity);
+     }
+ 
+-    private static void AddClaim(List<Claim> claims, string type, IdentityClaimValue value, string issuer)
++    private static void AddClaim(ClaimsIdentity identity, string type, IdentityClaimValue value, string issuer)
+     {
+         if (value.IsNull || value.IsUndefined)
+         {
+             return;
+         }
+ 
+-        claims.Add(new Claim(type, value.ToString(), MapValueType(value.Kind), issuer));
++        identity.AddClaim(new Claim(type, value.ToString(), MapValueType(value.Kind), issuer, issuer, identity));
+     }
+ 
+     private static string MapValueType(IdentityValueKind kind) => kind switch
+diff --git a/resources/Web/Assimalign.Cohesion.Web.Authentication.Cookie/src/Internal/CookieTicketSerializer.cs b/resources/Web/Assimalign.Cohesion.Web.Authentication.Cookie/src/Internal/CookieTicketSerializer.cs
+index 6f74824ef8d14fed64a01aafdd62f6cc61b08a88..0e37e4ffb57592e194bc5cf62d648510505d1477 100644
+GIT binary patch
+delta 151
+zcmX?Qx4>@05x&XYoH8tVspT4*fAd{socw^5ZE`5L5Sy(6NNn<AA;ZZ(x%oG<3(7JI
+zW~QX(m1LGw>N%#QIOim0=1$fV(iGNF$Sf`{O)Ub_P<hSC>jf0$3W_rGk~0eub3n>H
+ep;8(!HIsQbB`3>Ca<W4eP1cvx+-xJv#{&S)3p0WM
+
+delta 172
+zcmZ2rcgk+V5x&V6xwQB*Q&RIvGD|9*^GoweG_5D|ODJw;=ikIQ*_KC^D>)}IGZ!qg
+znO#tq5yCIlb4*E@>?))=xj{%t3#vae6)dcgms+mi4ANEX2{l*)Y)G+=!sP1$hLaBn
+jDJUS+1QccFC1(~S=4c>{0lHxUuiWGsF0Rc&!hAdcf?qrM
+

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="$(CohesionResourcesRoot)Web\Assimalign.Cohesion.Web.Authentication.Bearer\src\Assimalign.Cohesion.Web.Authentication.Bearer.csproj" />
+		<ProjectReference Include="$(CohesionResourcesRoot)Web\Assimalign.Cohesion.Web.Authentication.Cookie\src\Assimalign.Cohesion.Web.Authentication.Cookie.csproj" />
+		<ProjectReference Include="$(CohesionResourcesRoot)Web\Assimalign.Cohesion.Web.Authorization\src\Assimalign.Cohesion.Web.Authorization.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- A minimal IHttpContext without a server: the Bearer tests' TestHttpContext. -->
+		<Compile Include="$(CohesionResourcesRoot)Web\Assimalign.Cohesion.Web.Authentication.Bearer\tests\TestObjects\BearerTestObjects.cs" Link="Fixtures\BearerTestObjects.cs" />
+		<Compile Include="$(WebBenchmarksSharedDirectory)BenchmarkShared.cs" Link="Fixtures\BenchmarkShared.cs" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+	</ItemGroup>
+</Project>

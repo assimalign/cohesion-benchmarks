@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="$(CohesionLibrariesRoot)ObjectPool\Assimalign.Cohesion.ObjectPool\src\Assimalign.Cohesion.ObjectPool.csproj" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.ObjectPool" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="$(CohesionLibrariesRoot)Amqp\Assimalign.Cohesion.Amqp.Connections\src\Assimalign.Cohesion.Amqp.Connections.csproj" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="AMQPNetLite.Core" />
+	</ItemGroup>
+</Project>

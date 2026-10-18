@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="$(CohesionLibrariesRoot)OpenApi\Assimalign.Cohesion.OpenApi\src\Assimalign.Cohesion.OpenApi.csproj" />
+		<ProjectReference Include="$(CohesionLibrariesRoot)OpenApi\Assimalign.Cohesion.OpenApi.Serialization\src\Assimalign.Cohesion.OpenApi.Serialization.csproj" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.OpenApi" />
+	</ItemGroup>
+</Project>

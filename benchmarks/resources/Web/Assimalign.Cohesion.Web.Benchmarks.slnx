@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="global.json" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+    <File Path="run.ps1" />
+    <File Path="shared/BenchmarkShared.cs" />
+  </Folder>
+  <Project Path="benchmarks/Assimalign.Cohesion.Web.Benchmarks.AspNetCoreServer/src/Assimalign.Cohesion.Web.Benchmarks.AspNetCoreServer.csproj" />
+  <Project Path="benchmarks/Assimalign.Cohesion.Web.Benchmarks.CohesionServer/src/Assimalign.Cohesion.Web.Benchmarks.CohesionServer.csproj" />
+  <Project Path="benchmarks/Assimalign.Cohesion.Web.Benchmarks.Runner/src/Assimalign.Cohesion.Web.Benchmarks.Runner.csproj" />
+</Solution>
