@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<RootNamespace>Assimalign.Cohesion.Web.Benchmarks</RootNamespace>
+		<AssemblyName>aspnetcore-server</AssemblyName>
+		<!-- Published self-contained for the host RID, as the Cohesion server is, so both run the same runtime build. -->
+		<SelfContained>true</SelfContained>
+		<RuntimeIdentifier>$(NETCoreSdkRuntimeIdentifier)</RuntimeIdentifier>
+		<!-- Microsoft.NET.Sdk.Web turns Server GC on; the runner sets the GC mode for both servers explicitly. -->
+		<EnableRequestDelegateGenerator>true</EnableRequestDelegateGenerator>
+		<InterceptorsNamespaces>$(InterceptorsNamespaces);Microsoft.AspNetCore.Http.Validation.Generated</InterceptorsNamespaces>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="$(BenchmarksSharedDirectory)BenchmarkShared.cs" Link="Shared\BenchmarkShared.cs" />
+		<Content Include="$(BenchmarksSharedDirectory)wwwroot\**" Link="wwwroot\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+	</ItemGroup>
+</Project>

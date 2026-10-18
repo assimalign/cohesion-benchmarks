@@ -1,0 +1,3 @@
+<Project>
+	<!-- Shadows the repository root Directory.Build.targets (BenchmarkDotNet and comparison-library pins). -->
+</Project>
