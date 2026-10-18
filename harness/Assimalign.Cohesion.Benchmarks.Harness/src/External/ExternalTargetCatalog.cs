@@ -31,12 +31,12 @@ public sealed class ExternalTargetCatalog
 
     private readonly Dictionary<string, string> _unavailable = new(StringComparer.Ordinal);
 
-    private ExternalTargetCatalog(string path, string repositoryRoot, string cohesionRoot, IReadOnlyList<ExternalTarget> targets)
+    private ExternalTargetCatalog(string path, string repositoryRoot, string cohesionVersion, IReadOnlyList<ExternalTarget> targets)
     {
         CatalogPath = path;
         CatalogDirectory = Path.GetDirectoryName(path)!;
         RepositoryRoot = repositoryRoot;
-        CohesionRoot = cohesionRoot;
+        CohesionVersion = cohesionVersion;
         Targets = targets;
 
         string[]? selected = System.Environment.GetEnvironmentVariable("COHESION_BENCHMARK_TARGETS")?
@@ -64,8 +64,8 @@ public sealed class ExternalTargetCatalog
     /// <summary>This repository's root (<c>{repoRoot}</c>).</summary>
     public string RepositoryRoot { get; }
 
-    /// <summary>The measured cohesion checkout (<c>{cohesionRoot}</c>).</summary>
-    public string CohesionRoot { get; }
+    /// <summary>The measured cohesion package version (<c>{cohesionVersion}</c>).</summary>
+    public string CohesionVersion { get; }
 
     /// <summary>Every target in the catalog.</summary>
     public IReadOnlyList<ExternalTarget> Targets { get; }
@@ -76,7 +76,7 @@ public sealed class ExternalTargetCatalog
     /// <summary>
     /// Loads (once per process) the catalog at <paramref name="relativePath"/>, relative to the repository root.
     /// </summary>
-    /// <param name="assembly">The benchmark assembly (it knows the repository root and cohesion checkout).</param>
+    /// <param name="assembly">The benchmark assembly (it knows the repository root and the cohesion version).</param>
     /// <param name="relativePath">For example <c>benchmarks/resources/Web/targets/catalog.json</c>.</param>
     /// <returns>The catalog.</returns>
     public static ExternalTargetCatalog Load(Assembly assembly, string relativePath)
@@ -102,7 +102,7 @@ public sealed class ExternalTargetCatalog
             return new ExternalTargetCatalog(
                 fullPath,
                 BenchmarkEnvironment.GetBenchmarksRoot(owner),
-                BenchmarkEnvironment.GetCohesionRoot(owner),
+                BenchmarkEnvironment.GetCohesionVersion(owner),
                 document.Targets);
         }, assembly);
     }

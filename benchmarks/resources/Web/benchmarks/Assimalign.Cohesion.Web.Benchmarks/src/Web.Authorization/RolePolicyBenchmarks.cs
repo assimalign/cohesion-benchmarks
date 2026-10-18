@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 
-using Assimalign.Cohesion.Web.Authentication.Bearer.Tests.TestObjects;
 using Assimalign.Cohesion.Web.Benchmarks.Fixtures;
 
 using BenchmarkDotNet.Attributes;
@@ -17,13 +16,13 @@ namespace Assimalign.Cohesion.Web.Benchmarks.Web.Authorization;
 public class RolePolicyBenchmarks
 {
     private AuthenticationFixture _fixture = null!;
-    private TestHttpContext _context = null!;
+    private BenchmarkHttpContext _context = null!;
 
     [GlobalSetup]
     public void Setup()
     {
         _fixture = new AuthenticationFixture();
-        _context = TestHttpContext.Create();
+        _context = BenchmarkHttpContext.Create();
     }
 
     [GlobalCleanup]

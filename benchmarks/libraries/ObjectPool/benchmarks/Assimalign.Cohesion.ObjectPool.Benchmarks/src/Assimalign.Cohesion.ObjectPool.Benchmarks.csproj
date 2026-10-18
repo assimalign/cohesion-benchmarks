@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)ObjectPool\Assimalign.Cohesion.ObjectPool\src\Assimalign.Cohesion.ObjectPool.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.ObjectPool" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

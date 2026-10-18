@@ -5,14 +5,17 @@
 
 .DESCRIPTION
     A suite is benchmarks/<libraries|resources>/<Area>/benchmarks/<Name>/src/<Name>.csproj where <Name> ends in
-    .Benchmarks (CONVENTIONS.md). Each suite is built once (Release) against the requested cohesion checkout and run
-    under a profile; its BenchmarkDotNet reports land in .artifacts/results/<Name>/ and, with -Output, are copied to
+    .Benchmarks (CONVENTIONS.md). Each suite is built once (Release) against a cohesion CI build from the Assimalign
+    GitHub Packages feed (the pinned CohesionPackageVersion unless -CohesionVersion names another) and run under a
+    profile; its BenchmarkDotNet reports land in .artifacts/results/<Name>/ and, with -Output, are copied to
     <Output>/<scope>/<Area>/.
+
+    The feed needs a token with read:packages, supplied through NuGetPackageSourceCredentials_assimalign.
 
 .EXAMPLE
     ./scripts/Invoke-Benchmarks.ps1 -Area ObjectPool
     ./scripts/Invoke-Benchmarks.ps1 -Scope libraries -Profile dry
-    ./scripts/Invoke-Benchmarks.ps1 -Area Http -Filter '*Cookie*' -CohesionRoot ..\coh-branch -Profile ci -Output .artifacts\ab\after
+    ./scripts/Invoke-Benchmarks.ps1 -Area Http -Profile ci -CohesionVersion 10.0.0-preview.0.pr.1663.37 -Output .artifacts\ab\after
     ./scripts/Invoke-Benchmarks.ps1 -List -AsJson        # the CI matrix
 #>
 [CmdletBinding()]
@@ -29,8 +32,9 @@ param(
     [ValidateSet('local', 'ci', 'dry')]
     [string]$Profile = 'local',
 
-    # The cohesion checkout to measure. Default: the sibling ../cohesion.
-    [string]$CohesionRoot,
+    # The cohesion CI package version to measure (scripts/Resolve-CohesionVersion.ps1 finds one). Default: the pin
+    # in Directory.Build.props.
+    [string]$CohesionVersion,
 
     # Copy each suite's reports here, under <scope>/<Area>/.
     [string]$Output,
@@ -84,10 +88,14 @@ if ($List) {
 if (-not $suites) { throw "No benchmark suite matches scope '$Scope' and area '$($Area -join ',')'." }
 
 $msbuildArgs = @('-c', 'Release', '--nologo', '-v', 'quiet')
-if ($CohesionRoot) {
-    $resolved = (Resolve-Path $CohesionRoot).Path.TrimEnd('\', '/') + [IO.Path]::DirectorySeparatorChar
-    $msbuildArgs += "-p:CohesionRoot=$resolved"
-    Write-Host "CohesionRoot: $resolved"
+if ($CohesionVersion) {
+    $msbuildArgs += "-p:CohesionPackageVersion=$CohesionVersion"
+    Write-Host "Cohesion: $CohesionVersion"
+}
+
+if (-not $env:NuGetPackageSourceCredentials_assimalign) {
+    Write-Warning ("NuGetPackageSourceCredentials_assimalign is not set; restoring Assimalign.Cohesion.* from GitHub Packages " +
+        "needs a token with read:packages: `$env:NuGetPackageSourceCredentials_assimalign = `"Username=<github-user>;Password=`$(gh auth token)`"")
 }
 
 $failed = @()

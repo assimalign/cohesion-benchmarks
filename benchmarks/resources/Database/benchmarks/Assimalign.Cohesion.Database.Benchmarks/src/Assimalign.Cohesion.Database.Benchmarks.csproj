@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionResourcesRoot)Database\Assimalign.Cohesion.Database.Sql\src\Assimalign.Cohesion.Database.Sql.csproj" />
-		<ProjectReference Include="$(CohesionResourcesRoot)Database\Assimalign.Cohesion.Database.KeyValuePair\src\Assimalign.Cohesion.Database.KeyValuePair.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.Database.Sql" />
+		<CohesionReference Include="Assimalign.Cohesion.Database.KeyValuePair" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

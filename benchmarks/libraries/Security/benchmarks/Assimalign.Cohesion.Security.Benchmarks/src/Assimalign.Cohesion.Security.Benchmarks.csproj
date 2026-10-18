@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)Security\Assimalign.Cohesion.Security.DataProtection\src\Assimalign.Cohesion.Security.DataProtection.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.Security.DataProtection" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

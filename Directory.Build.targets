@@ -1,12 +1,10 @@
 <Project>
 	<!--
-		BenchmarkDotNet rebuilds a suite in a generated child project and passes ArtifactsPath globally. Cohesion's
-		projects do not use the artifacts layout and their build infrastructure (shared sources, code generation)
-		evaluates some projects more than once; under a global ArtifactsPath those evaluations share one obj folder
-		and race. Referenced projects build into their own obj folders instead, as they do in an ordinary build.
+		The Cohesion packages a suite measures: <CohesionReference Include="Assimalign.Cohesion.ObjectPool" />. Every
+		one resolves at CohesionPackageVersion, so a suite always measures one cohesion build, never a mix.
 	-->
-	<ItemGroup Condition="'$(IsCohesionBenchmark)' == 'true'">
-		<ProjectReference Update="@(ProjectReference)" UndefineProperties="%(ProjectReference.UndefineProperties);ArtifactsPath" />
+	<ItemGroup>
+		<PackageReference Include="@(CohesionReference)" Version="$(CohesionPackageVersion)" />
 	</ItemGroup>
 
 	<!--

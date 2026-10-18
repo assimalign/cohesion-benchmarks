@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)Hosting\Assimalign.Cohesion.Hosting\src\Assimalign.Cohesion.Hosting.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.Hosting" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

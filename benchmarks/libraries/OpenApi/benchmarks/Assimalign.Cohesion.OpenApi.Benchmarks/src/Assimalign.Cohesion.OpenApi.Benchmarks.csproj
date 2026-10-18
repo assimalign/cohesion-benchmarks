@@ -1,7 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)OpenApi\Assimalign.Cohesion.OpenApi\src\Assimalign.Cohesion.OpenApi.csproj" />
-		<ProjectReference Include="$(CohesionLibrariesRoot)OpenApi\Assimalign.Cohesion.OpenApi.Serialization\src\Assimalign.Cohesion.OpenApi.Serialization.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.OpenApi" />
+		<CohesionReference Include="Assimalign.Cohesion.OpenApi.Serialization" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- The OpenAPI Initiative's Tic Tac Toe example (CC-BY-4.0, OpenApi.Serialization/NOTICE.md). -->
+		<EmbeddedResource Include="OpenApi.Serialization\tictactoe.json" LogicalName="tictactoe.json" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

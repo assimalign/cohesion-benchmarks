@@ -8,13 +8,11 @@
 		  benchmarks/resources/<Area>/benchmarks/<other projects>/src/                        end-to-end harnesses (servers, load runners)
 		  harness/                                                                           shared BenchmarkDotNet conventions and the out-of-process toolkit
 
-		Benchmarks measure Cohesion from source: CohesionRoot points at a cohesion checkout (default: the sibling
-		..\cohesion), and projects reference its projects through $(CohesionLibrariesRoot) / $(CohesionResourcesRoot).
-		Pass -p:CohesionRoot=<path> to measure another checkout or worktree; the harness forwards it to every
-		BenchmarkDotNet child build.
-
-		The end-to-end Web harness (benchmarks/resources/Web) consumes packed Cohesion SDKs instead and keeps its own
-		Directory.Build.props.
+		Benchmarks measure the Cohesion packages cohesion's CI publishes to the Assimalign GitHub Packages feed
+		(nuget.config): one build of main, or of a cohesion pull request, at a time. A suite names the packages it
+		measures with CohesionReference items; they resolve at CohesionPackageVersion. The default below is the pinned
+		build; pass -p:CohesionPackageVersion=<version> (or scripts/Invoke-Benchmarks.ps1 -CohesionVersion) to measure
+		another, and scripts/Update-CohesionVersion.ps1 to move the pin.
 	-->
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
@@ -29,17 +27,15 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
+		<!-- The pinned cohesion CI build (main, cohesion ff7a93e80a9a). Moved by scripts/Update-CohesionVersion.ps1. -->
+		<CohesionPackageVersion Condition="'$(CohesionPackageVersion)' == ''">10.0.0-preview.0.ci.38</CohesionPackageVersion>
 		<BenchmarksRoot>$(MSBuildThisFileDirectory)</BenchmarksRoot>
-		<CohesionRoot Condition="'$(CohesionRoot)' == ''">$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '..', 'cohesion'))</CohesionRoot>
-		<CohesionRoot>$([MSBuild]::EnsureTrailingSlash('$(CohesionRoot)'))</CohesionRoot>
-		<CohesionLibrariesRoot>$(CohesionRoot)libraries\</CohesionLibrariesRoot>
-		<CohesionResourcesRoot>$(CohesionRoot)resources\</CohesionResourcesRoot>
 		<BenchmarksHarnessProject>$(MSBuildThisFileDirectory)harness\Assimalign.Cohesion.Benchmarks.Harness\src\Assimalign.Cohesion.Benchmarks.Harness.csproj</BenchmarksHarnessProject>
 	</PropertyGroup>
 
 	<!--
-		Short output paths. BenchmarkDotNet builds a child project per job and copies cohesion's project graph into it;
-		under the default bin/obj layout that exceeds MAX_PATH on Windows. Everything lands in .artifacts/ instead.
+		Short output paths. BenchmarkDotNet builds a child project per job when a suite runs out of process; under the
+		default bin/obj layout that can exceed MAX_PATH on Windows. Everything lands in .artifacts/ instead.
 	-->
 	<PropertyGroup>
 		<UseArtifactsOutput>true</UseArtifactsOutput>
@@ -62,8 +58,8 @@
 	<ItemGroup Condition="'$(IsCohesionBenchmark)' == 'true'">
 		<PackageReference Include="BenchmarkDotNet" />
 		<ProjectReference Include="$(BenchmarksHarnessProject)" />
-		<!-- Read back by the harness: which checkout this build measures and where results go. -->
-		<AssemblyMetadata Include="CohesionRoot" Value="$(CohesionRoot)" />
+		<!-- Read back by the harness: which cohesion build this suite measures and where results go. -->
+		<AssemblyMetadata Include="CohesionPackageVersion" Value="$(CohesionPackageVersion)" />
 		<AssemblyMetadata Include="BenchmarksRoot" Value="$(BenchmarksRoot)" />
 	</ItemGroup>
 </Project>

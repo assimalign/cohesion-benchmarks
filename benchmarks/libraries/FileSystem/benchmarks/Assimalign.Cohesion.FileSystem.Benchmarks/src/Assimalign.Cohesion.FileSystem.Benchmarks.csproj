@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)FileSystem\Assimalign.Cohesion.FileSystem.Globbing\src\Assimalign.Cohesion.FileSystem.Globbing.csproj" />
-		<ProjectReference Include="$(CohesionLibrariesRoot)FileSystem\Assimalign.Cohesion.FileSystem.InMemory\src\Assimalign.Cohesion.FileSystem.InMemory.csproj" />
-		<ProjectReference Include="$(CohesionLibrariesRoot)FileSystem\Assimalign.Cohesion.FileSystem.Physical\src\Assimalign.Cohesion.FileSystem.Physical.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.FileSystem.Globbing" />
+		<CohesionReference Include="Assimalign.Cohesion.FileSystem.InMemory" />
+		<CohesionReference Include="Assimalign.Cohesion.FileSystem.Physical" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

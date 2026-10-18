@@ -8,7 +8,6 @@ using System.Text;
 using Assimalign.Cohesion.Http;
 using Assimalign.Cohesion.Web.Authentication.Bearer;
 using Assimalign.Cohesion.Web.Authentication.Cookie;
-using Assimalign.Cohesion.Web.Authentication.Bearer.Tests.TestObjects;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.DataProtection;
@@ -117,17 +116,17 @@ internal sealed class AuthenticationFixture : IDisposable
     public AspNetCoreAuthorization.IAuthorizationService AspNetCoreAuthorizationService { get; }
 
     /// <summary>A fresh request carrying the bearer token, as each request arrives.</summary>
-    public TestHttpContext CreateCohesionBearerContext()
+    public BenchmarkHttpContext CreateCohesionBearerContext()
     {
-        TestHttpContext context = TestHttpContext.Create();
+        BenchmarkHttpContext context = BenchmarkHttpContext.Create();
         context.SetAuthorization("Bearer " + Token);
         return context;
     }
 
     /// <summary>A fresh request carrying the authentication cookie.</summary>
-    public TestHttpContext CreateCohesionCookieContext()
+    public BenchmarkHttpContext CreateCohesionCookieContext()
     {
-        TestHttpContext context = TestHttpContext.Create();
+        BenchmarkHttpContext context = BenchmarkHttpContext.Create();
         context.Request.Headers[HttpHeaderKey.Cookie] = CohesionCookieName + "=" + CohesionCookieValue;
         return context;
     }
@@ -177,7 +176,7 @@ internal sealed class AuthenticationFixture : IDisposable
 
     private static (string Name, string Value) SignInCohesion(CohesionAuthentication.IAuthenticationService service)
     {
-        TestHttpContext context = TestHttpContext.Create();
+        BenchmarkHttpContext context = BenchmarkHttpContext.Create();
         DateTimeOffset now = DateTimeOffset.UtcNow;
         service.SignInAsync(
                 context,

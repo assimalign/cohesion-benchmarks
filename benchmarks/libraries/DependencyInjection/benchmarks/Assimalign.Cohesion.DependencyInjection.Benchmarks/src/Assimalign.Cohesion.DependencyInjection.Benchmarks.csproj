@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="$(CohesionLibrariesRoot)DependencyInjection\Assimalign.Cohesion.DependencyInjection\src\Assimalign.Cohesion.DependencyInjection.csproj" />
+		<CohesionReference Include="Assimalign.Cohesion.DependencyInjection" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

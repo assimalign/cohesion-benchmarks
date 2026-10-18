@@ -18,15 +18,12 @@ namespace Assimalign.Cohesion.Benchmarks;
 /// <remarks>
 /// <para>
 /// Suites run <b>in-process</b> by default (BenchmarkDotNet's <see cref="InProcessEmitToolchain"/>: the same
-/// emitted measurement harness, in the already-built benchmark process). BenchmarkDotNet's default toolchain
-/// rebuilds the suite in a generated child project, and cohesion's project graph does not rebuild reliably there:
-/// its analyzer and shared-source references evaluate some projects more than once under different global
-/// properties, and those instances race on shared output files. In-process also skips a multi-minute rebuild per
-/// suite, which matters in CI.
+/// emitted measurement harness, in the already-built benchmark process), which skips a rebuild of every suite in a
+/// generated child project and keeps CI short.
 /// </para>
 /// <para>
-/// <c>--out-of-process</c> restores the default toolchain for a suite whose graph rebuilds cleanly (for example
-/// to compare GC modes in separate processes); the measured cohesion checkout is then forwarded to the child build.
+/// <c>--out-of-process</c> restores BenchmarkDotNet's default toolchain (for example to compare GC modes in
+/// separate processes); the measured cohesion package version is then forwarded to the child build.
 /// </para>
 /// </remarks>
 public static class BenchmarkProfiles
@@ -94,12 +91,11 @@ public static class BenchmarkProfiles
             return job.WithToolchain(InProcessEmitToolchain.Instance);
         }
 
-        // The child project rebuilds the suite: forward the measured checkout, or it would measure the default
-        // sibling checkout instead, and build on one node to keep duplicate project instances from racing.
+        // The child project rebuilds the suite: forward the measured cohesion build, or it would restore the pinned
+        // default instead.
         return job.WithArguments(
         [
-            new MsBuildArgument($"/p:CohesionRoot={BenchmarkEnvironment.GetCohesionRoot(assembly)}"),
-            new MsBuildArgument("/m:1"),
+            new MsBuildArgument($"/p:CohesionPackageVersion={BenchmarkEnvironment.GetCohesionVersion(assembly)}"),
         ]);
     }
 }

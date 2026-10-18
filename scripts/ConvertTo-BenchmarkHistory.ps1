@@ -7,16 +7,19 @@
 .DESCRIPTION
     The action's built-in BenchmarkDotNet parser records time only, and keys history to this repository's commit.
     Converting first lets CI track allocations too (deterministic, so they take a tight regression threshold) and
-    stamps every data point with the cohesion commit it measured. Failed benchmarks are reported and left out.
+    stamps every data point with the cohesion build it measured (CI package version and commit). Failed benchmarks
+    are reported and left out.
 
 .EXAMPLE
-    ./scripts/ConvertTo-BenchmarkHistory.ps1 -Path results/libraries/Http -TimeOutput time.json -AllocationOutput alloc.json -CohesionCommit (git -C ../cohesion rev-parse HEAD)
+    $build = ./scripts/Resolve-CohesionVersion.ps1 -Version 10.0.0-preview.0.ci.38
+    ./scripts/ConvertTo-BenchmarkHistory.ps1 -Path results/libraries/Http -TimeOutput time.json -AllocationOutput alloc.json -CohesionVersion $build.Version -CohesionCommit $build.Commit
 #>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory)][string]$Path,
     [Parameter(Mandatory)][string]$TimeOutput,
     [Parameter(Mandatory)][string]$AllocationOutput,
+    [string]$CohesionVersion = 'unknown',
     [string]$CohesionCommit = 'unknown',
     [string]$Runner = $env:RUNNER_NAME
 )
@@ -30,7 +33,7 @@ if ($rows.Count -eq 0) { throw "No BenchmarkDotNet *-report-full.json under $Pat
 $failed = @($rows | Where-Object Failed)
 foreach ($row in $failed) { Write-Warning "No statistics for $($row.Name) ($($row.Report)); left out of the history." }
 
-$context = "cohesion $($CohesionCommit.Substring(0, [Math]::Min(12, $CohesionCommit.Length)))" + $(if ($Runner) { " on $Runner" } else { '' })
+$context = "cohesion $CohesionVersion ($($CohesionCommit.Substring(0, [Math]::Min(12, $CohesionCommit.Length))))" + $(if ($Runner) { " on $Runner" } else { '' })
 
 $time = foreach ($row in $rows | Where-Object { -not $_.Failed }) {
     [ordered]@{

@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.IO;
 
-using Assimalign.Cohesion.Benchmarks;
 using Assimalign.Cohesion.OpenApi.Serialization;
 
 using BenchmarkDotNet.Attributes;
@@ -22,17 +21,14 @@ namespace Assimalign.Cohesion.OpenApi.Benchmarks.OpenApi.Serialization;
 /// </summary>
 /// <remarks>
 /// The input is the OpenAPI Initiative's "Tic Tac Toe" 3.1 example (paths, operations, parameters, components,
-/// security schemes and <c>$ref</c>s), read from the measured cohesion checkout's vendored test corpus so this
-/// repository does not carry a copy.
+/// security schemes and <c>$ref</c>s), embedded beside this class as <c>tictactoe.json</c> (CC-BY-4.0, see
+/// NOTICE.md).
 /// </remarks>
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 public class OpenApiJsonBenchmarks
 {
     private const string parseCategory = "Parse";
     private const string serializeCategory = "Serialize";
-
-    private const string corpusPath =
-        "libraries/OpenApi/Assimalign.Cohesion.OpenApi/tests/Shared/Corpus/v3.1/tictactoe.json";
 
     private string _json = null!;
     private OpenApiDocument _document = null!;
@@ -41,8 +37,10 @@ public class OpenApiJsonBenchmarks
     [GlobalSetup]
     public void Setup()
     {
-        string cohesionRoot = BenchmarkEnvironment.GetCohesionRoot(typeof(OpenApiJsonBenchmarks).Assembly);
-        _json = File.ReadAllText(Path.Combine(cohesionRoot, corpusPath.Replace('/', Path.DirectorySeparatorChar)));
+        using Stream corpus = typeof(OpenApiJsonBenchmarks).Assembly.GetManifestResourceStream("tictactoe.json")
+            ?? throw new InvalidOperationException("The embedded tictactoe.json is missing.");
+        using StreamReader reader = new(corpus);
+        _json = reader.ReadToEnd();
 
         _document = OpenApiJson.Parse(_json);
         _microsoftDocument = Parse_MicrosoftOpenApi().Document

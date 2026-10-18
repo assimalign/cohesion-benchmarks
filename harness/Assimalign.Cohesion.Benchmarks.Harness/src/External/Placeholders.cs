@@ -25,7 +25,7 @@ internal sealed partial class Placeholders
         string result = value
             .Replace("{host}", Host, StringComparison.Ordinal)
             .Replace("{repoRoot}", Trim(_catalog.RepositoryRoot), StringComparison.Ordinal)
-            .Replace("{cohesionRoot}", Trim(_catalog.CohesionRoot), StringComparison.Ordinal)
+            .Replace("{cohesionVersion}", _catalog.CohesionVersion, StringComparison.Ordinal)
             .Replace("{catalogDir}", Trim(_catalog.CatalogDirectory), StringComparison.Ordinal)
             .Replace("{exe}", ExternalTargetCatalog.ExecutableSuffix, StringComparison.Ordinal);
 
