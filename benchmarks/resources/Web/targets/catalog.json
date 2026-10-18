@@ -1,0 +1,70 @@
+{
+  // External applications the Web area's BenchmarkDotNet suite compares Cohesion against (CONVENTIONS.md,
+  // "Out-of-process targets"). Every target answers GET / with "Hello, World!" over HTTP/1.1.
+  // Targets whose prerequisites are missing on a machine are skipped, not failed.
+  "schemaVersion": 1,
+  "targets": [
+    {
+      "id": "cohesion",
+      "kind": "process",
+      "description": "The end-to-end harness's Cohesion server (plaintext scenario), published by ../run.ps1.",
+      "command": "{catalogDir}/../artifacts/publish/cohesion/cohesion-server{exe}",
+      "arguments": [ "--scenario", "plaintext", "--port", "{port}" ],
+      "requiresFiles": [ "{catalogDir}/../artifacts/publish/cohesion/cohesion-server{exe}" ],
+      "ports": [ { "published": 0 } ],
+      "readiness": { "kind": "http", "path": "/", "timeoutSeconds": 30 },
+      "endpointTemplate": "http://{host}:{port}/"
+    },
+    {
+      "id": "aspnetcore",
+      "kind": "process",
+      "description": "The end-to-end harness's ASP.NET Core server (plaintext scenario), published by ../run.ps1.",
+      "command": "{catalogDir}/../artifacts/publish/aspnetcore/aspnetcore-server{exe}",
+      "arguments": [ "--scenario", "plaintext", "--port", "{port}" ],
+      "requiresFiles": [ "{catalogDir}/../artifacts/publish/aspnetcore/aspnetcore-server{exe}" ],
+      "ports": [ { "published": 0 } ],
+      "readiness": { "kind": "http", "path": "/", "timeoutSeconds": 30 },
+      "endpointTemplate": "http://{host}:{port}/"
+    },
+    {
+      "id": "node",
+      "kind": "process",
+      "description": "Node.js http module.",
+      "command": "node",
+      "arguments": [ "{catalogDir}/node-http/server.js", "{port}" ],
+      "requires": [ "node" ],
+      "ports": [ { "published": 0 } ],
+      "readiness": { "kind": "http", "path": "/", "timeoutSeconds": 30 },
+      "endpointTemplate": "http://{host}:{port}/"
+    },
+    {
+      "id": "python",
+      "kind": "process",
+      "description": "Python http.server (single-threaded standard library server).",
+      "command": "python3",
+      "arguments": [ "{catalogDir}/python-http/server.py", "{port}" ],
+      "requires": [ "python3" ],
+      "ports": [ { "published": 0 } ],
+      "readiness": { "kind": "http", "path": "/", "timeoutSeconds": 30 },
+      "endpointTemplate": "http://{host}:{port}/"
+    },
+    {
+      "id": "nginx",
+      "kind": "container",
+      "description": "nginx serving a static Hello, World! (docker or podman).",
+      "image": "docker.io/library/nginx:1.27-alpine",
+      "arguments": [ "sh", "-c", "printf 'Hello, World!' > /usr/share/nginx/html/index.html && exec nginx -g 'daemon off;'" ],
+      "ports": [ { "internal": 80, "published": 0 } ],
+      "readiness": { "kind": "http", "path": "/", "timeoutSeconds": 120 },
+      "endpointTemplate": "http://{host}:{port}/"
+    },
+    {
+      "id": "node-run",
+      "kind": "command",
+      "description": "Starting Node.js and running an empty script to exit: the process-startup floor for a runtime.",
+      "command": "node",
+      "arguments": [ "-e", "" ],
+      "requires": [ "node" ]
+    }
+  ]
+}

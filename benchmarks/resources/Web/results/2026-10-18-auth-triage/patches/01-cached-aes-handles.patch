@@ -1,0 +1,223 @@
+diff --git a/libraries/Security/Assimalign.Cohesion.Security.DataProtection/src/Internal/AesGcmDataProtector.cs b/libraries/Security/Assimalign.Cohesion.Security.DataProtection/src/Internal/AesGcmDataProtector.cs
+index 60258abe7..a09df2cbc 100644
+--- a/libraries/Security/Assimalign.Cohesion.Security.DataProtection/src/Internal/AesGcmDataProtector.cs
++++ b/libraries/Security/Assimalign.Cohesion.Security.DataProtection/src/Internal/AesGcmDataProtector.cs
+@@ -1,5 +1,8 @@
+ using System;
++using System.Collections.Concurrent;
++using System.Runtime.CompilerServices;
+ using System.Security.Cryptography;
++using System.Threading;
+ 
+ namespace Assimalign.Cohesion.Security.DataProtection.Internal;
+ 
+@@ -24,6 +27,7 @@ namespace Assimalign.Cohesion.Security.DataProtection.Internal;
+ /// </remarks>
+ internal sealed class AesGcmDataProtector : IDataProtector
+ {
++    private static readonly string _verificationFailedMessage = ErrorMessages.ProtectedPayloadVerificationFailed;
+     private const byte Version = 0x01;
+     private const int VersionSize = 1;
+     private const int KeyIdSize = 16;
+@@ -36,12 +40,17 @@ internal sealed class AesGcmDataProtector : IDataProtector
+     private readonly KeyRing _ring;
+     private readonly string[] _purposes;
+     private readonly byte[] _info;
++    // Triage prototype: cache keyed handles, never an unprotect result. ResolveForUnprotect
++    // still runs before every lookup, including when a warmed handle is available.
++    private readonly ConditionalWeakTable<ManagedKey, CipherPool> _ciphers = new();
++    private readonly ConditionalWeakTable<ManagedKey, CipherPool>.CreateValueCallback _createPool;
+ 
+     public AesGcmDataProtector(KeyRing ring, string[] purposes)
+     {
+         _ring = ring;
+         _purposes = purposes;
+         _info = PurposeChain.BuildInfo(purposes);
++        _createPool = key => new CipherPool(key, _info);
+     }
+ 
+     /// <inheritdoc />
+@@ -104,24 +113,86 @@ internal sealed class AesGcmDataProtector : IDataProtector
+         ReadOnlySpan<byte> tag = protectedData.Slice(protectedData.Length - TagSize, TagSize);
+ 
+         byte[] plaintext = new byte[ciphertextLength];
+-        Span<byte> subkey = stackalloc byte[SubkeySize];
+-        HKDF.DeriveKey(HashAlgorithmName.SHA256, key.Master, subkey, salt: default, info: _info);
++        CipherPool pool = _ciphers.GetValue(key, _createPool);
++        AesGcm aes = pool.Rent();
++        bool succeeded = false;
+         try
+         {
+-            using AesGcm aes = new(subkey, TagSize);
+             aes.Decrypt(nonce, ciphertext, tag, plaintext, associatedData);
++            succeeded = true;
+         }
+         catch (CryptographicException ex)
+         {
+             // Authentication failure on untrusted input — surface as the area-scoped type
+             // without leaking which byte failed.
+-            throw new DataProtectionException("The protected payload could not be verified.", ex);
++            throw new DataProtectionException(_verificationFailedMessage, ex);
+         }
+         finally
+         {
+-            CryptographicOperations.ZeroMemory(subkey);
++            if (succeeded)
++            {
++                pool.Return(aes);
++            }
++            else
++            {
++                aes.Dispose();
++            }
+         }
+ 
+         return plaintext;
+     }
++
++    // Handles are exclusively borrowed and bounded per producing key/purpose. The weak key
++    // binds the pool to the resolved snapshot object, so a reloaded/revoked key is re-checked.
++    // Retaining native keyed handles is an owner-review item before any shipping change.
++    private sealed class CipherPool
++    {
++        private readonly ManagedKey _key;
++        private readonly byte[] _info;
++        private readonly ConcurrentBag<AesGcm> _available = new();
++        private readonly int _capacity = Math.Max(1, Environment.ProcessorCount);
++        private int _retained;
++
++        public CipherPool(ManagedKey key, byte[] info)
++        {
++            _key = key;
++            _info = info;
++        }
++
++        public AesGcm Rent()
++        {
++            if (_available.TryTake(out AesGcm? aes))
++            {
++                Interlocked.Decrement(ref _retained);
++                return aes;
++            }
++
++            Span<byte> subkey = stackalloc byte[SubkeySize];
++            HKDF.DeriveKey(HashAlgorithmName.SHA256, _key.Master, subkey, salt: default, info: _info);
++            try
++            {
++                return new AesGcm(subkey, TagSize);
++            }
++            catch (CryptographicException ex)
++            {
++                throw new DataProtectionException(_verificationFailedMessage, ex);
++            }
++            finally
++            {
++                CryptographicOperations.ZeroMemory(subkey);
++            }
++        }
++
++        public void Return(AesGcm aes)
++        {
++            if (Interlocked.Increment(ref _retained) <= _capacity)
++            {
++                _available.Add(aes);
++                return;
++            }
++
++            Interlocked.Decrement(ref _retained);
++            aes.Dispose();
++        }
++    }
+ }
+diff --git a/libraries/Security/Assimalign.Cohesion.Security.DataProtection/src/Properties/ErrorMessages.resx b/libraries/Security/Assimalign.Cohesion.Security.DataProtection/src/Properties/ErrorMessages.resx
+index 3ac9794b7..576e2ad55 100644
+--- a/libraries/Security/Assimalign.Cohesion.Security.DataProtection/src/Properties/ErrorMessages.resx
++++ b/libraries/Security/Assimalign.Cohesion.Security.DataProtection/src/Properties/ErrorMessages.resx
+@@ -21,4 +21,7 @@
+   <data name="KeyRepositoryPathRequired" xml:space="preserve">
+     <value>A key repository directory path is required.</value>
+   </data>
++  <data name="ProtectedPayloadVerificationFailed" xml:space="preserve">
++    <value>The protected payload could not be verified.</value>
++  </data>
+ </root>
+diff --git a/libraries/Security/Assimalign.Cohesion.Security.DataProtection/tests/DataProtectorTests.cs b/libraries/Security/Assimalign.Cohesion.Security.DataProtection/tests/DataProtectorTests.cs
+index e39f6244a..caae080b3 100644
+--- a/libraries/Security/Assimalign.Cohesion.Security.DataProtection/tests/DataProtectorTests.cs
++++ b/libraries/Security/Assimalign.Cohesion.Security.DataProtection/tests/DataProtectorTests.cs
+@@ -1,14 +1,63 @@
+ using System;
+ using System.Text;
++using System.Threading.Tasks;
+ 
+ using Shouldly;
+ 
+ using Xunit;
+ 
++using Assimalign.Cohesion.Security.DataProtection.Internal;
++
+ namespace Assimalign.Cohesion.Security.DataProtection.Tests;
+ 
+ public class DataProtectorTests
+ {
++    [Fact(DisplayName = "Cohesion Test [Security.DataProtection] - Unprotect: concurrent valid and invalid tags remain independent")]
++    public void Unprotect_ConcurrentValidAndInvalidTags_ShouldVerifyEachCall()
++    {
++        IDataProtector protector = CreateProvider().CreateProtector("purpose");
++        byte[] valid = protector.Protect(_sample);
++        byte[] invalid = (byte[])valid.Clone();
++        invalid[^1] ^= 1;
++        protector.Unprotect(valid).ShouldBe(_sample);
++
++        Parallel.For(0, 512, i =>
++        {
++            if ((i & 1) == 0)
++            {
++                protector.Unprotect(valid).ShouldBe(_sample);
++            }
++            else
++            {
++                Should.Throw<DataProtectionException>(() => protector.Unprotect(invalid));
++            }
++        });
++
++        protector.Unprotect(valid).ShouldBe(_sample);
++    }
++
++    [Fact(DisplayName = "Cohesion Test [Security.DataProtection] - Unprotect: a warmed handle does not bypass reloaded revocation")]
++    public void Unprotect_AfterRevocationReload_ShouldRejectPreviouslyAcceptedPayload()
++    {
++        InMemoryKeyRepository repository = new();
++        IDataProtector protector = DataProtectionProvider.Create(repository).CreateProtector("purpose");
++        byte[] valid = protector.Protect(_sample);
++        protector.Unprotect(valid).ShouldBe(_sample);
++        KeyDocument document = repository.GetAllKeys()[0];
++        KeySerializer.TryDeserialize(document.Content.Span, out ManagedKey? key).ShouldBeTrue();
++        key.ShouldNotBeNull();
++        repository.StoreKey(KeySerializer.Serialize(new ManagedKey(key.KeyId, key.CreatedAt,
++            key.ActivatedAt, key.ExpiresAt, isRevoked: true, key.Master.ToArray())));
++
++        byte[] unknown = new byte[45];
++        unknown[0] = 1;
++        Guid.NewGuid().TryWriteBytes(unknown.AsSpan(1, 16));
++        Should.Throw<DataProtectionException>(() => protector.Unprotect(unknown));
++
++        Should.Throw<DataProtectionException>(() => protector.Unprotect(valid))
++            .Message.ShouldContain("revoked", Case.Sensitive);
++    }
++
+     private static readonly byte[] _sample = Encoding.UTF8.GetBytes("cohesion-data-protection-sample-payload");
+ 
+     private static DataProtectionProvider CreateProvider(string discriminator = "app")
+diff --git a/libraries/Security/Assimalign.Cohesion.Security.DataProtection/tests/KeyRingRotationTests.cs b/libraries/Security/Assimalign.Cohesion.Security.DataProtection/tests/KeyRingRotationTests.cs
+index 8fb550cf5..f7fbe3266 100644
+--- a/libraries/Security/Assimalign.Cohesion.Security.DataProtection/tests/KeyRingRotationTests.cs
++++ b/libraries/Security/Assimalign.Cohesion.Security.DataProtection/tests/KeyRingRotationTests.cs
+@@ -86,6 +86,7 @@ public class KeyRingRotationTests
+             .CreateProtector("purpose");
+ 
+         byte[] protectedByKey1 = protector.Protect(_sample);
++        protector.Unprotect(protectedByKey1).ShouldBe(_sample);
+ 
+         time.Advance(TimeSpan.FromMinutes(11));
+         protector.Protect(_sample); // key2

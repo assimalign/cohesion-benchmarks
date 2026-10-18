@@ -1,0 +1,92 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
+using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Reports;
+using BenchmarkDotNet.Running;
+
+namespace Assimalign.Cohesion.Benchmarks;
+
+/// <summary>
+/// The entry point every <c>*.Benchmarks</c> project uses:
+/// <code>public static int Main(string[] args) => BenchmarkProgram.Run(args, typeof(Program).Assembly);</code>
+/// </summary>
+/// <remarks>
+/// <para>
+/// Arguments pass through to BenchmarkDotNet (<c>--filter</c>, <c>--list flat</c>, <c>--join</c>,
+/// <c>--inProcess</c>, ...), plus two of ours: <c>--profile local|ci|dry</c> (or the
+/// <c>COHESION_BENCHMARK_PROFILE</c> environment variable) and <c>--out-of-process</c> (see
+/// <see cref="BenchmarkProfiles"/>). With no filter the whole suite runs, so a
+/// non-interactive run never stops at BenchmarkDotNet's selection prompt.
+/// </para>
+/// <para>
+/// The process exits with 1 when any benchmark failed to build, threw, or failed validation, so CI fails on a
+/// broken benchmark instead of publishing a partial result.
+/// </para>
+/// </remarks>
+public static class BenchmarkProgram
+{
+    private static readonly string[] SelectionOptions =
+        ["--filter", "-f", "--allCategories", "--anyCategories", "--list", "--info", "--help", "-h", "--version", "--attribute", "-a"];
+
+    /// <summary>Runs the benchmarks in <paramref name="assembly"/> under the requested profile.</summary>
+    /// <param name="args">The command-line arguments.</param>
+    /// <param name="assembly">The benchmark assembly, normally <c>typeof(Program).Assembly</c>.</param>
+    /// <returns>0 when every benchmark ran; 1 otherwise.</returns>
+    public static int Run(string[] args, Assembly assembly)
+    {
+        ArgumentNullException.ThrowIfNull(args);
+        ArgumentNullException.ThrowIfNull(assembly);
+
+        List<string> arguments = [.. args];
+        string profile = TakeOption(arguments, "--profile")
+            ?? Environment.GetEnvironmentVariable("COHESION_BENCHMARK_PROFILE")
+            ?? BenchmarkProfiles.Local;
+
+        if (!arguments.Any(argument => SelectionOptions.Contains(argument, StringComparer.OrdinalIgnoreCase)))
+        {
+            arguments.Add("--filter");
+            arguments.Add("*");
+        }
+
+        bool outOfProcess = TakeFlag(arguments, "--out-of-process");
+
+        // In-process is already the default; BenchmarkDotNet's own --inProcess would replace the profile's job with its
+        // default job, so it is absorbed here instead.
+        TakeFlag(arguments, "--inProcess");
+        TakeFlag(arguments, "-i");
+        bool jobFromCommandLine = arguments.Any(argument => argument is "--job" or "-j" or "--runtimes" or "-r");
+        IConfig config = BenchmarkProfiles.CreateConfig(profile, assembly, addProfileJob: !jobFromCommandLine, outOfProcess);
+
+        Console.WriteLine($"// Cohesion benchmarks: profile={profile}, {(outOfProcess ? "out-of-process" : "in-process")}, CohesionRoot={BenchmarkEnvironment.GetCohesionRoot(assembly)}");
+
+        IEnumerable<Summary> summaries = BenchmarkSwitcher.FromAssembly(assembly).Run([.. arguments], config);
+        return summaries.Any(Failed) ? 1 : 0;
+    }
+
+    private static bool Failed(Summary summary)
+        => summary.HasCriticalValidationErrors || summary.Reports.Any(report => !report.Success);
+
+    private static bool TakeFlag(List<string> arguments, string name)
+        => arguments.RemoveAll(argument => string.Equals(argument, name, StringComparison.OrdinalIgnoreCase)) > 0;
+
+    private static string? TakeOption(List<string> arguments, string name)
+    {
+        int index = arguments.FindIndex(argument => string.Equals(argument, name, StringComparison.OrdinalIgnoreCase));
+        if (index < 0)
+        {
+            return null;
+        }
+
+        if (index == arguments.Count - 1)
+        {
+            throw new ArgumentException($"{name} needs a value.");
+        }
+
+        string value = arguments[index + 1];
+        arguments.RemoveRange(index, 2);
+        return value;
+    }
+}

@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="$(CohesionLibrariesRoot)ObjectMapping\Assimalign.Cohesion.ObjectMapping\src\Assimalign.Cohesion.ObjectMapping.csproj" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" />
+	</ItemGroup>
+</Project>

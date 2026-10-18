@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<!--
+		Shared BenchmarkDotNet conventions for every *.Benchmarks project: the entry point, the run profiles
+		(local / ci / dry), result locations, and the out-of-process toolkit for benchmarking applications that are
+		not .NET code in the benchmark process (servers, containers, command-line tools).
+	-->
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<RootNamespace>Assimalign.Cohesion.Benchmarks</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BenchmarkDotNet" />
+	</ItemGroup>
+</Project>

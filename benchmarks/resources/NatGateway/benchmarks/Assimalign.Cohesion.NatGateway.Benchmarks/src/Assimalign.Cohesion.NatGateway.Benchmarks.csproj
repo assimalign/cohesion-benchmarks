@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="$(CohesionResourcesRoot)NatGateway\Assimalign.Cohesion.NatGateway.Hosting\src\Assimalign.Cohesion.NatGateway.Hosting.csproj" />
+	</ItemGroup>
+</Project>
