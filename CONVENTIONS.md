@@ -26,7 +26,9 @@ cohesion-benchmarks/
 │       ├── results/<date>-<what>/        checked-in results worth keeping (optional)
 │       └── README.md
 ├── scripts/                              Invoke-Benchmarks, Compare-Benchmarks, ConvertTo-BenchmarkHistory
-└── .github/workflows/benchmarks.yml      CI: validation on pull requests, history and regression alerts on main
+└── .github/workflows/
+    ├── benchmarks.yml                    CI: validation on pull requests, history and regression alerts on main
+    └── cohesion-pin.yml                  daily pull request that moves the pinned cohesion build
 ```
 
 - **One BenchmarkDotNet suite per area**, named `Assimalign.Cohesion.<Area>.Benchmarks`. Inside it, one folder per
@@ -55,6 +57,9 @@ suite names the packages it measures; they resolve at one version for the whole 
   request check uses; the Web harness's `global.json` pins its Cohesion SDKs to the same build.
   `./scripts/Update-CohesionVersion.ps1` moves both to the newest `main` build (or `-Version <v>`). cohesion keeps
   only the newest 20 `main` builds, so a pin older than that stops restoring; move it at least that often.
+  `.github/workflows/cohesion-pin.yml` runs the script daily and, when the pin moved, opens or updates one
+  `chore: pin cohesion <version>` pull request from the `chore/cohesion-pin` branch; merging it moves the pin. Its
+  header lists the token it needs for that pull request to get the `benchmarks` check.
 - **Another build.** `-p:CohesionPackageVersion=<v>` (or `Invoke-Benchmarks.ps1 -CohesionVersion <v>`) measures any
   build still on the feed. `./scripts/Resolve-CohesionVersion.ps1` finds one: the newest `main` build by default,
   `-PullRequest <n>` for a cohesion pull request's newest build (an unmerged change: no checkout, no local pack; a

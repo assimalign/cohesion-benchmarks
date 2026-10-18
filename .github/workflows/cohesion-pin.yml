@@ -1,0 +1,186 @@
+# Keeps the pinned cohesion CI build current: CohesionPackageVersion in Directory.Build.props and the Cohesion SDK pins
+# in benchmarks/resources/Web/global.json (CONVENTIONS.md, "Referencing Cohesion").
+#
+# cohesion keeps only its newest 20 main builds on the Assimalign GitHub Packages feed. A pin older than that stops
+# restoring, and every pull request check in this repository fails at restore. Daily and on demand, this workflow runs
+# scripts/Update-CohesionVersion.ps1 (the newest main build). When the pin moved, it commits both files to the
+# chore/cohesion-pin branch, force-updates it, and opens or updates one pull request, "chore: pin cohesion <version>".
+# Merging it is still a person's job. The nightly measuring run (benchmarks.yml) follows the newest main build and does
+# not need the pin.
+#
+# - The branch is this workflow's while it holds only github-actions[bot] commits (merge commits aside). Once someone
+#   else commits to it (a fix for a breaking cohesion change, say), the workflow leaves the branch and its pull request
+#   alone until the pull request merges or the branch is deleted.
+# - Closing the pull request unmerged does not hold the pin: while the pin is behind, the next run opens a new one.
+#   Disable the workflow to hold it.
+#
+# Secrets (Settings -> Secrets and variables -> Actions):
+#   BENCHMARKS_BOT_TOKEN      recommended: pushes the branch and opens the pull request. A fine-grained personal access
+#                             token (or a GitHub App token) for this repository with Contents and Pull requests read and
+#                             write. A pull request opened or pushed with the workflow token starts no other workflow,
+#                             so benchmarks.yml's pull request check would not run on it.
+#   COHESION_PACKAGES_TOKEN   optional, as in benchmarks.yml: reads cohesion's public CI Packages run history
+#                             (Resolve-CohesionVersion.ps1) when the workflow token cannot. Never used to write: it
+#                             needs only read:packages, and benchmarks.yml hands it to pull request code.
+#
+# Without BENCHMARKS_BOT_TOKEN the workflow token pushes and opens the pull request:
+#   - Settings -> Actions -> General -> Workflow permissions -> "Allow GitHub Actions to create and approve pull
+#     requests" must be on (and allowed by the organization), or opening the pull request fails.
+#   - The pull request gets no pull_request check. The workflow dispatches benchmarks.yml (profile dry, the pinned
+#     build) on the branch instead, which the workflow token may do; its result lands on the branch's head commit. If a
+#     required check still waits, close and reopen the pull request, or push to the branch, to run the check by hand.
+name: cohesion-pin
+
+on:
+  schedule:
+    - cron: "23 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cohesion-pin
+  cancel-in-progress: false
+
+jobs:
+  pin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Used only without BENCHMARKS_BOT_TOKEN.
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    env:
+      BRANCH: chore/cohesion-pin
+      # A schedule runs on the default branch; a dispatch from any branch still pins the default branch.
+      BASE: ${{ github.event.repository.default_branch || github.ref_name }}
+      HAS_BOT_TOKEN: ${{ secrets.BENCHMARKS_BOT_TOKEN != '' }}
+    steps:
+      # Full history: telling this workflow's commits on the branch from anyone else's needs the merge base.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.BASE }}
+          fetch-depth: 0
+          token: ${{ secrets.BENCHMARKS_BOT_TOKEN || github.token }}
+
+      - id: pin
+        name: Move the pin
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.COHESION_PACKAGES_TOKEN || github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          $files = 'Directory.Build.props', 'benchmarks/resources/Web/global.json'
+          function Read-Pin {
+            $text = Get-Content Directory.Build.props -Raw
+            [pscustomobject]@{
+              Version = (Select-Xml -Content $text -XPath '//CohesionPackageVersion').Node.InnerText.Trim()
+              Commit  = if ($text -match 'The pinned cohesion CI build \([^)]*cohesion (?<commit>[0-9a-f]{7,40})\)') { $Matches.commit } else { '' }
+            }
+          }
+
+          $before = Read-Pin
+          ./scripts/Update-CohesionVersion.ps1
+          $after = Read-Pin
+
+          if (-not (git status --porcelain -- $files)) {
+            "changed=false" >> $env:GITHUB_OUTPUT
+            "The pin is current: cohesion $($after.Version)." >> $env:GITHUB_STEP_SUMMARY
+            Write-Host "The pin is current: cohesion $($after.Version)."
+            exit 0
+          }
+
+          # The version reaches a commit message, a branch push and a pull request title; accept only a NuGet version.
+          if ($after.Version -notmatch '^\d+\.\d+\.\d+-[0-9A-Za-z.]+$') { throw "Unexpected cohesion version '$($after.Version)'." }
+
+          $compare = if ($before.Commit -and $after.Commit) {
+            " ([what changed in cohesion](https://github.com/assimalign/cohesion/compare/$($before.Commit)...$($after.Commit)))"
+          }
+          $body = @(
+            "Moves the pinned cohesion CI build from ``$($before.Version)`` to ``$($after.Version)``, the newest cohesion ``main`` build$compare."
+            ''
+            '- `Directory.Build.props`: `CohesionPackageVersion`, the build every local run and pull request check restores.'
+            '- `benchmarks/resources/Web/global.json`: the Web harness''s Cohesion SDK pins.'
+            ''
+            "cohesion keeps only its newest 20 ``main`` builds on the feed. Once ``$($before.Version)`` falls out of that window, pull request checks here fail at restore."
+            ''
+            "Opened by [cohesion-pin]($env:RUN_URL), which force-updates ``$env:BRANCH`` while it holds only that workflow's commit. Push a fix to the branch (for a breaking cohesion change) and the workflow leaves it alone until this merges."
+          )
+          if ($env:HAS_BOT_TOKEN -ne 'true') {
+            $body += ''
+            $body += '> Opened with the workflow token, which starts no `pull_request` workflow. The `benchmarks` dry check was dispatched on the branch instead; if a required check still waits, close and reopen this pull request.'
+          }
+          $path = Join-Path $env:RUNNER_TEMP 'cohesion-pin.md'
+          Set-Content -Path $path -Value $body
+
+          "changed=true" >> $env:GITHUB_OUTPUT
+          "version=$($after.Version)" >> $env:GITHUB_OUTPUT
+          "commit=$($after.Commit)" >> $env:GITHUB_OUTPUT
+          "body=$path" >> $env:GITHUB_OUTPUT
+          Write-Host "cohesion $($before.Version) -> $($after.Version)"
+
+      - name: Open or update the pull request
+        if: steps.pin.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BENCHMARKS_BOT_TOKEN || github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ steps.pin.outputs.version }}
+          COMMIT: ${{ steps.pin.outputs.commit }}
+          BODY: ${{ steps.pin.outputs.body }}
+        run: |
+          set -euo pipefail
+          files=(Directory.Build.props benchmarks/resources/Web/global.json)
+          bot='41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.name 'github-actions[bot]'
+          git config user.email "$bot"
+
+          # Never overwrite someone else's commit on the branch. A merge commit (main merged in) carries nothing the
+          # rebuilt branch loses.
+          lease=''
+          if git ls-remote --exit-code origin "refs/heads/$BRANCH" >/dev/null; then
+            git fetch --no-tags origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH"
+            lease=$(git rev-parse "origin/$BRANCH")
+            authors=$(git log --no-merges --format='%ae' "HEAD..origin/$BRANCH")
+            if [ -n "$authors" ] && grep -qvxF "$bot" <<<"$authors"; then
+              echo "::warning::$BRANCH has commits from someone other than github-actions[bot]; leaving it and its pull request alone. The pin stays where that branch has it, not cohesion $VERSION."
+              echo "$BRANCH has commits from someone else; not moved to cohesion $VERSION." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          fi
+
+          git add -- "${files[@]}"
+          git commit --quiet -m "chore: pin cohesion $VERSION" \
+            -m "Moves CohesionPackageVersion and the Web harness's Cohesion SDK pins to the newest cohesion main build (cohesion ${COMMIT:-unknown})." \
+            -m "Opened by .github/workflows/cohesion-pin.yml."
+
+          # Pushing an identical pin again would only rerun the branch's checks.
+          pushed=false
+          if [ -n "$lease" ] && git diff --quiet "origin/$BRANCH" HEAD -- "${files[@]}"; then
+            echo "$BRANCH already pins cohesion $VERSION."
+          else
+            # The lease fails the push if the branch moved since it was read (an empty lease: if it now exists).
+            git push --force-with-lease="refs/heads/$BRANCH:$lease" origin "HEAD:refs/heads/$BRANCH"
+            pushed=true
+          fi
+
+          title="chore: pin cohesion $VERSION"
+          number=$(gh api "repos/$GH_REPO/pulls?state=open&base=$BASE&head=$GITHUB_REPOSITORY_OWNER:$BRANCH" --jq '.[0].number // empty')
+          if [ -n "$number" ]; then
+            url=$(gh api -X PATCH "repos/$GH_REPO/pulls/$number" -f title="$title" -F body=@"$BODY" --jq .html_url)
+          elif ! url=$(gh api "repos/$GH_REPO/pulls" -f title="$title" -f head="$BRANCH" -f base="$BASE" -F body=@"$BODY" --jq .html_url); then
+            if [ "$HAS_BOT_TOKEN" != true ]; then
+              echo "::error::Opening the pull request with the workflow token failed. Turn on \"Allow GitHub Actions to create and approve pull requests\" (Settings -> Actions -> General), or set BENCHMARKS_BOT_TOKEN."
+            fi
+            exit 1
+          fi
+
+          # The workflow token's push and pull request start no workflow, but a dispatch does.
+          if [ "$pushed" = true ] && [ "$HAS_BOT_TOKEN" != true ]; then
+            gh workflow run benchmarks.yml --ref "$BRANCH" -f profile=dry -f cohesion-version=pinned
+            echo "Dispatched benchmarks.yml (dry, pinned) on $BRANCH." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          echo "cohesion $VERSION: $url" >> "$GITHUB_STEP_SUMMARY"
+          echo "cohesion $VERSION: $url"

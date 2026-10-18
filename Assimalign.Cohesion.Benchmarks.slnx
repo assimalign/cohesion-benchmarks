@@ -7,6 +7,7 @@
     <File Path="nuget.config" />
     <File Path="README.md" />
     <File Path=".github/workflows/benchmarks.yml" />
+    <File Path=".github/workflows/cohesion-pin.yml" />
     <File Path="scripts/Invoke-Benchmarks.ps1" />
     <File Path="scripts/Compare-Benchmarks.ps1" />
     <File Path="scripts/ConvertTo-BenchmarkHistory.ps1" />
