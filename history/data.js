@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792403367934,
+  "lastUpdate": 1792416610187,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -2983,6 +2983,72 @@ window.BENCHMARK_DATA = {
             "value": 72,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079896"
+          }
+        ]
+      }
+    ],
+    "libraries/Amqp - time": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "00e8cb49c3ca66a73eac2bf997d449bd83a7801a",
+          "message": "Merge pull request #5 from assimalign/fix/benchmarks-ci-first-run\n\nfix(benchmarks): first measuring run failures (history bootstrap, keep-alive close, Python stall)",
+          "timestamp": "2026-10-19T10:03:39Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/00e8cb49c3ca66a73eac2bf997d449bd83a7801a"
+        },
+        "date": 1792416609586,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "AmqpFrameBenchmarks.EncodeTransferFrame",
+            "value": 222.354,
+            "range": "± 2.862",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080029\nmean 222.706 ns"
+          },
+          {
+            "name": "AmqpFrameBenchmarks.DecodeTransferFrame",
+            "value": 81.678,
+            "range": "± 0.617",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080029\nmean 81.513 ns"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Decode_AmqpNetLite",
+            "value": 254.132,
+            "range": "± 2.456",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080029\nmean 254.624 ns"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Decode",
+            "value": 373.576,
+            "range": "± 2.384",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080029\nmean 373.694 ns"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Encode_AmqpNetLite",
+            "value": 309.692,
+            "range": "± 4.907",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080029\nmean 310.829 ns"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Encode",
+            "value": 380.001,
+            "range": "± 5.083",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080029\nmean 381.684 ns"
           }
         ]
       }
