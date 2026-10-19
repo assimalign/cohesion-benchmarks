@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.IdentityModel" />
+		<CohesionReference Include="Assimalign.Cohesion.IdentityModel.Token.JsonWebToken" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" />
+	</ItemGroup>
+</Project>

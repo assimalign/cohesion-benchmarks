@@ -1,7 +1,65 @@
 <Project>
-	<!-- Target Frameworks -->
+	<!--
+		Repository-wide defaults for every benchmark project.
+
+		Layout convention (see CONVENTIONS.md):
+		  benchmarks/libraries/<Area>/benchmarks/Assimalign.Cohesion.<Area>.Benchmarks/src/   BenchmarkDotNet suite per library area
+		  benchmarks/resources/<Area>/benchmarks/Assimalign.Cohesion.<Area>.Benchmarks/src/   BenchmarkDotNet suite per resource area
+		  benchmarks/resources/<Area>/benchmarks/<other projects>/src/                        end-to-end harnesses (servers, load runners)
+		  harness/                                                                           shared BenchmarkDotNet conventions and the out-of-process toolkit
+
+		Benchmarks measure the Cohesion packages cohesion's CI publishes to the Assimalign GitHub Packages feed
+		(nuget.config): one build of main, or of a cohesion pull request, at a time. A suite names the packages it
+		measures with CohesionReference items; they resolve at CohesionPackageVersion. The default below is the pinned
+		build; pass -p:CohesionPackageVersion=<version> (or scripts/Invoke-Benchmarks.ps1 -CohesionVersion) to measure
+		another, and scripts/Update-CohesionVersion.ps1 to move the pin.
+	-->
 	<PropertyGroup>
-		<TargetFrameworkLatest>net9.0</TargetFrameworkLatest>
-		<TargetFrameworkForBenchmark>net6.0;net8.0;$(TargetFrameworkLatest)</TargetFrameworkForBenchmark>
+		<TargetFramework>net10.0</TargetFramework>
+		<LangVersion>preview</LangVersion>
+		<EnablePreviewFeatures>true</EnablePreviewFeatures>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<InvariantGlobalization>true</InvariantGlobalization>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<IsPackable>false</IsPackable>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 	</PropertyGroup>
+
+	<PropertyGroup>
+		<!-- The pinned cohesion CI build (main, cohesion ff7a93e80a9a). Moved by scripts/Update-CohesionVersion.ps1. -->
+		<CohesionPackageVersion Condition="'$(CohesionPackageVersion)' == ''">10.0.0-preview.0.ci.38</CohesionPackageVersion>
+		<BenchmarksRoot>$(MSBuildThisFileDirectory)</BenchmarksRoot>
+		<BenchmarksHarnessProject>$(MSBuildThisFileDirectory)harness\Assimalign.Cohesion.Benchmarks.Harness\src\Assimalign.Cohesion.Benchmarks.Harness.csproj</BenchmarksHarnessProject>
+	</PropertyGroup>
+
+	<!--
+		Short output paths. BenchmarkDotNet builds a child project per job when a suite runs out of process; under the
+		default bin/obj layout that can exceed MAX_PATH on Windows. Everything lands in .artifacts/ instead.
+	-->
+	<PropertyGroup>
+		<UseArtifactsOutput>true</UseArtifactsOutput>
+		<ArtifactsPath>$(MSBuildThisFileDirectory).artifacts</ArtifactsPath>
+	</PropertyGroup>
+
+	<!-- A project named *.Benchmarks is a BenchmarkDotNet suite: an executable wired to the shared harness. -->
+	<PropertyGroup Condition="'$(IsCohesionBenchmark)' == '' and $(MSBuildProjectName.EndsWith('.Benchmarks'))">
+		<IsCohesionBenchmark>true</IsCohesionBenchmark>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(IsCohesionBenchmark)' == 'true'">
+		<OutputType>Exe</OutputType>
+		<Optimize>true</Optimize>
+		<DebugType>portable</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+		<RootNamespace>$(MSBuildProjectName)</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(IsCohesionBenchmark)' == 'true'">
+		<PackageReference Include="BenchmarkDotNet" />
+		<ProjectReference Include="$(BenchmarksHarnessProject)" />
+		<!-- Read back by the harness: which cohesion build this suite measures and where results go. -->
+		<AssemblyMetadata Include="CohesionPackageVersion" Value="$(CohesionPackageVersion)" />
+		<AssemblyMetadata Include="BenchmarksRoot" Value="$(BenchmarksRoot)" />
+	</ItemGroup>
 </Project>

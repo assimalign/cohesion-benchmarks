@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.Content.Binary" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Bmff" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Markdown" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Yaml" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="Markdig" />
+		<PackageReference Include="YamlDotNet" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.Web.Authentication.Bearer" />
+		<CohesionReference Include="Assimalign.Cohesion.Web.Authentication.Cookie" />
+		<CohesionReference Include="Assimalign.Cohesion.Web.Authorization" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="$(WebBenchmarksSharedDirectory)BenchmarkShared.cs" Link="Fixtures\BenchmarkShared.cs" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+<Project Sdk="Assimalign.Cohesion.Sdk.Web">
+	<PropertyGroup>
+		<RootNamespace>Assimalign.Cohesion.Web.Benchmarks</RootNamespace>
+		<!-- Sdk.Web publishes self-contained for the host RID by default; the runner starts the apphost. -->
+		<AssemblyName>cohesion-server</AssemblyName>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- Web.OpenApi ships NuGet-only; it is not a member of the App.Web shared framework. -->
+		<PackageReference Include="Assimalign.Cohesion.Web.OpenApi" Version="$(CohesionVersion)" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="$(BenchmarksSharedDirectory)BenchmarkShared.cs" Link="Shared\BenchmarkShared.cs" />
+		<None Include="$(BenchmarksSharedDirectory)wwwroot\**" Link="wwwroot\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+	</ItemGroup>
+</Project>

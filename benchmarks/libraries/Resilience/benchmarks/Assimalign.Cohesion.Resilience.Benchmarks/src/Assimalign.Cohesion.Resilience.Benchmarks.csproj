@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.Resilience.Retry" />
+		<CohesionReference Include="Assimalign.Cohesion.Resilience.Timeout" />
+		<CohesionReference Include="Assimalign.Cohesion.Resilience.CircuitBreaker" />
+	</ItemGroup>
+
+	<!-- Counterparts. -->
+	<ItemGroup>
+		<PackageReference Include="Polly.Core" />
+	</ItemGroup>
+</Project>

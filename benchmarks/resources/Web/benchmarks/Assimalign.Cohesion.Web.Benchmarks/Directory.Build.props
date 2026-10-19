@@ -1,0 +1,13 @@
+<Project>
+	<!--
+		The Web area's end-to-end harness (the server and runner projects beside this one) keeps its own
+		Directory.Build.props, because it consumes packed Cohesion SDKs. This BenchmarkDotNet suite follows the
+		repository convention instead, so it imports the repository root directly.
+	-->
+	<Import Project="..\..\..\..\..\Directory.Build.props" />
+
+	<PropertyGroup>
+		<!-- Payloads, key and token shape shared with the end-to-end harness. -->
+		<WebBenchmarksSharedDirectory>$(MSBuildThisFileDirectory)..\..\shared\</WebBenchmarksSharedDirectory>
+	</PropertyGroup>
+</Project>

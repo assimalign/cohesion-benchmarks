@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.Http" />
+		<CohesionReference Include="Assimalign.Cohesion.Http.Cookies" />
+		<CohesionReference Include="Assimalign.Cohesion.Http.Connections" />
+		<CohesionReference Include="Assimalign.Cohesion.Connections.InMemory" />
+	</ItemGroup>
+
+	<!-- Counterparts: ASP.NET Core's header parsers (Microsoft.Net.Http.Headers), the ones a .NET server runs. -->
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+</Project>

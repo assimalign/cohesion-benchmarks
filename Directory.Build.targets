@@ -1,12 +1,52 @@
 <Project>
+	<!--
+		The Cohesion packages a suite measures: <CohesionReference Include="Assimalign.Cohesion.ObjectPool" />. Every
+		one resolves at CohesionPackageVersion, so a suite always measures one cohesion build, never a mix.
+	-->
 	<ItemGroup>
-		<PackageReference Update="BenchmarkDotNet" Version="0.14.0" />
+		<PackageReference Include="@(CohesionReference)" Version="$(CohesionPackageVersion)" />
 	</ItemGroup>
-	<!-- Benchmark Packages -->
+
+	<!--
+		Package versions for every benchmark project. Projects reference packages without a version; the version is
+		set here once. Comparison libraries (the non-Cohesion counterpart a benchmark is measured against) live here
+		too, so every area compares against the same version.
+	-->
 	<ItemGroup>
-		<PackageReference Update="Zio" Version="0.20.0" />
+		<PackageReference Update="BenchmarkDotNet" Version="0.15.8" />
+	</ItemGroup>
+
+	<!-- Counterparts Cohesion is compared against. -->
+	<ItemGroup>
+		<PackageReference Update="AMQPNetLite.Core" Version="2.4.11" />
 		<PackageReference Update="AutoMapper" Version="13.0.1" />
-		<PackageReference Update="TinyMapper" Version="3.0.3" />
+		<PackageReference Update="Cronos" Version="0.13.0" />
 		<PackageReference Update="FluentValidation" Version="11.11.0" />
+		<PackageReference Update="Markdig" Version="0.42.0" />
+		<PackageReference Update="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.13" />
+		<PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="10.0.13" />
+		<PackageReference Update="Microsoft.Data.Sqlite" Version="10.0.13" />
+		<PackageReference Update="Microsoft.Extensions.Caching.Memory" Version="10.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="10.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="10.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Configuration" Version="10.0.0" />
+		<PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+		<PackageReference Update="Microsoft.Extensions.FileSystemGlobbing" Version="10.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Hosting" Version="10.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Logging" Version="10.0.0" />
+		<PackageReference Update="Microsoft.Extensions.ObjectPool" Version="10.0.0" />
+		<PackageReference Update="Microsoft.IdentityModel.JsonWebTokens" Version="8.14.0" />
+		<PackageReference Update="Microsoft.OpenApi" Version="3.10.2" />
+		<PackageReference Update="Polly.Core" Version="8.6.4" />
+		<PackageReference Update="YamlDotNet" Version="16.3.0" />
+	</ItemGroup>
+
+	<!--
+		GHSA-rvv3-g6hj-g44x (AutoMapper, denial of service through unbounded recursion on deep object graphs) is fixed
+		only in AutoMapper 15.1.1+, which is commercially licensed. The benchmarks map fixed in-repository objects, never
+		untrusted input, so the MIT-licensed 13.x stays as the counterpart and only this advisory is suppressed.
+	-->
+	<ItemGroup>
+		<NuGetAuditSuppress Include="https://github.com/advisories/GHSA-rvv3-g6hj-g44x" />
 	</ItemGroup>
 </Project>

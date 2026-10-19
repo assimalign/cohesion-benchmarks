@@ -1,0 +1,280 @@
+# Runs the BenchmarkDotNet suites (CONVENTIONS.md) against a cohesion CI build and keeps their history.
+#
+# The suites restore Assimalign.Cohesion.* from the Assimalign GitHub Packages feed, where cohesion's CI publishes every
+# main build (10.0.0-preview.0.ci.<run>) and every same-repository pull request build (10.0.0-preview.0.pr.<pr>.<run>).
+#
+# - Pull requests and pushes that touch the suites: every suite under the `dry` profile, against the pinned build
+#   (CohesionPackageVersion in Directory.Build.props). A benchmark that no longer builds or throws fails the check.
+#   Nothing is recorded.
+# - Nightly, on demand (workflow_dispatch), and when cohesion signals a new main build (repository_dispatch
+#   `cohesion-main`, optional client_payload.version): the `ci` profile against the newest main build unless told
+#   otherwise. Each suite's results become two series per benchmark, median time and allocated bytes, appended to the
+#   history on the gh-pages branch (history/, charted by GitHub Pages). A regression past the threshold comments on the
+#   commit and fails the run. Only main builds are recorded; a measured pull request build is reported, not recorded.
+#
+# Secrets (Settings -> Secrets and variables -> Actions), optional:
+#   COHESION_PACKAGES_TOKEN          a token with read:packages, used instead of the workflow token to read the feed
+#                                    and cohesion's run history when the workflow token cannot
+#
+# Repository variables (Settings -> Secrets and variables -> Actions -> Variables), all optional:
+#   BENCHMARK_RUNNER                 runner label for measuring jobs (default ubuntu-latest; a dedicated self-hosted
+#                                    machine gives far steadier time series)
+#   BENCHMARK_TIME_THRESHOLD         alert when median time grows past this (default 150%; shared runners are noisy)
+#   BENCHMARK_ALLOCATION_THRESHOLD   alert when allocated bytes grow past this (default 110%; allocations are exact)
+#   BENCHMARK_ALERT_USERS            "@user1,@user2" to mention in regression comments
+name: benchmarks
+
+on:
+  pull_request:
+    paths:
+      - "benchmarks/**"
+      - "harness/**"
+      - "scripts/**"
+      - "Directory.Build.*"
+      - "global.json"
+      - "nuget.config"
+      - ".github/workflows/benchmarks.yml"
+  push:
+    branches: [main]
+    paths:
+      - "benchmarks/**"
+      - "harness/**"
+      - "scripts/**"
+      - "Directory.Build.*"
+      - "global.json"
+      - "nuget.config"
+      - ".github/workflows/benchmarks.yml"
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+    inputs:
+      cohesion-version:
+        description: "Cohesion CI package version to measure; empty for the newest main build, `pinned` for the pin, #<number> for a cohesion pull request's newest build"
+        default: ""
+      areas:
+        description: Comma-separated areas (ObjectPool,Http,Web); empty for every suite
+        default: ""
+      profile:
+        description: ci records history (main builds only); dry only checks that the suites run
+        type: choice
+        options: [ci, dry]
+        default: ci
+  repository_dispatch:
+    types: [cohesion-main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: benchmarks-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  DOTNET_NOLOGO: "1"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  MSBUILDDISABLENODEREUSE: "1"
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      suites: ${{ steps.plan.outputs.suites }}
+      profile: ${{ steps.plan.outputs.profile }}
+      record: ${{ steps.plan.outputs.record }}
+      cohesion-version: ${{ steps.plan.outputs.cohesion-version }}
+      cohesion-commit: ${{ steps.plan.outputs.cohesion-commit }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # Resolve-CohesionVersion.ps1 reads cohesion's public CI Packages run history through the GitHub CLI.
+      - id: plan
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.COHESION_PACKAGES_TOKEN || github.token }}
+          EVENT: ${{ github.event_name }}
+          INPUT_PROFILE: ${{ inputs.profile }}
+          INPUT_VERSION: ${{ inputs.cohesion-version }}
+          INPUT_AREAS: ${{ inputs.areas }}
+          DISPATCH_VERSION: ${{ github.event.client_payload.version }}
+        run: |
+          $profile = switch ($env:EVENT) {
+            'workflow_dispatch' { $env:INPUT_PROFILE }
+            'schedule' { 'ci' }
+            'repository_dispatch' { 'ci' }
+            default { 'dry' }
+          }
+
+          # Pull requests and pushes check the suites against the pin; the measuring events follow cohesion main
+          # unless the dispatch names a build.
+          $request = switch ($env:EVENT) {
+            'workflow_dispatch' { "$env:INPUT_VERSION".Trim() }
+            'repository_dispatch' { "$env:DISPATCH_VERSION".Trim() }
+            'schedule' { '' }
+            default { 'pinned' }
+          }
+
+          $resolve = './scripts/Resolve-CohesionVersion.ps1'
+          if ($request -eq 'pinned') {
+            $pinned = (Select-Xml -Path Directory.Build.props -XPath '//CohesionPackageVersion').Node.InnerText.Trim()
+            # The commit only labels a dry run; a failed lookup must not fail the check.
+            $build = try { & $resolve -Version $pinned }
+                     catch {
+                       Write-Host "::warning::Could not look up the commit behind cohesion $($pinned): $($_.Exception.Message)"
+                       [pscustomobject]@{ Version = $pinned; Commit = 'unknown'; Channel = 'ci'; RunUrl = '' }
+                     }
+          }
+          elseif ($request -match '^#?(?<pr>\d+)$') { $build = & $resolve -PullRequest ([int]$Matches.pr) }
+          elseif ($request -and $request -ne 'main') { $build = & $resolve -Version $request }
+          else { $build = & $resolve }
+
+          $record = $profile -eq 'ci' -and $build.Channel -eq 'ci'
+          if ($profile -eq 'ci' -and -not $record) {
+            Write-Host "::notice::cohesion $($build.Version) is a pull request build; its results are reported, not recorded."
+          }
+
+          $suites = ./scripts/Invoke-Benchmarks.ps1 -List -AsJson -Area $env:INPUT_AREAS
+          "profile=$profile" >> $env:GITHUB_OUTPUT
+          "record=$($record.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          "cohesion-version=$($build.Version)" >> $env:GITHUB_OUTPUT
+          "cohesion-commit=$($build.Commit)" >> $env:GITHUB_OUTPUT
+          "suites=$suites" >> $env:GITHUB_OUTPUT
+
+          $source = if ($build.RunUrl) { "[$($build.Version)]($($build.RunUrl))" } else { $build.Version }
+          "Cohesion $source (commit ``$($build.Commit)``), profile ``$profile``, $(if ($record) { 'recorded' } else { 'not recorded' })" >> $env:GITHUB_STEP_SUMMARY
+          Write-Host "profile=$profile record=$record cohesion=$($build.Version) ($($build.Commit))"
+          Write-Host $suites
+
+  run:
+    needs: plan
+    if: needs.plan.outputs.suites != '[]'
+    name: ${{ matrix.suite.scope }}/${{ matrix.suite.area }}
+    runs-on: ${{ vars.BENCHMARK_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 90
+    permissions:
+      contents: read
+      packages: read
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: ${{ fromJson(needs.plan.outputs.suites) }}
+    env:
+      # GitHub Packages needs a token with read:packages even to read (nuget.config's `assimalign` source).
+      NuGetPackageSourceCredentials_assimalign: Username=${{ github.actor }};Password=${{ secrets.COHESION_PACKAGES_TOKEN || github.token }}
+      COHESION_VERSION: ${{ needs.plan.outputs.cohesion-version }}
+      COHESION_COMMIT: ${{ needs.plan.outputs.cohesion-commit }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          global-json-file: global.json
+
+      - name: Run ${{ matrix.suite.name }} (${{ needs.plan.outputs.profile }})
+        shell: pwsh
+        run: ./scripts/Invoke-Benchmarks.ps1 -Scope ${{ matrix.suite.scope }} -Area ${{ matrix.suite.area }} -Profile ${{ needs.plan.outputs.profile }} -CohesionVersion $env:COHESION_VERSION -Output results
+
+      - name: Summarize
+        if: always()
+        shell: pwsh
+        run: |
+          $commit = $env:COHESION_COMMIT.Substring(0, [Math]::Min(12, $env:COHESION_COMMIT.Length))
+          "### ${{ matrix.suite.name }} (${{ needs.plan.outputs.profile }}, cohesion $env:COHESION_VERSION, $commit)" >> $env:GITHUB_STEP_SUMMARY
+          if (Test-Path results) {
+            Get-ChildItem results -Recurse -Filter '*-report-github.md' | ForEach-Object {
+              Get-Content $_.FullName | Where-Object { $_ -match '^\|' } >> $env:GITHUB_STEP_SUMMARY
+              '' >> $env:GITHUB_STEP_SUMMARY
+            }
+          }
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: results-${{ matrix.suite.scope }}-${{ matrix.suite.area }}
+          path: results
+          if-no-files-found: ignore
+          retention-days: 30
+
+  # One writer at a time: every suite appends to the same gh-pages branch.
+  record:
+    needs: [plan, run]
+    if: always() && needs.plan.outputs.record == 'true' && needs.plan.outputs.suites != '[]'
+    name: record ${{ matrix.suite.scope }}/${{ matrix.suite.area }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        suite: ${{ fromJson(needs.plan.outputs.suites) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        id: download
+        continue-on-error: true
+        with:
+          name: results-${{ matrix.suite.scope }}-${{ matrix.suite.area }}
+          path: results
+
+      - name: Convert to history series
+        id: convert
+        if: steps.download.outcome == 'success'
+        shell: pwsh
+        env:
+          COHESION_VERSION: ${{ needs.plan.outputs.cohesion-version }}
+          COHESION_COMMIT: ${{ needs.plan.outputs.cohesion-commit }}
+        run: |
+          $path = "results/${{ matrix.suite.scope }}/${{ matrix.suite.area }}"
+          if (-not (Test-Path $path)) { Write-Host "No results for this suite (it failed to build or run)."; exit 0 }
+          ./scripts/ConvertTo-BenchmarkHistory.ps1 -Path $path -TimeOutput time.json -AllocationOutput allocations.json -CohesionVersion $env:COHESION_VERSION -CohesionCommit $env:COHESION_COMMIT
+          "ready=true" >> $env:GITHUB_OUTPUT
+
+      # github-action-benchmark appends to an existing branch; create it on the first run.
+      - name: Ensure the history branch exists
+        if: steps.convert.outputs.ready == 'true'
+        run: |
+          if ! git ls-remote --exit-code --heads origin gh-pages >/dev/null; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git switch --orphan gh-pages
+            git commit --allow-empty -m "chore: start benchmark history"
+            git push origin gh-pages || git fetch origin gh-pages
+            git switch -
+          fi
+
+      - name: Record time
+        if: steps.convert.outputs.ready == 'true'
+        uses: benchmark-action/github-action-benchmark@4322e5726e6334590d251fc4f92bec0efafc45dc # v1.22.2
+        with:
+          name: ${{ matrix.suite.scope }}/${{ matrix.suite.area }} - time
+          tool: customSmallerIsBetter
+          output-file-path: time.json
+          gh-pages-branch: gh-pages
+          benchmark-data-dir-path: history
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          max-items-in-chart: 120
+          summary-always: true
+          alert-threshold: ${{ vars.BENCHMARK_TIME_THRESHOLD || '150%' }}
+          comment-on-alert: true
+          fail-on-alert: true
+          alert-comment-cc-users: ${{ vars.BENCHMARK_ALERT_USERS }}
+
+      - name: Record allocations
+        if: steps.convert.outputs.ready == 'true'
+        uses: benchmark-action/github-action-benchmark@4322e5726e6334590d251fc4f92bec0efafc45dc # v1.22.2
+        with:
+          name: ${{ matrix.suite.scope }}/${{ matrix.suite.area }} - allocations
+          tool: customSmallerIsBetter
+          output-file-path: allocations.json
+          gh-pages-branch: gh-pages
+          benchmark-data-dir-path: history
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          max-items-in-chart: 120
+          summary-always: true
+          alert-threshold: ${{ vars.BENCHMARK_ALLOCATION_THRESHOLD || '110%' }}
+          comment-on-alert: true
+          fail-on-alert: true
+          alert-comment-cc-users: ${{ vars.BENCHMARK_ALERT_USERS }}

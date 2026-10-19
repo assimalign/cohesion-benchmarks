@@ -1,0 +1,16 @@
+<Project>
+	<!--
+		The Web benchmarks are self-contained: this file deliberately does not import the repository root
+		Directory.Build.props, whose net6.0/net8.0/net9.0 targets belong to the older benchmark projects.
+		The Cohesion server takes its target framework from Assimalign.Cohesion.Sdk.Web; the ASP.NET Core
+		server and the runner take it from here.
+	-->
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<InvariantGlobalization>true</InvariantGlobalization>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<BenchmarksSharedDirectory>$(MSBuildThisFileDirectory)shared\</BenchmarksSharedDirectory>
+	</PropertyGroup>
+</Project>

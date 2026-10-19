@@ -1,0 +1,50 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="CONVENTIONS.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="global.json" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+    <File Path=".github/workflows/benchmarks.yml" />
+    <File Path=".github/workflows/cohesion-pin.yml" />
+    <File Path="scripts/Invoke-Benchmarks.ps1" />
+    <File Path="scripts/Compare-Benchmarks.ps1" />
+    <File Path="scripts/ConvertTo-BenchmarkHistory.ps1" />
+    <File Path="scripts/BenchmarkReports.psm1" />
+    <File Path="scripts/Resolve-CohesionVersion.ps1" />
+    <File Path="scripts/Update-CohesionVersion.ps1" />
+  </Folder>
+  <Folder Name="/harness/">
+    <Project Path="harness/Assimalign.Cohesion.Benchmarks.Harness/src/Assimalign.Cohesion.Benchmarks.Harness.csproj" />
+  </Folder>
+  <Folder Name="/libraries/">
+    <Project Path="benchmarks/libraries/Amqp/benchmarks/Assimalign.Cohesion.Amqp.Benchmarks/src/Assimalign.Cohesion.Amqp.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/ApplicationModel/benchmarks/Assimalign.Cohesion.ApplicationModel.Benchmarks/src/Assimalign.Cohesion.ApplicationModel.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Cache/benchmarks/Assimalign.Cohesion.Cache.Benchmarks/src/Assimalign.Cohesion.Cache.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Configuration/benchmarks/Assimalign.Cohesion.Configuration.Benchmarks/src/Assimalign.Cohesion.Configuration.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Connections/benchmarks/Assimalign.Cohesion.Connections.Benchmarks/src/Assimalign.Cohesion.Connections.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Content/benchmarks/Assimalign.Cohesion.Content.Benchmarks/src/Assimalign.Cohesion.Content.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Core/benchmarks/Assimalign.Cohesion.Core.Benchmarks/src/Assimalign.Cohesion.Core.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/DependencyInjection/benchmarks/Assimalign.Cohesion.DependencyInjection.Benchmarks/src/Assimalign.Cohesion.DependencyInjection.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Dns/benchmarks/Assimalign.Cohesion.Dns.Benchmarks/src/Assimalign.Cohesion.Dns.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/FileSystem/benchmarks/Assimalign.Cohesion.FileSystem.Benchmarks/src/Assimalign.Cohesion.FileSystem.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Hosting/benchmarks/Assimalign.Cohesion.Hosting.Benchmarks/src/Assimalign.Cohesion.Hosting.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Http/benchmarks/Assimalign.Cohesion.Http.Benchmarks/src/Assimalign.Cohesion.Http.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/IdentityModel/benchmarks/Assimalign.Cohesion.IdentityModel.Benchmarks/src/Assimalign.Cohesion.IdentityModel.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Logging/benchmarks/Assimalign.Cohesion.Logging.Benchmarks/src/Assimalign.Cohesion.Logging.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/ObjectMapping/benchmarks/Assimalign.Cohesion.ObjectMapping.Benchmarks/src/Assimalign.Cohesion.ObjectMapping.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/ObjectPool/benchmarks/Assimalign.Cohesion.ObjectPool.Benchmarks/src/Assimalign.Cohesion.ObjectPool.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/ObjectValidation/benchmarks/Assimalign.Cohesion.ObjectValidation.Benchmarks/src/Assimalign.Cohesion.ObjectValidation.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/OpenApi/benchmarks/Assimalign.Cohesion.OpenApi.Benchmarks/src/Assimalign.Cohesion.OpenApi.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/OpenTelemetry/benchmarks/Assimalign.Cohesion.OpenTelemetry.Benchmarks/src/Assimalign.Cohesion.OpenTelemetry.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Resilience/benchmarks/Assimalign.Cohesion.Resilience.Benchmarks/src/Assimalign.Cohesion.Resilience.Benchmarks.csproj" />
+    <Project Path="benchmarks/libraries/Security/benchmarks/Assimalign.Cohesion.Security.Benchmarks/src/Assimalign.Cohesion.Security.Benchmarks.csproj" />
+  </Folder>
+  <Folder Name="/resources/">
+    <Project Path="benchmarks/resources/Database/benchmarks/Assimalign.Cohesion.Database.Benchmarks/src/Assimalign.Cohesion.Database.Benchmarks.csproj" />
+    <Project Path="benchmarks/resources/NatGateway/benchmarks/Assimalign.Cohesion.NatGateway.Benchmarks/src/Assimalign.Cohesion.NatGateway.Benchmarks.csproj" />
+    <Project Path="benchmarks/resources/Scheduler/benchmarks/Assimalign.Cohesion.Scheduler.Benchmarks/src/Assimalign.Cohesion.Scheduler.Benchmarks.csproj" />
+    <Project Path="benchmarks/resources/Web/benchmarks/Assimalign.Cohesion.Web.Benchmarks/src/Assimalign.Cohesion.Web.Benchmarks.csproj" />
+  </Folder>
+</Solution>
