@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792403158726,
+  "lastUpdate": 1792403174518,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -1523,6 +1523,72 @@ window.BENCHMARK_DATA = {
             "value": 5032,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079877"
+          }
+        ]
+      }
+    ],
+    "libraries/Logging - time": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "3861cd040532be00d816c57a1fc14b242b9195a4",
+          "message": "Merge pull request #4 from assimalign/fix/benchmarks-filter-glob\n\nfix(benchmarks): stop PowerShell globbing the filter on Linux; fail runs that measure nothing",
+          "timestamp": "2026-10-19T09:36:35Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/3861cd040532be00d816c57a1fc14b242b9195a4"
+        },
+        "date": 1792403173894,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "LoggerBenchmarks.LogDisabled_MicrosoftExtensions",
+            "value": 23.386,
+            "range": "± 0.247",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079879\nmean 23.506 ns"
+          },
+          {
+            "name": "LoggerBenchmarks.LogDisabled",
+            "value": 29.246,
+            "range": "± 0.566",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079879\nmean 29.174 ns"
+          },
+          {
+            "name": "LoggerBenchmarks.LogEnabled_MicrosoftExtensions",
+            "value": 46.904,
+            "range": "± 0.197",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079879\nmean 46.914 ns"
+          },
+          {
+            "name": "LoggerBenchmarks.LogEnabled",
+            "value": 162.824,
+            "range": "± 1.511",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079879\nmean 162.752 ns"
+          },
+          {
+            "name": "LoggerBenchmarks.Scope_MicrosoftExtensions",
+            "value": 38.379,
+            "range": "± 0.085",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079879\nmean 38.384 ns"
+          },
+          {
+            "name": "LoggerBenchmarks.Scope",
+            "value": 279.416,
+            "range": "± 2.898",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079879\nmean 280.909 ns"
           }
         ]
       }
