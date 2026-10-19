@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792448914227,
+  "lastUpdate": 1792448929290,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -5772,6 +5772,56 @@ window.BENCHMARK_DATA = {
             "range": "± 209.428",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080059\nmean 19490.163 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "06c9dcd86539ac3365bc0bb6b3432db5ad769ce5",
+          "message": "Merge pull request #7 from assimalign/fix/record-both-metrics-on-alert\n\nRecord allocations even when the time series alerts",
+          "timestamp": "2026-10-19T20:26:47Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/06c9dcd86539ac3365bc0bb6b3432db5ad769ce5"
+        },
+        "date": 1792448928649,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "OpenApiJsonBenchmarks.Parse_MicrosoftOpenApi",
+            "value": 122934.923,
+            "range": "± 3069.609",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080373\nmean 122323.77 ns"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Parse",
+            "value": 51752.81,
+            "range": "± 1127.623",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080373\nmean 52164.922 ns"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Serialize_MicrosoftOpenApi",
+            "value": 33398.261,
+            "range": "± 581.162",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080373\nmean 33589.155 ns"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Serialize",
+            "value": 27442.188,
+            "range": "± 704.122",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080373\nmean 27544.66 ns"
           }
         ]
       }
