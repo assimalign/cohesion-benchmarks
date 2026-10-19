@@ -29,3 +29,9 @@ The suites measure the Cohesion packages cohesion's CI publishes to the Assimali
 
 CI ([benchmarks.yml](.github/workflows/benchmarks.yml)) checks every suite on pull requests, measures the newest
 cohesion `main` build nightly, keeps time and allocation history on the `gh-pages` branch, and fails on a regression.
+
+**[The dashboard](https://assimalign.github.io/cohesion-benchmarks/)** shows that history: every area's movement
+since the previous run on one screen, a sidebar to each area, and a benchmark's own chart on demand. Its source is
+[site/index.html](site/index.html) — one static page, no dependencies — published by
+[site.yml](.github/workflows/site.yml). The raw per-benchmark charts stay at
+[`/history/`](https://assimalign.github.io/cohesion-benchmarks/history/).

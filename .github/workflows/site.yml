@@ -1,0 +1,86 @@
+# Publishes the benchmark dashboard (site/) to the root of the gh-pages branch.
+#
+# The dashboard is a single static page that reads history/data.js in the browser, so it never needs regenerating
+# when a benchmark runs: benchmarks.yml keeps history/ current, and this workflow only republishes when the page
+# itself changes. The two never write the same files — github-action-benchmark owns history/, this owns the root.
+#
+# Layout on gh-pages:
+#   /index.html     the dashboard (this workflow)
+#   /.nojekyll      serve the files as they are, no Jekyll pass
+#   /history/       data.js and the raw per-benchmark charts (benchmarks.yml, via github-action-benchmark)
+#
+# Pages serves it at https://<owner>.github.io/<repo>/ once Settings -> Pages is set to deploy from branch gh-pages,
+# folder / (root).
+name: site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/site.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: site-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Publish site/ to the gh-pages root
+        env:
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          set -euo pipefail
+          source_sha="$(git rev-parse --short HEAD)"
+
+          # A recording run pushes to gh-pages twice per suite, so this races with benchmarks.yml. Each attempt
+          # starts from the current remote tip and replays the copy, so a rejected push just tries again.
+          for attempt in 1 2 3 4 5; do
+            rm -rf ../pages
+            git worktree prune
+
+            # gh-pages is created by benchmarks.yml's first recording run; create it here too, so the dashboard can
+            # go up before any benchmark has been recorded.
+            if git ls-remote --exit-code --heads origin gh-pages >/dev/null; then
+              # An explicit refspec: "git fetch origin gh-pages" alone leaves no ref a worktree can be made from.
+              git fetch --depth=1 --force origin refs/heads/gh-pages:refs/remotes/origin/gh-pages
+              git worktree add ../pages -B gh-pages refs/remotes/origin/gh-pages
+            else
+              git worktree add --detach ../pages
+              git -C ../pages switch --orphan gh-pages
+              git -C ../pages rm -rq --ignore-unmatch .
+            fi
+
+            # Only the root files this workflow owns; history/ belongs to github-action-benchmark, untouched.
+            cp site/index.html ../pages/index.html
+            touch ../pages/.nojekyll
+
+            git -C ../pages add index.html .nojekyll
+            if git -C ../pages diff --cached --quiet; then
+              echo "The published dashboard already matches site/; nothing to push."
+              exit 0
+            fi
+
+            git -C ../pages commit -m "chore(site): publish the benchmark dashboard from ${source_sha}"
+            if git -C ../pages push origin gh-pages; then
+              echo "Published the dashboard to gh-pages."
+              exit 0
+            fi
+
+            echo "::warning::Push to gh-pages was rejected (attempt ${attempt}); a recording run probably pushed first. Retrying."
+            sleep $((attempt * 5))
+          done
+
+          echo "::error::Could not publish the dashboard to gh-pages after 5 attempts."
+          exit 1

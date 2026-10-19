@@ -203,4 +203,32 @@ $change = (./scripts/Resolve-CohesionVersion.ps1 -PullRequest 1700).Version
   their threshold is tight; time on shared runners is noisy, so its threshold is loose. Both are workflow
   variables (`BENCHMARK_TIME_THRESHOLD`, `BENCHMARK_ALLOCATION_THRESHOLD`), as is the runner
   (`BENCHMARK_RUNNER`): point it at a dedicated self-hosted machine to tighten the time threshold.
-- Charts: the repository's GitHub Pages site (Settings → Pages → deploy from branch `gh-pages`), under `history/`.
+- Charts: the repository's GitHub Pages site (Settings → Pages → deploy from branch `gh-pages`, folder `/`).
+
+## The dashboard
+
+The site root is a dashboard over that history: every area's movement since the previous run on one screen, a
+sidebar to each area, and a benchmark's own chart on demand.
+
+```
+site/index.html                       the source; one static page, no dependencies and no build step
+  -> gh-pages:/index.html             published by .github/workflows/site.yml on a push that changes site/
+     gh-pages:/history/data.js        written by github-action-benchmark; the dashboard reads it in the browser
+     gh-pages:/history/index.html     the raw per-benchmark charts, still there, linked from the footer
+```
+
+The two halves never write the same files: `benchmarks.yml` owns `history/`, `site.yml` owns the root. Because
+the page reads `data.js` at load time, recording a run never needs the page republished — only a change to the
+page itself does.
+
+Working on it: `site/` has no build step, so open `site/index.html` over HTTP with a copy of the published
+`history/data.js` beside it (`site/history/data.js` is git-ignored for exactly this). A few conventions worth
+keeping if you edit it:
+
+- **Derive, never hardcode.** Areas, scopes, benchmark names and units all come out of `data.js`, so a new area
+  appears on the dashboard the first time it records, with no edit here.
+- The allocation recorder names its benches `<Method> - allocated` and the time recorder does not; the page
+  strips that suffix so one benchmark is one row with both metrics.
+- An area's headline is the **median** ratio across its benchmarks, so one noisy outlier cannot move it, and a
+  change under 2% reads as flat. The red dot is the workflow's own alert threshold.
+- It must survive an empty or missing `data.js` (the state before the first recording run) without throwing.

@@ -402,3 +402,6 @@ FodyWeavers.xsd
 # Benchmark build output and results (Directory.Build.props: UseArtifactsOutput)
 .artifacts/
 BenchmarkDotNet.Artifacts/
+
+# A local copy of the published history, fetched for previewing site/index.html.
+site/history/
