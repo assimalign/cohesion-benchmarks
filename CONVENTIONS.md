@@ -208,7 +208,20 @@ $change = (./scripts/Resolve-CohesionVersion.ps1 -PullRequest 1700).Version
 ## The dashboard
 
 The site root is a dashboard over that history: every area's movement since the previous run on one screen, a
-sidebar to each area, and a benchmark's own chart on demand.
+sidebar to each area, and a benchmark's own chart on demand. Time and allocations are shown side by side
+throughout, and the **Time / Allocations** toggle decides which one the overview sorts by and the sparklines
+draw.
+
+Inside an area the benchmarks are split by what they measure:
+
+- **Measured against a counterpart** — the `Method` / `Method_Counterpart` pairs this document asks for. These
+  carry the number the comparison exists to produce, Cohesion ÷ the counterpart, for time and for allocations;
+  below 1× is Cohesion ahead. A subject measured against more than one counterpart shows each, worst first.
+- **Measured on its own** — a Cohesion API with nothing to compare against, where only the movement between runs
+  means anything.
+
+That split is derived from the names, so naming a counterpart after itself is what puts a benchmark in the first
+group. A suffixed name with no unsuffixed sibling stays a benchmark in its own right.
 
 ```
 site/index.html                       the source; one static page, no dependencies and no build step
@@ -231,4 +244,6 @@ keeping if you edit it:
   strips that suffix so one benchmark is one row with both metrics.
 - An area's headline is the **median** ratio across its benchmarks, so one noisy outlier cannot move it, and a
   change under 2% reads as flat. The red dot is the workflow's own alert threshold.
+- Counterparts are found by pairing `Method` with `Method_Suffix` inside the same class and parameters. Only a
+  suffixed name beside an unsuffixed sibling counts, so `Parse_Large` on its own is not read as a rival.
 - It must survive an empty or missing `data.js` (the state before the first recording run) without throwing.
