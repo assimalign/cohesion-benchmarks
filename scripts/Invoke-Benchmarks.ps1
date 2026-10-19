@@ -112,7 +112,9 @@ foreach ($suite in $suites) {
     $results = Join-Path $root '.artifacts' 'results' $suite.name
     if (Test-Path $results) { Remove-Item $results -Recurse -Force }
 
-    & dotnet run --project $project -c Release --no-build -- --profile $Profile --filter $Filter @BenchmarkArguments
+    # "$Filter" is quoted on purpose: on Linux and macOS PowerShell expands an unquoted wildcard argument to a native
+    # command into file names, so a bare $Filter of '*' reached BenchmarkDotNet as the repository's file list.
+    & dotnet run --project $project -c Release --no-build -- --profile $Profile --filter "$Filter" @BenchmarkArguments
     if ($LASTEXITCODE -ne 0) { $failed += "$($suite.name) (run)" }
 
     if ($Output -and (Test-Path $results)) {
