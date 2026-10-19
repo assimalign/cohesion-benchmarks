@@ -107,6 +107,18 @@ th {
   font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-faint);
   background: var(--panel); position: sticky; top: 0; z-index: 1; white-space: nowrap; font-weight: 600;
 }
+/* A header sits over its numbers, so it is aligned the same way they are. */
+th.num { text-align: right; }
+
+/* ---------- metric groups ---------- */
+/* Time and allocations are different measures; a rule between them stops the eye reading across the boundary. */
+.gsep { border-left: 2px solid var(--line-strong); }
+thead tr.groups th {
+  height: 26px; padding: 4px 12px; top: 0;
+  font-size: 10px; letter-spacing: .09em; color: var(--fg-dim); text-align: center;
+}
+thead tr.groups th.blank { background: var(--panel); }
+thead tr.cols th { top: 26px; }
 th.sortable { cursor: pointer; user-select: none; }
 th.sortable:hover { color: var(--fg); }
 th .arrow { opacity: .45; font-size: 9px; }
@@ -164,6 +176,24 @@ tr.sect td span { color: var(--fg-faint); }
 .runs { margin-top: 12px; font-size: 12px; color: var(--fg-dim); }
 .runs code { font-family: var(--mono); font-size: 11.5px; }
 .empty { padding: 28px 16px; text-align: center; color: var(--fg-faint); font-size: 13px; }
+
+/* ---------- how to read ---------- */
+.howto { margin: 0 0 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+.howto > summary {
+  cursor: pointer; padding: 7px 12px; font-size: 12.5px; color: var(--fg-dim); list-style: none;
+  display: flex; align-items: center; gap: 7px; user-select: none;
+}
+.howto > summary::-webkit-details-marker { display: none; }
+.howto > summary::before { content: "?"; display: inline-grid; place-items: center; width: 15px; height: 15px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 10px; font-weight: 700; }
+.howto > summary:hover { color: var(--fg); }
+.howto[open] > summary { border-bottom: 1px solid var(--line); color: var(--fg); }
+.howto .body { padding: 10px 12px 12px; font-size: 12.5px; color: var(--fg-dim); }
+.howto dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; margin: 0 0 10px; }
+@media (max-width: 620px) { .howto dl { grid-template-columns: minmax(0, 1fr); gap: 1px; } .howto dd { margin-bottom: 7px; } }
+.howto dt { font-weight: 650; color: var(--fg); font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; padding-top: 1px; }
+.howto dd { margin: 0; }
+.howto p { margin: 8px 0 0; max-width: 84ch; }
+.howto .ex { font-family: var(--mono); font-size: 11.5px; color: var(--fg); }
 .foot { margin-top: 22px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--fg-faint); font-size: 11.5px; display: flex; flex-wrap: wrap; gap: 6px 16px; }
 .pill { display: inline-block; font-family: var(--mono); font-size: 11px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; color: var(--fg-dim); }
 .legend { font-size: 11.5px; color: var(--fg-faint); margin: 10px 0 0; }
@@ -533,20 +563,25 @@ function renderOverview() {
     kpi("Last run", bits.newest ? sinceText(bits.newest.date) : "—", bits.build ? "cohesion " + bits.build.version.replace(/^10\.0\.0-preview\.0\./, "") : "") +
     "</div>";
 
+  html += howTo("overview");
   html += '<div class="card"><table><thead><tr>' +
-    '<th>Area</th><th class="num">Benchmarks</th><th class="num">Compared</th>' +
-    '<th class="num">Time</th><th class="num">Allocations</th>' +
-    '<th class="num">' + (PRIMARY === "time" ? "Time trend" : "Allocation trend") + '</th>' +
-    '<th class="num">Last run</th></tr></thead><tbody>';
+    '<th>Area</th>' +
+    '<th class="num" title="Benchmark methods this area records">Benchmarks</th>' +
+    '<th class="num" title="How many are measured against a counterpart such as ASP.NET Core or SQLite">Compared</th>' +
+    '<th class="num gsep" title="Median change in time since the previous recorded run. Red is slower.">Time</th>' +
+    '<th class="num gsep" title="Median change in allocated bytes since the previous recorded run. Red is heavier.">Allocations</th>' +
+    '<th class="num gsep" title="The median of this area\'s benchmarks in every recorded run, oldest to newest">' +
+    (PRIMARY === "time" ? "Time trend" : "Allocation trend") + '</th>' +
+    '<th class="num" title="Date of the most recent recorded run">Last run</th></tr></thead><tbody>';
 
   rows.forEach(function (r) {
     html += '<tr class="clickable" data-area="' + esc(r.area.id) + '">' +
       '<td class="name"><span class="scope">' + esc(r.area.scope) + "/</span>" + esc(r.area.name) + "</td>" +
       '<td class="num">' + r.names.length + "</td>" +
       '<td class="num">' + (r.compared ? r.compared : '<span class="d none">—</span>') + "</td>" +
-      '<td class="num">' + deltaCell(r.t.ratio, "time") + "</td>" +
-      '<td class="num">' + deltaCell(r.al.ratio, "alloc") + "</td>" +
-      '<td class="num">' + sparkline(r.trend, 90, 22) + "</td>" +
+      '<td class="num gsep">' + deltaCell(r.t.ratio, "time") + "</td>" +
+      '<td class="num gsep">' + deltaCell(r.al.ratio, "alloc") + "</td>" +
+      '<td class="num gsep">' + sparkline(r.trend, 90, 22) + "</td>" +
       '<td class="num">' + (r.last ? fmtDate(r.last.date) : "—") + "</td></tr>";
   });
 
@@ -556,6 +591,51 @@ function renderOverview() {
     'which, and by how much. Trend is the median of the area\'s benchmarks per run, oldest to newest.</p>';
   html += footer(bits);
   return html;
+}
+
+// The two comparisons in these tables answer different questions, and reading one as the other is the easy
+// mistake: a benchmark can be slower than it was last night and still far ahead of its counterpart.
+function howTo(kind) {
+  var shared =
+    '<p><strong>Trust the vs column more than the Δ column.</strong> Both sides of a vs ratio are measured on ' +
+    'the same machine seconds apart, so it is unaffected by how busy the runner was; Δ compares two runs on ' +
+    'different days and shared runners vary. When a counterpart moves by about as much as Cohesion did, the run ' +
+    'was slow, not the code. Allocation numbers are deterministic, so a real move there means more than the same ' +
+    'move in time.</p>';
+
+  if (kind === "overview") {
+    return '<details class="howto"><summary>How to read this table</summary><div class="body"><dl>' +
+      "<dt>Benchmarks</dt><dd>How many benchmark methods the area records.</dd>" +
+      "<dt>Compared</dt><dd>How many of them are measured against a counterpart such as ASP.NET Core or SQLite. " +
+      "The rest measure a Cohesion API that has nothing to compare against.</dd>" +
+      "<dt>Time, Allocations</dt><dd>The change from the previous recorded run, as the <strong>median</strong> " +
+      "across the area's benchmarks, so one noisy outlier cannot move it. Red is slower or heavier, green is " +
+      "faster or lighter, and under " + (NOISE * 100) + "% reads as flat. A red dot marks a benchmark past the " +
+      "workflow's alert threshold, which fails the run.</dd>" +
+      "<dt>new</dt><dd>Only one run recorded so far, so there is nothing to compare against yet.</dd>" +
+      "<dt>Trend</dt><dd>The median of the area's benchmarks in every recorded run, oldest to newest.</dd>" +
+      "</dl>" + shared + "<p>Open an area to see its individual benchmarks and how each compares with its " +
+      "counterpart.</p></div></details>";
+  }
+
+  return '<details class="howto"><summary>How to read this table</summary><div class="body">' +
+    "<p>The two Δ columns and the two vs columns answer different questions. <strong>Δ compares a " +
+    "benchmark with its own previous run. vs compares Cohesion with its counterpart inside the latest run.</strong> " +
+    "A benchmark can be slower than it was last night and still well ahead of its counterpart.</p><dl>" +
+    "<dt>Time</dt><dd>What Cohesion's method measured in the latest run, as a mean per operation.</dd>" +
+    "<dt>Δ</dt><dd>Against this benchmark's previous run. Red is slower, green is faster, under " +
+    (NOISE * 100) + "% is flat. A red dot means it passed the alert threshold (time " +
+    Math.round(ALERT.time * 100) + "%, allocations " + Math.round(ALERT.alloc * 100) + "%), which fails the run.</dd>" +
+    "<dt>vs</dt><dd>Cohesion ÷ the counterpart, both from the latest run. <strong>Below 1× means Cohesion " +
+    "is ahead.</strong> <span class=\"ex\">0.18×</span> is about a fifth of the counterpart's time or bytes; " +
+    "<span class=\"ex\">1.97×</span> is about twice. A benchmark measured against more than one counterpart " +
+    "lists each, worst first.</dd>" +
+    "<dt>Allocated</dt><dd>Bytes allocated per operation, with its own Δ and vs.</dd>" +
+    "<dt>new</dt><dd>Only one run recorded so far, so Δ has nothing to compare against. A vs ratio still " +
+    "works, because it needs only the one run.</dd>" +
+    "<dt>Trend</dt><dd>This benchmark in every recorded run, oldest to newest, in whichever metric the toggle " +
+    "has in front.</dd>" +
+    "</dl>" + shared + "<p>Click any row for its full history, including a chart per counterpart.</p></div></details>";
 }
 
 function metricToggle() {
@@ -592,10 +672,21 @@ function renderArea(id) {
     kpi("Last run", last ? fmtDate(last.date) : "—", build ? "cohesion " + build.version.replace(/^10\.0\.0-preview\.0\./, "") : "") +
     "</div>";
 
-  html += '<div class="card"><table><thead><tr><th>Benchmark</th>' +
-    '<th class="num">Time</th><th class="num">Δ</th><th class="num">vs</th>' +
-    '<th class="num">Allocated</th><th class="num">Δ</th><th class="num">vs</th>' +
-    '<th class="num">Trend</th></tr></thead><tbody>';
+  html += howTo("area");
+  html += '<div class="card"><table><thead>' +
+    '<tr class="groups"><th class="blank"></th>' +
+    '<th colspan="3" class="gsep" title="How long one operation takes">Time</th>' +
+    '<th colspan="3" class="gsep" title="Memory allocated by one operation">Allocations</th>' +
+    '<th class="gsep"></th></tr>' +
+    '<tr class="cols"><th>Benchmark</th>' +
+    '<th class="num gsep" title="Mean per operation in the latest run">Mean</th>' +
+    '<th class="num" title="Change against this benchmark\'s own previous run. Red is slower.">Δ</th>' +
+    '<th class="num" title="Cohesion ÷ the counterpart, both from the latest run. Below 1× is Cohesion ahead.">vs</th>' +
+    '<th class="num gsep" title="Bytes allocated per operation in the latest run">Bytes</th>' +
+    '<th class="num" title="Change against this benchmark\'s own previous run. Red is heavier.">Δ</th>' +
+    '<th class="num" title="Cohesion ÷ the counterpart in allocated bytes. Below 1× is Cohesion leaner.">vs</th>' +
+    '<th class="num gsep" title="This benchmark in every recorded run, oldest to newest">Trend</th>' +
+    "</tr></thead><tbody>";
 
   var groups = benchGroups(area);
   var sections = [
@@ -631,13 +722,13 @@ function benchRow(area, g) {
   var vsT = versusCells(area, "time", g), vsA = versusCells(area, "alloc", g);
   return '<tr class="clickable bench" data-group="' + esc(g.key) + '">' +
     '<td class="bench-name">' + shown + "</td>" +
-    '<td class="num">' + (tl ? esc(fmtValue(tl.value, tl.unit)) : "—") + "</td>" +
+    '<td class="num gsep">' + (tl ? esc(fmtValue(tl.value, tl.unit)) : "—") + "</td>" +
     '<td class="num">' + deltaCell(ratio(ts), "time") + "</td>" +
     '<td class="num">' + vsT + "</td>" +
-    '<td class="num">' + (al ? esc(fmtValue(al.value, al.unit)) : "—") + "</td>" +
+    '<td class="num gsep">' + (al ? esc(fmtValue(al.value, al.unit)) : "—") + "</td>" +
     '<td class="num">' + deltaCell(ratio(as), "alloc") + "</td>" +
     '<td class="num">' + vsA + "</td>" +
-    '<td class="num">' + sparkline((PRIMARY === "time" ? ts : as).map(function (p) { return p.value; }), 90, 22) + "</td></tr>" +
+    '<td class="num gsep">' + sparkline((PRIMARY === "time" ? ts : as).map(function (p) { return p.value; }), 90, 22) + "</td></tr>" +
     '<tr class="detailrow" data-for="' + esc(g.key) + '" hidden><td colspan="8" class="detail"></td></tr>';
 }
 

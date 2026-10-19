@@ -247,3 +247,7 @@ keeping if you edit it:
 - Counterparts are found by pairing `Method` with `Method_Suffix` inside the same class and parameters. Only a
   suffixed name beside an unsuffixed sibling counts, so `Parse_Large` on its own is not read as a rival.
 - It must survive an empty or missing `data.js` (the state before the first recording run) without throwing.
+- Each view carries a collapsed **How to read this table** panel and every column header a tooltip. The one
+  thing they exist to prevent is reading Δ as vs: Δ is this benchmark against its own previous run, vs is
+  Cohesion against its counterpart inside the latest run. Add or rename a column and that panel is part of the
+  change.
