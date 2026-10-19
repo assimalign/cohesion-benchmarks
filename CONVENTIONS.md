@@ -241,7 +241,9 @@ keeping if you edit it:
 - **Derive, never hardcode.** Areas, scopes, benchmark names and units all come out of `data.js`, so a new area
   appears on the dashboard the first time it records, with no edit here.
 - The allocation recorder names its benches `<Method> - allocated` and the time recorder does not; the page
-  strips that suffix so one benchmark is one row with both metrics.
+  strips that suffix so one benchmark is one row with both metrics. Both recorders run on every recorded
+  commit even when one of them alerts, so the two series stay the same length; a row showing a trend for one
+  metric and not the other means a recording job failed, not that the benchmark skipped a metric.
 - An area's headline is the **median** ratio across its benchmarks, so one noisy outlier cannot move it, and a
   change under 2% reads as flat. The red dot is the workflow's own alert threshold.
 - Counterparts are found by pairing `Method` with `Method_Suffix` inside the same class and parameters. Only a
