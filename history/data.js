@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792416793029,
+  "lastUpdate": 1792416795526,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -2282,6 +2282,52 @@ window.BENCHMARK_DATA = {
             "value": 9056,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079872"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "00e8cb49c3ca66a73eac2bf997d449bd83a7801a",
+          "message": "Merge pull request #5 from assimalign/fix/benchmarks-ci-first-run\n\nfix(benchmarks): first measuring run failures (history bootstrap, keep-alive close, Python stall)",
+          "timestamp": "2026-10-19T10:03:39Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/00e8cb49c3ca66a73eac2bf997d449bd83a7801a"
+        },
+        "date": 1792416795091,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "HostLifecycleBenchmarks.BuildStartStop_MicrosoftExtensions(ServiceCount=1) - allocated",
+            "value": 69431,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080047"
+          },
+          {
+            "name": "HostLifecycleBenchmarks.BuildStartStop(ServiceCount=1) - allocated",
+            "value": 2336,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080047"
+          },
+          {
+            "name": "HostLifecycleBenchmarks.BuildStartStop_MicrosoftExtensions(ServiceCount=16) - allocated",
+            "value": 91873,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080047"
+          },
+          {
+            "name": "HostLifecycleBenchmarks.BuildStartStop(ServiceCount=16) - allocated",
+            "value": 9056,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080047"
           }
         ]
       }
