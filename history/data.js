@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792448770328,
+  "lastUpdate": 1792448785337,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -2964,6 +2964,70 @@ window.BENCHMARK_DATA = {
             "range": "± 77.729",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080045\nmean 10800.032 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "06c9dcd86539ac3365bc0bb6b3432db5ad769ce5",
+          "message": "Merge pull request #7 from assimalign/fix/record-both-metrics-on-alert\n\nRecord allocations even when the time series alerts",
+          "timestamp": "2026-10-19T20:26:47Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/06c9dcd86539ac3365bc0bb6b3432db5ad769ce5"
+        },
+        "date": 1792448784397,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "GlobMatcherBenchmarks.Filter_MicrosoftExtensions",
+            "value": 79740.295,
+            "range": "± 519.583",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080347\nmean 79777.021 ns"
+          },
+          {
+            "name": "GlobMatcherBenchmarks.Filter",
+            "value": 29267.807,
+            "range": "± 132.598",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080347\nmean 29260.224 ns"
+          },
+          {
+            "name": "GlobMatcherBenchmarks.Filter_FromStrings",
+            "value": 347075.088,
+            "range": "± 3959.319",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080347\nmean 347965.421 ns"
+          },
+          {
+            "name": "InMemoryFileSystemBenchmarks.ReadFile",
+            "value": 9595.184,
+            "range": "± 96.02",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080347\nmean 9573.802 ns"
+          },
+          {
+            "name": "PhysicalFileSystemBenchmarks.ReadFile_SystemIO",
+            "value": 2232.253,
+            "range": "± 26.331",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080347\nmean 2236.553 ns"
+          },
+          {
+            "name": "PhysicalFileSystemBenchmarks.ReadFile",
+            "value": 7064.441,
+            "range": "± 137.471",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080347\nmean 7094.121 ns"
           }
         ]
       }
