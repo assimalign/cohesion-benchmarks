@@ -7,6 +7,7 @@ Benchmarks for [Cohesion](https://github.com/assimalign/cohesion), laid out by c
 | `benchmarks/libraries/<Area>` | A BenchmarkDotNet suite per library area, against the .NET counterpart where there is one |
 | `benchmarks/resources/<Area>` | A BenchmarkDotNet suite per resource area |
 | [benchmarks/resources/Web](benchmarks/resources/Web/README.md) | Also the end-to-end Web harness: Cohesion Web vs ASP.NET Core over HTTP, scenario by scenario, under load |
+| [benchmarks/resources/Database](benchmarks/resources/Database/README.md) | Also the groundwork for the multi-engine comparison (PostgreSQL, SQL Server, MongoDB, RavenDB, Neo4j): deterministic datasets, the engine catalog, and the capability baseline. Not yet running |
 | `harness/` | The shared conventions: entry point, run profiles, and the toolkit for benchmarking applications in other processes (servers, containers, CLIs, non-.NET) |
 
 [CONVENTIONS.md](CONVENTIONS.md) is how a suite is laid out, written, run, compared and tracked.
@@ -28,3 +29,9 @@ The suites measure the Cohesion packages cohesion's CI publishes to the Assimali
 
 CI ([benchmarks.yml](.github/workflows/benchmarks.yml)) checks every suite on pull requests, measures the newest
 cohesion `main` build nightly, keeps time and allocation history on the `gh-pages` branch, and fails on a regression.
+
+**[The dashboard](https://assimalign.github.io/cohesion-benchmarks/)** shows that history: every area's movement
+since the previous run on one screen, a sidebar to each area, and a benchmark's own chart on demand. Its source is
+[site/index.html](site/index.html) — one static page, no dependencies — published by
+[site.yml](.github/workflows/site.yml). The raw per-benchmark charts stay at
+[`/history/`](https://assimalign.github.io/cohesion-benchmarks/history/).

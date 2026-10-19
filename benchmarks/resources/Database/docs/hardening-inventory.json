@@ -1,0 +1,2379 @@
+{
+  "generatedFrom": {
+    "cohesionCommit": "bf20be5eb452fa57363f412bdcff36b2dc2e7edd",
+    "benchmarksCommit": "388199bfe748bc77a124b637c567c03612dcadcc",
+    "evidence": [
+      "C:/cw/bench/b-sql/database/artifacts/sql-r2-results/20261015T2141230753801Z-postgresql-latency-1.json",
+      "C:/cw/bench/b-sql/database/artifacts/sql-r2-results/20261015T2141281853729Z-postgresql-throughput-1.json",
+      "C:/cw/bench/b-sql/database/artifacts/sql-r2-results/20261015T2149021705785Z-sqlserver-latency-1.json",
+      "C:/cw/bench/b-sql/database/artifacts/sql-r2-results/20261015T2149047883682Z-sqlserver-throughput-1.json",
+      "C:/cw/bench/b-sql/database/artifacts/sql-r2-results/20261015T2153255829733Z-cohesion-sql-embedded-latency-1.json",
+      "C:/cw/bench/b-sql/database/artifacts/sql-r2-results/20261015T2153329507202Z-cohesion-sql-embedded-throughput-1.json",
+      "C:/cw/bench/b-sql/database/artifacts/sql-r2-results/20261015T2205431048551Z-cohesion-sql-tcp-latency-1.json",
+      "C:/cw/bench/b-sql/database/artifacts/sql-r2-results/20261015T2205481646179Z-cohesion-sql-tcp-throughput-1.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/windows/20261015T2243062945987Z-cohesion-documents-embedded-latency-1.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/windows/20261015T2243202253144Z-cohesion-documents-embedded-throughput-1.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/windows/20261015T2248152079026Z-mongodb-latency-1.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/windows/20261015T2248304012094Z-mongodb-throughput-1.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/windows/20261015T2253003112034Z-ravendb-latency-1.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/windows/20261015T2253140361534Z-ravendb-throughput-1.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/windows/20261015T2259571172796Z-cosmos-emulator-latency-1.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/windows/20261015T2300240615638Z-cosmos-emulator-throughput-1.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/container/20261015T2314322498665Z-cohesion-documents-embedded-latency-1.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/container/20261015T2314530954491Z-cohesion-documents-embedded-throughput-1.json",
+      "C:/cw/bench/b-graph/database/artifacts/r4-results/20261015T2238533088177Z-cohesion-graph-embedded-latency-1.json",
+      "C:/cw/bench/b-graph/database/artifacts/r4-results/20261015T2246597549654Z-cohesion-graph-embedded-throughput-1.json",
+      "C:/cw/bench/b-graph/database/artifacts/r4-results/20261015T2247127375422Z-cohesion-graph-embedded-throughput-1.json",
+      "C:/cw/bench/b-graph/database/artifacts/r4-results/20261015T2250013940970Z-cohesion-graph-embedded-throughput-1.json",
+      "C:/cw/bench/b-graph/database/artifacts/r4-results/20261015T2250144890841Z-cohesion-graph-embedded-throughput-1.json",
+      "C:/cw/bench/b-graph/database/artifacts/r4-results/20261015T2258312233435Z-cohesion-graph-tcp-latency-1.json",
+      "C:/cw/bench/b-graph/database/artifacts/r4-results/20261015T2301542371756Z-cohesion-graph-tcp-throughput-1.json",
+      "C:/cw/bench/b-graph/database/artifacts/r4-results/20261015T2323039915828Z-neo4j-latency-1.json",
+      "C:/cw/bench/b-graph/database/artifacts/r4-results/20261015T2326092569514Z-neo4j-throughput-1.json",
+      "database/docs/COHESION-CAPABILITIES.md",
+      "database/docs/SQL.md",
+      "database/docs/DOCUMENTS.md",
+      "database/docs/GRAPH.md",
+      "C:/cw/bench/b-sql/database/artifacts/sql-r2-report/sql.md",
+      "C:/cw/bench/b-sql/database/artifacts/sql-r2-report/findings.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/windows/report/documents.md",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/windows/report/findings.json",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/container/report/documents.md",
+      "C:/cw/bench/b-doc/database/artifacts/documents-r3-smoke/container/report/findings.json",
+      "C:/cw/bench/b-graph/database/artifacts/r4-report/graph.md",
+      "C:/cw/bench/b-graph/database/artifacts/r4-report/findings.json",
+      "C:/Users/chase/AppData/Local/Temp/claude/C--Source-repos-assimalign-cohesion/2994f116-47ca-4997-88ac-2017811fa3e5/scratchpad/main-dataplatform-issues.jsonl",
+      "C:/Users/chase/AppData/Local/Temp/r6-probe/docs-sync-1.jsonl",
+      "C:/Users/chase/AppData/Local/Temp/r6-probe/docs-stack.jsonl",
+      "C:/Users/chase/AppData/Local/Temp/r6-probe/docs-stack-1.txt",
+      "C:/Users/chase/AppData/Local/Temp/r6-probe/docs-linux-sync-1.jsonl",
+      "C:/Users/chase/AppData/Local/Temp/r6-probe/docs-linux-none-1.jsonl",
+      "C:/Users/chase/AppData/Local/Temp/r6-probe/graph-sync-1.jsonl",
+      "C:/Users/chase/AppData/Local/Temp/r6-probe/graph-linux-sync-1.jsonl",
+      "C:/Users/chase/AppData/Local/Temp/r6-probe/graph-linux-none-1.jsonl",
+      "database/docs/HARDENING.md"
+    ]
+  },
+  "features": [
+    {
+      "id": "F01",
+      "title": "Shared read transactions and commit concurrency",
+      "summary": "Remove unnecessary read WAL first, then isolate flush synchronization and evaluate safe write concurrency. Existing kernel issues are reuse targets, not new tickets.",
+      "priority": "P001",
+      "wave": "W01",
+      "tasks": [
+        {
+          "id": "F01.T01",
+          "title": "Elide WAL and durable flushes for read-only transactions",
+          "category": "performance",
+          "summary": "Measured: a point read pays a durable commit; this shared path also limits graph TCP reads.",
+          "evidence": {
+            "benchmark": [
+              {
+                "operation": "doc.order-by-id",
+                "target": "cohesion-documents-embedded (Linux, 8 clients)",
+                "scale": 0.01,
+                "metric": "opsPerSec",
+                "value": 43.653007071084005,
+                "competitor": "same target, 1 client",
+                "competitorValue": 128.1828414448442
+              },
+              {
+                "operation": "graph.person-recent-messages",
+                "target": "cohesion-graph-tcp (8 clients)",
+                "scale": 0.01,
+                "metric": "opsPerSec",
+                "value": 38.32,
+                "competitor": "same target, 1 client",
+                "competitorValue": 263.022
+              }
+            ],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/DocumentCollection.cs:75 — GetAsync uses RunAsync",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/DocumentDatabase.cs:314 — autocommit begins a Snapshot context",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/Internal/DocumentOperation.cs:74 — read operations commit their context",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/GraphDatabase.Lifetime.cs:32 — graph autocommit starts a Snapshot context",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphOperation.cs:72 — graph read operations also commit",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/TransactionCoordinator.cs:1082 — begin is always journaled",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/TransactionCoordinator.cs:1122 — commit always appends and ensures durability"
+            ],
+            "measured": "R6 Linux ARM64, 3 CPUs/2 GiB, 100 documents: explicit begin/read/commit averaged 0.0193/0.0268/8.1587 ms over 200 transactions, with 200 durable flushes. Autocommit at one client: 234.53 ops/s; 4.956 of 5.006 s inside the forwarding journal Flush wrapper, 1,174 flushes and 89,224 WAL bytes for 1,174 reads. A held snapshot fetched 175,837 reads/s with zero flushes (diagnostic amortization, different transaction boundaries). Windows 8-client stack: six workers at GatedJournalLog.AppendCommitAsync monitor entry, one at TransactionManager.BeginAsync monitor entry and one at Storage.AwaitCommitDurable; 207.96 aggregate contention-seconds over 30.03 s. Original Linux 128.2 -> 43.7 slope did not reproduce (R6 234.5/244.0/831.5 ops/s at 1/3/8); shared-host fsync latency varied. This proves the read-WAL/flush mechanism, not every millisecond of R3."
+          },
+          "rootCause": "The read-only state is not used to suppress lifecycle WAL. Every successful autocommit read drains 76 bytes of begin/commit frames and normally forces the journal. GetAsync itself does not execute OQL; statement parsing cannot explain this read latency.",
+          "proposal": "Implement #1280 with a non-writing transaction/snapshot identity and lazy durable writer enrollment on first mutation. Preserve snapshot pinning, rollback classification and writer crash recovery in every model.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/access/transam/xact.c:1384 — transactions without an assigned XID avoid commit WAL; the no-XLOG exit is at 1429"
+          ],
+          "acceptance": [
+            "Autocommit and explicit read-only transactions in SQL, Documents and Graph produce zero journal bytes and zero durable flushes.",
+            "Crash/recovery suites preserve every acknowledged write and snapshot visibility when a read transaction becomes a writer.",
+            "On a quiet 3 CPU host, Documents point-read throughput at 3 clients is at least 2.7x the 1-client result; report 8 clients separately and require no regression."
+          ],
+          "effort": "M",
+          "priority": "P001",
+          "wave": "W01",
+          "existingIssues": [
+            {
+              "number": 1280,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F01.T02",
+          "title": "Release journal append synchronization while forcing durable bytes",
+          "category": "scalability",
+          "summary": "Measured contention and code inspection: journal fsync blocks other appenders and propagates through transaction gates.",
+          "evidence": {
+            "benchmark": [
+              {
+                "operation": "doc.order-by-id",
+                "target": "cohesion-documents-embedded (Linux, 8 clients)",
+                "scale": 0.01,
+                "metric": "opsPerSec",
+                "value": 43.653007071084005,
+                "competitor": "same target, 1 client",
+                "competitorValue": 128.1828414448442
+              },
+              {
+                "operation": "graph.person-recent-messages",
+                "target": "cohesion-graph-tcp (8 clients)",
+                "scale": 0.01,
+                "metric": "opsPerSec",
+                "value": 38.32,
+                "competitor": "same target, 1 client",
+                "competitorValue": 263.022
+              }
+            ],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Storage/src/Journal/StorageJournal.cs:770 — the journal monitor covers DrainLocked(durable:true)",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Storage/src/Journal/StorageJournal.cs:1397 — FlushCore synchronously invokes the file handle",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/TransactionCoordinator.cs:1127 — the lifecycle gate encloses AppendCommit, which can wait for the journal monitor"
+            ],
+            "measured": "R6 Linux ARM64, 3 CPUs/2 GiB, 100 documents: explicit begin/read/commit averaged 0.0193/0.0268/8.1587 ms over 200 transactions, with 200 durable flushes. Autocommit at one client: 234.53 ops/s; 4.956 of 5.006 s inside the forwarding journal Flush wrapper, 1,174 flushes and 89,224 WAL bytes for 1,174 reads. A held snapshot fetched 175,837 reads/s with zero flushes (diagnostic amortization, different transaction boundaries). Windows 8-client stack: six workers at GatedJournalLog.AppendCommitAsync monitor entry, one at TransactionManager.BeginAsync monitor entry and one at Storage.AwaitCommitDurable; 207.96 aggregate contention-seconds over 30.03 s. Original Linux 128.2 -> 43.7 slope did not reproduce (R6 234.5/244.0/831.5 ops/s at 1/3/8); shared-host fsync latency varied. This proves the read-WAL/flush mechanism, not every millisecond of R3. R6 Linux fixed 20-path recent-messages query, one engine plus loopback TCP client in one 3 CPU/2 GiB process: TCP paths 416.97/604.66/377.00 ops/s at 1/3/8 clients. At 8 clients, 2,282 reads generated 2,174 durable flushes, 5.609 s in flush calls over 6.053 s wall time, 37.282 aggregate contention-seconds, 20 peak pool threads and 3 peak queued work items. Durability=None diagnostic: 4,432.75 ops/s at 8 clients and zero durable flushes; this is not an eligible benchmark result or a proposed durability setting. The smaller negative slope reproduces, but the original 263.022 -> 38.320 magnitude is not attributed fully."
+          },
+          "rootCause": "One synchronous flush holds StorageJournal._syncRoot; appenders wait behind it while holding or waiting for GatedJournalLog._gate. More callers increase waiters rather than independent disk work. The old recovery-reader half of #1276 has already changed (ReadSequential uses buffered reads); only the live flush coupling is asserted here.",
+          "proposal": "Reuse #1276: separate append and force coordination, publish written/durable LSN watermarks, and coalesce waiters for a common durable prefix. Keep fsync-on-ack, cancellation and offline transitions intact; do not switch benchmark durability to None.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/kernel/src/main/java/org/neo4j/wal/files/TransactionLogFile.java:1194 — force prepares the writer under synchronization and forces outside the lock at 1204"
+          ],
+          "acceptance": [
+            "An instrumented blocked force does not block appending subsequent WAL into available buffers.",
+            "Concurrent durable commits acknowledge only LSNs proven durable; forced-failure and restart tests pass.",
+            "The 8-client read/write probe reports append-gate wait, force wait and flushes/commit independently; synchronous 3-client distinct-key writes improve at least 2x over this baseline after F01.T03."
+          ],
+          "effort": "L",
+          "priority": "P001",
+          "wave": "W01",
+          "existingIssues": [
+            {
+              "number": 1276,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F01.T03",
+          "title": "Permit independent model writers without a database-wide writer lock",
+          "category": "scalability",
+          "summary": "Code inspection: Documents and Graph serialize whole writer transactions; the kernel also serializes physical statement application.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/DocumentDatabase.cs:377 — LockWriterAsync acquires an exclusive database resource",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/GraphDatabase.Lifetime.cs:122 — graph writers acquire the exclusive database resource too",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/TransactionCoordinator.cs:37 — the documented bracket model serializes application",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/TransactionCoordinator.cs:511 — every physical apply waits on one semaphore"
+            ],
+            "measured": null
+          },
+          "rootCause": "Model-wide exclusive ownership lasts until transaction completion, including durable commit. Removing just that lock still leaves the per-database apply gate; removing either without a new page/index conflict protocol would reintroduce deadlocks or rollback corruption.",
+          "proposal": "After F01.T01/T02, design per-document/per-node/key logical locks and short page latches with retryable physical application. Retain a catalog gate for schema changes and define lock order, endpoint deletion and index rollback before implementation. Start with disjoint-key Documents writes; expand to Graph only after crash validation.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/storage/lmgr/lock.c:2338 — LockReleaseAll manages backend-owned lock entries",
+            "C:/Source/repos/postgres/postgres/src/backend/access/nbtree/nbtinsert.c:190 — unique insertion coordinates concurrent writers at the index leaf/key conflict"
+          ],
+          "acceptance": [
+            "Disjoint-key writes at 3 clients achieve at least 2x 1-client throughput with synchronous durability on the controlled fixture.",
+            "Same-key writes preserve conflict detection and exactly one visible committed version; cancellation, deadlock, checkpoint and restart tests pass."
+          ],
+          "effort": "XL",
+          "priority": "P003",
+          "wave": "W04",
+          "existingIssues": [
+            {
+              "number": 1393,
+              "relation": "blocked-by"
+            },
+            {
+              "number": 1195,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        }
+      ]
+    },
+    {
+      "id": "F02",
+      "title": "SQL access paths and bounded execution",
+      "summary": "Fix selective joins and DML first, then reduce scan, sorting and materialization costs.",
+      "priority": "P001",
+      "wave": "W01",
+      "tasks": [
+        {
+          "id": "F02.T01",
+          "title": "Push selective predicates into both SQL join inputs",
+          "category": "performance",
+          "summary": "Smoke: sql.order-lines is 280.319 ms embedded versus PostgreSQL 1.208 ms (232.1x); TCP is 93.311 ms.",
+          "evidence": {
+            "benchmark": [
+              {
+                "operation": "sql.order-lines",
+                "target": "cohesion-sql-embedded",
+                "scale": 0.01,
+                "metric": "p50Ms",
+                "value": 280.319,
+                "competitor": "postgresql",
+                "competitorValue": 1.208
+              },
+              {
+                "operation": "sql.order-lines",
+                "target": "cohesion-sql-tcp",
+                "scale": 0.01,
+                "metric": "p50Ms",
+                "value": 93.311,
+                "competitor": "postgresql",
+                "competitorValue": 1.208
+              }
+            ],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.Joins.cs:30 — WHERE runs after join candidate construction",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.Joins.cs:64 — the outer table always scans",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.Joins.cs:86 — each pair allocates a joined row before filtering"
+            ],
+            "measured": null
+          },
+          "rootCause": "The planner can choose an index on the inner ON key, but the executor cannot seek or filter the outer input by the order-id predicate. It scans every outer row, probes/materializes matches and only then tests WHERE; if no usable inner index exists it evaluates the Cartesian candidate set.",
+          "proposal": "Bind per-relation restrictions, choose an outer access path using the existing equality/range seek rules, propagate safe equijoin constants, and apply residual filters before pair allocation. Keep ON and WHERE semantics separate for future outer joins.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/optimizer/plan/initsplan.c:3261 — singleton restrictions attach to baserestrictinfo; append at 3315"
+          ],
+          "acceptance": [
+            "The order-id predicate produces an outer key seek and inner order-lines seek; records examined grows with returned lines, not total orders.",
+            "At SF10 after verification, sql.order-lines p50 is within 2x PostgreSQL under the shared settings.",
+            "NULLs, duplicate keys, mixed numeric types and detached-index fallback preserve result digests."
+          ],
+          "effort": "M",
+          "priority": "P001",
+          "wave": "W01",
+          "existingIssues": [
+            {
+              "number": 1019,
+              "relation": "related"
+            },
+            {
+              "number": 1109,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F02.T02",
+          "title": "Seek indexed UPDATE and DELETE targets",
+          "category": "performance",
+          "summary": "Smoke and code inspection: every write statement scans; cleanup scans also extend total run time.",
+          "evidence": {
+            "benchmark": [
+              {
+                "operation": "sql.tx.ship-order",
+                "target": "cohesion-sql-embedded",
+                "scale": 0.01,
+                "metric": "p50Ms",
+                "value": 13.031,
+                "competitor": "postgresql",
+                "competitorValue": 3.605
+              },
+              {
+                "operation": "sql.update-customer",
+                "target": "cohesion-sql-embedded",
+                "scale": 0.01,
+                "metric": "p50Ms",
+                "value": 5.019,
+                "competitor": "postgresql",
+                "competitorValue": 1.373
+              }
+            ],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.cs:360 — UPDATE target discovery calls Scan",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.cs:472 — DELETE target discovery calls Scan",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/docs/DESIGN.md:1656 — DML scan limitation"
+            ],
+            "measured": null
+          },
+          "rootCause": "DML target discovery does not reuse SELECT access paths, so a primary-key update costs O(table versions) before row locking, cloning and index maintenance. Place-order repeats this for each inventory line; rollback cleanup repeats the same cost outside timers.",
+          "proposal": "Implement #1274 by planning an index seek/range for DML, collecting stable target identities before mutation, and rechecking conflict/visibility after locks. Preserve Halloween protection and FK/unique maintenance.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/executor/nodeModifyTable.c:4497 — ModifyTable consumes its child plan via ExecProcNode, allowing indexed target access"
+          ],
+          "acceptance": [
+            "50,000-row key UPDATE/DELETE costs at most 2x the same operation at 1,000 rows, with rows examined bounded by matching targets.",
+            "Range updates that change their own indexed key update each original target once; rollback and FK tests pass."
+          ],
+          "effort": "M",
+          "priority": "P001",
+          "wave": "W01",
+          "existingIssues": [
+            {
+              "number": 1274,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F02.T03",
+          "title": "Cost SQL access paths and add a hash join for broad equijoins",
+          "category": "performance",
+          "summary": "Code inspection: longest-prefix rules and nested loops cannot choose selective inputs or a linear broad join.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanner.cs:374 — single-table access selection uses rule-based equality/range prefixes",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.Joins.cs:44 — unindexed join evaluates O(L*R) candidate pairs",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/docs/DESIGN.md:1583 — planner has no statistics/cost model"
+            ],
+            "measured": null
+          },
+          "rootCause": "Index presence and syntactic prefix length are used as cost proxies; neither cardinality nor distribution determines the outer side or join algorithm.",
+          "proposal": "Add persisted row counts, distinct-count/selectivity samples and ANALYZE/refresh policy; estimate base and join cardinality; choose scan, index nested loop or bounded hash join. Add partition spill before enabling hash joins beyond the memory grant. F02.T01 precedes costing.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/optimizer/path/costsize.c:546 — cost_index estimates rows and I/O from selectivity",
+            "C:/Source/repos/postgres/postgres/src/backend/executor/nodeHashjoin.c:180 — hybrid hash join implementation and memory partitioning"
+          ],
+          "acceptance": [
+            "EXPLAIN (#1104) shows estimated/actual candidate counts and chosen join algorithm.",
+            "A 10x increase in both inputs of a broad equijoin avoids a 100x predicate count; spill stays within a configured grant.",
+            "Benchmarks retain identical indexes and run statistics maintenance within documented setup."
+          ],
+          "effort": "XL",
+          "priority": "P002",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1104,
+              "relation": "blocked-by"
+            },
+            {
+              "number": 1109,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F02.T04",
+          "title": "Stream SQL results and apply LIMIT through bounded top-N execution",
+          "category": "memory",
+          "summary": "Code inspection: LIMIT follows complete matching, projection, sorting and a final output list.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.cs:134 — all matching source arrays accumulate",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.cs:157 — projection and full sorting precede LIMIT",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.cs:185 — the window materializes another list"
+            ],
+            "measured": null
+          },
+          "rootCause": "Memory and time are proportional to all qualifying rows even when ten are returned. Per-row object arrays, boxing and duplicated source/output collections add allocation and GC load.",
+          "proposal": "Introduce pull/batch operators with explicit snapshot ownership, early termination for unordered LIMIT, order-preserving index scans, bounded top-N heaps and spillable sort/aggregation. Carry only needed columns and release buffers on cancellation.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/utils/sort/tuplesort.c:157 — bounded heap state",
+            "C:/Source/repos/postgres/postgres/src/backend/utils/sort/tuplesort.c:737 — sort bound configuration",
+            "C:/Source/repos/postgres/postgres/src/backend/executor/nodeLimit.c:39 — separate LIMIT executor node"
+          ],
+          "acceptance": [
+            "An indexed ORDER BY LIMIT 10 visits at most offset+10 qualifying rows where semantics permit.",
+            "Unindexed top-N retains O(N) rows plus bounded operator buffers, and a full sort spills within its grant.",
+            "SF10 limited-query peak managed bytes falls at least 80% versus the eager baseline, with identical digests."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1100,
+              "relation": "related"
+            },
+            {
+              "number": 1112,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F02.T05",
+          "title": "Check MVCC visibility before decoding SQL row values",
+          "category": "performance",
+          "summary": "Code inspection: scans allocate and decode invisible row versions before testing their stamps.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.cs:1413 — visibility filtering consumes already-decoded versions",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlPlanExecutor.cs:1452 — ScanVersions decodes every encountered record",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/TransactionSnapshot.cs:78 — visibility can be decided from writer/deleter stamps"
+            ],
+            "measured": null
+          },
+          "rootCause": "Rows hidden by a held snapshot or committed deletion still pay DecodeRow and object-array costs. This worsens aging workloads independently of target-selection scans.",
+          "proposal": "Add a validated stamp/header read, skip invisible versions before value decoding, and decode only referenced columns for visible rows. Keep corruption checks and snapshot pinning intact; index-build scans still need every required historical version.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/access/heap/heapam.c:1019 — heap scan applies HeapTupleSatisfiesVisibility before returning the tuple"
+          ],
+          "acceptance": [
+            "With 90% invisible versions, decoded-value count equals visible rows, and allocated bytes fall at least 70%.",
+            "Old-snapshot reads and corrupt-record diagnostics remain correct while purge runs."
+          ],
+          "effort": "M",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1361,
+              "relation": "related"
+            },
+            {
+              "number": 1362,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        }
+      ]
+    },
+    {
+      "id": "F03",
+      "title": "SQL analytical and transactional language coverage",
+      "summary": "Reuse the T1 tickets for covered syntax; only window execution and remaining outer joins need new scope.",
+      "priority": "P002",
+      "wave": "W02",
+      "tasks": [
+        {
+          "id": "F03.T01",
+          "title": "Execute N-way, LEFT, CROSS and USING joins",
+          "category": "functional-gap",
+          "summary": "Existing T1 scope; three-table benchmark operations cannot execute.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Language/docs/DIALECT.md:55 — Only two stored tables with INNER JOIN ON execute."
+            ],
+            "measured": null
+          },
+          "rootCause": "Only two stored tables with INNER JOIN ON execute.",
+          "proposal": "Implement #1109 with a join tree and correct null extension; use the access and filter work in F02.T01.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/executor/nodeNestloop.c:154 — nested loop handles unmatched outer rows"
+          ],
+          "acceptance": [
+            "Three-table benchmark queries become native and verify against PostgreSQL.",
+            "LEFT/USING/CROSS cases preserve duplicates, nulls and ON-versus-WHERE semantics."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1109,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F03.T02",
+          "title": "Execute RIGHT and FULL OUTER joins",
+          "category": "functional-gap",
+          "summary": "Code inspection: #1109 covers LEFT/CROSS/N-way but does not name RIGHT/FULL.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Language/docs/DIALECT.md:55 — The executable join subset excludes RIGHT and FULL."
+            ],
+            "measured": null
+          },
+          "rootCause": "The executable join subset excludes RIGHT and FULL.",
+          "proposal": "After #1109, normalize RIGHT to LEFT where possible and add FULL unmatched-side tracking in the physical join operators; preserve three-valued ON/WHERE semantics.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/executor/nodeHashjoin.c:180 — hash join implementation supports outer join processing"
+          ],
+          "acceptance": [
+            "RIGHT and FULL match PostgreSQL for empty sides, duplicate keys, null keys and unmatched rows.",
+            "EXPLAIN identifies normalization or the full-join physical operator."
+          ],
+          "effort": "L",
+          "priority": "P004",
+          "wave": "W04",
+          "existingIssues": [
+            {
+              "number": 1109,
+              "relation": "blocked-by"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F03.T03",
+          "title": "Execute non-recursive common table expressions",
+          "category": "functional-gap",
+          "summary": "Reuse #1116; category ranking and reusable analytical subplans need WITH.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Language/docs/DIALECT.md:62 — WITH/CTEs are not executable."
+            ],
+            "measured": null
+          },
+          "rootCause": "WITH/CTEs are not executable.",
+          "proposal": "Implement #1116 with scoped names and explicit inline/materialized choices; compose with the window task.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/parser/parse_cte.c:110 — WITH-clause analysis and namespace handling"
+          ],
+          "acceptance": [
+            "Non-recursive CTEs execute in SELECT and DML with PostgreSQL-equivalent scope and digests."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1116,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F03.T04",
+          "title": "Execute correlated subqueries and derived tables",
+          "category": "functional-gap",
+          "summary": "Reuse #1113; above-country-average cannot be expressed.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Language/docs/DIALECT.md:971 — Correlated subqueries and derived tables are excluded."
+            ],
+            "measured": null
+          },
+          "rootCause": "Correlated subqueries and derived tables are excluded.",
+          "proposal": "Implement #1113 with parameterized subplans and decorrelation where valid; avoid substituting client-side joins.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/executor/nodeSubplan.c:59 — subplan evaluation within expressions"
+          ],
+          "acceptance": [
+            "sql.a.above-country-average verifies natively at SF0.01 and SF10.",
+            "Correlated EXISTS, IN and scalar-cardinality errors preserve SQL NULL semantics."
+          ],
+          "effort": "XL",
+          "priority": "P002",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1113,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F03.T05",
+          "title": "Execute SQL window ranking and aggregate functions",
+          "category": "functional-gap",
+          "summary": "Uncovered execution feature; category-rank-window reports COHDBL001 for OVER.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Language/docs/DIALECT.md:63 — Window functions do not execute."
+            ],
+            "measured": null
+          },
+          "rootCause": "Window functions do not execute.",
+          "proposal": "Add a window AST, partition/order binding and operators for ROW_NUMBER, RANK, DENSE_RANK and aggregate windows with ROWS frames, then RANGE frames with explicit type semantics. Coordinate WITH support through #1116 and bounded storage through F02.T04.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/executor/nodeWindowAgg.c:6 — WindowAgg requires ordered partitions and uses a tuplestore"
+          ],
+          "acceptance": [
+            "sql.a.category-rank-window becomes native and matches PostgreSQL, including ties and empty partitions.",
+            "Large partitions spill under a memory grant; frame boundaries and NULL ordering have conformance tests."
+          ],
+          "effort": "XL",
+          "priority": "P003",
+          "wave": "W04",
+          "existingIssues": [
+            {
+              "number": 1116,
+              "relation": "blocked-by"
+            },
+            {
+              "number": 1112,
+              "relation": "blocked-by"
+            },
+            {
+              "number": 1096,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F03.T06",
+          "title": "Execute EXTRACT and the planned temporal scalar functions",
+          "category": "functional-gap",
+          "summary": "Reuse #1120 rather than file separate date-function tickets.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Language/docs/DIALECT.md:1572 — EXTRACT and several recognized date functions are not executable built-ins."
+            ],
+            "measured": null
+          },
+          "rootCause": "EXTRACT and several recognized date functions are not executable built-ins.",
+          "proposal": "Implement the T1 function table with validated signatures, transaction-start time and typed temporal arithmetic; reuse the function ABI work.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/utils/adt/timestamp.c:5793 — timestamp and interval function implementation"
+          ],
+          "acceptance": [
+            "Revenue-by-month runs without client computation and matches PostgreSQL over month/year boundaries.",
+            "EXTRACT, CURRENT_DATE/TIMESTAMP and interval arithmetic have timezone and null tests."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1120,
+              "relation": "duplicate"
+            },
+            {
+              "number": 1358,
+              "relation": "related"
+            },
+            {
+              "number": 1373,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F03.T07",
+          "title": "Execute DISTINCT aggregate arguments",
+          "category": "functional-gap",
+          "summary": "Reuse #1115 for COUNT(DISTINCT) and related aggregates.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Language/docs/DIALECT.md:928 — Aggregate DISTINCT/ALL arguments are excluded."
+            ],
+            "measured": null
+          },
+          "rootCause": "Aggregate DISTINCT/ALL arguments are excluded.",
+          "proposal": "Implement #1115 with per-group distinct state, shared equality/collation semantics and bounded spill.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/executor/nodeAgg.c:33 — DISTINCT/ORDER BY aggregate input processing"
+          ],
+          "acceptance": [
+            "COUNT(DISTINCT) ignores NULL and collapses duplicates under the bound collation.",
+            "SF10 aggregate state stays within its grant and spills deterministically."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1115,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F03.T08",
+          "title": "Execute explicit NULLS FIRST and NULLS LAST",
+          "category": "functional-gap",
+          "summary": "Existing #1112; do not duplicate while implementing top-N.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Language/docs/DIALECT.md:52 — Explicit null ordering is rejected."
+            ],
+            "measured": null
+          },
+          "rootCause": "Explicit null ordering is rejected.",
+          "proposal": "Implement #1112 and propagate null ordering through comparison, index-order compatibility and top-N.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/utils/sort/tuplesortvariants.c:231 — sort keys carry explicit nulls-first flags"
+          ],
+          "acceptance": [
+            "ASC/DESC with both NULL placements match PostgreSQL in full sort and top-N."
+          ],
+          "effort": "S",
+          "priority": "P003",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1112,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F03.T09",
+          "title": "Execute SELECT without FROM",
+          "category": "functional-gap",
+          "summary": "Existing #1373 includes transaction timestamps and scalar-only SELECT.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Language/docs/DIALECT.md:42 — The planner requires a FROM relation."
+            ],
+            "measured": null
+          },
+          "rootCause": "The planner requires a FROM relation.",
+          "proposal": "Reuse #1373 with a one-row input and no implicit storage scan.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/executor/nodeResult.c:101 — Result handles constant target lists without an outer plan"
+          ],
+          "acceptance": [
+            "SELECT 1 and temporal/function-only projections return one correct row without storage access."
+          ],
+          "effort": "S",
+          "priority": "P004",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1373,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F03.T10",
+          "title": "Execute SQL savepoints and isolation-level syntax",
+          "category": "functional-gap",
+          "summary": "Reuse #1012; transaction-level recovery remains coarser than the planned SQL surface.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/docs/DESIGN.md:2980 — savepoint and isolation syntax exclusions"
+            ],
+            "measured": null
+          },
+          "rootCause": "The exposed transaction path offers begin/commit/rollback, without a statement undo boundary that implements savepoints.",
+          "proposal": "Implement #1012 with coherent logical/index/WAL savepoint markers and failure-state rules; preserve the current all-or-nothing behavior until complete.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/access/transam/xact.c:4426 — transaction/subtransaction state machine"
+          ],
+          "acceptance": [
+            "SAVEPOINT, ROLLBACK TO and RELEASE preserve prior changes, locks and restart correctness."
+          ],
+          "effort": "XL",
+          "priority": "P004",
+          "wave": "W04",
+          "existingIssues": [
+            {
+              "number": 1012,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        }
+      ]
+    },
+    {
+      "id": "F04",
+      "title": "Documents query execution, indexes and APIs",
+      "summary": "Choose selective access, avoid redundant JSON work, and reuse OQL T1 coverage while adding multikey and batch APIs.",
+      "priority": "P002",
+      "wave": "W02",
+      "tasks": [
+        {
+          "id": "F04.T01",
+          "title": "Choose document access paths by selectivity and intersect indexed predicates",
+          "category": "performance",
+          "summary": "Smoke: status/date p50 is 76.543 ms versus RavenDB 3.871 ms (19.8x).",
+          "evidence": {
+            "benchmark": [
+              {
+                "operation": "doc.orders-status-range",
+                "target": "cohesion-documents-embedded (Windows)",
+                "scale": 0.01,
+                "metric": "p50Ms",
+                "value": 76.543,
+                "competitor": "ravendb",
+                "competitorValue": 3.871
+              }
+            ],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/Internal/DocumentPlanner.cs:132 — one index is chosen; equality wins over range at 165",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/Internal/DocumentPlanExecutor.cs:41 — every selected candidate is fetched and parsed"
+            ],
+            "measured": null
+          },
+          "rootCause": "The status equality index wins irrespective of how narrow the date range is; same-kind paths tie by index name. The planner neither costs candidates nor intersects the two indexes. The source explains amplification, but no percentage of the original 76.543 ms is claimed from profiling.",
+          "proposal": "Collect per-path cardinality/selectivity estimates; select the cheapest equality/range input or intersect sorted identity streams before reading JSON. Add compound equality-prefix/range support after #1135.",
+          "referencePrecedent": [
+            "C:/Source/repos/ravendb/ravendb/src/Corax/Querying/Matches/BinaryMatch.Boolean.cs:129 — AND intersects result sets; counts inform confidence and mode at 165"
+          ],
+          "acceptance": [
+            "A fixture with common status and rare dates fetches no more than 2x the selective date candidate count.",
+            "All status/date queries verify; SF10 p50 is within 2x RavenDB once compared on controlled supported paths.",
+            "EXPLAIN reports chosen index/intersection and candidate counts after #1104."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1135,
+              "relation": "related"
+            },
+            {
+              "number": 1104,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F04.T02",
+          "title": "Read and project document JSON once per candidate",
+          "category": "memory",
+          "summary": "Code inspection and probe allocation: point reads allocate about 4.5 KB per 1 KB document; OQL adds another parse and clone.",
+          "evidence": {
+            "benchmark": [
+              {
+                "operation": "doc.orders-status-range",
+                "target": "cohesion-documents-embedded (Windows)",
+                "scale": 0.01,
+                "metric": "p50Ms",
+                "value": 76.543,
+                "competitor": "ravendb",
+                "competitorValue": 3.871
+              }
+            ],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Storage/src/DocumentStorage.Content.cs:18 — ValidateContent constructs a JsonDocument",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Storage/src/DocumentStorage.Content.cs:59 — ReadContent allocates all bytes and validates them again",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/Internal/DocumentPlanExecutor.cs:55 — OQL parses that content again and clones matching roots",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/Internal/DocumentPlanExecutor.cs:105 — output rows sort after full materialization"
+            ],
+            "measured": "R6 Linux docs-auto c=1 allocated 4,510.8 bytes/op; shared-snapshot reads allocated 4,223.2 bytes/op. Allocation totals are measured; type-level dominance follows source inspection, not a sampled allocation trace."
+          },
+          "rootCause": "Persisted content is reconstructed, CRC checked and parsed for validation on every read. OQL then reparses it and clones matches into retained JSON trees, followed by projection and sorting. This is distinct from the dominant durable flush.",
+          "proposal": "Introduce an internal validated read lease with a single JSON parse shared by predicate/projection, direct projection of needed values, and bounded result buffers. Keep corruption detection and public byte-memory lifetime guarantees; do not silently return borrowed page memory. Consider a versioned binary JSON representation only after measuring the simpler single-parse path.",
+          "referencePrecedent": [
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Server/Documents/DocumentsStorage.cs:1765 — document reads expose BlittableJsonReaderObject over stored table bytes"
+          ],
+          "acceptance": [
+            "OQL instrumentation records at most one JSON parse per fetched candidate and no whole-document clone for scalar projections.",
+            "Point-read allocated bytes for the 1 KB fixture fall at least 40%; OQL allocation falls at least 50%, with unchanged checksums/digests.",
+            "Disposed/cancelled results release every lease and preserve snapshot lifetime."
+          ],
+          "effort": "L",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1271,
+              "relation": "related"
+            },
+            {
+              "number": 1129,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F04.T03",
+          "title": "Keep document catalog reads outside a single decode lock",
+          "category": "scalability",
+          "summary": "Code inspection: point metadata lookup and full collection enumeration run under one catalog monitor.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Catalog/src/DocumentCatalog.cs:93 — FindCollection holds _sync while resolving visible versions",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Catalog/src/DocumentCatalog.cs:195 — FindDocument holds the same monitor",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Catalog/src/DocumentCatalog.cs:215 — enumeration filters and sorts all document keys under that monitor"
+            ],
+            "measured": "R6 Linux held-snapshot point reads: 175,837/440,401/270,890 ops/s at 1/3/8 clients. This diagnostic removes per-read commits; it is evidence of a remaining concurrency ceiling, not proof of this particular lock."
+          },
+          "rootCause": "Catalog identity maps and version resolution share an exclusive monitor. After read WAL is removed, concurrent metadata decoding and collection enumeration can serialize otherwise independent readers. Probe throughput in held snapshots rises from 1 to 3 clients then falls at 8, but this alone does not isolate catalog versus buffer-pool locks.",
+          "proposal": "After F01.T01, instrument catalog and buffer lock waits separately; snapshot immutable map entries under short locks and resolve versions under page latches, or partition identity maps by collection/key. Add an ordered per-collection identity index for prefix iteration.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/storage/buffer/bufmgr.c:2484 — partitioned buffer mapping locks protect short map operations",
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Server/Documents/DocumentsStorage.cs:932 — prefix queries use bounded start/take traversal"
+          ],
+          "acceptance": [
+            "Catalog lock time excludes storage reads, JSON decoding and complete-key sorting.",
+            "At fixed durable semantics after F01.T01, point reads scale at least 2.7x from 1 to 3 clients and do not regress at 8; report lock wait attribution.",
+            "Concurrent collection drop/replace and old-snapshot lookups retain existing semantics."
+          ],
+          "effort": "L",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1280,
+              "relation": "blocked-by"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F04.T04",
+          "title": "Execute OQL LIMIT and OFFSET with bounded execution",
+          "category": "functional-gap",
+          "summary": "Reuse #1129; current recent-order queries return all rows for client trimming.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Language/docs/DESIGN.md:52 — unsupported OQL clauses and expressions",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/Internal/DocumentPlanExecutor.cs:105 — sorting is eager"
+            ],
+            "measured": null
+          },
+          "rootCause": "No LIMIT/OFFSET syntax or plan operator exists.",
+          "proposal": "Implement #1129, with index-order early stop and bounded top-N rather than only slicing a full output list.",
+          "referencePrecedent": [
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Server/Documents/Queries/Dynamic/CollectionQueryRunner.cs:158 — query Start/Take are passed into execution"
+          ],
+          "acceptance": [
+            "Native pagination matches existing normalized results including ties and parameter validation.",
+            "LIMIT 10 has O(10) retained result state when no full sort is necessary."
+          ],
+          "effort": "M",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1129,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F04.T05",
+          "title": "Execute array existential predicates and UNNEST",
+          "category": "functional-gap",
+          "summary": "Reuse #1136; products-by-category-price is unsupported because filtering arrays in the client is forbidden.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Language/docs/DESIGN.md:55 — UNNEST is unsupported",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Language/docs/DESIGN.md:56 — ANY/SOME/EVERY quantified predicates are unsupported"
+            ],
+            "measured": null
+          },
+          "rootCause": "Fixed array subscripts exist; ANY/SOME/EVERY and UNNEST do not.",
+          "proposal": "Implement #1136 with SQL++ MISSING/NULL semantics and a correlated element binding; coordinate index plans with multikey support.",
+          "referencePrecedent": [
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Server/Documents/Indexes/Persistence/Corax/CoraxDocumentConverterBase.cs:363 — array values are traversed as indexed lists"
+          ],
+          "acceptance": [
+            "doc.products-by-category-price verifies natively for missing, empty, null and multi-element arrays.",
+            "Predicates referring to the same element cannot match values from different elements."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1136,
+              "relation": "duplicate"
+            },
+            {
+              "number": 1126,
+              "relation": "blocked-by"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F04.T06",
+          "title": "Execute compound and unique document indexes",
+          "category": "functional-gap",
+          "summary": "Reuse #1135; scalar single-path indexes cannot serve status plus date as one ordered range.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Catalog/src/ValueObjects/DocumentIndexMetadata.cs:10 — metadata carries one path",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/Internal/DocumentPlanner.cs:138 — indexes expose one path"
+            ],
+            "measured": null
+          },
+          "rootCause": "The catalog, key encoding and planner use one scalar path per index.",
+          "proposal": "Implement #1135 with versioned catalog records, tuple key encoding, equality prefixes, one trailing range and unique-null policy. Keep old file-set compatibility explicit.",
+          "referencePrecedent": [
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Server/Documents/Indexes/Persistence/Corax/CoraxDocumentConverterBase.cs:119 — compound fields are processed during conversion"
+          ],
+          "acceptance": [
+            "The required customer/date and status/date indexes are usable with native ordering and range seeks.",
+            "Crash/reopen and unique-conflict tests cover old and new catalog formats."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1135,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F04.T07",
+          "title": "Index document array elements with multikey semantics",
+          "category": "functional-gap",
+          "summary": "Code inspection: the compound-index T1 ticket does not supply multikey element postings.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Catalog/src/Internal/DocumentIndexKeys.cs:16 — path extraction produces a single scalar value",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Catalog/docs/DESIGN.md:100 — index key limitations"
+            ],
+            "measured": null
+          },
+          "rootCause": "There is no per-document set of array-element keys or element correlation metadata; indexing a scalar subscript cannot implement arbitrary ANY predicates.",
+          "proposal": "After #1136, emit deduplicated scalar postings per array element, maintain all old/new postings atomically on replacement, and specify whether compound arrays carry element identity. Require same-element semantics for category/variant price and stock predicates.",
+          "referencePrecedent": [
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Server/Documents/Indexes/Persistence/Corax/CoraxDocumentConverterBase.cs:363 — enumerables increment list context and recursively emit elements"
+          ],
+          "acceptance": [
+            "Array price queries use an index and return each document once; cross-element false positives are rejected.",
+            "Replacement, deletion, rollback and old snapshots preserve all multikey postings.",
+            "Selective SF10 array queries fetch at most 2x qualifying documents."
+          ],
+          "effort": "L",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1136,
+              "relation": "blocked-by"
+            },
+            {
+              "number": 1135,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F04.T08",
+          "title": "Execute atomic document patches through the existing OQL work",
+          "category": "functional-gap",
+          "summary": "Reuse #1133; patch-order-status and adjust-variant-stock currently read and replace content.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/DocumentCollection.cs:109 — PutAsync replaces whole content",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Language/docs/DESIGN.md:52 — unsupported OQL clauses and expressions"
+            ],
+            "measured": null
+          },
+          "rootCause": "No partial-update primitive exists; client emulation must fetch and rebuild a document, then perform an expected-version replacement.",
+          "proposal": "Extend #1133 implementation evidence to the benchmark patches; execute nested SET/UNSET with one statement snapshot, conflict checks and atomic index updates. A physical in-place delta format is a separate optimization, not required for initial patch semantics.",
+          "referencePrecedent": [
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Client/Documents/Operations/PatchOperation.cs:59 — patch command combines identity, change vector and patch request"
+          ],
+          "acceptance": [
+            "Both patch workloads run natively without a client-side pre-read and match existing results.",
+            "Concurrent patches either compose under defined semantics or return a retryable version conflict; no lost update."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1133,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F04.T09",
+          "title": "Add ordered batch document reads in one snapshot",
+          "category": "performance",
+          "summary": "Smoke: products-multiget p50 4.027 ms Windows / 20.223 ms Linux; RavenDB 1.572 ms.",
+          "evidence": {
+            "benchmark": [
+              {
+                "operation": "doc.products-multiget",
+                "target": "cohesion-documents-embedded (Windows)",
+                "scale": 0.01,
+                "metric": "p50Ms",
+                "value": 4.027,
+                "competitor": "ravendb",
+                "competitorValue": 1.572
+              }
+            ],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/DocumentCollection.cs:75 — the public read API accepts one identity",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/DocumentDatabaseSession.cs:178 — collection access is a session operation"
+            ],
+            "measured": null
+          },
+          "rootCause": "Repeated GetAsync calls impose repeated admission, snapshot and commit overhead and have no single-snapshot multi-key result contract.",
+          "proposal": "Add GetManyAsync with one snapshot, ordered keys, explicit missing/duplicate behavior, bounded chunking and cancellation; add its protocol operation through #190. Reuse shared read elision before measuring gains.",
+          "referencePrecedent": [
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Client/Documents/Session/Operations/LoadOperation.cs:34 — one GetDocumentsCommand carries an array of ids",
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Client/Documents/Session/Operations/LoadOperation.cs:135 — ByIds accepts multiple keys"
+          ],
+          "acceptance": [
+            "A 10-key batch performs one statement admission and no read-only WAL; duplicate and absent ids have documented deterministic results.",
+            "SF10 multiget p50 is within 2x RavenDB under equivalent transport and key sequence."
+          ],
+          "effort": "M",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 190,
+              "relation": "related"
+            },
+            {
+              "number": 1280,
+              "relation": "blocked-by"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F04.T10",
+          "title": "Expose Documents through its planned wire server and client",
+          "category": "functional-gap",
+          "summary": "Existing #190 owns both server and client, not only a client wrapper.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/docs/DESIGN.md:220 — Documents has no wire server/client"
+            ],
+            "measured": null
+          },
+          "rootCause": "The benchmark can use Documents only in-process; public network-engine parity cannot be measured.",
+          "proposal": "Implement #190 with bounded framing, session transactions, OQL and document operations; include batch reads and transport cancellation tests from this inventory.",
+          "referencePrecedent": [
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Client/Documents/Session/Operations/LoadOperation.cs:34 — the document client creates a network command"
+          ],
+          "acceptance": [
+            "All currently supported Documents benchmark operations load, verify and run through TCP with the same normalized digest as embedded.",
+            "Disconnects release sessions/snapshots and transactions cannot leak into pooled rentals."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 190,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F04.T11",
+          "title": "Accelerate document content checksums without changing persisted CRC semantics",
+          "category": "performance",
+          "summary": "Code inspection only: every content read runs the byte-at-a-time IEEE CRC loop.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Storage/src/Internal/DocumentChunkCodec.cs:50 — one table step per byte",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents.Storage/src/Internal/DocumentReadStream.cs:57 — reads append checksum state"
+            ],
+            "measured": null
+          },
+          "rootCause": "CRC cost grows with content size and is repeated for every query candidate; it is not the measured multi-millisecond point-read bottleneck.",
+          "proposal": "Reuse #1271: implement a faster IEEE-compatible slice/vector algorithm or explicitly version a different checksum. Never substitute CRC-32C for IEEE in existing stores.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/port/pg_crc32c_armv8.c:30 — architecture-specific accelerated checksum implementation; polynomial differs, so it is an optimization pattern only"
+          ],
+          "acceptance": [
+            "Existing IEEE checksum vectors and persisted documents remain readable.",
+            "For 64 KiB documents, checksum-only throughput improves at least 2x on ARM64 and scalar fallback remains correct."
+          ],
+          "effort": "M",
+          "priority": "P004",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1271,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        }
+      ]
+    },
+    {
+      "id": "F05",
+      "title": "Graph query execution and indexing",
+      "summary": "Reduce candidate expansion, bound execution memory, and replace graph-client emulation with native language features.",
+      "priority": "P001",
+      "wave": "W01",
+      "tasks": [
+        {
+          "id": "F05.T01",
+          "title": "Filter graph adjacency by type and direction before candidate expansion",
+          "category": "performance",
+          "summary": "R4: two/three-hop patterns hit 100,000 matches or 1,000,000 candidates at SF0.01.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:153 — all incident edges are fetched",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:155 — budget is charged before type/direction rejection",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Storage/src/GraphStore.cs:180 — adjacency keys contain node and relationship id, not type/direction"
+            ],
+            "measured": null
+          },
+          "rootCause": "The storage API decodes every incident relationship into a list, then the executor consumes candidate budget before checking type and direction. High-degree nodes waste work on irrelevant edges; real matching-path fan-out can still exceed the separate match bound.",
+          "proposal": "Add type/direction-aware adjacency cursors keyed by endpoint/type/direction/edge identity, push edge and safe node predicates during expansion, and distinguish scanned physical candidates from viable expansions in diagnostics. Preserve a physical-work safety budget; do not fix this merely by moving its counter after filtering.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/kernel/src/main/java/org/neo4j/kernel/impl/newapi/DefaultRelationshipTraversalCursor.java:67 — RelationshipSelection is passed into the storage cursor before traversal"
+          ],
+          "acceptance": [
+            "Adding 1 million unrelated-type edges to an anchor does not increase decoded matching-type edges beyond a small indexed overhead.",
+            "Both exact R4 COHDBG004 repros verify after this and F05.T02; record actual physical and viable expansion counts.",
+            "Cancellation and adversarial high-degree workloads remain bounded and diagnostic."
+          ],
+          "effort": "L",
+          "priority": "P001",
+          "wave": "W01",
+          "existingIssues": [
+            {
+              "number": 1245,
+              "relation": "related"
+            },
+            {
+              "number": 1144,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F05.T02",
+          "title": "Stream graph bindings under explicit memory and work budgets",
+          "category": "memory",
+          "summary": "Measured R4 bound errors; code inspection shows retained binding/path arrays before projection.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:17 — MaximumMatches is a hard 100,000 cap",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:144 — completed bindings accumulate before result projection",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:166 — each expansion copies a dictionary",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:245 — separate 1,000,000 candidate cap"
+            ],
+            "measured": "R4 post-run audit: person=165 FoF query throws COHDBG004: The query exceeded 100000 path matches.; person=266/firstName=Penelope 3-hop query throws COHDBG004: The query exceeded 1000000 candidate expansions. R6 did not rerun the full graph or investigate the R5-owned OOM."
+          },
+          "rootCause": "Fixed pattern depth guarantees termination but not affordable fan-out. Full binding lists and copied arrays/dictionaries retain intermediates; downstream LIMIT/aggregation cannot stop upstream expansion. This is not an attribution of the separate 2 GiB OOM.",
+          "proposal": "Introduce iterator/batch binding operators with slot-based bindings and explicit ownership; push predicates, DISTINCT/aggregates and top-N where valid. Expose per-query memory/work limits and cancellation while retaining safe defaults. Owner must choose budget semantics and any opt-in overrides before relaxing hard bounds.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/cypher/interpreted-runtime/src/main/scala/org/neo4j/cypher/internal/runtime/interpreted/pipes/VarLengthExpandPipe.scala:74 — expansion receives an operator memory tracker and yields an iterator",
+            "C:/Source/repos/neo4j/neo4j/community/cypher/interpreted-runtime/src/main/scala/org/neo4j/cypher/internal/runtime/interpreted/pipes/TopPipe.scala:58 — top-N uses a scoped memory tracker and bounded table"
+          ],
+          "acceptance": [
+            "R4 FoF and three-hop-name repros return complete verified results at SF0.01 without raising process memory limits.",
+            "A deliberately explosive query terminates with a coded budget diagnostic and releases all leases.",
+            "At SF10, profile peak retained bytes and expansions; no unbounded binding lists remain on limited queries."
+          ],
+          "effort": "XL",
+          "priority": "P001",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1142,
+              "relation": "related"
+            },
+            {
+              "number": 1144,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F05.T03",
+          "title": "Add an MVCC label index for graph anchor scans",
+          "category": "performance",
+          "summary": "R4 country-count observations: embedded p50 359.679 ms (run verification incomplete; diagnostic only), TCP 605.695 ms, Neo4j 12.079 ms.",
+          "evidence": {
+            "benchmark": [
+              {
+                "operation": "graph.country-person-count",
+                "target": "cohesion-graph-embedded (diagnostic; run verification incomplete)",
+                "scale": 0.01,
+                "metric": "p50Ms",
+                "value": 359.679,
+                "competitor": "neo4j",
+                "competitorValue": 12.079
+              },
+              {
+                "operation": "graph.country-person-count",
+                "target": "cohesion-graph-tcp",
+                "scale": 0.01,
+                "metric": "p50Ms",
+                "value": 605.695,
+                "competitor": "neo4j",
+                "competitorValue": 12.079
+              }
+            ],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Storage/src/GraphStore.cs:129 — GetNodes(label) reads every node and sorts matches",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Storage/src/GraphStore.cs:291 — Ids builds an array from the full record dictionary"
+            ],
+            "measured": null
+          },
+          "rootCause": "A label anchor is not an index scan: 300 Persons require considering the 43,595-node R4 store. All node records are decoded before label filtering.",
+          "proposal": "Maintain label-token to node-identity postings transactionally, support label-expression unions/intersections, and iterate visible identities without materializing all nodes. #1245 is related predicate anchoring, not storage label-index implementation.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/kernel/src/main/java/org/neo4j/kernel/impl/newapi/DefaultNodeLabelIndexCursor.java:40 — a dedicated label/token cursor includes transaction-state additions/removals"
+          ],
+          "acceptance": [
+            "Person label scan examines O(Persons) entries rather than O(all nodes), and old snapshots see correct label versions.",
+            "The country-count benchmark remains correct and its anchor node decodes fall at least 90% on the R4 distribution."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1245,
+              "relation": "related"
+            },
+            {
+              "number": 1139,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F05.T04",
+          "title": "Persist graph identity lookup instead of rebuilding the complete record map",
+          "category": "scalability",
+          "summary": "R4 observed 0.592 s open, 153.96 MiB process working set, 79.24 MiB managed; these are whole-process values.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Storage/src/GraphStore.cs:26 — all record identities live in a dictionary",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Storage/src/GraphStore.cs:36 — open scans and decodes the complete graph owner chain",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Storage/src/GraphStore.cs:302 — Find reads a version while holding the map monitor"
+            ],
+            "measured": null
+          },
+          "rootCause": "Startup is O(V+E+I), with at least one managed dictionary entry per record and serialized lookup/decode. Process memory in the smoke includes runtime and driver, so it is not the map size.",
+          "proposal": "Persist kind/id to version-head mapping in an indexed directory, load it lazily through the buffer pool, and resolve version chains outside a global dictionary monitor. Define transactional head updates and crash rebuild tooling; coordinate with label and adjacency indexes.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/record-storage-engine/src/main/java/org/neo4j/kernel/impl/store/NodeStore.java:51 — nodes reside in a record store rather than a required all-node managed dictionary"
+          ],
+          "acceptance": [
+            "Opening a 10x larger graph without queries does not allocate 10x identity-map entries.",
+            "Bound managed directory memory by configuration; random lookup remains logarithmic or direct and survives restart/rollback."
+          ],
+          "effort": "XL",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1234,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F05.T05",
+          "title": "Execute GQL ORDER BY, OFFSET and LIMIT",
+          "category": "functional-gap",
+          "summary": "Reuse #1142; recent-messages currently transfers all paths and sorts/trims client-side.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Language/docs/DESIGN.md:173 — GQL execution exclusions",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:60 — path results are fully materialized"
+            ],
+            "measured": null
+          },
+          "rootCause": "There is no native order/limit operator, so final-cardinality reduction happens after network transfer.",
+          "proposal": "Implement #1142 with bounded top-N and deterministic null/tie ordering, using F05.T02 streaming.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/cypher/interpreted-runtime/src/main/scala/org/neo4j/cypher/internal/runtime/interpreted/pipes/TopPipe.scala:47 — LIMIT determines a bounded TopTable"
+          ],
+          "acceptance": [
+            "Recent-messages returns only the requested ten rows over TCP and matches Neo4j ordering/digests.",
+            "Top-N memory is proportional to N, not all paths."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1142,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F05.T06",
+          "title": "Execute GQL grouping and aggregate expressions",
+          "category": "functional-gap",
+          "summary": "Reuse #1147; country count and tag cooccurrence currently aggregate client-side.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Language/docs/DESIGN.md:173 — GQL execution exclusions",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Language/src/GqlQueryParser.cs:221 — function calls including aggregate expressions are rejected",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:105 — projection emits ordinary bound values"
+            ],
+            "measured": null
+          },
+          "rootCause": "The native executor has no grouping/aggregate operator, requiring transfer of all source rows.",
+          "proposal": "Implement #1147 with DISTINCT aggregate support where specified, hash/ordered grouping and bounded spill; preserve entity identity semantics.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/cypher/interpreted-runtime/src/main/scala/org/neo4j/cypher/internal/runtime/interpreted/pipes/EagerAggregationPipe.scala:31 — aggregation builds group state through a dedicated pipe"
+          ],
+          "acceptance": [
+            "Country count and tag cooccurrence verify natively; wire rows equal groups, not source paths.",
+            "Grouping has a configured memory budget and old snapshots remain valid through consumption."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1147,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F05.T07",
+          "title": "Bind GQL parameters from APIs and the wire",
+          "category": "functional-gap",
+          "summary": "Reuse #1138 and the shared #1102 parameter contract.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Language/docs/DESIGN.md:173 — GQL execution exclusions",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Language/src/GqlQueryParser.cs:191 — parameter tokens are rejected",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:39 — planning happens per request"
+            ],
+            "measured": null
+          },
+          "rootCause": "Benchmark statements inline escaped literals because the GQL execution surface rejects parameters; this prevents reusable shape plans.",
+          "proposal": "Implement #1138 with typed value slots bound at execution and one normalized parameter-name contract.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/cypher/runtime-util/src/main/scala/org/neo4j/cypher/internal/runtime/createParameterArray.scala:29 — runtime parameter values are bound into reusable slots"
+          ],
+          "acceptance": [
+            "The same parsed statement executes different ids safely without literal reconstruction.",
+            "Wire and embedded missing/duplicate/type errors share coded diagnostics."
+          ],
+          "effort": "M",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1138,
+              "relation": "duplicate"
+            },
+            {
+              "number": 1102,
+              "relation": "blocked-by"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F05.T08",
+          "title": "Execute variable-length graph paths with trail semantics",
+          "category": "functional-gap",
+          "summary": "Reuse #1144; multi-depth benchmark emulation currently sends several fixed patterns.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Language/src/GqlQueryParser.cs:186 — quantified/variable-length patterns rejected",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:123 — steps are fixed from syntax"
+            ],
+            "measured": null
+          },
+          "rootCause": "The AST/executor has one fixed step per syntactic edge, not a quantified expansion.",
+          "proposal": "Implement #1144 with bounded traversal and trail identity rules, using typed adjacency and streaming budgets rather than concatenating fixed-depth result lists.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/cypher/interpreted-runtime/src/main/scala/org/neo4j/cypher/internal/runtime/interpreted/pipes/VarLengthExpandPipe.scala:75 — variable-length iterator receives direction, types, traversal mode and maximum depth"
+          ],
+          "acceptance": [
+            "The 1..2-hop FoF and 1..3-hop name workloads execute as native single statements.",
+            "Cycles, zero-length bounds and duplicate paths match the selected GQL/Cypher semantics."
+          ],
+          "effort": "XL",
+          "priority": "P002",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1144,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F05.T09",
+          "title": "Expose shortest graph paths with their actual distance",
+          "category": "functional-gap",
+          "summary": "Uncovered: the traversal API provides reachability but cannot supply correct per-target shortest distance for the workload.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/docs/DESIGN.md:392 — C# traversal surface",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Language/docs/DESIGN.md:173 — GQL execution exclusions",
+              "C:/cw/bench/b-analysis/database/docs/GRAPH.md:323 — shortest distance remains unsupported; BFS counterexample is covered by benchmark tests"
+            ],
+            "measured": null
+          },
+          "rootCause": "Neither fixed GQL patterns nor a visited traversal sequence is a shortest-path result contract. Inferring distance from visit order is incorrect.",
+          "proposal": "Add bounded BFS/bidirectional BFS with explicit distance/path result, relationship-type and direction filters, no-path/null behavior, and a GQL shortest selector. Preserve identity-based visited state and define single/all-shortest tie behavior.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/cypher/slotted-runtime/src/main/scala/org/neo4j/cypher/internal/runtime/slotted/pipes/ShortestPathSlottedPipe.scala:100 — ShortestPathBFSFactory supplies shortestPathIterator at 120"
+          ],
+          "acceptance": [
+            "graph.shortest-path-knows becomes native and matches Neo4j, including disconnected nodes, cycles and unequal branch lengths.",
+            "Memory is O(visited frontier/vertices) under a configurable traversal budget; cancellation is prompt."
+          ],
+          "effort": "L",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1144,
+              "relation": "blocked-by"
+            },
+            {
+              "number": 1098,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F05.T10",
+          "title": "Execute NOT EXISTS graph pattern predicates",
+          "category": "functional-gap",
+          "summary": "Uncovered anti-pattern feature; friend recommendation is currently unsupported.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Language/docs/DESIGN.md:173 — GQL execution exclusions",
+              "C:/cw/bench/b-analysis/database/docs/GRAPH.md:66 — recommendation requires engine-selected candidates and predicates"
+            ],
+            "measured": null
+          },
+          "rootCause": "Scalar NOT support does not supply a correlated pattern-existence operator; client filtering would change workload semantics.",
+          "proposal": "Add correlated EXISTS/NOT EXISTS pattern subplans with semi/anti apply and early exit; reuse endpoint/type adjacency seeks. Coordinate scalar WHERE support (#1140) and WITH/grouping (#1145/#1147) without treating those as complete coverage.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/cypher/slotted-runtime/src/main/scala/org/neo4j/cypher/internal/runtime/slotted/pipes/SelectOrSemiApplySlottedPipe.scala:49 — semi-apply evaluates existence of correlated inner results"
+          ],
+          "acceptance": [
+            "Recommendation excludes direct friends inside the engine and verifies against Neo4j.",
+            "NOT EXISTS stops at the first matching edge and handles empty/multiple/correlated bindings."
+          ],
+          "effort": "L",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1140,
+              "relation": "blocked-by"
+            },
+            {
+              "number": 1145,
+              "relation": "related"
+            },
+            {
+              "number": 1147,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        }
+      ]
+    },
+    {
+      "id": "F06",
+      "title": "Query preparation and wire execution",
+      "summary": "Cache validated plan shapes, reduce result framing cost and add graph transaction state.",
+      "priority": "P002",
+      "wave": "W02",
+      "tasks": [
+        {
+          "id": "F06.T01",
+          "title": "Cache parsed and bound query shapes with schema-aware invalidation",
+          "category": "performance",
+          "summary": "Code inspection: SQL, OQL and GQL parse/plan on each text call; parameters do not provide server preparation.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/SqlDatabaseSession.cs:199 — text constructs SqlQueryRequest.FromSql on every call",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlQueryExecutor.cs:52 — a new planner binds each request",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/DocumentDatabaseSession.cs:408 — text dispatch builds an OQL request",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphPlanExecutor.cs:39 — a new planner binds each execution"
+            ],
+            "measured": null
+          },
+          "rootCause": "Repeated benchmark operations pay tokenization, AST allocation, catalog binding and expression analysis. Caching mutable ASTs or parameter-dependent plans naively would return wrong results or retain unbounded literal variants.",
+          "proposal": "Add bounded per-database parsed/plan caches keyed by text/parameter types, schema/function/collation version and relevant session settings. Bind values separately, invalidate on DDL, account memory and expose hit/miss metrics. Graph requires #1138; snapshot-sensitive catalog metadata cannot outlive its version.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/utils/cache/plancache.c:8 — plan cache has explicit invalidation and revalidation of dependent objects"
+          ],
+          "acceptance": [
+            "After first use, 1,000 executions of one parameterized shape parse once and bind values correctly.",
+            "DDL/function changes invalidate affected plans; different security and collation contexts cannot share unsafe state.",
+            "At least 50% lower parse/plan allocated bytes on repeated point queries; total latency reported after read-WAL removal."
+          ],
+          "effort": "L",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1138,
+              "relation": "blocked-by"
+            },
+            {
+              "number": 1167,
+              "relation": "related"
+            },
+            {
+              "number": 1104,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F06.T02",
+          "title": "Batch result frames and remove repeated graph path serialization allocations",
+          "category": "performance",
+          "summary": "Measured: Linux 20-path TCP reads allocate 615–623 KB/op versus about 227–229 KB embedded.",
+          "evidence": {
+            "benchmark": [
+              {
+                "operation": "graph.person-recent-messages",
+                "target": "cohesion-graph-tcp (8 clients)",
+                "scale": 0.01,
+                "metric": "opsPerSec",
+                "value": 38.32,
+                "competitor": "same target, 1 client",
+                "competitorValue": 263.022
+              }
+            ],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphDatabaseServerSession.cs:496 — encodes and sends every complete path",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphDatabaseServerSession.cs:581 — each frame write flushes the transport",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Protocol/src/Internal/ProtocolStreamFrameWriter.cs:37 — header and payload are separate writes",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Protocol/src/Internal/ProtocolStreamFrameReader.cs:61 — each payload allocates a fresh array",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Protocol/GraphProtocolPathMessage.cs:38 — path encoding returns another array",
+              "C:/cw/bench/b-analysis/database/src/Assimalign.Cohesion.Benchmarks.Database.Graph/CohesionTarget.cs:36 — benchmark pool limit is 64",
+              "C:/cw/bench/cohesion/libraries/Connections/Assimalign.Cohesion.Connections.Tcp/src/TcpConnectionFactoryOptions.cs:23 — client NoDelay defaults true",
+              "C:/cw/bench/cohesion/libraries/Connections/Assimalign.Cohesion.Connections.Tcp/src/TcpConnectionListenerOptions.cs:40 — listener NoDelay defaults true"
+            ],
+            "measured": "R6 Linux fixed 20-path recent-messages query, one engine plus loopback TCP client in one 3 CPU/2 GiB process: TCP paths 416.97/604.66/377.00 ops/s at 1/3/8 clients. At 8 clients, 2,282 reads generated 2,174 durable flushes, 5.609 s in flush calls over 6.053 s wall time, 37.282 aggregate contention-seconds, 20 peak pool threads and 3 peak queued work items. Durability=None diagnostic: 4,432.75 ops/s at 8 clients and zero durable flushes; this is not an eligible benchmark result or a proposed durability setting. The smaller negative slope reproduces, but the original 263.022 -> 38.320 magnitude is not attributed fully. At 8 clients synchronous paths allocated 621,613 bytes/op; scalars 414,896. Totals include both client and server in this diagnostic process; the benchmark separates them."
+          },
+          "rootCause": "Each path repeats shared nodes and properties; server and client copy framed payloads and build entity objects. Per-frame flushes create many transport scheduling points. One exchange per connection and MaxPoolSize=64 in the benchmark mean an 8-client result is not evidence of pool exhaustion. No Nagle claim: TCP NoDelay defaults true.",
+          "proposal": "Use pooled owned frame buffers and bounded byte/count batches; flush at result/latency boundaries and honor backpressure. Prefer scalar projection plus server top-N for recent messages. Add per-phase server execution, encoding, send and client decode counters before changing pipelining or entity deduplication.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/bolt/src/main/java/org/neo4j/packstream/codec/transport/ChunkFrameEncoder.java:63 — chunks are written into an output buffer",
+            "C:/Source/repos/neo4j/neo4j/community/bolt/src/main/java/org/neo4j/bolt/protocol/common/fsm/response/NetworkResponseHandler.java:153 — success completion flushes the response"
+          ],
+          "acceptance": [
+            "At 20 paths, allocated bytes per TCP operation fall at least 40% and transport flush count is bounded by batch size, not row count.",
+            "Slow consumer, cancellation, partial frame and pool-rental tests preserve result ownership and terminal diagnostics.",
+            "After F01 fixes, 8-client recent-messages throughput does not fall below 1 client on a quiet host; collect server and client spans."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1016,
+              "relation": "related"
+            },
+            {
+              "number": 1087,
+              "relation": "related"
+            },
+            {
+              "number": 1230,
+              "relation": "related"
+            },
+            {
+              "number": 1313,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F06.T03",
+          "title": "Add explicit graph transactions over the wire",
+          "category": "functional-gap",
+          "summary": "Uncovered transport capability; multiple fixed-pattern emulations cannot share a TCP snapshot.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Client/src/GraphConnection.cs:16 — explicit graph transactions are unsupported",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/Internal/GraphDatabaseServerSession.cs:492 — execution is an independent session operation"
+            ],
+            "measured": null
+          },
+          "rootCause": "In-process GraphDatabaseSession exposes transaction objects, but GraphConnection/protocol lacks begin/commit/rollback state. Multiple requests cannot guarantee one read snapshot.",
+          "proposal": "Add version-negotiated transaction messages and server session state, binding all requests to the same context until commit/rollback. Define disconnect, aborted statement, timeout and pooled-connection reset behavior; reuse #1105 capability negotiation.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/bolt/src/main/java/org/neo4j/bolt/protocol/common/fsm/transition/ready/CreateTransactionStateTransition.java:63 — Bolt BEGIN creates a connection-owned explicit transaction"
+          ],
+          "acceptance": [
+            "Two read statements separated by another client write observe one snapshot within a wire transaction.",
+            "Errors, disconnect and pool return roll back or refuse unfinished transactions without silent autocommit.",
+            "Graph multi-statement benchmark emulations can run over TCP until replaced by native queries."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1105,
+              "relation": "blocked-by"
+            },
+            {
+              "number": 1013,
+              "relation": "related"
+            },
+            {
+              "number": 1188,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        }
+      ]
+    },
+    {
+      "id": "F07",
+      "title": "Storage, indexes and MVCC maintenance",
+      "summary": "Make cached reads and ranges incremental; reuse the existing vacuum, unique-insert and checkpoint defects.",
+      "priority": "P002",
+      "wave": "W02",
+      "tasks": [
+        {
+          "id": "F07.T01",
+          "title": "Remove page I/O from the global buffer-pool lock",
+          "category": "scalability",
+          "summary": "Code inspection: both hits and miss reads serialize under one pool monitor.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Storage/src/Internal/StorageBufferPool.cs:209 — one monitor covers pin lookup/LRU updates",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Storage/src/Internal/StorageBufferPool.cs:236 — a miss reads and verifies the page inside that monitor",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Storage/src/Internal/StorageBufferPool.cs:424 — FlushAll writes pages under that monitor"
+            ],
+            "measured": null
+          },
+          "rootCause": "Even independent page requests share the map/LRU lock; a slow disk miss or dirty eviction blocks unrelated hot hits. The 32 MiB default is configurable, and increasing it alone does not remove contention.",
+          "proposal": "Partition page lookup, introduce per-frame I/O ownership and awaitable miss completion, use a clock or segmented replacement policy, and perform read/write I/O outside mapping locks. Preserve pin lifetime, page restore seqlocks, WAL-before-data ordering and bounded memory.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/storage/buffer/bufmgr.c:2484 — mapping uses partition locks",
+            "C:/Source/repos/postgres/postgres/src/backend/storage/buffer/bufmgr.c:22 — StartReadBuffers and WaitReadBuffers separate initiation from completion"
+          ],
+          "acceptance": [
+            "A blocked cold-page read does not block a cached read on an unrelated page.",
+            "8-client cached-read throughput exceeds 3-client throughput on a quiet host after F01.T01; publish per-lock wait attribution.",
+            "Pinned-page, restore, checksum and concurrent DDL tests retain correctness."
+          ],
+          "effort": "XL",
+          "priority": "P002",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1157,
+              "relation": "related"
+            },
+            {
+              "number": 1365,
+              "relation": "related"
+            },
+            {
+              "number": 1269,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F07.T02",
+          "title": "Make B+Tree range cursors incremental and cancellable",
+          "category": "memory",
+          "summary": "Code inspection: opening a cursor materializes every key and entry reference under a tree read latch.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Indexing/src/BTreeIndex.cs:336 — OpenCursor collects the entire range before returning",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Indexing/src/BTreeIndex.cs:621 — every visible key is copied into a result list"
+            ],
+            "measured": null
+          },
+          "rootCause": "A cursor is a snapshot list, not an incremental leaf walk. LIMIT cannot stop key collection; wide ranges allocate O(matches), and writers wait for the full read-latched collection.",
+          "proposal": "Implement a resumable leaf cursor with bounded batches, key/reference/writer continuation, snapshot pinning and safe split/delete retries. Propagate cancellation into cursor creation and reverse scans; coordinate pruning so continuation references cannot be reclaimed early.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/access/nbtree/nbtree.c:230 — btgettuple calls _bt_first then _bt_next incrementally"
+          ],
+          "acceptance": [
+            "Opening a million-key range and consuming ten results allocates O(batch size) and visits O(tree height+batch pages).",
+            "Concurrent splits, duplicate runs, rollback, forward/reverse bounds and old-snapshot scans return every expected entry once."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1159,
+              "relation": "related"
+            },
+            {
+              "number": 1194,
+              "relation": "related"
+            },
+            {
+              "number": 1195,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F07.T03",
+          "title": "Prune dead secondary-index versions below the snapshot horizon",
+          "category": "performance",
+          "summary": "Reuse #1195; current SQL index-maintenance worker remains a stub.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql/src/Internal/SqlIndexMaintenanceWorker.cs:29 — maintenance body is a stub",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Indexing/src/BTreeIndex.cs:217 — UNIQUE scans live/dead versions through HasLiveEntry",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Indexing/src/BTreeIndex.cs:497 — existing purge handles aborted writers, not committed dead versions"
+            ],
+            "measured": null
+          },
+          "rootCause": "Record-version pruning does not reclaim committed dead B+Tree entries. UNIQUE and range scans keep revisiting dead entries as churn accumulates.",
+          "proposal": "Implement #1195 with committed-deleter visibility below the oldest pinned horizon, batched index vacuum and safe page reclamation; share the service across model indexes.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/access/nbtree/nbtree.c:1122 — B-tree access method includes vacuum support",
+            "C:/Source/repos/postgres/postgres/src/backend/access/nbtree/nbtpage.c:3013 — deleted page reuse waits for safe reclamation"
+          ],
+          "acceptance": [
+            "The 20,000-update unique-key fixture has flat per-update cost within 2x between first and last quartiles.",
+            "A held old snapshot reads its versions through concurrent vacuum; index counts shrink after it ends."
+          ],
+          "effort": "L",
+          "priority": "P002",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1195,
+              "relation": "duplicate"
+            },
+            {
+              "number": 1361,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F07.T04",
+          "title": "Reuse the unique-key descent for B+Tree insertion",
+          "category": "performance",
+          "summary": "Reuse #1239; unique insertion still descends for HasLiveEntry and again for InsertCore.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Indexing/src/BTreeIndex.cs:217 — uniqueness probe precedes InsertCore at 222"
+            ],
+            "measured": null
+          },
+          "rootCause": "The same search path is traversed twice, increasing latch hold and page pin work for bulk/random unique inserts.",
+          "proposal": "Implement #1239 by retaining leaf/search bounds from the uniqueness check and advancing safely to the tuple-order insertion point.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/access/nbtree/nbtinsert.c:170 — one search feeds uniqueness checking and insertion-position reuse"
+          ],
+          "acceptance": [
+            "Unique insertion performs one root descent in the uncontended no-split case.",
+            "Random and monotonic unique insertion throughput does not regress; duplicate/race/crash tests pass."
+          ],
+          "effort": "M",
+          "priority": "P004",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1239,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F07.T05",
+          "title": "Spread checkpoint I/O and admit readers during checkpoint progress",
+          "category": "performance",
+          "summary": "Reuse #1269 and related #1283; checkpoint stalls are documented, not remeasured by R6.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Storage/src/Storage.cs:1543 — checkpoint owns the transaction lock and rejects active physical brackets",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Storage/src/Internal/StorageBufferPool.cs:424 — dirty-page flush holds the global pool lock",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/TransactionCoordinator.cs:63 — apply gate serializes physical mutation/checkpoint work"
+            ],
+            "measured": null
+          },
+          "rootCause": "Synchronous checkpoint I/O and quiescence requirements couple foreground admission to all dirty pages. The baseline documents 241–267 ms stalls; R6 makes no new checkpoint timing claim.",
+          "proposal": "Implement #1269 first with bounded paced writeback outside pool locks and read-only begin independence; coordinate #1283 for checkpoint progress under sustained writers. A fuzzy checkpoint/redo-point design requires explicit crash-order review, not merely weakening the active-bracket check.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/postmaster/checkpointer.c:795 — CheckpointWriteDelay spreads writes toward completion target"
+          ],
+          "acceptance": [
+            "At the default pool, reader p99 during checkpoint is below 10 ms on controlled storage.",
+            "A sustained-write test makes bounded checkpoint progress without unbounded WAL growth; crash recovery validates every checkpoint boundary."
+          ],
+          "effort": "XL",
+          "priority": "P002",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 1269,
+              "relation": "duplicate"
+            },
+            {
+              "number": 1283,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F07.T06",
+          "title": "Bound MVCC prune discovery as well as mutation batches",
+          "category": "memory",
+          "summary": "Code inspection: record purge batches writes but first copies every eligible tombstone candidate.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/RecordSpaceVersionStore.cs:200 — FindAll copies eligible entries from the complete prunable list",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/RecordSpaceVersionStore.cs:214 — settled tracking is sized to all candidates"
+            ],
+            "measured": null
+          },
+          "rootCause": "Long-lived snapshots retain a large in-memory prunable list; after the horizon advances, discovery and settled-set allocation scale with the entire backlog even though mutations are batched.",
+          "proposal": "Partition/order prune candidates by deleter sequence and process a bounded continuation per pass, maintaining a stable safe horizon and retry markers. Expose backlog bytes/age and ensure a failed batch cannot starve later eligible work.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/access/heap/vacuumlazy.c:106 — lazy vacuum performs staged bounded heap/index cleanup"
+          ],
+          "acceptance": [
+            "Releasing a snapshot after 1 million obsolete versions does not allocate one array/hash set for the whole backlog.",
+            "Each pass respects configured time/byte limits and eventually drains eligible versions despite isolated unreadable records.",
+            "The pinned snapshot horizon is never crossed."
+          ],
+          "effort": "L",
+          "priority": "P004",
+          "wave": "W04",
+          "existingIssues": [
+            {
+              "number": 1361,
+              "relation": "related"
+            },
+            {
+              "number": 1284,
+              "relation": "related"
+            },
+            {
+              "number": 1195,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F07.T07",
+          "title": "Partition lock-manager synchronization while preserving fair queues",
+          "category": "scalability",
+          "summary": "Code inspection only: release is already owner-indexed, but acquisition/release queues share one monitor.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/LockManager.cs:331 — lock acquisition uses one _sync monitor",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/LockManager.cs:510 — owner-indexed release still runs under _sync",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Transactions/src/LockManager.cs:90 — the old whole-table release issue is already addressed"
+            ],
+            "measured": null
+          },
+          "rootCause": "The central lock table can serialize unrelated resource owners. R6 did not measure this lock as the current point-read bottleneck, so this is a later scalability task, not an explanation of the smoke regressions.",
+          "proposal": "After writer/read bottlenecks are removed, measure lock wait attribution and partition resource tables while retaining ordered queues and a consistent cross-partition deadlock graph. Keep the existing owner-resource reverse map.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/storage/lmgr/lock.c:769 — shared lock-manager structures use partitioned synchronization"
+          ],
+          "acceptance": [
+            "Unrelated-resource lock operations scale from 1 to 3 clients; merge only if measured throughput improves at least 25%.",
+            "FIFO exclusive-wait fairness, soft/hard deadlocks and owner cleanup remain correct."
+          ],
+          "effort": "L",
+          "priority": "P005",
+          "wave": "W05",
+          "existingIssues": [
+            {
+              "number": 1163,
+              "relation": "related"
+            },
+            {
+              "number": 1250,
+              "relation": "related"
+            },
+            {
+              "number": 1420,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        }
+      ]
+    },
+    {
+      "id": "F08",
+      "title": "Durable bulk ingest paths",
+      "summary": "Replace per-record API/text overhead with bounded, restart-safe bulk paths while keeping equivalent indexes and durability.",
+      "priority": "P003",
+      "wave": "W03",
+      "tasks": [
+        {
+          "id": "F08.T01",
+          "title": "Resolve graph schema definitions by identity without catalog-wide scans",
+          "category": "performance",
+          "summary": "Code inspection: the quadratic catalog work from #1229 is still present and adds cost to graph ingest.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Catalog/src/GraphCatalog.cs:239 — SaveDefinition enumerates both definition kinds to check identity",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Catalog/src/GraphCatalog.cs:300 — parent validation enumerates definitions twice for old/latest snapshots",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Catalog/src/GraphCatalog.cs:319 — owner lookup scans definitions",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/GraphDatabase.cs:492 — undeclared-property validation enumerates label/type definitions"
+            ],
+            "measured": null
+          },
+          "rootCause": "Definition identity and ownership lookup use complete visible-definition lists. Repeating this for each new label/type and discovered property causes catalog-size-dependent work inside writes. This is the existing #1229 defect despite its stale source filenames.",
+          "proposal": "Reuse #1229: maintain identity-to-version-head lookup alongside name lookup, resolve visibility at the requested snapshot, and read owner metadata directly. Cache only version-safe metadata within a statement; preserve schema-owned definitions and conflict checks.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/token-api/src/main/java/org/neo4j/token/TokenRegistry.java:101 — getToken performs direct id-to-token lookup; name lookup uses a separate map at 93"
+          ],
+          "acceptance": [
+            "Defining N labels/types performs O(N log N) or better catalog lookup work; doubling 1,000 to 2,000 definitions takes at most 2.5x time on a controlled host.",
+            "Per-property validation performs no full catalog enumeration; rollback, old snapshots and schema ownership tests pass."
+          ],
+          "effort": "M",
+          "priority": "P003",
+          "wave": "W02",
+          "existingIssues": [
+            {
+              "number": 1229,
+              "relation": "duplicate"
+            }
+          ],
+          "fileAsNew": false
+        },
+        {
+          "id": "F08.T02",
+          "title": "Add a streaming SQL bulk-load protocol and API",
+          "category": "load",
+          "summary": "Code inspection: the SQL client exposes query/execute operations but no bulk stream.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Client/src/SqlConnection.cs:82 — query/execute/scalar API surface",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Sql.Language/docs/DIALECT.md:43 — multi-row INSERT is the available ingest primitive"
+            ],
+            "measured": null
+          },
+          "rootCause": "Batching INSERT text still pays tokenization/value-object construction, row/index work and frame limits. There is no typed bulk row stream or dedicated batched apply.",
+          "proposal": "Add typed column metadata and bounded row batches with explicit atomic-batch semantics, checks/foreign keys, backpressure and final counts; exploit bulk index building after load where all engines use the same schedule.",
+          "referencePrecedent": [
+            "C:/Source/repos/postgres/postgres/src/backend/commands/copyfrom.c:65 — COPY uses bounded tuple/byte multi-insert buffers"
+          ],
+          "acceptance": [
+            "Load and verify the SF10 SQL dataset with the identical indexes, durable acknowledged batches and unchanged row digests.",
+            "Ingest plus index finalization is at least 2x faster than current INSERT batching, with bounded driver/server memory.",
+            "A partial batch failure has explicit rollback/progress semantics and passes crash tests."
+          ],
+          "effort": "L",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 43,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F08.T03",
+          "title": "Add bounded bulk document writes and deferred index finalization",
+          "category": "load",
+          "summary": "Code inspection: Documents ingest loops PutAsync; there is no batch content API.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/DocumentCollection.cs:109 — one-document PutAsync captures and writes content",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Documents/src/DocumentCollection.cs:113 — input bytes are copied before each operation"
+            ],
+            "measured": null
+          },
+          "rootCause": "An explicit transaction amortizes durability but does not remove per-document operation/copy/catalog overhead or offer streaming backpressure.",
+          "proposal": "Add PutMany/bulk writer with bounded bytes, documented batch atomicity, cancellation, expected-version policy and post-load index construction. Reuse #190 for eventual transport and keep logical index parity.",
+          "referencePrecedent": [
+            "C:/Source/repos/ravendb/ravendb/src/Raven.Client/Documents/BulkInsert/BulkInsertOperation.cs:346 — bulk StoreAsync writes through a streaming operation"
+          ],
+          "acceptance": [
+            "SF10 ingest plus index finalization improves at least 2x over per-document API batching with identical content/index digests.",
+            "Peak in-flight bytes remain within a configured bound and acknowledged batches survive restart."
+          ],
+          "effort": "L",
+          "priority": "P003",
+          "wave": "W03",
+          "existingIssues": [
+            {
+              "number": 190,
+              "relation": "related"
+            },
+            {
+              "number": 1135,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        },
+        {
+          "id": "F08.T04",
+          "title": "Add a bulk graph importer with ordered adjacency and index construction",
+          "category": "load",
+          "summary": "Code inspection: per-element APIs or multi-path INSERT are the only ingest paths.",
+          "evidence": {
+            "benchmark": [],
+            "source": [
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/GraphDatabase.cs:234 — one-node creation API",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph/src/GraphDatabase.cs:314 — one-relationship creation API",
+              "C:/cw/bench/cohesion/resources/Database/Assimalign.Cohesion.Database.Graph.Storage/src/GraphStore.cs:145 — each relationship maintains endpoint adjacency"
+            ],
+            "measured": null
+          },
+          "rootCause": "Per-entity MVCC, catalog/property validation and adjacency B+Tree mutation repeat at every insert; endpoint resolution and textual INSERT add work on the wire.",
+          "proposal": "Provide an offline empty-store importer plus bounded online batches with separate contracts. Map external ids deterministically, validate endpoints, sort/build node/label/type/adjacency/property indexes, and publish the completed store atomically with a durable import manifest.",
+          "referencePrecedent": [
+            "C:/Source/repos/neo4j/neo4j/community/record-storage-engine/src/main/java/org/neo4j/internal/batchimport/ParallelBatchImporter.java:168 — staged importer initializes, imports nodes and then relationships"
+          ],
+          "acceptance": [
+            "Full SF10 graph load has identical node/edge/index counts and query digests; all index-build time is included.",
+            "Total ingest/finalization improves at least 3x over current per-element load; import memory is bounded.",
+            "Interrupted offline import cannot be mistaken for a complete database, and online acknowledged batches survive restart."
+          ],
+          "effort": "XL",
+          "priority": "P003",
+          "wave": "W04",
+          "existingIssues": [
+            {
+              "number": 1229,
+              "relation": "related"
+            },
+            {
+              "number": 1234,
+              "relation": "related"
+            }
+          ],
+          "fileAsNew": true
+        }
+      ]
+    }
+  ],
+  "notFiled": [
+    {
+      "finding": "F01.T01: Elide WAL and durable flushes for read-only transactions",
+      "reason": "duplicate of #1280"
+    },
+    {
+      "finding": "F01.T02: Release journal append synchronization while forcing durable bytes",
+      "reason": "duplicate of #1276"
+    },
+    {
+      "finding": "F02.T02: Seek indexed UPDATE and DELETE targets",
+      "reason": "duplicate of #1274"
+    },
+    {
+      "finding": "F03.T01: Execute N-way, LEFT, CROSS and USING joins",
+      "reason": "duplicate of #1109"
+    },
+    {
+      "finding": "F03.T03: Execute non-recursive common table expressions",
+      "reason": "duplicate of #1116"
+    },
+    {
+      "finding": "F03.T04: Execute correlated subqueries and derived tables",
+      "reason": "duplicate of #1113"
+    },
+    {
+      "finding": "F03.T06: Execute EXTRACT and the planned temporal scalar functions",
+      "reason": "duplicate of #1120"
+    },
+    {
+      "finding": "F03.T07: Execute DISTINCT aggregate arguments",
+      "reason": "duplicate of #1115"
+    },
+    {
+      "finding": "F03.T08: Execute explicit NULLS FIRST and NULLS LAST",
+      "reason": "duplicate of #1112"
+    },
+    {
+      "finding": "F03.T09: Execute SELECT without FROM",
+      "reason": "duplicate of #1373"
+    },
+    {
+      "finding": "F03.T10: Execute SQL savepoints and isolation-level syntax",
+      "reason": "duplicate of #1012"
+    },
+    {
+      "finding": "F04.T04: Execute OQL LIMIT and OFFSET with bounded execution",
+      "reason": "duplicate of #1129"
+    },
+    {
+      "finding": "F04.T05: Execute array existential predicates and UNNEST",
+      "reason": "duplicate of #1136"
+    },
+    {
+      "finding": "F04.T06: Execute compound and unique document indexes",
+      "reason": "duplicate of #1135"
+    },
+    {
+      "finding": "F04.T08: Execute atomic document patches through the existing OQL work",
+      "reason": "duplicate of #1133"
+    },
+    {
+      "finding": "F04.T10: Expose Documents through its planned wire server and client",
+      "reason": "duplicate of #190"
+    },
+    {
+      "finding": "F04.T11: Accelerate document content checksums without changing persisted CRC semantics",
+      "reason": "duplicate of #1271"
+    },
+    {
+      "finding": "F05.T05: Execute GQL ORDER BY, OFFSET and LIMIT",
+      "reason": "duplicate of #1142"
+    },
+    {
+      "finding": "F05.T06: Execute GQL grouping and aggregate expressions",
+      "reason": "duplicate of #1147"
+    },
+    {
+      "finding": "F05.T07: Bind GQL parameters from APIs and the wire",
+      "reason": "duplicate of #1138"
+    },
+    {
+      "finding": "F05.T08: Execute variable-length graph paths with trail semantics",
+      "reason": "duplicate of #1144"
+    },
+    {
+      "finding": "F07.T03: Prune dead secondary-index versions below the snapshot horizon",
+      "reason": "duplicate of #1195"
+    },
+    {
+      "finding": "F07.T04: Reuse the unique-key descent for B+Tree insertion",
+      "reason": "duplicate of #1239"
+    },
+    {
+      "finding": "F07.T05: Spread checkpoint I/O and admit readers during checkpoint progress",
+      "reason": "duplicate of #1269"
+    },
+    {
+      "finding": "F08.T01: Resolve graph schema definitions by identity without catalog-wide scans",
+      "reason": "duplicate of #1229"
+    },
+    {
+      "finding": "The embedded graph combined-throughput process exhausted 2 GiB; R5 owns engine-versus-harness attribution. No R6 memory-leak ticket is justified by process RSS alone.",
+      "reason": "not reproducible"
+    },
+    {
+      "finding": "The exact R3 Documents 128.2 -> 43.7 ops/s slope was not reproduced. Read WAL/flush serialization is measured and routed to #1280/#1276; no separate negative-scaling defect is filed.",
+      "reason": "not reproducible"
+    },
+    {
+      "finding": "The full R4 graph TCP 263.022 -> 38.320 magnitude was not reproduced. R6 reproduced a smaller 416.97 -> 377.00 slope with measured flush waits; do not file an asserted TCP pool or Nagle defect.",
+      "reason": "not reproducible"
+    },
+    {
+      "finding": "Historical whole-lock-table ReleaseAll scan is already replaced by _owned reverse lookup at LockManager.cs:90,510. The dump still lists #1250 open; reconcile status instead of refiling.",
+      "reason": "duplicate of #1250"
+    },
+    {
+      "finding": "Historical duplicate-key B+Tree ordering/leaf-seek defect already has composite search ordering at BTreeIndex.cs:581,598. Do not refile from stale design prose.",
+      "reason": "duplicate of #1194"
+    },
+    {
+      "finding": "Per-transaction full 8 KiB WAL images and unbuffered journal appends are stale descriptions: StorageJournal.cs:33,58 documents checkpoint images/deltas and append buffering now implemented.",
+      "reason": "duplicate of #1236, #1252, #1253"
+    },
+    {
+      "finding": "Three reads and two arrays per recovery frame are stale: StorageJournal.cs:1414 now reads chunks sequentially; keep only the unresolved flush-lock half of #1276.",
+      "reason": "duplicate of #1276"
+    },
+    {
+      "finding": "Debug O(resident pages) invariant checking is not a Release benchmark cause; current hit path checks one frame at StorageBufferPool.cs:219.",
+      "reason": "duplicate of #1240"
+    },
+    {
+      "finding": "Buffer-pool size and WAL-size checkpoint trigger already exist at engine options and Storage.cs:344; no new configuration-exposure ticket.",
+      "reason": "duplicate of #1254"
+    },
+    {
+      "finding": "Other baseline SQL gaps already planned: set operations, RETURNING, UPSERT, views, identity, type aliases and typed literals; carry their native support tests forward under the existing T1 work.",
+      "reason": "duplicate of #1114, #1117, #1118, #1124, #1123, #1108, #1110"
+    },
+    {
+      "finding": "Other baseline OQL gaps already planned: MISSING semantics, IN/BETWEEN/LIKE, DISTINCT/value constructors, collection DDL, INSERT/DELETE, UPSERT and scalar functions.",
+      "reason": "duplicate of #1126, #1127, #1128, #1130, #1131, #1132, #1134, #1137"
+    },
+    {
+      "finding": "Other baseline GQL gaps already planned: label/edge syntax, scalar WHERE, computed RETURN/DISTINCT, OPTIONAL MATCH, composition, values/functions and SET/REMOVE.",
+      "reason": "duplicate of #1139, #1140, #1141, #1143, #1145, #1146, #1148, #1149"
+    },
+    {
+      "finding": "The R4 report repeats verification evidence across runs; these are two engine bounds, not dozens of distinct defects. Report deduplication and host telemetry belong to benchmark readiness.",
+      "reason": "benchmark-side"
+    }
+  ]
+}

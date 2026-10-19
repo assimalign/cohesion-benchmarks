@@ -28,15 +28,15 @@ public class SqlPointQueryBenchmarks
     private const long LookupId = 500;
 
     private SqlDatabaseEngine _engine = null!;
-    private IDatabaseSession _session = null!;
+    private SqlDatabaseSession _session = null!;
     private Dictionary<string, object?> _parameters = null!;
     private SqliteConnection _sqlite = null!;
 
     [GlobalSetup]
     public void Setup()
     {
-        _engine = SqlDatabaseEngine.Create(new SqlDatabaseEngineOptions { EngineName = "benchmarks" });
-        IDatabase database = _engine.CreateDatabaseAsync("benchmarks").AsTask().GetAwaiter().GetResult();
+        _engine = SqlDatabaseEngine.Create("benchmarks", new SqlDatabaseEngineOptions());
+        SqlDatabase database = _engine.CreateDatabaseAsync("benchmarks").AsTask().GetAwaiter().GetResult();
         _session = database.CreateSessionAsync().AsTask().GetAwaiter().GetResult();
         _parameters = new Dictionary<string, object?> { ["id"] = LookupId };
 
@@ -88,9 +88,9 @@ public class SqlPointQueryBenchmarks
     [Benchmark]
     public async ValueTask<string?> SelectById()
     {
-        QueryResult result = await _session.ExecuteAsync(Query, _parameters).ConfigureAwait(false);
-        await using QueryResultSet rows = (QueryResultSet)result;
-        await foreach (QueryRow row in rows.GetRowsAsync().ConfigureAwait(false))
+        DatabaseResult result = await _session.ExecuteAsync(Query, _parameters).ConfigureAwait(false);
+        await using DatabaseResultSet rows = (DatabaseResultSet)result;
+        await foreach (DatabaseRow row in rows.GetRowsAsync().ConfigureAwait(false))
         {
             return row.GetString(0);
         }

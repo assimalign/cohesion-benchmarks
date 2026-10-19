@@ -6,8 +6,10 @@
     <File Path="global.json" />
     <File Path="nuget.config" />
     <File Path="README.md" />
+    <File Path="site/index.html" />
     <File Path=".github/workflows/benchmarks.yml" />
     <File Path=".github/workflows/cohesion-pin.yml" />
+    <File Path=".github/workflows/site.yml" />
     <File Path="scripts/Invoke-Benchmarks.ps1" />
     <File Path="scripts/Compare-Benchmarks.ps1" />
     <File Path="scripts/ConvertTo-BenchmarkHistory.ps1" />
@@ -43,6 +45,8 @@
   </Folder>
   <Folder Name="/resources/">
     <Project Path="benchmarks/resources/Database/benchmarks/Assimalign.Cohesion.Database.Benchmarks/src/Assimalign.Cohesion.Database.Benchmarks.csproj" />
+    <Project Path="benchmarks/resources/Database/benchmarks/Assimalign.Cohesion.Database.Benchmarks.Datasets/src/Assimalign.Cohesion.Database.Benchmarks.Datasets.csproj" />
+    <Project Path="benchmarks/resources/Database/tests/Assimalign.Cohesion.Database.Benchmarks.Datasets.Tests/src/Assimalign.Cohesion.Database.Benchmarks.Datasets.Tests.csproj" />
     <Project Path="benchmarks/resources/NatGateway/benchmarks/Assimalign.Cohesion.NatGateway.Benchmarks/src/Assimalign.Cohesion.NatGateway.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/Scheduler/benchmarks/Assimalign.Cohesion.Scheduler.Benchmarks/src/Assimalign.Cohesion.Scheduler.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/Web/benchmarks/Assimalign.Cohesion.Web.Benchmarks/src/Assimalign.Cohesion.Web.Benchmarks.csproj" />

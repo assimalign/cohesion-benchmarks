@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cohesion benchmarks</title>
+<meta name="description" content="Benchmark history for Cohesion, by area.">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --panel: #f6f7f9;
+  --panel-2: #ffffff;
+  --line: #e3e6ea;
+  --line-strong: #cfd4da;
+  --fg: #1b1f24;
+  --fg-dim: #5a6472;
+  --fg-faint: #8b95a3;
+  --accent: #2563eb;
+  --accent-soft: #e8efff;
+  --good: #137a4b;
+  --good-soft: #e3f5ec;
+  --bad: #b32318;
+  --bad-soft: #fdeceb;
+  --warn: #8a5a00;
+  --flat: #6b7483;
+  --radius: 8px;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --panel: #161b22; --panel-2: #11161d; --line: #262d36; --line-strong: #39414c;
+    --fg: #e6edf3; --fg-dim: #9aa6b2; --fg-faint: #6e7a87; --accent: #4f8cff; --accent-soft: #15233d;
+    --good: #3fb950; --good-soft: #10261a; --bad: #f85149; --bad-soft: #2d1513;
+    --warn: #d29922; --flat: #8b949e;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --panel: #161b22; --panel-2: #11161d; --line: #262d36; --line-strong: #39414c;
+  --fg: #e6edf3; --fg-dim: #9aa6b2; --fg-faint: #6e7a87; --accent: #4f8cff; --accent-soft: #15233d;
+  --good: #3fb950; --good-soft: #10261a; --bad: #f85149; --bad-soft: #2d1513;
+  --warn: #d29922; --flat: #8b949e;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--sans);
+  font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- shell ---------- */
+.shell { display: grid; grid-template-columns: 260px minmax(0, 1fr); min-height: 100vh; }
+@media (max-width: 860px) { .shell { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- sidebar ---------- */
+.side {
+  border-right: 1px solid var(--line); background: var(--panel);
+  display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; overflow: hidden;
+}
+@media (max-width: 860px) { .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); } }
+.brand { padding: 14px 16px 10px; border-bottom: 1px solid var(--line); }
+.brand h1 { margin: 0; font-size: 14px; letter-spacing: .01em; }
+.brand p { margin: 2px 0 0; font-size: 11.5px; color: var(--fg-faint); }
+.side-search { padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.side-search input {
+  width: 100%; padding: 6px 9px; font: inherit; font-size: 12.5px; color: var(--fg);
+  background: var(--panel-2); border: 1px solid var(--line-strong); border-radius: 6px;
+}
+.side-search input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.nav { overflow-y: auto; padding: 6px 0 16px; flex: 1; }
+@media (max-width: 860px) { .nav { max-height: 44vh; } }
+.nav-group { padding: 10px 16px 4px; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-faint); }
+.nav a {
+  display: flex; align-items: center; gap: 8px; padding: 5px 16px; color: var(--fg-dim);
+  font-size: 13px; border-left: 2px solid transparent;
+}
+.nav a:hover { background: var(--panel-2); color: var(--fg); text-decoration: none; }
+.nav a.on { background: var(--accent-soft); color: var(--fg); border-left-color: var(--accent); font-weight: 600; }
+.nav a .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nav a .ct { font-size: 11px; color: var(--fg-faint); font-variant-numeric: tabular-nums; }
+
+/* ---------- main ---------- */
+.main { min-width: 0; padding: 20px 24px 64px; }
+@media (max-width: 860px) { .main { padding: 16px; } }
+.head { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: baseline; margin-bottom: 4px; }
+.head h2 { margin: 0; font-size: 20px; }
+.head .sub { color: var(--fg-dim); font-size: 12.5px; }
+.note { color: var(--fg-dim); font-size: 12.5px; margin: 6px 0 18px; max-width: 76ch; }
+
+/* ---------- kpis ---------- */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 0 0 20px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; }
+.kpi .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--fg-faint); }
+.kpi .v { font-size: 21px; font-weight: 650; font-variant-numeric: tabular-nums; margin-top: 2px; }
+.kpi .v small { display: block; font-size: 12px; font-weight: 400; color: var(--fg-dim); }
+
+/* ---------- table ---------- */
+.card { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+/* Narrow screens: let the table scroll sideways inside the card instead of clipping its right-hand columns. */
+@media (max-width: 860px) { .card { overflow-x: auto; } .card table { min-width: 560px; } }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-faint);
+  background: var(--panel); position: sticky; top: 0; z-index: 1; white-space: nowrap; font-weight: 600;
+}
+/* A header sits over its numbers, so it is aligned the same way they are. */
+th.num { text-align: right; }
+
+/* ---------- metric groups ---------- */
+/* Time and allocations are different measures; a rule between them stops the eye reading across the boundary. */
+.gsep { border-left: 2px solid var(--line-strong); }
+thead tr.groups th {
+  height: 26px; padding: 4px 12px; top: 0;
+  font-size: 10px; letter-spacing: .09em; color: var(--fg-dim); text-align: center;
+}
+thead tr.groups th.blank { background: var(--panel); }
+thead tr.cols th { top: 26px; }
+th.sortable { cursor: pointer; user-select: none; }
+th.sortable:hover { color: var(--fg); }
+th .arrow { opacity: .45; font-size: 9px; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr.clickable { cursor: pointer; }
+tbody tr.clickable:hover { background: var(--panel); }
+td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--mono); font-size: 12px; white-space: nowrap; }
+td.name { font-weight: 550; }
+td.name .scope { color: var(--fg-faint); font-weight: 400; font-size: 11.5px; }
+.bench-name { font-family: var(--mono); font-size: 12px; word-break: break-word; }
+.bench-name .cls { color: var(--fg-faint); }
+
+/* ---------- deltas ---------- */
+.d { display: inline-block; min-width: 62px; text-align: right; padding: 1px 6px; border-radius: 999px; font-variant-numeric: tabular-nums; font-size: 11.5px; font-weight: 600; font-family: var(--mono); }
+.d.up { color: var(--bad); background: var(--bad-soft); }
+.d.down { color: var(--good); background: var(--good-soft); }
+.d.flat { color: var(--flat); }
+.d.none { color: var(--fg-faint); font-weight: 400; }
+.alertdot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--bad); margin-left: 6px; vertical-align: 1px; }
+.rival { font-size: 10.5px; color: var(--fg-faint); font-family: var(--sans); }
+
+/* ---------- metric toggle ---------- */
+.toggle { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 6px; overflow: hidden; margin-left: auto; }
+.toggle button {
+  font: inherit; font-size: 12px; padding: 3px 11px; border: 0; cursor: pointer;
+  background: var(--panel-2); color: var(--fg-dim);
+}
+.toggle button + button { border-left: 1px solid var(--line-strong); }
+.toggle button:hover { color: var(--fg); }
+.toggle button.on { background: var(--accent); color: #fff; }
+
+/* ---------- section rows ---------- */
+tr.sect td {
+  background: var(--panel); font-size: 11px; color: var(--fg-dim); padding: 6px 12px;
+  border-top: 1px solid var(--line-strong);
+}
+tr.sect td span { color: var(--fg-faint); }
+
+/* ---------- spark ---------- */
+.spark { display: block; }
+.spark path.ln { fill: none; stroke: var(--accent); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.spark path.ar { fill: var(--accent); opacity: .10; }
+.spark circle { fill: var(--accent); }
+.spark .flatline { stroke: var(--fg-faint); }
+
+/* ---------- detail ---------- */
+.detail { padding: 14px 12px 18px; background: var(--panel); border-top: 1px solid var(--line); }
+.chartwrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }
+.chart { background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px 6px; min-width: 0; }
+.chart h4 { margin: 0 0 2px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-faint); }
+.chart .cur { font-family: var(--mono); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.chart svg { width: 100%; height: 108px; overflow: visible; }
+.chart .gl { stroke: var(--line); stroke-width: 1; }
+.chart .lbl { fill: var(--fg-faint); font-size: 9.5px; font-family: var(--mono); }
+.runs { margin-top: 12px; font-size: 12px; color: var(--fg-dim); }
+.runs code { font-family: var(--mono); font-size: 11.5px; }
+.empty { padding: 28px 16px; text-align: center; color: var(--fg-faint); font-size: 13px; }
+
+/* ---------- how to read ---------- */
+.howto { margin: 0 0 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+.howto > summary {
+  cursor: pointer; padding: 7px 12px; font-size: 12.5px; color: var(--fg-dim); list-style: none;
+  display: flex; align-items: center; gap: 7px; user-select: none;
+}
+.howto > summary::-webkit-details-marker { display: none; }
+.howto > summary::before { content: "?"; display: inline-grid; place-items: center; width: 15px; height: 15px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 10px; font-weight: 700; }
+.howto > summary:hover { color: var(--fg); }
+.howto[open] > summary { border-bottom: 1px solid var(--line); color: var(--fg); }
+.howto .body { padding: 10px 12px 12px; font-size: 12.5px; color: var(--fg-dim); }
+.howto dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; margin: 0 0 10px; }
+@media (max-width: 620px) { .howto dl { grid-template-columns: minmax(0, 1fr); gap: 1px; } .howto dd { margin-bottom: 7px; } }
+.howto dt { font-weight: 650; color: var(--fg); font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; padding-top: 1px; }
+.howto dd { margin: 0; }
+.howto p { margin: 8px 0 0; max-width: 84ch; }
+.howto .ex { font-family: var(--mono); font-size: 11.5px; color: var(--fg); }
+.foot { margin-top: 22px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--fg-faint); font-size: 11.5px; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.pill { display: inline-block; font-family: var(--mono); font-size: 11px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; color: var(--fg-dim); }
+.legend { font-size: 11.5px; color: var(--fg-faint); margin: 10px 0 0; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="side">
+    <div class="brand">
+      <h1>Cohesion benchmarks</h1>
+      <p id="brandsub">loading…</p>
+    </div>
+    <div class="side-search"><input id="filter" type="search" placeholder="Filter areas…" autocomplete="off" aria-label="Filter areas"></div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+
+<script src="history/data.js"></script>
+<script>
+"use strict";
+
+// ---------------------------------------------------------------- data model
+// history/data.js is written by github-action-benchmark: entries are keyed
+// "<scope>/<Area> - time" and "<scope>/<Area> - allocations", each an array of
+// runs (one per recorded commit) holding one bench per benchmark method.
+var RAW = (window.BENCHMARK_DATA && window.BENCHMARK_DATA.entries) || {};
+var LAST_UPDATE = (window.BENCHMARK_DATA || {}).lastUpdate || 0;
+var REPO = (window.BENCHMARK_DATA || {}).repoUrl || "https://github.com/assimalign/cohesion-benchmarks";
+
+// The workflow's alert thresholds: a ratio past these fails the run.
+var ALERT = { time: 1.5, alloc: 1.1 };
+// Below this, a change is reported as flat: shared runners are noisy.
+var NOISE = 0.02;
+// Which metric the overview sorts by and the sparklines draw. Both are always shown as columns.
+var PRIMARY = "time";
+
+function metricOf(key) {
+  if (/ - time$/.test(key)) return "time";
+  if (/ - allocations?$/.test(key)) return "alloc";
+  return null;
+}
+function areaOf(key) { return key.replace(/ - (time|allocations?)$/, ""); }
+
+var AREAS = (function () {
+  var map = new Map();
+  Object.keys(RAW).forEach(function (key) {
+    var metric = metricOf(key);
+    if (!metric) return;
+    var id = areaOf(key);
+    if (!map.has(id)) {
+      var bits = id.split("/");
+      map.set(id, { id: id, scope: bits[0] || "", name: bits.slice(1).join("/") || id, time: [], alloc: [] });
+    }
+    // Oldest first, so the last element is always the newest run.
+    map.get(id)[metric] = (RAW[key] || []).slice().sort(function (a, b) { return a.date - b.date; });
+  });
+  return Array.from(map.values()).sort(function (a, b) {
+    return a.scope.localeCompare(b.scope) || a.name.localeCompare(b.name);
+  });
+})();
+
+function runsOf(area, metric) { return area[metric] || []; }
+function latestRun(area, metric) { var r = runsOf(area, metric); return r.length ? r[r.length - 1] : null; }
+
+// The allocation recorder names its benches "<Method> - allocated"; the time recorder does not. Strip the
+// suffix so both metrics of one benchmark share a key instead of showing up as two benchmarks.
+function normName(n) { return String(n).replace(/ - allocated$/, ""); }
+
+// One benchmark's value through every run of a metric, oldest first.
+function seriesFor(area, metric, benchName) {
+  return runsOf(area, metric).map(function (run) {
+    var hit = (run.benches || []).find(function (b) { return normName(b.name) === benchName; });
+    return hit ? { date: run.date, commit: run.commit, value: hit.value, unit: hit.unit, range: hit.range, extra: hit.extra } : null;
+  }).filter(Boolean);
+}
+
+// Every benchmark name in an area, from the newest run of each metric.
+function benchNames(area) {
+  var names = new Set();
+  ["time", "alloc"].forEach(function (m) {
+    var run = latestRun(area, m);
+    if (run) (run.benches || []).forEach(function (b) { names.add(normName(b.name)); });
+  });
+  return Array.from(names).sort();
+}
+
+// "Class.Method_Counterpart(Param=x)" -> its parts. The convention names a counterpart's method after it
+// (CONVENTIONS.md, "Writing a benchmark"): Parse is Cohesion, Parse_SystemTextJson is what it is measured against.
+function parseName(full) {
+  var m = /^(.*?)\(([^)]*)\)\s*$/.exec(full);
+  var head = m ? m[1] : full;
+  var params = m ? m[2] : "";
+  var dot = head.lastIndexOf(".");
+  var cls = dot > 0 ? head.slice(0, dot) : "";
+  var method = dot > 0 ? head.slice(dot + 1) : head;
+  var us = method.indexOf("_");
+  return {
+    full: full, cls: cls, method: method, params: params,
+    base: us > 0 ? method.slice(0, us) : method,
+    suffix: us > 0 ? method.slice(us + 1) : null
+  };
+}
+
+// An area's benchmarks, folded into one entry per subject. A subject with a counterpart ("compared") carries the
+// rivals it is measured against; one without stands alone. Only a suffixed name *beside* an unsuffixed sibling
+// counts as a counterpart, so a lone Parse_Large stays a benchmark in its own right rather than a phantom rival.
+function benchGroups(area) {
+  var buckets = new Map();
+  benchNames(area).forEach(function (n) {
+    var p = parseName(n);
+    var key = p.cls + "." + p.base + "(" + p.params + ")";
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(p);
+  });
+
+  var groups = [];
+  buckets.forEach(function (members, key) {
+    var subject = members.find(function (p) { return p.suffix === null; });
+    var rivals = members.filter(function (p) { return p.suffix !== null; });
+    if (subject && rivals.length) {
+      groups.push({
+        key: key, kind: "compared", display: subject.cls + "." + subject.base + (subject.params ? "(" + subject.params + ")" : ""),
+        subject: subject.full, rivals: rivals.map(function (p) { return { name: p.full, label: p.suffix }; })
+      });
+    } else {
+      // No pairing: every member is its own standalone subject.
+      members.forEach(function (p) {
+        groups.push({ key: p.full, kind: "standalone", display: p.full, subject: p.full, rivals: [] });
+      });
+    }
+  });
+  return groups.sort(function (a, b) { return a.display.localeCompare(b.display); });
+}
+
+// Cohesion ÷ counterpart on the newest run: below 1 means Cohesion is ahead. This is the number a comparative
+// benchmark exists to produce, and it is not the same question as "did it move since last night".
+function versusRatio(area, metric, group) {
+  if (!group.rivals.length) return null;
+  var mine = seriesFor(area, metric, group.subject);
+  var theirs = seriesFor(area, metric, group.rivals[0].name);
+  if (!mine.length || !theirs.length) return null;
+  var a = mine[mine.length - 1].value, b = theirs[theirs.length - 1].value;
+  if (!(b > 0)) return null;
+  return a / b;
+}
+
+// latest / previous for one benchmark, or null when there is no history yet.
+function ratio(series) {
+  if (series.length < 2) return null;
+  var prev = series[series.length - 2].value, cur = series[series.length - 1].value;
+  if (!(prev > 0)) return null;
+  return cur / prev;
+}
+
+// An area's headline movement: the median ratio across its benchmarks, which
+// one outlier cannot drag, plus how many breached the workflow's threshold.
+function areaMovement(area, metric) {
+  var ratios = [], alerts = 0, threshold = ALERT[metric];
+  benchNames(area).forEach(function (n) {
+    var r = ratio(seriesFor(area, metric, n));
+    if (r === null) return;
+    ratios.push(r);
+    if (r >= threshold) alerts++;
+  });
+  if (!ratios.length) return { ratio: null, alerts: 0, count: 0 };
+  ratios.sort(function (a, b) { return a - b; });
+  var mid = Math.floor(ratios.length / 2);
+  var med = ratios.length % 2 ? ratios[mid] : (ratios[mid - 1] + ratios[mid]) / 2;
+  return { ratio: med, alerts: alerts, count: ratios.length };
+}
+
+// ---------------------------------------------------------------- formatting
+function fmtNum(v) {
+  if (v === null || v === undefined || !isFinite(v)) return "—";
+  var a = Math.abs(v);
+  if (a >= 1e9) return (v / 1e9).toFixed(2) + "B";
+  if (a >= 1e6) return (v / 1e6).toFixed(2) + "M";
+  if (a >= 1e4) return Math.round(v).toLocaleString("en-US");
+  if (a >= 100) return v.toFixed(1);
+  if (a >= 1) return v.toFixed(2);
+  if (a === 0) return "0";
+  return v.toPrecision(3);
+}
+function fmtValue(v, unit) { return fmtNum(v) + (unit ? " " + unit : ""); }
+function fmtDate(ms) {
+  if (!ms) return "—";
+  return new Date(ms).toISOString().slice(0, 10);
+}
+function sinceText(ms) {
+  if (!ms) return "";
+  var days = Math.floor((Date.now() - ms) / 86400000);
+  if (days <= 0) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 30) return days + " days ago";
+  return fmtDate(ms);
+}
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+// "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 123" -> the build it measured
+function cohesionOf(extra) {
+  var m = /cohesion (\S+) \(([0-9a-f]+)\)/.exec(extra || "");
+  return m ? { version: m[1], commit: m[2] } : null;
+}
+
+// Cohesion ÷ counterpart as a multiplier chip: 0.72x is Cohesion ahead, 2.4x behind.
+function versusCell(r, label) {
+  if (r === null) return '<span class="d none">—</span>';
+  var cls = Math.abs(r - 1) < NOISE ? "flat" : (r > 1 ? "up" : "down");
+  var txt = (r >= 10 ? r.toFixed(0) : r.toFixed(2)) + "×";
+  return '<span class="d ' + cls + '" title="Cohesion ÷ ' + esc(label) + '">' + txt + "</span>" +
+    ' <span class="rival">' + esc(label) + "</span>";
+}
+
+// One chip per counterpart, worst for Cohesion first.
+function versusCells(area, metric, g) {
+  if (!g.rivals.length) return '<span class="d none">—</span>';
+  return g.rivals.map(function (rv) {
+    var mine = seriesFor(area, metric, g.subject), theirs = seriesFor(area, metric, rv.name);
+    var r = (mine.length && theirs.length && theirs[theirs.length - 1].value > 0)
+      ? mine[mine.length - 1].value / theirs[theirs.length - 1].value : null;
+    return { r: r, html: versusCell(r, rv.label) };
+  }).sort(function (a, b) {
+    return (b.r === null ? -Infinity : b.r) - (a.r === null ? -Infinity : a.r);
+  }).map(function (x) { return x.html; }).join('<br>');
+}
+
+// A ratio as a signed percentage chip. Lower is better for both metrics
+// (the recorder uses customSmallerIsBetter), so "up" is always the bad way.
+function deltaCell(r, metric) {
+  if (r === null) return '<span class="d none" title="No previous run to compare with">new</span>';
+  var pct = (r - 1) * 100;
+  var cls = Math.abs(r - 1) < NOISE ? "flat" : (r > 1 ? "up" : "down");
+  var sign = pct > 0 ? "+" : "";
+  var txt = Math.abs(pct) < 0.05 ? "0.0%" : sign + pct.toFixed(1) + "%";
+  var alert = metric && r >= ALERT[metric] ? '<span class="alertdot" title="Past the alert threshold"></span>' : "";
+  return '<span class="d ' + cls + '">' + txt + "</span>" + alert;
+}
+
+// ---------------------------------------------------------------- svg charts
+function sparkline(values, w, h) {
+  if (!values.length) return "";
+  if (values.length === 1) {
+    return '<svg class="spark" viewBox="0 0 ' + w + " " + h + '" width="' + w + '" height="' + h +
+      '" aria-hidden="true"><line class="flatline" x1="2" y1="' + (h / 2) + '" x2="' + (w - 2) + '" y2="' + (h / 2) +
+      '" stroke-width="1" stroke-dasharray="2 2"/><circle cx="' + (w - 2) + '" cy="' + (h / 2) + '" r="2"/></svg>';
+  }
+  var min = Math.min.apply(null, values), max = Math.max.apply(null, values);
+  var span = max - min || Math.abs(max) || 1;
+  var pad = 2;
+  var x = function (i) { return pad + (i * (w - pad * 2)) / (values.length - 1); };
+  var y = function (v) { return h - pad - ((v - min) / span) * (h - pad * 2); };
+  var line = values.map(function (v, i) { return (i ? "L" : "M") + x(i).toFixed(1) + " " + y(v).toFixed(1); }).join(" ");
+  var area = line + " L" + x(values.length - 1).toFixed(1) + " " + (h - pad) + " L" + x(0).toFixed(1) + " " + (h - pad) + " Z";
+  return '<svg class="spark" viewBox="0 0 ' + w + " " + h + '" width="' + w + '" height="' + h + '" aria-hidden="true">' +
+    '<path class="ar" d="' + area + '"/><path class="ln" d="' + line + '"/>' +
+    '<circle cx="' + x(values.length - 1).toFixed(1) + '" cy="' + y(values[values.length - 1]).toFixed(1) + '" r="2"/></svg>';
+}
+
+function chart(series, label, unit) {
+  if (!series.length) return "";
+  var w = 560, h = 108, padL = 46, padR = 8, padT = 8, padB = 18;
+  var values = series.map(function (p) { return p.value; });
+  var min = Math.min.apply(null, values), max = Math.max.apply(null, values);
+  if (min === max) { min = min * 0.95 || -1; max = max * 1.05 || 1; }
+  var span = max - min;
+  var x = function (i) { return series.length === 1 ? padL + (w - padL - padR) / 2 : padL + (i * (w - padL - padR)) / (series.length - 1); };
+  var y = function (v) { return padT + (1 - (v - min) / span) * (h - padT - padB); };
+  var parts = [];
+  [0, 0.5, 1].forEach(function (f) {
+    var yy = padT + f * (h - padT - padB);
+    var val = max - f * span;
+    parts.push('<line class="gl" x1="' + padL + '" y1="' + yy.toFixed(1) + '" x2="' + (w - padR) + '" y2="' + yy.toFixed(1) + '"/>');
+    parts.push('<text class="lbl" x="' + (padL - 5) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">' + esc(fmtNum(val)) + "</text>");
+  });
+  if (series.length > 1) {
+    var line = series.map(function (p, i) { return (i ? "L" : "M") + x(i).toFixed(1) + " " + y(p.value).toFixed(1); }).join(" ");
+    parts.push('<path class="ar" d="' + line + " L" + x(series.length - 1).toFixed(1) + " " + (h - padB) + " L" + x(0).toFixed(1) + " " + (h - padB) + ' Z"/>');
+    parts.push('<path class="ln" d="' + line + '"/>');
+  }
+  series.forEach(function (p, i) {
+    var co = cohesionOf(p.extra);
+    var tip = fmtValue(p.value, unit) + "  ·  " + fmtDate(p.date) + "  ·  " + p.commit.id.slice(0, 8) + (co ? "  ·  cohesion " + co.version : "");
+    parts.push('<circle cx="' + x(i).toFixed(1) + '" cy="' + y(p.value).toFixed(1) + '" r="2.5"><title>' + esc(tip) + "</title></circle>");
+  });
+  parts.push('<text class="lbl" x="' + padL + '" y="' + (h - 4) + '">' + esc(fmtDate(series[0].date)) + "</text>");
+  if (series.length > 1) {
+    parts.push('<text class="lbl" x="' + (w - padR) + '" y="' + (h - 4) + '" text-anchor="end">' + esc(fmtDate(series[series.length - 1].date)) + "</text>");
+  }
+  return '<div class="chart"><h4>' + esc(label) + '</h4><div class="cur">' +
+    esc(fmtValue(series[series.length - 1].value, unit)) + '</div><svg viewBox="0 0 ' + w + " " + h +
+    '" preserveAspectRatio="none" role="img" aria-label="' + esc(label) + ' history">' + parts.join("") + "</svg></div>";
+}
+
+// ---------------------------------------------------------------- views
+function headerBits() {
+  var newest = null, build = null;
+  AREAS.forEach(function (a) {
+    ["time", "alloc"].forEach(function (m) {
+      var r = latestRun(a, m);
+      if (r && (!newest || r.date > newest.date)) {
+        newest = r;
+        var b = (r.benches || [])[0];
+        build = b ? cohesionOf(b.extra) : null;
+      }
+    });
+  });
+  return { newest: newest, build: build };
+}
+
+function renderOverview() {
+  var bits = headerBits();
+  var totalBench = 0, totalCompared = 0;
+  var moved = { time: { up: 0, down: 0 }, alloc: { up: 0, down: 0 } };
+  var alerts = { time: 0, alloc: 0 };
+
+  var rows = AREAS.map(function (a) {
+    var names = benchNames(a);
+    var groups = benchGroups(a);
+    var compared = groups.filter(function (g) { return g.kind === "compared"; }).length;
+    totalBench += names.length;
+    totalCompared += compared;
+    var t = areaMovement(a, "time"), al = areaMovement(a, "alloc");
+    alerts.time += t.alerts; alerts.alloc += al.alerts;
+    [["time", t], ["alloc", al]].forEach(function (pair) {
+      var r = pair[1].ratio;
+      if (r === null) return;
+      if (r > 1 + NOISE) moved[pair[0]].up++; else if (r < 1 - NOISE) moved[pair[0]].down++;
+    });
+    var last = latestRun(a, "time") || latestRun(a, "alloc");
+    // The area's own trend line: the median of its benchmarks per run, in whichever metric is in front.
+    var trend = runsOf(a, PRIMARY).map(function (run) {
+      var vals = (run.benches || []).map(function (b) { return b.value; }).sort(function (p, q) { return p - q; });
+      if (!vals.length) return null;
+      var mid = Math.floor(vals.length / 2);
+      return vals.length % 2 ? vals[mid] : (vals[mid - 1] + vals[mid]) / 2;
+    }).filter(function (v) { return v !== null; });
+    return { area: a, names: names, compared: compared, t: t, al: al, last: last, trend: trend };
+  });
+
+  // Sort by the metric in front, worst first; areas with no history yet sink to the bottom.
+  rows.sort(function (p, q) {
+    var pr = (PRIMARY === "time" ? p.t : p.al).ratio, qr = (PRIMARY === "time" ? q.t : q.al).ratio;
+    if (pr === null && qr === null) return p.area.id.localeCompare(q.area.id);
+    if (pr === null) return 1;
+    if (qr === null) return -1;
+    return qr - pr || p.area.id.localeCompare(q.area.id);
+  });
+
+  var html = '<div class="head"><h2>Overview</h2><span class="sub">' + AREAS.length + " areas · " + totalBench +
+    " benchmarks · " + totalCompared + " measured against a counterpart · lower is better</span>" + metricToggle() + "</div>" +
+    '<p class="note">Time and allocations both read as the change from the previous recorded run. An area\'s figure is ' +
+    'the <strong>median</strong> across its benchmarks, so one noisy outlier cannot move it. A red dot marks a ' +
+    'benchmark past the workflow\'s alert threshold (time ' + Math.round(ALERT.time * 100) + '%, allocations ' +
+    Math.round(ALERT.alloc * 100) + '%). Changes under ' + (NOISE * 100) + '% read as flat: time on shared runners ' +
+    'is noisy, though allocations are exact and a real move there is worth a look however small.</p>';
+
+  html += '<div class="kpis">' +
+    kpi("Areas", AREAS.length, totalCompared + " comparisons") +
+    kpi("Benchmarks", totalBench, "") +
+    kpi("Time", "+" + moved.time.up + " / −" + moved.time.down, "areas slower / faster") +
+    kpi("Allocations", "+" + moved.alloc.up + " / −" + moved.alloc.down, "areas up / down") +
+    kpi("Past threshold", alerts.time + alerts.alloc, alerts.time + " time, " + alerts.alloc + " allocation") +
+    kpi("Last run", bits.newest ? sinceText(bits.newest.date) : "—", bits.build ? "cohesion " + bits.build.version.replace(/^10\.0\.0-preview\.0\./, "") : "") +
+    "</div>";
+
+  html += howTo("overview");
+  html += '<div class="card"><table><thead><tr>' +
+    '<th>Area</th>' +
+    '<th class="num" title="Benchmark methods this area records">Benchmarks</th>' +
+    '<th class="num" title="How many are measured against a counterpart such as ASP.NET Core or SQLite">Compared</th>' +
+    '<th class="num gsep" title="Median change in time since the previous recorded run. Red is slower.">Time</th>' +
+    '<th class="num gsep" title="Median change in allocated bytes since the previous recorded run. Red is heavier.">Allocations</th>' +
+    '<th class="num gsep" title="The median of this area\'s benchmarks in every recorded run, oldest to newest">' +
+    (PRIMARY === "time" ? "Time trend" : "Allocation trend") + '</th>' +
+    '<th class="num" title="Date of the most recent recorded run">Last run</th></tr></thead><tbody>';
+
+  rows.forEach(function (r) {
+    html += '<tr class="clickable" data-area="' + esc(r.area.id) + '">' +
+      '<td class="name"><span class="scope">' + esc(r.area.scope) + "/</span>" + esc(r.area.name) + "</td>" +
+      '<td class="num">' + r.names.length + "</td>" +
+      '<td class="num">' + (r.compared ? r.compared : '<span class="d none">—</span>') + "</td>" +
+      '<td class="num gsep">' + deltaCell(r.t.ratio, "time") + "</td>" +
+      '<td class="num gsep">' + deltaCell(r.al.ratio, "alloc") + "</td>" +
+      '<td class="num gsep">' + sparkline(r.trend, 90, 22) + "</td>" +
+      '<td class="num">' + (r.last ? fmtDate(r.last.date) : "—") + "</td></tr>";
+  });
+
+  html += "</tbody></table></div>";
+  html += '<p class="legend"><strong>Compared</strong> counts the benchmarks measured against a counterpart ' +
+    '(ASP.NET Core, SQLite, Regex and the rest); the others measure a Cohesion API on its own. Open an area to see ' +
+    'which, and by how much. Trend is the median of the area\'s benchmarks per run, oldest to newest.</p>';
+  html += footer(bits);
+  return html;
+}
+
+// The two comparisons in these tables answer different questions, and reading one as the other is the easy
+// mistake: a benchmark can be slower than it was last night and still far ahead of its counterpart.
+function howTo(kind) {
+  var shared =
+    '<p><strong>Trust the vs column more than the Δ column.</strong> Both sides of a vs ratio are measured on ' +
+    'the same machine seconds apart, so it is unaffected by how busy the runner was; Δ compares two runs on ' +
+    'different days and shared runners vary. When a counterpart moves by about as much as Cohesion did, the run ' +
+    'was slow, not the code. Allocation numbers are deterministic, so a real move there means more than the same ' +
+    'move in time.</p>';
+
+  if (kind === "overview") {
+    return '<details class="howto"><summary>How to read this table</summary><div class="body"><dl>' +
+      "<dt>Benchmarks</dt><dd>How many benchmark methods the area records.</dd>" +
+      "<dt>Compared</dt><dd>How many of them are measured against a counterpart such as ASP.NET Core or SQLite. " +
+      "The rest measure a Cohesion API that has nothing to compare against.</dd>" +
+      "<dt>Time, Allocations</dt><dd>The change from the previous recorded run, as the <strong>median</strong> " +
+      "across the area's benchmarks, so one noisy outlier cannot move it. Red is slower or heavier, green is " +
+      "faster or lighter, and under " + (NOISE * 100) + "% reads as flat. A red dot marks a benchmark past the " +
+      "workflow's alert threshold, which fails the run.</dd>" +
+      "<dt>new</dt><dd>Only one run recorded so far, so there is nothing to compare against yet.</dd>" +
+      "<dt>Trend</dt><dd>The median of the area's benchmarks in every recorded run, oldest to newest.</dd>" +
+      "</dl>" + shared + "<p>Open an area to see its individual benchmarks and how each compares with its " +
+      "counterpart.</p></div></details>";
+  }
+
+  return '<details class="howto"><summary>How to read this table</summary><div class="body">' +
+    "<p>The two Δ columns and the two vs columns answer different questions. <strong>Δ compares a " +
+    "benchmark with its own previous run. vs compares Cohesion with its counterpart inside the latest run.</strong> " +
+    "A benchmark can be slower than it was last night and still well ahead of its counterpart.</p><dl>" +
+    "<dt>Time</dt><dd>What Cohesion's method measured in the latest run, as a mean per operation.</dd>" +
+    "<dt>Δ</dt><dd>Against this benchmark's previous run. Red is slower, green is faster, under " +
+    (NOISE * 100) + "% is flat. A red dot means it passed the alert threshold (time " +
+    Math.round(ALERT.time * 100) + "%, allocations " + Math.round(ALERT.alloc * 100) + "%), which fails the run.</dd>" +
+    "<dt>vs</dt><dd>Cohesion ÷ the counterpart, both from the latest run. <strong>Below 1× means Cohesion " +
+    "is ahead.</strong> <span class=\"ex\">0.18×</span> is about a fifth of the counterpart's time or bytes; " +
+    "<span class=\"ex\">1.97×</span> is about twice. A benchmark measured against more than one counterpart " +
+    "lists each, worst first.</dd>" +
+    "<dt>Allocated</dt><dd>Bytes allocated per operation, with its own Δ and vs.</dd>" +
+    "<dt>new</dt><dd>Only one run recorded so far, so Δ has nothing to compare against. A vs ratio still " +
+    "works, because it needs only the one run.</dd>" +
+    "<dt>Trend</dt><dd>This benchmark in every recorded run, oldest to newest, in whichever metric the toggle " +
+    "has in front.</dd>" +
+    "</dl>" + shared + "<p>Click any row for its full history, including a chart per counterpart.</p></div></details>";
+}
+
+function metricToggle() {
+  return '<span class="toggle" role="group" aria-label="Metric in front">' +
+    '<button type="button" data-metric="time" class="' + (PRIMARY === "time" ? "on" : "") + '">Time</button>' +
+    '<button type="button" data-metric="alloc" class="' + (PRIMARY === "alloc" ? "on" : "") + '">Allocations</button>' +
+    "</span>";
+}
+
+function kpi(k, v, sub) {
+  return '<div class="kpi"><div class="k">' + esc(k) + '</div><div class="v">' + esc(String(v)) +
+    (sub ? " <small>" + esc(sub) + "</small>" : "") + "</div></div>";
+}
+
+function renderArea(id) {
+  var area = AREAS.find(function (a) { return a.id === id; });
+  if (!area) return '<div class="empty">No area named ' + esc(id) + ".</div>";
+  var names = benchNames(area);
+  var t = areaMovement(area, "time"), al = areaMovement(area, "alloc");
+  var last = latestRun(area, "time") || latestRun(area, "alloc");
+  var build = last && (last.benches || [])[0] ? cohesionOf(last.benches[0].extra) : null;
+
+  var gs = benchGroups(area);
+  var comparedCount = gs.filter(function (g) { return g.kind === "compared"; }).length;
+  var soloCount = gs.length - comparedCount;
+  var html = '<div class="head"><h2>' + esc(area.name) + '</h2><span class="sub">' + esc(area.scope) + " · " +
+    names.length + " benchmarks · " + comparedCount + " compared, " + soloCount + " on their own · " +
+    runsOf(area, "time").length + " recorded runs</span>" + metricToggle() + "</div>";
+
+  html += '<div class="kpis">' +
+    kpi("Median time", deltaPlain(t.ratio), "vs previous run") +
+    kpi("Median allocations", deltaPlain(al.ratio), "vs previous run") +
+    kpi("Past threshold", t.alerts + al.alerts, "benchmarks") +
+    kpi("Last run", last ? fmtDate(last.date) : "—", build ? "cohesion " + build.version.replace(/^10\.0\.0-preview\.0\./, "") : "") +
+    "</div>";
+
+  html += howTo("area");
+  html += '<div class="card"><table><thead>' +
+    '<tr class="groups"><th class="blank"></th>' +
+    '<th colspan="3" class="gsep" title="How long one operation takes">Time</th>' +
+    '<th colspan="3" class="gsep" title="Memory allocated by one operation">Allocations</th>' +
+    '<th class="gsep"></th></tr>' +
+    '<tr class="cols"><th>Benchmark</th>' +
+    '<th class="num gsep" title="Mean per operation in the latest run">Mean</th>' +
+    '<th class="num" title="Change against this benchmark\'s own previous run. Red is slower.">Δ</th>' +
+    '<th class="num" title="Cohesion ÷ the counterpart, both from the latest run. Below 1× is Cohesion ahead.">vs</th>' +
+    '<th class="num gsep" title="Bytes allocated per operation in the latest run">Bytes</th>' +
+    '<th class="num" title="Change against this benchmark\'s own previous run. Red is heavier.">Δ</th>' +
+    '<th class="num" title="Cohesion ÷ the counterpart in allocated bytes. Below 1× is Cohesion leaner.">vs</th>' +
+    '<th class="num gsep" title="This benchmark in every recorded run, oldest to newest">Trend</th>' +
+    "</tr></thead><tbody>";
+
+  var groups = benchGroups(area);
+  var sections = [
+    { kind: "compared", title: "Measured against a counterpart", hint: "Cohesion ÷ the counterpart; below 1× is Cohesion ahead" },
+    { kind: "standalone", title: "Measured on its own", hint: "a Cohesion API with no counterpart to compare against" }
+  ];
+
+  sections.forEach(function (section) {
+    var mine = groups.filter(function (g) { return g.kind === section.kind; });
+    if (!mine.length) return;
+    html += '<tr class="sect"><td colspan="8"><strong>' + esc(section.title) + "</strong> · " + mine.length +
+      " · <span>" + esc(section.hint) + "</span></td></tr>";
+    mine.forEach(function (g) { html += benchRow(area, g); });
+  });
+
+  html += "</tbody></table></div>";
+  html += '<p class="legend">Click a benchmark for its history, including each counterpart. Hover a point for the ' +
+    'value, date, commit and cohesion build.</p>';
+  html += footer(headerBits());
+  return html;
+}
+
+function benchRow(area, g) {
+  var ts = seriesFor(area, "time", g.subject), as = seriesFor(area, "alloc", g.subject);
+  var tl = ts.length ? ts[ts.length - 1] : null, al = as.length ? as[as.length - 1] : null;
+  var parts = g.display.split(".");
+  var shown = parts.length > 1
+    ? '<span class="cls">' + esc(parts.slice(0, -1).join(".")) + ".</span>" + esc(parts[parts.length - 1])
+    : esc(g.display);
+  // Every counterpart, not just the first: a group can be measured against an external library and an
+  // internal variant at once (Glob's Filter is, against Microsoft.Extensions and against FromStrings), and
+  // picking one of them to headline would be an arbitrary choice the reader cannot see.
+  var vsT = versusCells(area, "time", g), vsA = versusCells(area, "alloc", g);
+  return '<tr class="clickable bench" data-group="' + esc(g.key) + '">' +
+    '<td class="bench-name">' + shown + "</td>" +
+    '<td class="num gsep">' + (tl ? esc(fmtValue(tl.value, tl.unit)) : "—") + "</td>" +
+    '<td class="num">' + deltaCell(ratio(ts), "time") + "</td>" +
+    '<td class="num">' + vsT + "</td>" +
+    '<td class="num gsep">' + (al ? esc(fmtValue(al.value, al.unit)) : "—") + "</td>" +
+    '<td class="num">' + deltaCell(ratio(as), "alloc") + "</td>" +
+    '<td class="num">' + vsA + "</td>" +
+    '<td class="num gsep">' + sparkline((PRIMARY === "time" ? ts : as).map(function (p) { return p.value; }), 90, 22) + "</td></tr>" +
+    '<tr class="detailrow" data-for="' + esc(g.key) + '" hidden><td colspan="8" class="detail"></td></tr>';
+}
+
+function deltaPlain(r) {
+  if (r === null) return "new";
+  var pct = (r - 1) * 100;
+  return (pct > 0 ? "+" : "") + pct.toFixed(1) + "%";
+}
+
+function footer(bits) {
+  var when = LAST_UPDATE ? new Date(LAST_UPDATE).toISOString().replace("T", " ").slice(0, 16) + " UTC" : "unknown";
+  return '<div class="foot"><span>History updated ' + esc(when) + "</span>" +
+    '<span><a href="' + esc(REPO) + '">Repository</a></span>' +
+    '<span><a href="history/">Raw per-benchmark charts</a></span>' +
+    (bits.build ? '<span class="pill">cohesion ' + esc(bits.build.version) + " · " + esc(bits.build.commit.slice(0, 8)) + "</span>" : "") +
+    "</div>";
+}
+
+// ---------------------------------------------------------------- navigation
+function renderNav(current, filter) {
+  var q = (filter || "").trim().toLowerCase();
+  var html = '<a href="#" data-route="" class="' + (current ? "" : "on") + '"><span class="nm">Overview</span></a>';
+  var scope = null;
+  var shown = 0;
+  AREAS.forEach(function (a) {
+    if (q && a.id.toLowerCase().indexOf(q) === -1) return;
+    shown++;
+    if (a.scope !== scope) { scope = a.scope; html += '<div class="nav-group">' + esc(scope) + "</div>"; }
+    html += '<a href="#' + encodeURIComponent(a.id) + '" data-route="' + esc(a.id) + '" class="' +
+      (current === a.id ? "on" : "") + '"><span class="nm">' + esc(a.name) + '</span><span class="ct">' +
+      benchNames(a).length + "</span></a>";
+  });
+  if (!shown && q) html += '<div class="nav-group">no match</div>';
+  return html;
+}
+
+function route() {
+  var id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+  var main = document.getElementById("main");
+  var valid = id && AREAS.some(function (a) { return a.id === id; });
+  main.innerHTML = valid ? renderArea(id) : renderOverview();
+  document.getElementById("nav").innerHTML = renderNav(valid ? id : "", document.getElementById("filter").value);
+  main.scrollTop = 0;
+  window.scrollTo(0, 0);
+  document.title = valid ? id + " · Cohesion benchmarks" : "Cohesion benchmarks";
+}
+
+document.addEventListener("click", function (e) {
+  var row = e.target.closest && e.target.closest("tr.clickable");
+  if (!row) return;
+  if (row.dataset.area) { location.hash = "#" + encodeURIComponent(row.dataset.area); return; }
+  if (row.dataset.group) {
+    var key = row.dataset.group;
+    var det = row.parentNode.querySelector('tr.detailrow[data-for="' + CSS.escape(key) + '"]');
+    if (!det) return;
+    if (!det.hidden) { det.hidden = true; return; }
+    var id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+    var area = AREAS.find(function (a) { return a.id === id; });
+    var group = benchGroups(area).find(function (g) { return g.key === key; });
+    if (!group) return;
+
+    // Cohesion first, then each counterpart, so the charts read in the order the comparison is stated.
+    var subjects = [{ name: group.subject, label: "Cohesion" }].concat(group.rivals);
+    var charts = subjects.map(function (s) {
+      var ts = seriesFor(area, "time", s.name), as = seriesFor(area, "alloc", s.name);
+      return chart(ts, s.label + " · time", ts.length ? ts[0].unit : "") +
+        chart(as, s.label + " · allocated", as.length ? as[0].unit : "");
+    }).join("");
+
+    var base = seriesFor(area, "time", group.subject);
+    var runs = base.length ? base : seriesFor(area, "alloc", group.subject);
+    var list = runs.slice().reverse().slice(0, 6).map(function (p) {
+      var co = cohesionOf(p.extra);
+      return '<code>' + esc(p.commit.id.slice(0, 8)) + "</code> " + esc(fmtDate(p.date)) +
+        (co ? " · cohesion " + esc(co.version.replace(/^10\.0\.0-preview\.0\./, "")) : "");
+    }).join("<br>");
+
+    det.querySelector("td").innerHTML = '<div class="chartwrap">' + charts + "</div>" +
+      (list ? '<div class="runs"><strong>Recent runs</strong><br>' + list + "</div>" : "");
+    det.hidden = false;
+  }
+});
+
+// The metric toggle decides what the overview sorts by and what the sparklines show.
+document.addEventListener("click", function (e) {
+  var btn = e.target.closest && e.target.closest(".toggle button");
+  if (!btn) return;
+  PRIMARY = btn.dataset.metric === "alloc" ? "alloc" : "time";
+  route();
+});
+
+document.getElementById("filter").addEventListener("input", function () {
+  var id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+  var valid = id && AREAS.some(function (a) { return a.id === id; });
+  document.getElementById("nav").innerHTML = renderNav(valid ? id : "", this.value);
+});
+
+window.addEventListener("hashchange", route);
+
+(function init() {
+  var bits = headerBits();
+  document.getElementById("brandsub").textContent =
+    AREAS.length + " areas · " + (bits.newest ? sinceText(bits.newest.date) : "no runs yet");
+  if (!AREAS.length) {
+    document.getElementById("main").innerHTML =
+      '<div class="empty">No benchmark history yet. The nightly run records the first entries.</div>';
+    return;
+  }
+  route();
+})();
+</script>
+</body>
+</html>

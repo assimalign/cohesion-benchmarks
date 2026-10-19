@@ -1,0 +1,32 @@
+{
+  "settings": [
+    {
+      "name": "ACCEPT_EULA",
+      "value": "Y",
+      "reason": "Owner decision 2026-10-15."
+    },
+    {
+      "name": "MSSQL_PID",
+      "value": "Developer",
+      "reason": "Development benchmark edition."
+    },
+    {
+      "name": "MSSQL_MEMORY_LIMIT_MB",
+      "value": "4608",
+      "reason": "Leave 1.5 GiB of the shared budget for operating system and overhead."
+    },
+    {
+      "name": "recovery model",
+      "value": "SIMPLE",
+      "reason": "No log backups exist; adapter applies sqlserver/prepare.sql after creating benchmark database."
+    },
+    {
+      "name": "DELAYED_DURABILITY",
+      "value": "DISABLED",
+      "reason": "Full synchronous commit durability."
+    }
+  ],
+  "development": {
+    "reason": "Readiness smoke only. A budget below 6 GiB changes cache sizes and therefore the numbers, so it is not comparable with the measurements this table is for."
+  }
+}

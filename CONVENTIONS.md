@@ -203,4 +203,51 @@ $change = (./scripts/Resolve-CohesionVersion.ps1 -PullRequest 1700).Version
   their threshold is tight; time on shared runners is noisy, so its threshold is loose. Both are workflow
   variables (`BENCHMARK_TIME_THRESHOLD`, `BENCHMARK_ALLOCATION_THRESHOLD`), as is the runner
   (`BENCHMARK_RUNNER`): point it at a dedicated self-hosted machine to tighten the time threshold.
-- Charts: the repository's GitHub Pages site (Settings → Pages → deploy from branch `gh-pages`), under `history/`.
+- Charts: the repository's GitHub Pages site (Settings → Pages → deploy from branch `gh-pages`, folder `/`).
+
+## The dashboard
+
+The site root is a dashboard over that history: every area's movement since the previous run on one screen, a
+sidebar to each area, and a benchmark's own chart on demand. Time and allocations are shown side by side
+throughout, and the **Time / Allocations** toggle decides which one the overview sorts by and the sparklines
+draw.
+
+Inside an area the benchmarks are split by what they measure:
+
+- **Measured against a counterpart** — the `Method` / `Method_Counterpart` pairs this document asks for. These
+  carry the number the comparison exists to produce, Cohesion ÷ the counterpart, for time and for allocations;
+  below 1× is Cohesion ahead. A subject measured against more than one counterpart shows each, worst first.
+- **Measured on its own** — a Cohesion API with nothing to compare against, where only the movement between runs
+  means anything.
+
+That split is derived from the names, so naming a counterpart after itself is what puts a benchmark in the first
+group. A suffixed name with no unsuffixed sibling stays a benchmark in its own right.
+
+```
+site/index.html                       the source; one static page, no dependencies and no build step
+  -> gh-pages:/index.html             published by .github/workflows/site.yml on a push that changes site/
+     gh-pages:/history/data.js        written by github-action-benchmark; the dashboard reads it in the browser
+     gh-pages:/history/index.html     the raw per-benchmark charts, still there, linked from the footer
+```
+
+The two halves never write the same files: `benchmarks.yml` owns `history/`, `site.yml` owns the root. Because
+the page reads `data.js` at load time, recording a run never needs the page republished — only a change to the
+page itself does.
+
+Working on it: `site/` has no build step, so open `site/index.html` over HTTP with a copy of the published
+`history/data.js` beside it (`site/history/data.js` is git-ignored for exactly this). A few conventions worth
+keeping if you edit it:
+
+- **Derive, never hardcode.** Areas, scopes, benchmark names and units all come out of `data.js`, so a new area
+  appears on the dashboard the first time it records, with no edit here.
+- The allocation recorder names its benches `<Method> - allocated` and the time recorder does not; the page
+  strips that suffix so one benchmark is one row with both metrics.
+- An area's headline is the **median** ratio across its benchmarks, so one noisy outlier cannot move it, and a
+  change under 2% reads as flat. The red dot is the workflow's own alert threshold.
+- Counterparts are found by pairing `Method` with `Method_Suffix` inside the same class and parameters. Only a
+  suffixed name beside an unsuffixed sibling counts, so `Parse_Large` on its own is not read as a rival.
+- It must survive an empty or missing `data.js` (the state before the first recording run) without throwing.
+- Each view carries a collapsed **How to read this table** panel and every column header a tooltip. The one
+  thing they exist to prevent is reading Δ as vs: Δ is this benchmark against its own previous run, vs is
+  Cohesion against its counterpart inside the latest run. Add or rename a column and that panel is part of the
+  change.
