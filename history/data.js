@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792403107359,
+  "lastUpdate": 1792403109825,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -1046,6 +1046,66 @@ window.BENCHMARK_DATA = {
             "range": "± 66.694",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079870\nmean 17299.117 ns"
+          }
+        ]
+      }
+    ],
+    "libraries/FileSystem - allocations": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "3861cd040532be00d816c57a1fc14b242b9195a4",
+          "message": "Merge pull request #4 from assimalign/fix/benchmarks-filter-glob\n\nfix(benchmarks): stop PowerShell globbing the filter on Linux; fail runs that measure nothing",
+          "timestamp": "2026-10-19T09:36:35Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/3861cd040532be00d816c57a1fc14b242b9195a4"
+        },
+        "date": 1792403109233,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "GlobMatcherBenchmarks.Filter_MicrosoftExtensions - allocated",
+            "value": 186416,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079870"
+          },
+          {
+            "name": "GlobMatcherBenchmarks.Filter - allocated",
+            "value": 13760,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079870"
+          },
+          {
+            "name": "GlobMatcherBenchmarks.Filter_FromStrings - allocated",
+            "value": 883140,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079870"
+          },
+          {
+            "name": "InMemoryFileSystemBenchmarks.ReadFile - allocated",
+            "value": 23872,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079870"
+          },
+          {
+            "name": "PhysicalFileSystemBenchmarks.ReadFile_SystemIO - allocated",
+            "value": 232,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079870"
+          },
+          {
+            "name": "PhysicalFileSystemBenchmarks.ReadFile - allocated",
+            "value": 8936,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079870"
           }
         ]
       }
