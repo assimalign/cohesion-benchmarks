@@ -230,17 +230,16 @@ jobs:
           ./scripts/ConvertTo-BenchmarkHistory.ps1 -Path $path -TimeOutput time.json -AllocationOutput allocations.json -CohesionVersion $env:COHESION_VERSION -CohesionCommit $env:COHESION_COMMIT
           "ready=true" >> $env:GITHUB_OUTPUT
 
-      # github-action-benchmark appends to an existing branch; create it on the first run.
+      # github-action-benchmark appends to an existing branch; create it on the first run. The empty root commit is
+      # built without touching the working tree (switching to an orphan branch and back left the job on no branch).
       - name: Ensure the history branch exists
         if: steps.convert.outputs.ready == 'true'
         run: |
           if ! git ls-remote --exit-code --heads origin gh-pages >/dev/null; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git switch --orphan gh-pages
-            git commit --allow-empty -m "chore: start benchmark history"
-            git push origin gh-pages || git fetch origin gh-pages
-            git switch -
+            root=$(git commit-tree "$(git hash-object -t tree /dev/null)" -m "chore: start benchmark history")
+            git push origin "$root:refs/heads/gh-pages"
           fi
 
       - name: Record time

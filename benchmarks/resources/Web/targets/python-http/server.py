@@ -8,6 +8,9 @@ BODY = b"Hello, World!"
 
 class Handler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
+    # The head and the body leave in two writes. With Nagle on, the body waits for the client's delayed ACK of the
+    # head (about 40 ms on Linux), and the benchmark would measure that stall instead of the server.
+    disable_nagle_algorithm = True
 
     def do_GET(self):
         self.send_response(200)

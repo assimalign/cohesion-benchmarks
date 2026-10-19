@@ -18,6 +18,11 @@ namespace Assimalign.Cohesion.Web.Benchmarks.External;
 /// This is unloaded round-trip latency (client, loopback and server for one request), not throughput: concurrent
 /// load belongs to the end-to-end runner. The client is a raw socket writing a fixed request, so the client side
 /// costs the same for every target.
+/// <para>
+/// A server may end a kept-alive connection: nginx closes it after 1,000 requests by default and says so with
+/// <c>Connection: close</c>, and an idle timeout closes it without a response. The client then reconnects, so an
+/// occasional operation includes a loopback connect.
+/// </para>
 /// </remarks>
 public class HttpRoundTripBenchmarks
 {
@@ -37,8 +42,7 @@ public class HttpRoundTripBenchmarks
     public void Start()
     {
         _target = WebTargets.Catalog.Start(Target);
-        _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) { NoDelay = true };
-        _socket.Connect(_target.IPEndPoint);
+        _socket = Connect();
     }
 
     [GlobalCleanup]
@@ -51,25 +55,81 @@ public class HttpRoundTripBenchmarks
     [Benchmark]
     public int Get()
     {
+        int received = Exchange();
+        if (received < 0)
+        {
+            // The server closed the kept-alive connection before answering (an idle timeout): retry once on a new one.
+            Reconnect();
+            received = Exchange();
+            if (received < 0)
+            {
+                throw new InvalidOperationException($"'{Target}' closed a new connection without answering.");
+            }
+        }
+
+        return received;
+    }
+
+    // Sends the request and reads the response head and its Content-Length body. Returns -1 when the connection
+    // closed before any of the response arrived.
+    private int Exchange()
+    {
         _socket.Send(Request);
 
-        // Read until the response head and its Content-Length body have arrived.
         int received = 0;
         while (true)
         {
             int read = _socket.Receive(_buffer, received, _buffer.Length - received, SocketFlags.None);
             if (read == 0)
             {
-                throw new InvalidOperationException($"'{Target}' closed the connection.");
+                return received == 0
+                    ? -1
+                    : throw new InvalidOperationException($"'{Target}' closed the connection in the middle of a response.");
             }
 
             received += read;
             int headEnd = _buffer.AsSpan(0, received).IndexOf("\r\n\r\n"u8);
             if (headEnd >= 0 && received >= headEnd + 4 + ContentLength(_buffer.AsSpan(0, headEnd)))
             {
+                if (ClosesConnection(_buffer.AsSpan(0, headEnd)))
+                {
+                    Reconnect();
+                }
+
                 return received;
             }
         }
+    }
+
+    private Socket Connect()
+    {
+        Socket socket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) { NoDelay = true };
+        socket.Connect(_target.IPEndPoint);
+        return socket;
+    }
+
+    private void Reconnect()
+    {
+        _socket.Dispose();
+        _socket = Connect();
+    }
+
+    private static bool ClosesConnection(ReadOnlySpan<byte> head)
+    {
+        while (!head.IsEmpty)
+        {
+            int end = head.IndexOf("\r\n"u8);
+            ReadOnlySpan<byte> line = end < 0 ? head : head[..end];
+            head = end < 0 ? default : head[(end + 2)..];
+
+            if (line.Length > 11 && Ascii.EqualsIgnoreCase(line[..11], "connection:"u8))
+            {
+                ReadOnlySpan<byte> value = line[11..];
+                return Ascii.EqualsIgnoreCase(value[Ascii.Trim(value)], "close"u8);
+            }
+        }
+
+        return false;
     }
 
     private static int ContentLength(ReadOnlySpan<byte> head)
