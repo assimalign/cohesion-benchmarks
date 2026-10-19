@@ -1,5 +1,36 @@
 # Cohesion Database Hardening inventory
 
+> **Re-verified against T1 (2026-10-19).** This analysis was written against Cohesion `bf20be5eb`. T1 completed on
+> 2026-10-18 at `52edc41c8` (PR #1168), moving SQL from 33 of 49 executable clauses to 51 of 57, OQL to 31 of 32
+> and GQL to 26 of 33, and giving Documents a network server and client. Checking every finding against that tip:
+>
+> - **All 28 new tasks (#1520–#1547) still stand.** T1 changed the language surface and left the planner,
+>   executor and storage alone. Spot-verified at the T1 tip: `UPDATE`/`DELETE` still scan to collect targets
+>   (`SqlPlanExecutor.cs:431`, `:559`); no cost model, hash join, index-only scan or plan cache; `LIMIT` still
+>   materializes, sorts, then windows with `GetRange` (`:188`); rows are still decoded before
+>   `snapshot.IsVisible` (`:1433`); the graph candidate budget is still consumed before the type, direction and
+>   trail tests (`GraphPlanExecutor.Paths.cs:160` before `:166`); `GraphStore` still builds a dictionary over
+>   every record at open (`GraphStore.cs:27`, now a `VersionChain` per entry); the buffer pool still guards page
+>   I/O with one `_syncRoot`. The graph traversal bounds are unchanged at 100,000 matches and 1,000,000
+>   candidates.
+> - **Most of the 25 matched items were T1's own tickets** and are implemented on #1168 — among them #1109
+>   (N-way, LEFT, CROSS, USING joins), #1116 (CTEs), #1113 (correlated subqueries and derived tables), #1120
+>   (scalar and temporal functions), #1115 (DISTINCT aggregates), #1112 (NULLS FIRST/LAST), #1129 (OQL
+>   LIMIT/OFFSET), #1135 (compound and unique document indexes), #1136 (array predicates and UNNEST), #1133 (OQL
+>   partial updates), #1138/#1142/#1144/#1147 (GQL parameters, ordering and paging, quantified paths, aggregates)
+>   and #190 (the Documents wire server and client). All 25 were still open when checked, because #1168 has not
+>   merged; they close with it.
+> - **The matched items T1 did not touch stay open work**: #1280, #1276, #1274, #1195, #1239, #1269, #1271, #1229.
+> - **Still absent after T1**, so the corresponding tasks keep their premise: bulk load on any model, a C# patch
+>   or batch API for documents, multikey document indexes, shortest-path distance and `NOT EXISTS` in GQL,
+>   RIGHT/FULL joins, window functions, and wire transactions for Graph. New since T1 and not yet filed:
+>   Documents has a wire server but **no transaction control over it**
+>   (`Documents/docs/DESIGN.md:1306`) — the Graph equivalent is #1540.
+>
+> Current capabilities, with citations for both `main` and the T1 tip:
+> [COHESION-CAPABILITIES.md](COHESION-CAPABILITIES.md). The numbers quoted below remain development scale
+> (SF 0.01) on a shared host.
+
 R6 proposes **28 new tasks in eight features**, and supplies current evidence for **25 tasks already covered by existing issues**. The machine-readable filing contract is [hardening-inventory.json](hardening-inventory.json). File only tasks with `fileAsNew: true`; link the other tasks to their existing issues. The Fxx/Txx identifiers are local cross-references, not proposed work-breakdown codes or issue-title prefixes.
 
 The first priorities are read-only WAL elision (#1280), append/flush concurrency (#1276), selective SQL join inputs, and typed graph adjacency. The probes establish that tiny reads pay durable journal flushes and that concurrent callers wait behind journal/transaction gates. They do not establish that these mechanisms explain the entire original concurrency regression. The SQL and Documents selective-query gaps follow directly from their access paths. Functional work should reuse the T1 language tickets wherever their scope matches.
