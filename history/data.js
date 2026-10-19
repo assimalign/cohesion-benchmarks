@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792416813818,
+  "lastUpdate": 1792416816930,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -2618,6 +2618,94 @@ window.BENCHMARK_DATA = {
             "value": 696,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079875"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "00e8cb49c3ca66a73eac2bf997d449bd83a7801a",
+          "message": "Merge pull request #5 from assimalign/fix/benchmarks-ci-first-run\n\nfix(benchmarks): first measuring run failures (history bootstrap, keep-alive close, Python stall)",
+          "timestamp": "2026-10-19T10:03:39Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/00e8cb49c3ca66a73eac2bf997d449bd83a7801a"
+        },
+        "date": 1792416816212,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Http1RequestBenchmarks.ServeRequest(Header=bearer) - allocated",
+            "value": 4776,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
+          },
+          {
+            "name": "Http1RequestBenchmarks.ServeRequest(Header=cookie) - allocated",
+            "value": 5496,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
+          },
+          {
+            "name": "Http1RequestBenchmarks.ServeRequest(Header=none) - allocated",
+            "value": 3272,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
+          },
+          {
+            "name": "HttpCookieBenchmarks.FormatSetCookie_AspNetCore - allocated",
+            "value": 360,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
+          },
+          {
+            "name": "HttpCookieBenchmarks.FormatSetCookie - allocated",
+            "value": 1040,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
+          },
+          {
+            "name": "HttpCookieBenchmarks.ParseCookieHeader_AspNetCore - allocated",
+            "value": 496,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
+          },
+          {
+            "name": "HttpCookieBenchmarks.ParseCookieHeader - allocated",
+            "value": 2176,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
+          },
+          {
+            "name": "HttpAcceptParserBenchmarks.ParseAccept_AspNetCore - allocated",
+            "value": 1672,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
+          },
+          {
+            "name": "HttpAcceptParserBenchmarks.ParseAccept - allocated",
+            "value": 2384,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
+          },
+          {
+            "name": "HttpForwardedBenchmarks.ParseForwarded - allocated",
+            "value": 2144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
+          },
+          {
+            "name": "HttpForwardedBenchmarks.ParseXForwardedFor - allocated",
+            "value": 696,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080048"
           }
         ]
       }
