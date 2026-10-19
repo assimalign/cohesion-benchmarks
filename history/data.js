@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792403272506,
+  "lastUpdate": 1792403274916,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -2228,6 +2228,66 @@ window.BENCHMARK_DATA = {
             "range": "± 112.955",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079891\nmean 975.564 ns"
+          }
+        ]
+      }
+    ],
+    "libraries/Resilience - allocations": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "3861cd040532be00d816c57a1fc14b242b9195a4",
+          "message": "Merge pull request #4 from assimalign/fix/benchmarks-filter-glob\n\nfix(benchmarks): stop PowerShell globbing the filter on Linux; fail runs that measure nothing",
+          "timestamp": "2026-10-19T09:36:35Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/3861cd040532be00d816c57a1fc14b242b9195a4"
+        },
+        "date": 1792403274302,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "CircuitBreakerPipelineBenchmarks.Execute_Polly - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079891"
+          },
+          {
+            "name": "CircuitBreakerPipelineBenchmarks.Execute - allocated",
+            "value": 200,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079891"
+          },
+          {
+            "name": "RetryPipelineBenchmarks.Execute_Polly - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079891"
+          },
+          {
+            "name": "RetryPipelineBenchmarks.Execute - allocated",
+            "value": 112,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079891"
+          },
+          {
+            "name": "TimeoutPipelineBenchmarks.Execute_Polly - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079891"
+          },
+          {
+            "name": "TimeoutPipelineBenchmarks.Execute - allocated",
+            "value": 560,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079891"
           }
         ]
       }
