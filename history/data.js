@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792417024005,
+  "lastUpdate": 1792417039436,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -5433,6 +5433,112 @@ window.BENCHMARK_DATA = {
             "range": "± 1.881",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079896\nmean 39.571 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "00e8cb49c3ca66a73eac2bf997d449bd83a7801a",
+          "message": "Merge pull request #5 from assimalign/fix/benchmarks-ci-first-run\n\nfix(benchmarks): first measuring run failures (history bootstrap, keep-alive close, Python stall)",
+          "timestamp": "2026-10-19T10:03:39Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/00e8cb49c3ca66a73eac2bf997d449bd83a7801a"
+        },
+        "date": 1792417038426,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "HttpRoundTripBenchmarks.Get(Target=nginx)",
+            "value": 192828.758,
+            "range": "± 981.234",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 193211.119 ns"
+          },
+          {
+            "name": "HttpRoundTripBenchmarks.Get(Target=node)",
+            "value": 68489.579,
+            "range": "± 6811.814",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 67492.408 ns"
+          },
+          {
+            "name": "HttpRoundTripBenchmarks.Get(Target=python)",
+            "value": 109903.699,
+            "range": "± 7165.028",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 110904.218 ns"
+          },
+          {
+            "name": "ProcessStartupBenchmarks.StartUntilReady(server=node)",
+            "value": 86661256,
+            "range": "± 3839796.134",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 88303980.35 ns"
+          },
+          {
+            "name": "ProcessStartupBenchmarks.RunToExit(command=node-run)",
+            "value": 22707041.5,
+            "range": "± 867860.816",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 22689822.35 ns"
+          },
+          {
+            "name": "ProcessStartupBenchmarks.StartUntilReady(server=python)",
+            "value": 79949563,
+            "range": "± 4240336.21",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 81847159.15 ns"
+          },
+          {
+            "name": "JwtBearerAuthenticationBenchmarks.Authenticate_AspNetCore",
+            "value": 7702.891,
+            "range": "± 36.353",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 7714.844 ns"
+          },
+          {
+            "name": "JwtBearerAuthenticationBenchmarks.Authenticate",
+            "value": 6693.832,
+            "range": "± 49.228",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 6704.932 ns"
+          },
+          {
+            "name": "CookieAuthenticationBenchmarks.Authenticate_AspNetCore",
+            "value": 15646.721,
+            "range": "± 62.439",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 15657.243 ns"
+          },
+          {
+            "name": "CookieAuthenticationBenchmarks.Authenticate",
+            "value": 8207.078,
+            "range": "± 20.482",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 8206.731 ns"
+          },
+          {
+            "name": "RolePolicyBenchmarks.Evaluate_AspNetCore",
+            "value": 417.052,
+            "range": "± 1.897",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 417.344 ns"
+          },
+          {
+            "name": "RolePolicyBenchmarks.Evaluate",
+            "value": 75.291,
+            "range": "± 0.127",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080070\nmean 75.304 ns"
           }
         ]
       }
