@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792448672758,
+  "lastUpdate": 1792448686114,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -694,6 +694,84 @@ window.BENCHMARK_DATA = {
             "range": "± 4.275",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080034\nmean 154.213 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "06c9dcd86539ac3365bc0bb6b3432db5ad769ce5",
+          "message": "Merge pull request #7 from assimalign/fix/record-both-metrics-on-alert\n\nRecord allocations even when the time series alerts",
+          "timestamp": "2026-10-19T20:26:47Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/06c9dcd86539ac3365bc0bb6b3432db5ad769ce5"
+        },
+        "date": 1792448685196,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ConfigurationBindingBenchmarks.Bind_MicrosoftExtensions",
+            "value": 14237.929,
+            "range": "± 67.725",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080325\nmean 14242.676 ns"
+          },
+          {
+            "name": "ConfigurationBindingBenchmarks.Bind",
+            "value": 21411.016,
+            "range": "± 98.684",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080325\nmean 21423.672 ns"
+          },
+          {
+            "name": "ConfigurationLookupBenchmarks.GetValue_MicrosoftExtensions",
+            "value": 33.367,
+            "range": "± 0.038",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080325\nmean 33.375 ns"
+          },
+          {
+            "name": "ConfigurationLookupBenchmarks.GetValue",
+            "value": 444.898,
+            "range": "± 2.727",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080325\nmean 444.778 ns"
+          },
+          {
+            "name": "JsonConfigurationBenchmarks.Build_MicrosoftExtensions",
+            "value": 6062.7,
+            "range": "± 24.745",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080325\nmean 6061.352 ns"
+          },
+          {
+            "name": "JsonConfigurationBenchmarks.Build",
+            "value": 15131.142,
+            "range": "± 69.411",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080325\nmean 15132.076 ns"
+          },
+          {
+            "name": "PathBenchmarks.Parse(value=/Serv(...)\\0:Url [23])",
+            "value": 310.839,
+            "range": "± 2.524",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080325\nmean 310.94 ns"
+          },
+          {
+            "name": "PathBenchmarks.Parse(value=Servi(...)quest [24])",
+            "value": 306.899,
+            "range": "± 2.9",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080325\nmean 306.468 ns"
           }
         ]
       }
