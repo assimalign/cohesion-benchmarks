@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792416697488,
+  "lastUpdate": 1792416716046,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -1213,6 +1213,77 @@ window.BENCHMARK_DATA = {
             "range": "± 45.122",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079866\nmean 11676.092 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "00e8cb49c3ca66a73eac2bf997d449bd83a7801a",
+          "message": "Merge pull request #5 from assimalign/fix/benchmarks-ci-first-run\n\nfix(benchmarks): first measuring run failures (history bootstrap, keep-alive close, Python stall)",
+          "timestamp": "2026-10-19T10:03:39Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/00e8cb49c3ca66a73eac2bf997d449bd83a7801a"
+        },
+        "date": 1792416714206,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "FileSystemPathBenchmarks.GetSegments",
+            "value": 178.129,
+            "range": "± 2.005",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080039\nmean 178.526 ns"
+          },
+          {
+            "name": "FileSystemPathBenchmarks.Parse(value=//tes(...)e.txt [33])",
+            "value": 2563.986,
+            "range": "± 47.233",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080039\nmean 2591.018 ns"
+          },
+          {
+            "name": "FileSystemPathBenchmarks.Parse(value=C:/te(...)e.txt [34])",
+            "value": 2919.027,
+            "range": "± 52.09",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080039\nmean 2917.587 ns"
+          },
+          {
+            "name": "GlobBenchmarks.IsMatch_Regex(Pattern=p?th/(...)].txt [21])",
+            "value": 1887.341,
+            "range": "± 11.935",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080039\nmean 1884.025 ns"
+          },
+          {
+            "name": "GlobBenchmarks.IsMatch(Pattern=p?th/(...)].txt [21])",
+            "value": 5906.789,
+            "range": "± 14.814",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080039\nmean 5908.018 ns"
+          },
+          {
+            "name": "GlobBenchmarks.IsMatch_Regex(Pattern=src/**/*.{cs,json})",
+            "value": 3256.143,
+            "range": "± 6.521",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080039\nmean 3257.613 ns"
+          },
+          {
+            "name": "GlobBenchmarks.IsMatch(Pattern=src/**/*.{cs,json})",
+            "value": 11466.509,
+            "range": "± 38.001",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080039\nmean 11465.63 ns"
           }
         ]
       }
