@@ -1,0 +1,57 @@
+{
+  "settings": [
+    {
+      "name": "shared_buffers",
+      "value": "1536MB",
+      "reason": "DESIGN §8 shared 6 GiB budget and SSD/checkpoint policy."
+    },
+    {
+      "name": "effective_cache_size",
+      "value": "4GB",
+      "reason": "DESIGN §8 shared 6 GiB budget and SSD/checkpoint policy."
+    },
+    {
+      "name": "work_mem",
+      "value": "64MB",
+      "reason": "DESIGN §8 shared 6 GiB budget and SSD/checkpoint policy."
+    },
+    {
+      "name": "maintenance_work_mem",
+      "value": "1GB",
+      "reason": "DESIGN §8 shared 6 GiB budget and SSD/checkpoint policy."
+    },
+    {
+      "name": "max_wal_size",
+      "value": "8GB",
+      "reason": "DESIGN §8 shared 6 GiB budget and SSD/checkpoint policy."
+    },
+    {
+      "name": "checkpoint_timeout",
+      "value": "15min",
+      "reason": "DESIGN §8 shared 6 GiB budget and SSD/checkpoint policy."
+    },
+    {
+      "name": "random_page_cost",
+      "value": "1.1",
+      "reason": "DESIGN §8 shared 6 GiB budget and SSD/checkpoint policy."
+    },
+    {
+      "name": "max_parallel_workers_per_gather",
+      "value": "2",
+      "reason": "DESIGN §8 shared 6 GiB budget and SSD/checkpoint policy."
+    },
+    {
+      "name": "synchronous_commit",
+      "value": "on",
+      "reason": "Durable acknowledgement required by shared methodology."
+    },
+    {
+      "name": "fsync",
+      "value": "on",
+      "reason": "Durable acknowledgement required by shared methodology."
+    }
+  ],
+  "development": {
+    "reason": "Readiness smoke only. A budget below 6 GiB changes cache sizes and therefore the numbers, so it is not comparable with the measurements this table is for."
+  }
+}

@@ -1,5 +1,0 @@
-# Build output (ArtifactsPath), generated datasets and raw run output.
-artifacts/
-data/
-results/raw/
-TestResults/

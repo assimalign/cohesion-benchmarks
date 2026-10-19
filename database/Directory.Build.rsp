@@ -1,2 +1,0 @@
-# Keep the solution configuration (Release/Debug) flowing into the Cohesion projects referenced from outside the solution.
--p:ShouldUnsetParentConfigurationAndPlatform=false

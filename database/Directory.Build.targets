@@ -1,6 +1,0 @@
-<Project>
-	<!-- Fail early with a clear message when the Cohesion source tree is missing. -->
-	<Target Name="CohesionBenchmarksCheckCohesionRoot" BeforeTargets="CollectPackageReferences;ResolveProjectReferences" Condition="'$(UsesCohesionSource)' == 'true'">
-		<Error Condition="!Exists('$(CohesionDatabaseRoot)')" Text="Cohesion source tree not found at '$(CohesionRoot)'. Set COHESION_ROOT (or -p:CohesionRoot=...) to a worktree of the Database integration branch." />
-	</Target>
-</Project>

@@ -1,0 +1,137 @@
+{
+  // The database engines the Database area compares Cohesion against (CONVENTIONS.md, "Out-of-process targets").
+  // Every target is a container the harness starts, waits for, and stops; one engine runs at a time.
+  //
+  // Fairness: every engine gets the same budget, cpus 3 and memory 6g with swap pinned to the same value, so a
+  // target over its budget fails instead of swapping and posting a slower number. The budget comes from RavenDB's
+  // unlicensed limit (3 cores, 6 GB), the lowest ceiling any of these engines imposes; the rest match it so no
+  // engine gets more hardware. Per-engine cache and durability settings are sized for that budget and are
+  // documented, with their reasons, in README.md. Changing a budget or a setting invalidates comparison with
+  // earlier results.
+  //
+  // Credentials are fixed development values for a local container on a published loopback port. They are not
+  // secrets and must never be reused anywhere else.
+  //
+  // The Cohesion side is missing on purpose: the server host and the in-process targets are not built yet
+  // (README.md, "What is not here yet"). An engine listed here with no counterpart measures nothing on its own.
+  "schemaVersion": 1,
+  "targets": [
+    {
+      "id": "postgresql",
+      "model": "sql",
+      "kind": "container",
+      "description": "PostgreSQL 17, tuned for a 6 GB budget, durable commits.",
+      "image": "docker.io/library/postgres:17",
+      "cpus": 3,
+      "memory": "6g",
+      "ports": [ { "internal": 5432, "published": 0 } ],
+      "volumes": [ "dbbench-postgresql-data:/var/lib/postgresql/data" ],
+      "environment": {
+        "POSTGRES_USER": "dbbench",
+        "POSTGRES_PASSWORD": "Dbbench-Local-2026!",
+        "POSTGRES_DB": "benchmark"
+      },
+      "arguments": [
+        "-c", "shared_buffers=1536MB",
+        "-c", "effective_cache_size=4GB",
+        "-c", "work_mem=64MB",
+        "-c", "maintenance_work_mem=1GB",
+        "-c", "max_wal_size=8GB",
+        "-c", "checkpoint_timeout=15min",
+        "-c", "random_page_cost=1.1",
+        "-c", "max_parallel_workers_per_gather=2",
+        "-c", "synchronous_commit=on",
+        "-c", "fsync=on"
+      ],
+      "readiness": { "kind": "exec", "command": [ "pg_isready", "-U", "dbbench", "-d", "benchmark" ], "timeoutSeconds": 120 },
+      "endpointTemplate": "postgresql://{host}:{port}"
+    },
+    {
+      "id": "sqlserver",
+      "model": "sql",
+      "kind": "container",
+      "description": "The SQL Server engine via Azure SQL Edge, the only native linux/arm64 build of it. Label results accordingly.",
+      "image": "mcr.microsoft.com/azure-sql-edge:latest",
+      "cpus": 3,
+      "memory": "6g",
+      "ports": [ { "internal": 1433, "published": 0 } ],
+      "volumes": [ "dbbench-sqlserver-data:/var/opt/mssql" ],
+      "environment": {
+        "ACCEPT_EULA": "Y",
+        "MSSQL_PID": "Developer",
+        "MSSQL_SA_PASSWORD": "Dbbench-Local-2026!",
+        "MSSQL_MEMORY_LIMIT_MB": "4608"
+      },
+      // sqlservr as PID 1, not a shell: the image's default entry point ignores the stop signal and the container
+      // is killed after the timeout (exit 137), which must never happen between a load and a measured run.
+      "arguments": [ "/opt/mssql/bin/sqlservr" ],
+      "readiness": { "kind": "log", "pattern": "SQL Server is now ready for client connections", "timeoutSeconds": 180 },
+      "endpointTemplate": "tcp://{host}:{port}"
+    },
+    {
+      "id": "mongodb",
+      "model": "documents",
+      "kind": "container",
+      "description": "MongoDB 8.0; writes are acknowledged and journaled (w:1, j:true) by the driver.",
+      "image": "docker.io/library/mongo:8.0",
+      "cpus": 3,
+      "memory": "6g",
+      "ports": [ { "internal": 27017, "published": 0 } ],
+      "volumes": [ "dbbench-mongodb-data:/data/db" ],
+      "environment": {
+        "MONGO_INITDB_ROOT_USERNAME": "dbbench",
+        "MONGO_INITDB_ROOT_PASSWORD": "Dbbench-Local-2026!"
+      },
+      "arguments": [ "--wiredTigerCacheSizeGB", "2.5" ],
+      "readiness": {
+        "kind": "exec",
+        "command": [ "mongosh", "--quiet", "--username", "dbbench", "--password", "Dbbench-Local-2026!",
+          "--authenticationDatabase", "admin", "--eval", "quit(db.adminCommand({ping:1}).ok === 1 ? 0 : 1)" ],
+        "timeoutSeconds": 120
+      },
+      "endpointTemplate": "mongodb://{host}:{port}"
+    },
+    {
+      "id": "ravendb",
+      "model": "documents",
+      "kind": "container",
+      "description": "RavenDB 7.1, unsecured local setup, EULA accepted. Unlicensed: 3 cores and 6 GB, which set this area's budget.",
+      "image": "docker.io/ravendb/ravendb:7.1-latest",
+      "cpus": 3,
+      "memory": "6g",
+      "ports": [ { "internal": 8080, "published": 0 } ],
+      "volumes": [ "dbbench-ravendb-data:/var/lib/ravendb/data" ],
+      "environment": {
+        "RAVEN_Setup_Mode": "None",
+        "RAVEN_License_Eula_Accepted": "true",
+        "RAVEN_Security_UnsecuredAccessAllowed": "PublicNetwork",
+        "RAVEN_ServerUrl": "http://0.0.0.0:8080"
+      },
+      "readiness": { "kind": "http", "path": "/build/version", "timeoutSeconds": 180 },
+      "endpointTemplate": "http://{host}:{port}"
+    },
+    {
+      "id": "neo4j",
+      "model": "graph",
+      "kind": "container",
+      "description": "Neo4j 5 Community: 1.5 GB heap (initial = max) and a 3 GB page cache inside the 6 GB budget.",
+      "image": "docker.io/library/neo4j:5-community",
+      "cpus": 3,
+      "memory": "6g",
+      "ports": [ { "internal": 7687, "published": 0 }, { "internal": 7474, "published": 0 } ],
+      "volumes": [ "dbbench-neo4j-data:/data" ],
+      "environment": {
+        "NEO4J_AUTH": "neo4j/Dbbench-Local-2026!",
+        "NEO4J_server_memory_heap_initial__size": "1536m",
+        "NEO4J_server_memory_heap_max__size": "1536m",
+        "NEO4J_server_memory_pagecache_size": "3g"
+      },
+      "readiness": {
+        "kind": "exec",
+        "command": [ "cypher-shell", "-u", "neo4j", "-p", "Dbbench-Local-2026!", "RETURN 1;" ],
+        "timeoutSeconds": 180
+      },
+      "endpointTemplate": "bolt://{host}:{port}"
+    }
+  ]
+}

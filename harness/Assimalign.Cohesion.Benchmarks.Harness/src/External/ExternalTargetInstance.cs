@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -160,6 +161,22 @@ public sealed class ExternalTargetInstance : IDisposable
         foreach ((string key, string value) in environment)
         {
             arguments.AddRange(["--env", $"{key}={value}"]);
+        }
+
+        if (target.Cpus is { } cpus)
+        {
+            arguments.AddRange(["--cpus", cpus.ToString("0.###", CultureInfo.InvariantCulture)]);
+        }
+
+        if (!string.IsNullOrWhiteSpace(target.Memory))
+        {
+            // Swap matches memory: a target over its budget must fail, not swap and post a slower number.
+            arguments.AddRange(["--memory", target.Memory, "--memory-swap", target.Memory]);
+        }
+
+        foreach (string volume in target.Volumes)
+        {
+            arguments.AddRange(["--volume", placeholders.Resolve(volume)]);
         }
 
         arguments.Add(target.Image!);

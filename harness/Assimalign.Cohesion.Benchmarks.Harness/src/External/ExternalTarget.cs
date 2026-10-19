@@ -57,6 +57,27 @@ public sealed class ExternalTarget
     /// <summary>Environment variables for the process or container.</summary>
     public IReadOnlyDictionary<string, string> Environment { get; init; } = new Dictionary<string, string>();
 
+    /// <summary>
+    /// For containers: the CPU budget (<c>--cpus</c>). Unset leaves the container unlimited.
+    /// </summary>
+    /// <remarks>
+    /// Comparing two engines is only meaningful when both get the same hardware, so an area that compares
+    /// server products gives every target the same budget and records it with the results.
+    /// </remarks>
+    public double? Cpus { get; init; }
+
+    /// <summary>
+    /// For containers: the memory budget (<c>--memory</c>), for example <c>6g</c>. Swap is pinned to the same
+    /// value, so a target that exceeds its budget fails instead of quietly swapping.
+    /// </summary>
+    public string? Memory { get; init; }
+
+    /// <summary>
+    /// For containers: volume mounts, each <c>source:/path/inside</c> (a named volume, or a host path with
+    /// placeholders). Database engines keep their data files in named volumes rather than the container layer.
+    /// </summary>
+    public IReadOnlyList<string> Volumes { get; init; } = [];
+
     /// <summary>How to tell the target is ready. Without one, a target with a port waits for a TCP connection.</summary>
     public ExternalTargetReadiness? Readiness { get; init; }
 

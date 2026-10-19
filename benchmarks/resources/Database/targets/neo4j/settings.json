@@ -1,0 +1,32 @@
+{
+  "settings": [
+    {
+      "name": "server.memory.heap.initial_size",
+      "value": "1536m",
+      "reason": "DESIGN §8 fixed heap within 6 GiB."
+    },
+    {
+      "name": "server.memory.heap.max_size",
+      "value": "1536m",
+      "reason": "Keep heap size constant across repetitions."
+    },
+    {
+      "name": "server.memory.pagecache.size",
+      "value": "3g",
+      "reason": "DESIGN §8 shared cache allocation."
+    },
+    {
+      "name": "NEO4J_AUTH",
+      "value": "catalog development credentials",
+      "reason": "Deterministic local authentication; transaction log flushing remains default."
+    }
+  ],
+  "offlineImport": {
+    "heap": "25% of the observed container memory limit",
+    "maxOffHeapMemory": "50% of the observed container memory limit",
+    "reason": "Offline importer uses the server's CPU, memory and swap limits; leaves 25% for native overhead. Dates are converted to epoch-millisecond longs before import."
+  },
+  "development": {
+    "reason": "Readiness smoke only. A budget below 6 GiB changes cache sizes and therefore the numbers, so it is not comparable with the measurements this table is for."
+  }
+}

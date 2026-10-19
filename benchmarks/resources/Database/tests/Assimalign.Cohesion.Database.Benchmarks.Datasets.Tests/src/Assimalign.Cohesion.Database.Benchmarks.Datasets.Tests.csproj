@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<!--
+		The dataset generators' determinism tests. A generator's contract is byte-identical output for a seed and
+		scale, which nothing else in this repository checks, so the tests travel with it.
+
+		CI does not run them: the benchmark workflow builds and runs the *.Benchmarks suites and has no test step
+		(CONVENTIONS.md). Run them by hand after changing a generator:
+		  dotnet test benchmarks/resources/Database/tests/Assimalign.Cohesion.Database.Benchmarks.Datasets.Tests/src
+		Set DBBENCH_LONG_TESTS=1 to include the scale-1 generation tests (about a minute per model).
+	-->
+	<PropertyGroup>
+		<RootNamespace>Assimalign.Cohesion.Database.Benchmarks.Datasets.Tests</RootNamespace>
+		<IsTestProject>true</IsTestProject>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\benchmarks\Assimalign.Cohesion.Database.Benchmarks.Datasets\src\Assimalign.Cohesion.Database.Benchmarks.Datasets.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+		<PackageReference Include="Shouldly" />
+	</ItemGroup>
+</Project>
