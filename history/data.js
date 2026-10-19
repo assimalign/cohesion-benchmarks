@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792416903310,
+  "lastUpdate": 1792416919571,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -3822,6 +3822,56 @@ window.BENCHMARK_DATA = {
             "range": "± 326.613",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079889\nmean 38425.773 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "00e8cb49c3ca66a73eac2bf997d449bd83a7801a",
+          "message": "Merge pull request #5 from assimalign/fix/benchmarks-ci-first-run\n\nfix(benchmarks): first measuring run failures (history bootstrap, keep-alive close, Python stall)",
+          "timestamp": "2026-10-19T10:03:39Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/00e8cb49c3ca66a73eac2bf997d449bd83a7801a"
+        },
+        "date": 1792416918709,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "OpenApiJsonBenchmarks.Parse_MicrosoftOpenApi",
+            "value": 88659.882,
+            "range": "± 6553.805",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080059\nmean 91488.532 ns"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Parse",
+            "value": 37555.888,
+            "range": "± 642.52",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080059\nmean 37506.118 ns"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Serialize_MicrosoftOpenApi",
+            "value": 25679.416,
+            "range": "± 465.65",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080059\nmean 25796.205 ns"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Serialize",
+            "value": 19499.873,
+            "range": "± 209.428",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080059\nmean 19490.163 ns"
           }
         ]
       }
