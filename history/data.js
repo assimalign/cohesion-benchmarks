@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792448931317,
+  "lastUpdate": 1792448946032,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -6064,6 +6064,56 @@ window.BENCHMARK_DATA = {
             "range": "± 871.314",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080061\nmean 44754.72 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "06c9dcd86539ac3365bc0bb6b3432db5ad769ce5",
+          "message": "Merge pull request #7 from assimalign/fix/record-both-metrics-on-alert\n\nRecord allocations even when the time series alerts",
+          "timestamp": "2026-10-19T20:26:47Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/06c9dcd86539ac3365bc0bb6b3432db5ad769ce5"
+        },
+        "date": 1792448945377,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "OtlpLogExporterBenchmarks.ExportAsync(BatchSize=1)",
+            "value": 3381.585,
+            "range": "± 15.068",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080384\nmean 3379.204 ns"
+          },
+          {
+            "name": "OtlpLogExporterBenchmarks.EnqueueThenFlush(BatchSize=1)",
+            "value": 3929.526,
+            "range": "± 31.69",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080384\nmean 3930.909 ns"
+          },
+          {
+            "name": "OtlpLogExporterBenchmarks.ExportAsync(BatchSize=64)",
+            "value": 96762.119,
+            "range": "± 533.453",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080384\nmean 96748.607 ns"
+          },
+          {
+            "name": "OtlpLogExporterBenchmarks.EnqueueThenFlush(BatchSize=64)",
+            "value": 98156.414,
+            "range": "± 962.416",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080384\nmean 97955.074 ns"
           }
         ]
       }
