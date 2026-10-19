@@ -316,10 +316,11 @@ pinned worktree the paused run used, and with it the problem that made it stale:
 
 Consequences the comparison has to respect:
 
-- **The pin follows `main`.** The Database area's rewrite and all of T1 are on PR #1168 and not on `main`, so
-  until it merges the suite measures the older interface-first engines. The API differences are tabulated in
-  COHESION-CAPABILITIES.md; they break the existing benchmarks the moment the pin crosses that merge, which is
-  the intended signal.
+- **The pin follows `main`, so a pin move can be a breaking change.** PR #1168 merged, and the pin crossing it at
+  `ci.44` turned the Database API from interface-first to concrete-first and stopped the suite compiling. That is
+  the mechanism working: a `dry` check fails, the call sites are migrated against the API that actually shipped,
+  and the move is one commit. Expect it again while the line is pre-release; COHESION-CAPABILITIES.md keeps the
+  shape of the last one.
 - **Engine data cannot outlive a format bump.** The storage record format and the compiled-schema document
   format both advance without an upgrade reader, and an older file is refused by design. So a loaded engine volume
   belongs to one Cohesion build: a comparison regenerates and reloads after the pin moves, and never carries a

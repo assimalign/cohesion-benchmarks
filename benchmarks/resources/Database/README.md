@@ -25,23 +25,18 @@ Three benchmarks, each measuring the embedded engine through the API an applicat
 - `Database.Sql.Language/SqlQueryParserBenchmarks` — parsing a point select, an insert and a join.
 - `Database.KeyValuePair/KeyValuePointBenchmarks` — a point read through one session.
 
-### These three will break when PR #1168 merges
-
-The suite measures the Cohesion packages from cohesion's `main`, and the Database area's rewrite is not on `main`
-yet: it is on `claude/database-inventory-sql-expansion-aa27d1` (PR #1168), where the API is concrete-first instead
-of interface-first. `SqlDatabaseEngine.Create(options)` becomes `Create(name, options)`, `IDatabase` becomes
-`SqlDatabase`, `QueryResult` becomes `DatabaseResult`, and key-value sessions lose their text overload. The full
-table is in [docs/COHESION-CAPABILITIES.md](docs/COHESION-CAPABILITIES.md#the-api-migration-1168-will-force).
-
-When the pin first moves to a build containing #1168, these three stop compiling and the `dry` check fails. That
-is the intended signal — fix the call sites then, against the API that actually shipped.
+These three were migrated on 2026-10-19 when the pin moved to `ci.44`, the first build carrying PR #1168: the
+Database API went from interface-first to concrete-first and they stopped compiling, exactly as planned. The
+shape of that break is kept in
+[docs/COHESION-CAPABILITIES.md](docs/COHESION-CAPABILITIES.md#the-api-migration-now-done), because anything else
+written against the older API needs the same edits.
 
 ## The comparison: what is here
 
 - **[docs/DESIGN.md](docs/DESIGN.md)** — the comparison's design: targets, the shared resource budget, the three
   datasets, the operation catalog, and how an operation is classified native, emulated or unsupported.
 - **[docs/COHESION-CAPABILITIES.md](docs/COHESION-CAPABILITIES.md)** — what the Cohesion engines can and cannot
-  express, with citations, for both `main` and the T1 tip. Read this before writing an operation; it is what keeps
+  express, with citations, as of the pinned build. Read this before writing an operation; it is what keeps
   a comparison honest rather than accidentally measuring a client-side workaround.
 - **[targets/catalog.json](targets/catalog.json)** — the five external engines, each a container the shared
   harness can start, with an identical 3 CPU / 6 GB budget and swap pinned to memory. Settings and their reasons
@@ -88,7 +83,7 @@ The run never reached full scale, but its development-scale pass and a root-caus
 existing issues and deliberately not refiled.
 
 T1 resolved many of the 25 matched items (they were T1's own tickets) but **none of the 28 new tasks**, because
-T1 changed the language surface and left the planner and executor alone. Re-verified at the T1 tip: `UPDATE` and
+T1 changed the language surface and left the planner and executor alone. Re-verified after T1: `UPDATE` and
 `DELETE` still scan to find their targets, there is still no cost model, no hash join, no index-only scan and no
 plan cache, `LIMIT` still materializes everything before windowing, rows are still decoded before the MVCC
 visibility test, the graph candidate budget is still charged before relationship type and direction are filtered,

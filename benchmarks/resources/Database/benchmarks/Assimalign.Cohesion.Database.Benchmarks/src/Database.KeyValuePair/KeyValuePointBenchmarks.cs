@@ -27,16 +27,16 @@ public class KeyValuePointBenchmarks
     private const int KeyCount = 1024;
 
     private KeyValueDatabaseEngine _engine = null!;
-    private IKeyValueDatabase _database = null!;
-    private IDatabaseSession _session = null!;
+    private KeyValueDatabase _database = null!;
+    private KeyValueDatabaseSession _session = null!;
     private byte[][] _keys = null!;
     private int _next;
 
     [GlobalSetup]
     public void Setup()
     {
-        _engine = KeyValueDatabaseEngine.Create(new KeyValueDatabaseEngineOptions { EngineName = "benchmarks" });
-        _database = (IKeyValueDatabase)_engine.CreateDatabaseAsync("benchmarks").AsTask().GetAwaiter().GetResult();
+        _engine = KeyValueDatabaseEngine.Create("benchmarks", new KeyValueDatabaseEngineOptions());
+        _database = _engine.CreateDatabaseAsync("benchmarks").AsTask().GetAwaiter().GetResult();
         _session = _database.CreateSessionAsync().AsTask().GetAwaiter().GetResult();
 
         byte[] value = new byte[128];

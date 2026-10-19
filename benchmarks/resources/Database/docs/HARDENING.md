@@ -1,8 +1,9 @@
 # Cohesion Database Hardening inventory
 
 > **Re-verified against T1 (2026-10-19).** This analysis was written against Cohesion `bf20be5eb`. T1 completed on
-> 2026-10-18 at `52edc41c8` (PR #1168), moving SQL from 33 of 49 executable clauses to 51 of 57, OQL to 31 of 32
-> and GQL to 26 of 33, and giving Documents a network server and client. Checking every finding against that tip:
+> 2026-10-18 at `52edc41c8`, **merged to `main` through PR #1168**, and ships in the pinned build
+> `10.0.0-preview.0.ci.44` (cohesion `179db17d`). It moved SQL from 33 of 49 executable clauses to 51 of 57, OQL to
+> 31 of 32 and GQL to 26 of 33, and gave Documents a network server and client. Checking every finding against it:
 >
 > - **All 28 new tasks (#1520–#1547) still stand.** T1 changed the language surface and left the planner,
 >   executor and storage alone. Spot-verified at the T1 tip: `UPDATE`/`DELETE` still scan to collect targets
@@ -13,14 +14,14 @@
 >   every record at open (`GraphStore.cs:27`, now a `VersionChain` per entry); the buffer pool still guards page
 >   I/O with one `_syncRoot`. The graph traversal bounds are unchanged at 100,000 matches and 1,000,000
 >   candidates.
-> - **Most of the 25 matched items were T1's own tickets** and are implemented on #1168 — among them #1109
+> - **Most of the 25 matched items were T1's own tickets** and merged with it — among them #1109
 >   (N-way, LEFT, CROSS, USING joins), #1116 (CTEs), #1113 (correlated subqueries and derived tables), #1120
 >   (scalar and temporal functions), #1115 (DISTINCT aggregates), #1112 (NULLS FIRST/LAST), #1129 (OQL
 >   LIMIT/OFFSET), #1135 (compound and unique document indexes), #1136 (array predicates and UNNEST), #1133 (OQL
 >   partial updates), #1138/#1142/#1144/#1147 (GQL parameters, ordering and paging, quantified paths, aggregates)
->   and #190 (the Documents wire server and client). All 25 were still open when checked, because #1168 has not
->   merged; they close with it.
-> - **The matched items T1 did not touch stay open work**: #1280, #1276, #1274, #1195, #1239, #1269, #1271, #1229.
+>   and #190 (the Documents wire server and client). Confirmed after the merge: all 15 of those are **closed**.
+> - **The matched items T1 did not touch stay open work**, and all eight still are: #1280, #1276, #1274, #1195,
+>   #1239, #1269, #1271, #1229. So are all 28 filed tasks.
 > - **Still absent after T1**, so the corresponding tasks keep their premise: bulk load on any model, a C# patch
 >   or batch API for documents, multikey document indexes, shortest-path distance and `NOT EXISTS` in GQL,
 >   RIGHT/FULL joins, window functions, and wire transactions for Graph. New since T1 and not yet filed:

@@ -4,28 +4,24 @@ What the Cohesion database engines can and cannot express, so the comparison's o
 **native**, **emulated** or **unsupported** (DESIGN.md §6) without guessing, and so the hardening analysis starts
 from evidence.
 
-**Two versions matter, and they differ enormously.**
-
-| | Commit | Where it is | What the suite sees |
-| --- | --- | --- | --- |
-| **`main`** | `ff7a93e80` | The CI packages this repository pins (`CohesionPackageVersion`) | Interface-first API, pre-T1 language surface. **What the BenchmarkDotNet suite compiles against today.** |
-| **T1 tip** | `52edc41c8` | Branch `claude/database-inventory-sql-expansion-aa27d1`, PR #1168, awaiting owner sign-off | Concrete-first API, the full T1 language surface. **What the comparison is designed for.** |
-
-The table below is the **T1 tip**. Re-verify it whenever #1168 moves or merges; the paths are relative to
+**T1 is on `main`** as of 2026-10-19: #1168 merged, and the pinned build `10.0.0-preview.0.ci.44`
+(cohesion `179db17d`) carries it, along with the follow-ups #1666 (constraint SQLSTATEs) and #1668 (upsert
+release-and-retry). The table below describes that build. Re-verify it when the pin moves; paths are relative to
 `resources/Database/` in cohesion unless another repository is named.
 
-> The earlier edition of this file described commit `bf20be5eb`. T1 landed on 2026-10-18 and moved SQL from 33 of
-> 49 executable clauses to **51 of 57**, OQL to **31 of 32** and GQL to **26 of 33**, so most of that edition's
-> "unsupported" rows are now native. What did **not** change is the planner and executor: every performance
-> limitation it recorded is still present.
+> Two earlier editions of this file are worth knowing about. The first described `bf20be5eb`, before T1; T1 moved
+> SQL from 33 of 49 executable clauses to **51 of 57**, OQL to **31 of 32** and GQL to **26 of 33**, so most of
+> that edition's "unsupported" rows are now native. The second described T1 as pending on a branch. What did
+> **not** change in either step is the planner and executor: every performance limitation recorded then is still
+> present.
 
-## The API migration #1168 will force
+## The API migration, now done
 
-`main` is interface-first; the T1 tip is concrete-first. `bf20be5eb` is **not** an ancestor of `main`, so this is
-not a fast-forward. Everything in this table breaks at the moment #1168 merges, including the three benchmarks
-already in the suite.
+`main` was interface-first before T1 and is concrete-first after it, which broke the three benchmarks in this
+suite the moment the pin crossed ci.44. They were migrated in the same change that moved the pin. The table is
+kept because it is the shape of the break, and anything else written against the older API needs the same edits.
 
-| Concern | `main` (pinned today) | T1 tip |
+| Concern | Before (≤ ci.38) | Now (≥ ci.44) |
 | --- | --- | --- |
 | Engine creation | `SqlDatabaseEngine.Create(options)` with `options.EngineName` | `SqlDatabaseEngine.Create(name, options)`; no `EngineName` on options |
 | Engine base | `: IDatabaseEngine` | `: DatabaseEngine` |
@@ -150,7 +146,7 @@ quadratic in N — 1,000 labels take 7.5 s, 2,000 take 42 s (`Graph/docs/DESIGN.
 
 ## Storage and schema formats
 
-| | T1 tip | `bf20be5eb` | `main` |
+| | Now (`main`, with T1) | `bf20be5eb` | `main` before T1 |
 | --- | --- | --- | --- |
 | Record space format | **25** (`Sql/src/Internal/SqlRowCodec.cs:87`) | 10 | 3 |
 | Compiled schema document | **`cohesion/database-schema/v7`** (`Sql.Schema/src/SqlCompiledSchema.cs:55`) | v4 | v1 |
