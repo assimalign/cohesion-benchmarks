@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792416695252,
+  "lastUpdate": 1792416697488,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -1076,6 +1076,70 @@ window.BENCHMARK_DATA = {
             "value": 46072,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000079864"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "00e8cb49c3ca66a73eac2bf997d449bd83a7801a",
+          "message": "Merge pull request #5 from assimalign/fix/benchmarks-ci-first-run\n\nfix(benchmarks): first measuring run failures (history bootstrap, keep-alive close, Python stall)",
+          "timestamp": "2026-10-19T10:03:39Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/00e8cb49c3ca66a73eac2bf997d449bd83a7801a"
+        },
+        "date": 1792416697080,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "BmffDocumentBenchmarks.Load - allocated",
+            "value": 19168,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080037"
+          },
+          {
+            "name": "MarkdownBenchmarks.Parse_Markdig - allocated",
+            "value": 19984,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080037"
+          },
+          {
+            "name": "MarkdownBenchmarks.Parse - allocated",
+            "value": 127657,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080037"
+          },
+          {
+            "name": "MarkdownBenchmarks.ToHtml_Markdig - allocated",
+            "value": 24224,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080037"
+          },
+          {
+            "name": "MarkdownBenchmarks.ToHtml - allocated",
+            "value": 147665,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080037"
+          },
+          {
+            "name": "YamlBenchmarks.Parse_YamlDotNet - allocated",
+            "value": 55928,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080037"
+          },
+          {
+            "name": "YamlBenchmarks.Parse - allocated",
+            "value": 46072,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.38 (ff7a93e80a9a) on GitHub Actions 1000080037"
           }
         ]
       }
