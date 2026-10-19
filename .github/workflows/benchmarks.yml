@@ -242,8 +242,12 @@ jobs:
             git push origin "$root:refs/heads/gh-pages"
           fi
 
+      # Both recorders run even when one alerts, so a time regression never costs us the
+      # allocation series for that commit; the gate below turns either alert into a red job.
       - name: Record time
+        id: time
         if: steps.convert.outputs.ready == 'true'
+        continue-on-error: true
         uses: benchmark-action/github-action-benchmark@4322e5726e6334590d251fc4f92bec0efafc45dc # v1.22.2
         with:
           name: ${{ matrix.suite.scope }}/${{ matrix.suite.area }} - time
@@ -261,7 +265,9 @@ jobs:
           alert-comment-cc-users: ${{ vars.BENCHMARK_ALERT_USERS }}
 
       - name: Record allocations
-        if: steps.convert.outputs.ready == 'true'
+        id: allocations
+        if: always() && steps.convert.outputs.ready == 'true'
+        continue-on-error: true
         uses: benchmark-action/github-action-benchmark@4322e5726e6334590d251fc4f92bec0efafc45dc # v1.22.2
         with:
           name: ${{ matrix.suite.scope }}/${{ matrix.suite.area }} - allocations
@@ -277,3 +283,12 @@ jobs:
           comment-on-alert: true
           fail-on-alert: true
           alert-comment-cc-users: ${{ vars.BENCHMARK_ALERT_USERS }}
+
+      # continue-on-error above stops one failed recorder from skipping the other, so the
+      # alert is re-raised here; without it a regression would land silently.
+      - name: Fail on a recorded alert
+        if: always() && (steps.time.outcome == 'failure' || steps.allocations.outcome == 'failure')
+        run: |
+          echo "time: ${{ steps.time.outcome }}  allocations: ${{ steps.allocations.outcome }}"
+          echo "::error::A benchmark alert or recording error was reported above. Both metric series were still recorded."
+          exit 1
