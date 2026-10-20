@@ -50,6 +50,7 @@
     <Project Path="benchmarks/resources/Database/benchmarks/Assimalign.Cohesion.Database.Benchmarks.Datasets/src/Assimalign.Cohesion.Database.Benchmarks.Datasets.csproj" />
     <Project Path="benchmarks/resources/Database/tests/Assimalign.Cohesion.Database.Benchmarks.Datasets.Tests/src/Assimalign.Cohesion.Database.Benchmarks.Datasets.Tests.csproj" />
     <Project Path="benchmarks/resources/EmailHub/benchmarks/Assimalign.Cohesion.EmailHub.Benchmarks/src/Assimalign.Cohesion.EmailHub.Benchmarks.csproj" />
+    <Project Path="benchmarks/resources/EventHub/benchmarks/Assimalign.Cohesion.EventHub.Benchmarks/src/Assimalign.Cohesion.EventHub.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/LogSpace/benchmarks/Assimalign.Cohesion.LogSpace.Benchmarks/src/Assimalign.Cohesion.LogSpace.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/NatGateway/benchmarks/Assimalign.Cohesion.NatGateway.Benchmarks/src/Assimalign.Cohesion.NatGateway.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/Rezolvr/benchmarks/Assimalign.Cohesion.Rezolvr.Benchmarks/src/Assimalign.Cohesion.Rezolvr.Benchmarks.csproj" />
