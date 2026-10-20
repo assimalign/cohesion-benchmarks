@@ -23,6 +23,8 @@ namespace Assimalign.Cohesion.OpenApi.Benchmarks.OpenApi.Serialization;
 /// The input is the OpenAPI Initiative's "Tic Tac Toe" 3.1 example (paths, operations, parameters, components,
 /// security schemes and <c>$ref</c>s), embedded beside this class as <c>tictactoe.json</c> (CC-BY-4.0, see
 /// NOTICE.md).
+/// Microsoft semantic validation is disabled so both sides measure syntax-to-model parsing;
+/// document validation has its own standalone benchmarks.
 /// </remarks>
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 public class OpenApiJsonBenchmarks
@@ -33,6 +35,7 @@ public class OpenApiJsonBenchmarks
     private string _json = null!;
     private OpenApiDocument _document = null!;
     private MicrosoftOpenApiDocument _microsoftDocument = null!;
+    private global::Microsoft.OpenApi.Reader.OpenApiReaderSettings _settings = null!;
 
     [GlobalSetup]
     public void Setup()
@@ -43,6 +46,10 @@ public class OpenApiJsonBenchmarks
         _json = reader.ReadToEnd();
 
         _document = OpenApiJson.Parse(_json);
+        _settings = new global::Microsoft.OpenApi.Reader.OpenApiReaderSettings
+        {
+            RuleSet = global::Microsoft.OpenApi.ValidationRuleSet.GetEmptyRuleSet(),
+        };
         _microsoftDocument = Parse_MicrosoftOpenApi().Document
             ?? throw new InvalidOperationException("Microsoft.OpenApi could not read the description.");
 
@@ -54,7 +61,7 @@ public class OpenApiJsonBenchmarks
 
     [Benchmark(Baseline = true)]
     [BenchmarkCategory(parseCategory)]
-    public MicrosoftReadResult Parse_MicrosoftOpenApi() => MicrosoftOpenApiDocument.Parse(_json, "json");
+    public MicrosoftReadResult Parse_MicrosoftOpenApi() => MicrosoftOpenApiDocument.Parse(_json, "json", _settings);
 
     [Benchmark]
     [BenchmarkCategory(parseCategory)]
