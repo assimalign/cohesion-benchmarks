@@ -1,6 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<CohesionReference Include="Assimalign.Cohesion.Logging" />
+		<CohesionReference Include="Assimalign.Cohesion.Logging.Console" />
+		<CohesionReference Include="Assimalign.Cohesion.Logging.Debug" />
+		<CohesionReference Include="Assimalign.Cohesion.Logging.EventSource" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->
