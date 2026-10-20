@@ -13,9 +13,9 @@ namespace Assimalign.Cohesion.Web.Benchmarks.External;
 [ExternalWorkload]
 public class ProcessStartupBenchmarks
 {
-    public IEnumerable<string> Servers => WebTargets.Catalog.AvailableIds(ExternalTargetKind.Process);
+    public IEnumerable<string> Servers => WebTargets.AvailableIds(ExternalTargetKind.Process);
 
-    public IEnumerable<string> Commands => WebTargets.Catalog.AvailableIds(ExternalTargetKind.Command);
+    public IEnumerable<string> Commands => WebTargets.AvailableIds(ExternalTargetKind.Command);
 
     /// <summary>Launch to the first successful HTTP response (the target's readiness probe), then stop.</summary>
     [Benchmark]

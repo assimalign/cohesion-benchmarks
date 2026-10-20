@@ -217,15 +217,57 @@ measures the cohesion CI packages at the repository's `CohesionPackageVersion`:
 
 | Folder | Measures | Baseline |
 | --- | --- | --- |
+| `Web` | Dispatch through 1 or 10 middleware to a status-setting terminal (4 cases) | ASP.NET Core application pipeline |
+| `Web.Api` | Typed endpoint binding of an integer route value, integer query value and context (2 cases) | ASP.NET Core RequestDelegateFactory |
+| `Web.Hosting` | Production application-feature stamping and aggregate consumption, 4 or 16 features (2 cases) | Standalone |
+| `Web.Routing` | Endpoint selection, integer constraint and value capture, hit/miss over 1 or 100 routes (8 cases) | ASP.NET Core routing middleware |
+| `Web.Serialization` | HTTP JSON read/write with identical source-generated web contracts, 32 or 4096 text characters (8 cases) | ASP.NET Core HTTP JSON extensions |
 | `Web.Authentication.Bearer` | One request authenticated with an HS256 bearer token (service, handler, principal) | ASP.NET Core JwtBearer |
 | `Web.Authentication.Cookie` | One request authenticated with a data-protected cookie | ASP.NET Core cookies |
 | `Web.Authorization` | A `RequireRole` policy evaluation | ASP.NET Core authorization |
-| `External` | One HTTP/1.1 round trip, and launch-to-ready time, against servers in other processes: the published Cohesion and ASP.NET Core servers (when `run.ps1` has published them), Node.js, Python and nginx (container) | — |
+| `Web.Antiforgery` | Anonymous data-protected token-pair issue and header-token validation (4 cases) | ASP.NET Core antiforgery |
+| `Web.RateLimiting` | Global concurrency middleware admit/reject, one permit and no queue (4 cases) | ASP.NET Core rate-limiting middleware |
+| `Web.Caching` | Warm 1 KiB output-cache hit and Authorization-header bypass (4 cases) | ASP.NET Core output-cache middleware |
+| `Web.Validation` | Registered profile validation, valid input or 400 problem+json with errors (2 cases) | Standalone |
+| `Web.ErrorHandling` | Exception-boundary success or thrown fault rendered as 500 problem+json (2 cases) | Standalone |
+| `External` | Existing HTTP/1.1 round trip and process-startup series; explicit opt-in only | — |
+
+The default suite has **46 in-process cases**, including **40 added cases across 10 classes**. It reuses
+`Fixtures/BenchmarkHttpContext.cs`; `PipelineFixture` builds the public production Web pipeline without starting
+the host. Registered application features are stamped by that pipeline. The feature-stamping benchmark uses a
+fresh, capacity-sized exchange; most component benchmarks reuse prepared exchanges and reset their output state.
+Authentication and antiforgery use fresh exchanges where per-request handler caches would otherwise skip work.
+
+The new counterparts all come from the existing `Microsoft.AspNetCore.App` framework reference, so no new
+counterpart NuGet pins are needed. Paired cases use the same inputs and work: typed integer binding without
+serialization; constrained GET endpoint selection without dispatch; JSON with identical generated contracts;
+anonymous antiforgery with purpose-bound data protection; BCL concurrency limiters with identical settings;
+and output-cache replay of the same response. Setup checks results, cache handler counts, limiter decisions,
+and successful/invalid token validation before measurement. Cache population is setup-only: the fixture supplies
+the server's successful-response-completion notification after warming Cohesion's cache.
+
+Counterparts deliberately not used: direct System.Text.Json calls omit HTTP media-type work; ASP.NET Core's
+default model validation and exception handler differ in validation profiles, error payload and re-execution;
+its feature collection alone omits Cohesion's application-feature stamping contract. Request `no-cache` was
+rejected as a paired cache-bypass scenario because these server-owned caches honor it differently; both bypass
+an Authorization-bearing request by default.
+
+Remaining in-process gaps: body/form/header binding and binding failures; route groups, host matching, link
+generation and method mismatch; authentication failures, cookie issue/renewal, certificate authentication and
+composite authorization policies; authenticated/form antiforgery and antiforgery endpoint middleware; queued or
+named endpoint rate limits; cache fill, expiration, Vary variants, tag eviction and concurrent coalescing; nested
+validation and status-code pages. No new cases cover Query, HostFiltering, HttpsPolicy, Rewrite, SecurityHeaders,
+RequestTimeouts, ForwardedHeaders, Sessions, Forms, Health, CookiePolicy, Cors, WebSockets, StaticFiles,
+Compression, Diagnostics, OpenApi, Testing, ApplicationModel or transport/server lifecycle. Many of these still
+have end-to-end scenarios above; those do not substitute for isolated in-process measurements.
 
 ```powershell
 ../../../scripts/Invoke-Benchmarks.ps1 -Area Web
-$env:COHESION_BENCHMARK_TARGETS = 'cohesion,aspnetcore,node'   # restrict the external targets
+$env:COHESION_BENCHMARK_TARGETS = 'cohesion,aspnetcore,node'   # opt into existing external targets
 ```
+
+Leave `COHESION_BENCHMARK_TARGETS` unset for the default, socket-free suite and CI dry verification. Existing
+external benchmark names are preserved; they enumerate no targets until explicitly selected.
 
 [results/2026-10-18-auth-triage](results/2026-10-18-auth-triage/triage-report.md) is the investigation behind
 the authentication rows of the 2026-10-17 results: the HTTP/1.1 request head was read one octet at a time.
