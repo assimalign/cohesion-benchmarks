@@ -264,6 +264,13 @@ only the baseline has ever recorded, so a repository that runs one leg is not of
 view names the leg it is showing and links to the same area on the others; those are links rather than another
 column, because numbers from two machines do not belong in one comparison.
 
+**Expanding a benchmark charts its legs together.** Above the per-leg charts, one chart for time and one for
+allocations overlay every leg that recorded this benchmark, on shared axes, with each leg's latest value in the
+legend — this is where an operating system or framework difference is actually visible. Points are placed by
+**date**, not by position, because the legs record different numbers of runs and lining them up by index would
+put one machine's Monday beside another's Thursday. The chart is omitted when only one leg has the benchmark,
+so a single-leg repository sees exactly what it sees today.
+
 That split is derived from the names, so naming a counterpart after itself is what puts a benchmark in the first
 group. A suffixed name with no unsuffixed sibling stays a benchmark in its own right.
 

@@ -198,6 +198,14 @@ tr.sect td span { color: var(--fg-faint); }
 .chart h4 { margin: 0 0 2px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-faint); }
 .chart .cur { font-family: var(--mono); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .chart svg { width: 100%; height: 108px; overflow: visible; }
+/* The cross-leg chart spans the detail grid: several lines in one 560px column is unreadable. */
+.chart.wide { grid-column: 1 / -1; }
+.chart.wide svg { height: 132px; }
+.chart.wide .lbl { font-size: 13px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 2px 0 6px; }
+.lgi { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--fg-dim); font-family: var(--mono); }
+.lgi i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+.lgi b { color: var(--fg); font-weight: 600; font-variant-numeric: tabular-nums; }
 .chart .gl { stroke: var(--line); stroke-width: 1; }
 .chart .lbl { fill: var(--fg-faint); font-size: 9.5px; font-family: var(--mono); }
 .runs { margin-top: 12px; font-size: 12px; color: var(--fg-dim); }
@@ -553,6 +561,65 @@ function chart(series, label, unit) {
     '" preserveAspectRatio="none" role="img" aria-label="' + esc(label) + ' history">' + parts.join("") + "</svg></div>";
 }
 
+// One benchmark, every leg it recorded on, on one set of axes. Points are placed by date rather than by
+// index: legs record different numbers of runs (a pull request measures Linux only, AOT measures five areas),
+// so lining them up by position would put a Monday Windows run above a Thursday Linux one.
+var LEG_COLOURS = ["#5b9dff", "#e8a33d", "#46b97a", "#c07ddb", "#e2706b", "#54bcc4"];
+
+function chartLegs(sets, label, unit) {
+  var live = sets.filter(function (s) { return s.series.length; });
+  if (live.length < 2) return "";
+
+  // A wider nominal viewBox than the narrow charts: these span the whole detail row, and with
+  // preserveAspectRatio="none" a 560-wide box stretched to full width stretches the axis text with it.
+  var w = 1000, h = 128, padL = 60, padR = 14, padT = 8, padB = 18;
+  var all = live.reduce(function (acc, s) { return acc.concat(s.series); }, []);
+  var values = all.map(function (p) { return p.value; });
+  var min = Math.min.apply(null, values), max = Math.max.apply(null, values);
+  if (min === max) { min = min * 0.95 || -1; max = max * 1.05 || 1; }
+  var span = max - min;
+  var dates = all.map(function (p) { return p.date; });
+  var minD = Math.min.apply(null, dates), maxD = Math.max.apply(null, dates);
+  var x = function (d) { return maxD === minD ? padL + (w - padL - padR) / 2 : padL + ((d - minD) / (maxD - minD)) * (w - padL - padR); };
+  var y = function (v) { return padT + (1 - (v - min) / span) * (h - padT - padB); };
+
+  var parts = [];
+  [0, 0.5, 1].forEach(function (f) {
+    var yy = padT + f * (h - padT - padB);
+    parts.push('<line class="gl" x1="' + padL + '" y1="' + yy.toFixed(1) + '" x2="' + (w - padR) + '" y2="' + yy.toFixed(1) + '"/>');
+    parts.push('<text class="lbl" x="' + (padL - 5) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">' + esc(fmtNum(max - f * span)) + "</text>");
+  });
+
+  live.forEach(function (s, idx) {
+    var colour = LEG_COLOURS[idx % LEG_COLOURS.length];
+    var pts = s.series.slice().sort(function (a, b) { return a.date - b.date; });
+    if (pts.length > 1) {
+      var d = pts.map(function (p, i) { return (i ? "L" : "M") + x(p.date).toFixed(1) + " " + y(p.value).toFixed(1); }).join(" ");
+      parts.push('<path d="' + d + '" fill="none" stroke="' + colour + '" stroke-width="1.6"/>');
+    }
+    pts.forEach(function (p) {
+      var co = cohesionOf(p.extra);
+      var tip = s.leg + "  ·  " + fmtValue(p.value, unit) + "  ·  " + fmtDate(p.date) + "  ·  " + p.commit.id.slice(0, 8) +
+        (co ? "  ·  cohesion " + co.version : "");
+      parts.push('<circle cx="' + x(p.date).toFixed(1) + '" cy="' + y(p.value).toFixed(1) + '" r="2.6" fill="' + colour +
+        '"><title>' + esc(tip) + "</title></circle>");
+    });
+  });
+  parts.push('<text class="lbl" x="' + padL + '" y="' + (h - 4) + '">' + esc(fmtDate(minD)) + "</text>");
+  parts.push('<text class="lbl" x="' + (w - padR) + '" y="' + (h - 4) + '" text-anchor="end">' + esc(fmtDate(maxD)) + "</text>");
+
+  // The legend doubles as the readout: each leg's latest value, so the comparison is a number and not an eyeball.
+  var legend = live.map(function (s, idx) {
+    var latest = s.series[s.series.length - 1];
+    return '<span class="lgi"><i style="background:' + LEG_COLOURS[idx % LEG_COLOURS.length] + '"></i>' +
+      esc(s.leg) + ' <b>' + esc(fmtValue(latest.value, unit)) + "</b></span>";
+  }).join("");
+
+  return '<div class="chart wide"><h4>' + esc(label) + '</h4><div class="legend">' + legend + "</div>" +
+    '<svg viewBox="0 0 ' + w + " " + h + '" preserveAspectRatio="none" role="img" aria-label="' +
+    esc(label) + '">' + parts.join("") + "</svg></div>";
+}
+
 // ---------------------------------------------------------------- views
 function headerBits() {
   var newest = null, build = null;
@@ -883,12 +950,24 @@ document.addEventListener("click", function (e) {
     var group = benchGroups(area).find(function (g) { return g.key === key; });
     if (!group) return;
 
-    // Cohesion first, then each counterpart, so the charts read in the order the comparison is stated.
+    // Across the legs first, when there is more than one: the same benchmark on each machine, framework and
+    // runtime, on shared axes. This is the comparison the per-leg charts below cannot show, because each of
+    // those is one leg's own history.
+    var legSets = function (metric) {
+      return AREAS.filter(function (a) { return a.base === area.base; })
+        .map(function (a) { return { leg: variantLabel(a.variant), series: seriesFor(a, metric, group.subject) }; });
+    };
+    var tUnit = (seriesFor(area, "time", group.subject)[0] || {}).unit || "";
+    var aUnit = (seriesFor(area, "alloc", group.subject)[0] || {}).unit || "";
+    var charts = chartLegs(legSets("time"), "Cohesion · time across legs", tUnit) +
+      chartLegs(legSets("alloc"), "Cohesion · allocated across legs", aUnit);
+
+    // Then Cohesion and each counterpart on the leg being viewed, in the order the comparison is stated.
     var subjects = [{ name: group.subject, label: "Cohesion" }].concat(group.rivals);
-    var charts = subjects.map(function (s) {
+    charts += subjects.map(function (s) {
       var ts = seriesFor(area, "time", s.name), as = seriesFor(area, "alloc", s.name);
-      return chart(ts, s.label + " · time", ts.length ? ts[0].unit : "") +
-        chart(as, s.label + " · allocated", as.length ? as[0].unit : "");
+      return chart(ts, s.label + " · time · " + variantLabel(area.variant), ts.length ? ts[0].unit : "") +
+        chart(as, s.label + " · allocated · " + variantLabel(area.variant), as.length ? as[0].unit : "");
     }).join("");
 
     var base = seriesFor(area, "time", group.subject);
