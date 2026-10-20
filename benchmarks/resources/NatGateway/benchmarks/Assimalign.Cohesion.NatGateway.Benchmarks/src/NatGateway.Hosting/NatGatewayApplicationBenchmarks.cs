@@ -22,6 +22,20 @@ public class NatGatewayApplicationBenchmarks
     [Params(1, 16)]
     public int ServiceCount { get; set; }
 
+    /// <summary>Composition, validated build and disposal without starting background work.</summary>
+    [Benchmark]
+    public async Task<NatGatewayApplicationContext> Build()
+    {
+        NatGatewayApplicationBuilder builder = NatGatewayApplication.CreateBuilder(Arguments);
+        for (int index = 0; index < ServiceCount; index++)
+        {
+            builder.AddService(static _ => new WaitForStopService());
+        }
+
+        await using NatGatewayApplication application = builder.Build();
+        return application.Context;
+    }
+
     [Benchmark]
     public async Task BuildStartStop()
     {
