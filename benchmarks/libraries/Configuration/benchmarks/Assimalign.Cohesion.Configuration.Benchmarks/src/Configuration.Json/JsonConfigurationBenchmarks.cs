@@ -28,7 +28,7 @@ public class JsonConfigurationBenchmarks
     {
         CohesionConfiguration.IConfiguration configuration = SampleSettings.BuildCohesion();
         string? value = configuration[SampleSettings.ValueKey];
-        (configuration as IDisposable)?.Dispose();
+        ((CohesionConfiguration.Configuration)configuration).Dispose();
         return value;
     }
 }
