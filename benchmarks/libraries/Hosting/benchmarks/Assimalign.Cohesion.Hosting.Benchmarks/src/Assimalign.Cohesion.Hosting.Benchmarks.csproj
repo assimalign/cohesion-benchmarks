@@ -1,10 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<CohesionReference Include="Assimalign.Cohesion.Hosting" />
+		<CohesionReference Include="Assimalign.Cohesion.Hosting.Health" />
+		<CohesionReference Include="Assimalign.Cohesion.Hosting.Resources" />
+		<CohesionReference Include="Assimalign.Cohesion.Hosting.Telemetry" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" />
 	</ItemGroup>
 </Project>

@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 
 using BenchmarkDotNet.Attributes;
 
+using Assimalign.Cohesion.Benchmarks.External;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using ExtensionsHosting = Microsoft.Extensions.Hosting;
@@ -23,6 +25,7 @@ namespace Assimalign.Cohesion.Hosting.Benchmarks.Hosting;
 /// which the resource suites measure), so the ratio reads as "what each host costs by default", not as a like-for-
 /// like comparison of the same features.
 /// </remarks>
+[ExternalWorkload]
 public class HostLifecycleBenchmarks
 {
     [Params(1, 16)]
