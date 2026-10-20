@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792485607441,
+  "lastUpdate": 1792485625848,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -17155,6 +17155,56 @@ window.BENCHMARK_DATA = {
             "range": "± 49.208",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.44 (179db17d132b) on GitHub Actions 1000080403\nmean 9390.915 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "699980c0cf28b76854e64dc51e4e45d2c5c05dee",
+          "message": "Merge pull request #8 from assimalign/feature/benchmark-suite-expansion\n\nBuild out the benchmark suites: 148 to 988 cases across every area but Database",
+          "timestamp": "2026-10-20T07:59:35Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/699980c0cf28b76854e64dc51e4e45d2c5c05dee"
+        },
+        "date": 1792485624638,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "NatGatewayApplicationBenchmarks.Build(ServiceCount=1)",
+            "value": 1921.057,
+            "range": "± 21.76",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080691\nmean 1914.339 ns"
+          },
+          {
+            "name": "NatGatewayApplicationBenchmarks.BuildStartStop(ServiceCount=1)",
+            "value": 2515.523,
+            "range": "± 35.771",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080691\nmean 2522.201 ns"
+          },
+          {
+            "name": "NatGatewayApplicationBenchmarks.Build(ServiceCount=16)",
+            "value": 5276.119,
+            "range": "± 72.472",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080691\nmean 5269.505 ns"
+          },
+          {
+            "name": "NatGatewayApplicationBenchmarks.BuildStartStop(ServiceCount=16)",
+            "value": 6956.582,
+            "range": "± 135.263",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080691\nmean 6913.623 ns"
           }
         ]
       }
