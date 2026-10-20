@@ -271,6 +271,15 @@ legend — this is where an operating system or framework difference is actually
 put one machine's Monday beside another's Thursday. The chart is omitted when only one leg has the benchmark,
 so a single-leg repository sees exactly what it sees today.
 
+A **Compare across** dropdown picks the axis: *Every leg*, or one of operating system, framework and runtime.
+Choosing an axis shows only the legs that differ along **that axis alone**, holding the others at baseline, and
+names each line by its value on it (`linux`, `windows`, `macos`). This is the difference between a comparison
+and a pile of lines: a leg such as `windows, aot` differs along two axes at once, so it belongs in *Every leg*
+and in neither single-axis view — including it would make a Windows-versus-Linux reading silently also a
+JIT-versus-AOT one. Only axes the legs actually vary along are offered, the choice is one setting for the page
+(changing it redraws every open benchmark, so two charts never answer different questions), and the dropdown
+appears only where there is more than one leg.
+
 That split is derived from the names, so naming a counterpart after itself is what puts a benchmark in the first
 group. A suffixed name with no unsuffixed sibling stays a benchmark in its own right.
 

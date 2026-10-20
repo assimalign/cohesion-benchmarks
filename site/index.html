@@ -198,6 +198,15 @@ tr.sect td span { color: var(--fg-faint); }
 .chart h4 { margin: 0 0 2px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-faint); }
 .chart .cur { font-family: var(--mono); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .chart svg { width: 100%; height: 108px; overflow: visible; }
+/* ---------- across-legs axis picker ---------- */
+.axispick { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; }
+.axispick .axislabel { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-faint); }
+.axispick select {
+  font: inherit; font-size: 12px; font-family: var(--mono); padding: 3px 8px; border-radius: 6px;
+  border: 1px solid var(--line-strong); background: var(--panel-2); color: var(--fg);
+}
+.axisnote { font-size: 11.5px; color: var(--fg-faint); }
+
 /* The cross-leg chart spans the detail grid: several lines in one 560px column is unreadable. */
 .chart.wide { grid-column: 1 / -1; }
 .chart.wide svg { height: 132px; }
@@ -277,12 +286,44 @@ function areaOf(key) { return key.replace(/ - (time|allocations?)$/, ""); }
 // the JIT -- records under the bare area name, as it always has; every other leg appends its label, so
 // "libraries/Http (windows)" and "libraries/Http (aot)" are separate series rather than extra points in the
 // Linux one. Mixing runners into one series would make every point a comparison between machines.
-var BASELINE_VARIANT = "linux · net10.0 · jit";
+var BASELINE_TFM = "net10.0";
+var BASELINE_VARIANT = "linux · " + BASELINE_TFM + " · jit";
 function splitVariant(id) {
   var m = /^(.*?)\s*\(([^()]*)\)\s*$/.exec(id);
   return m ? { base: m[1], variant: m[2] } : { base: id, variant: "" };
 }
 function variantLabel(v) { return v === "" ? BASELINE_VARIANT : v; }
+
+// A variant label is the non-default parts of (os, framework, runtime), comma-joined, so "windows",
+// "aot" and "windows, aot" are all possible. Classify each part back into its axis so the charts can
+// ask one question at a time: an OS comparison must hold the framework and runtime still, or it is not
+// a comparison of operating systems.
+var LEG_OS = ["linux", "windows", "macos"];
+var LEG_RUNTIME = ["jit", "aot"];
+function legDims(variant) {
+  var dims = { os: "linux", tfm: BASELINE_TFM, runtime: "jit" };
+  String(variant).split(",").map(function (p) { return p.trim(); }).filter(Boolean).forEach(function (p) {
+    if (LEG_OS.indexOf(p) >= 0) dims.os = p;
+    else if (LEG_RUNTIME.indexOf(p) >= 0) dims.runtime = p;
+    else if (/^net\d/i.test(p)) dims.tfm = p;
+  });
+  return dims;
+}
+
+// The axes worth offering: one where the legs differ only along it, everything else at baseline.
+var LEG_AXES = [
+  { key: "os", label: "Operating system" },
+  { key: "tfm", label: "Framework" },
+  { key: "runtime", label: "Runtime" },
+];
+function axisLegs(areasForBase, axis) {
+  return areasForBase.filter(function (a) {
+    var d = legDims(a.variant);
+    return LEG_AXES.every(function (ax) {
+      return ax.key === axis || d[ax.key] === (ax.key === "os" ? "linux" : ax.key === "tfm" ? BASELINE_TFM : "jit");
+    });
+  });
+}
 
 var AREAS = (function () {
   var map = new Map();
@@ -950,38 +991,100 @@ document.addEventListener("click", function (e) {
     var group = benchGroups(area).find(function (g) { return g.key === key; });
     if (!group) return;
 
-    // Across the legs first, when there is more than one: the same benchmark on each machine, framework and
-    // runtime, on shared axes. This is the comparison the per-leg charts below cannot show, because each of
-    // those is one leg's own history.
-    var legSets = function (metric) {
-      return AREAS.filter(function (a) { return a.base === area.base; })
-        .map(function (a) { return { leg: variantLabel(a.variant), series: seriesFor(a, metric, group.subject) }; });
-    };
-    var tUnit = (seriesFor(area, "time", group.subject)[0] || {}).unit || "";
-    var aUnit = (seriesFor(area, "alloc", group.subject)[0] || {}).unit || "";
-    var charts = chartLegs(legSets("time"), "Cohesion · time across legs", tUnit) +
-      chartLegs(legSets("alloc"), "Cohesion · allocated across legs", aUnit);
-
-    // Then Cohesion and each counterpart on the leg being viewed, in the order the comparison is stated.
-    var subjects = [{ name: group.subject, label: "Cohesion" }].concat(group.rivals);
-    charts += subjects.map(function (s) {
-      var ts = seriesFor(area, "time", s.name), as = seriesFor(area, "alloc", s.name);
-      return chart(ts, s.label + " · time · " + variantLabel(area.variant), ts.length ? ts[0].unit : "") +
-        chart(as, s.label + " · allocated · " + variantLabel(area.variant), as.length ? as[0].unit : "");
-    }).join("");
-
-    var base = seriesFor(area, "time", group.subject);
-    var runs = base.length ? base : seriesFor(area, "alloc", group.subject);
-    var list = runs.slice().reverse().slice(0, 6).map(function (p) {
-      var co = cohesionOf(p.extra);
-      return '<code>' + esc(p.commit.id.slice(0, 8)) + "</code> " + esc(fmtDate(p.date)) +
-        (co ? " · cohesion " + esc(co.version.replace(/^10\.0\.0-preview\.0\./, "")) : "");
-    }).join("<br>");
-
-    det.querySelector("td").innerHTML = '<div class="chartwrap">' + charts + "</div>" +
-      (list ? '<div class="runs"><strong>Recent runs</strong><br>' + list + "</div>" : "");
+    det.querySelector("td").innerHTML = renderDetail(area, group);
     det.hidden = false;
   }
+});
+
+// Which axis the across-legs charts compare along: "all", or one of LEG_AXES. Kept across redraws so
+// choosing "Operating system" once holds while you open other benchmarks.
+var LEG_AXIS = "all";
+
+function renderDetail(area, group) {
+  var siblings = AREAS.filter(function (a) { return a.base === area.base; });
+  var chosen = LEG_AXIS === "all" ? siblings : axisLegs(siblings, LEG_AXIS);
+
+  // Only offer an axis the legs actually differ along; with one framework, "Framework" would be a
+  // dropdown entry that changes nothing.
+  var axes = LEG_AXES.filter(function (ax) {
+    var vals = {};
+    siblings.forEach(function (a) { vals[legDims(a.variant)[ax.key]] = 1; });
+    return Object.keys(vals).length > 1;
+  });
+
+  var legSets = function (metric) {
+    return chosen.map(function (a) {
+      var d = legDims(a.variant);
+      // When comparing along one axis, name each line by its value on that axis: "windows" reads better
+      // than "windows · net10.0 · jit" when the rest is held still by construction.
+      return {
+        leg: LEG_AXIS === "all" ? variantLabel(a.variant) : d[LEG_AXIS],
+        series: seriesFor(a, metric, group.subject),
+      };
+    });
+  };
+
+  var tUnit = (seriesFor(area, "time", group.subject)[0] || {}).unit || "";
+  var aUnit = (seriesFor(area, "alloc", group.subject)[0] || {}).unit || "";
+  var axisName = LEG_AXIS === "all" ? "legs"
+    : (LEG_AXES.find(function (a) { return a.key === LEG_AXIS; }) || {}).label.toLowerCase();
+  var across = chartLegs(legSets("time"), "Cohesion · time across " + axisName, tUnit) +
+    chartLegs(legSets("alloc"), "Cohesion · allocated across " + axisName, aUnit);
+
+  var picker = "";
+  if (axes.length && siblings.length > 1) {
+    picker = '<div class="axispick"><span class="axislabel">Compare across</span>' +
+      '<select class="legaxis" aria-label="Compare the across-legs charts along"><option value="all"' + (LEG_AXIS === "all" ? " selected" : "") + ">Every leg</option>" +
+      axes.map(function (ax) {
+        return '<option value="' + ax.key + '"' + (LEG_AXIS === ax.key ? " selected" : "") + ">" + esc(ax.label) + "</option>";
+      }).join("") + "</select>" +
+      (LEG_AXIS === "all" ? "" : '<span class="axisnote">other axes held at ' + esc(BASELINE_VARIANT) + "</span>") +
+      "</div>";
+    // With one leg on the chosen axis there is nothing to overlay; say so rather than showing a gap.
+    if (!across) {
+      across = '<p class="note">Only one leg has recorded this benchmark on that axis, so there is nothing to ' +
+        "compare yet. The first multi-leg run fills this in.</p>";
+    }
+  }
+
+  var subjects = [{ name: group.subject, label: "Cohesion" }].concat(group.rivals);
+  var perLeg = subjects.map(function (s) {
+    var ts = seriesFor(area, "time", s.name), as = seriesFor(area, "alloc", s.name);
+    return chart(ts, s.label + " · time · " + variantLabel(area.variant), ts.length ? ts[0].unit : "") +
+      chart(as, s.label + " · allocated · " + variantLabel(area.variant), as.length ? as[0].unit : "");
+  }).join("");
+
+  var base = seriesFor(area, "time", group.subject);
+  var runs = base.length ? base : seriesFor(area, "alloc", group.subject);
+  var list = runs.slice().reverse().slice(0, 6).map(function (p) {
+    var co = cohesionOf(p.extra);
+    return '<code>' + esc(p.commit.id.slice(0, 8)) + "</code> " + esc(fmtDate(p.date)) +
+      (co ? " · cohesion " + esc(co.version.replace(/^10\.0\.0-preview\.0\./, "")) : "");
+  }).join("<br>");
+
+  return picker + '<div class="chartwrap">' + across + perLeg + "</div>" +
+    (list ? '<div class="runs"><strong>Recent runs</strong><br>' + list + "</div>" : "");
+}
+
+// Changing the axis redraws every open detail, not just the one whose dropdown was used: the axis is one
+// setting for the page, and leaving other open rows on the previous axis makes two charts that look alike
+// answer different questions.
+document.addEventListener("change", function (e) {
+  var sel = e.target.closest && e.target.closest(".legaxis");
+  if (!sel) return;
+  LEG_AXIS = sel.value;
+  var det = sel.closest("tr.detailrow");
+  var id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+  var area = AREAS.find(function (a) { return a.id === id; });
+  if (!area) return;
+  var groups = benchGroups(area);
+  Array.prototype.forEach.call(document.querySelectorAll("tr.detailrow:not([hidden])"), function (open) {
+    var group = groups.find(function (g) { return g.key === open.dataset.for; });
+    if (group) open.querySelector("td").innerHTML = renderDetail(area, group);
+  });
+  // Keep the keyboard where it was; the node was replaced by the redraw.
+  var again = det && det.querySelector(".legaxis");
+  if (again) again.focus();
 });
 
 // The metric toggle decides what the overview sorts by and what the sparklines show.
