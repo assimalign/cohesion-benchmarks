@@ -175,6 +175,43 @@ Profiles (`--profile`, `-Profile`, or `COHESION_BENCHMARK_PROFILE`): `local` (Be
 investigations), `ci` (1 launch, 5 warmups, 20 iterations: bounded and comparable run to run), `dry` (one
 invocation: proves it runs). Results land in `.artifacts/results/<suite>/` (git-ignored).
 
+## Legs: operating system, framework and runtime
+
+A **leg** is one combination of operating system, target framework and runtime that the suites are measured on.
+The profile decides how hard a benchmark is measured; the leg decides what it is measured on.
+
+| Axis | Values | Where it comes from |
+| --- | --- | --- |
+| OS | `linux`, `windows`, `macos` | the workflow matrix; Linux alone on a pull request |
+| Framework | `net10.0` | `BenchmarkTargetFrameworks` in `Directory.Build.props` |
+| Runtime | `jit`, `aot` | `-Runtime` / `--runtime` / `COHESION_BENCHMARK_RUNTIME` |
+
+```powershell
+./scripts/Invoke-Benchmarks.ps1 -Area Http -Profile ci -Runtime aot      # the NativeAOT cases only
+./scripts/Invoke-Benchmarks.ps1 -Area Http -Tfm net10.0                  # an explicit framework
+```
+
+- **Windows and macOS run on main, on the nightly, and on a manual run with `all-os`.** Pull requests and other
+  pushes measure Linux only: the organization's plan runs at most 20 jobs at once, 5 of them macOS, and a full
+  matrix is over a hundred legs.
+- **Only the frameworks cohesion ships can be measured.** Every Cohesion package targets `net10.0` and nothing
+  else today, so there is one framework leg. When cohesion multi-targets, add the moniker to
+  `BenchmarkTargetFrameworks` and the matrix produces a leg per entry — no project edit, no workflow edit.
+- **NativeAOT is opt-in per benchmark.** The JIT leg measures the whole suite in-process for the cost of one
+  build; NativeAOT natively compiles a project per benchmark case, about a minute each, so measuring all of them
+  is not viable. A case joins the AOT leg by carrying
+  `[BenchmarkCategory(global::Assimalign.Cohesion.Benchmarks.BenchmarkRuntimes.Category)]`, and the workflow
+  finds the areas that have one by scanning for it. Mark a case when "is this different once the JIT is gone" is
+  a real question for it — reflection-free composition, generic dispatch, devirtualization-sensitive paths — and
+  not otherwise. A suite with no marked case measures nothing on the AOT leg and still succeeds. AOT runs on
+  Linux only.
+
+**Each leg is its own history series, and the baseline leg is unlabelled.** Linux + the first framework + the JIT
+records under the bare area name, exactly as it always has; every other leg appends its label, so
+`libraries/Http (windows) - time` and `libraries/Http (aot) - allocations` sit alongside rather than inside the
+Linux series. Mixing machines into one series would make every point a comparison between runners instead of
+between commits. **Numbers are therefore not comparable across legs** — compare each leg against its own history.
+
 To compare two cohesion builds (here `main` against a cohesion pull request) or two runs:
 
 ```powershell
@@ -219,6 +256,13 @@ Inside an area the benchmarks are split by what they measure:
   below 1× is Cohesion ahead. A subject measured against more than one counterpart shows each, worst first.
 - **Measured on its own** — a Cohesion API with nothing to compare against, where only the movement between runs
   means anything.
+
+A **Measured on** row of chips picks the leg (above), and the whole dashboard follows it: the sidebar, the
+overview and the area views all show that leg alone. The chip count says how many areas recorded on it, because
+the non-baseline legs are partial by design — AOT measures only the opted-in cases. The row hides itself when
+only the baseline has ever recorded, so a repository that runs one leg is not offered a choice of one. An area
+view names the leg it is showing and links to the same area on the others; those are links rather than another
+column, because numbers from two machines do not belong in one comparison.
 
 That split is derived from the names, so naming a counterpart after itself is what puts a benchmark in the first
 group. A suffixed name with no unsuffixed sibling stays a benchmark in its own right.

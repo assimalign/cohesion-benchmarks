@@ -12,6 +12,8 @@ namespace Assimalign.Cohesion.DependencyInjection.Benchmarks.DependencyInjection
 /// scoped factory and transient factory registrations. Validation is measured independently of resolve;
 /// neither container can inspect dependencies hidden inside a factory. Cohesion disables dynamic code.
 /// </summary>
+// Opted into NativeAOT runs: this path is reflection-free by design, so losing the JIT is a real question for it.
+[BenchmarkCategory(global::Assimalign.Cohesion.Benchmarks.BenchmarkRuntimes.Category)]
 public class ContainerBuildBenchmarks
 {
     private C.IServiceProviderBuilder _builder = null!;

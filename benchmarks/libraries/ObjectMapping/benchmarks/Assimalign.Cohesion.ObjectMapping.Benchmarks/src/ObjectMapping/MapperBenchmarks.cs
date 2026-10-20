@@ -25,6 +25,8 @@ namespace Assimalign.Cohesion.ObjectMapping.Benchmarks.ObjectMapping;
 /// </para>
 /// </remarks>
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
+// Opted into NativeAOT runs: this path is reflection-free by design, so losing the JIT is a real question for it.
+[BenchmarkCategory(global::Assimalign.Cohesion.Benchmarks.BenchmarkRuntimes.Category)]
 public class MapperBenchmarks
 {
     private IMapper _cohesion = null!;

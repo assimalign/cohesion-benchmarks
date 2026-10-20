@@ -30,6 +30,10 @@ The suites measure the Cohesion packages cohesion's CI publishes to the Assimali
 CI ([benchmarks.yml](.github/workflows/benchmarks.yml)) checks every suite on pull requests, measures the newest
 cohesion `main` build nightly, keeps time and allocation history on the `gh-pages` branch, and fails on a regression.
 
+On `main` and on the nightly it measures each suite on **Linux, Windows and macOS**, plus a **NativeAOT** leg of
+the cases that opt into it; pull requests measure Linux only. Each leg records its own history series and is
+compared only against itself — see [Legs](CONVENTIONS.md#legs-operating-system-framework-and-runtime).
+
 **[The dashboard](https://assimalign.github.io/cohesion-benchmarks/)** shows that history: every area's movement
 since the previous run on one screen, a sidebar to each area, and a benchmark's own chart on demand. Its source is
 [site/index.html](site/index.html) — one static page, no dependencies — published by

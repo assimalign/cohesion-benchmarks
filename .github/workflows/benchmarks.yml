@@ -59,6 +59,14 @@ on:
         type: choice
         options: [ci, dry]
         default: ci
+      all-os:
+        description: Also measure on Windows and macOS, which otherwise happens only on main and on the nightly.
+        type: boolean
+        default: false
+      aot:
+        description: Also measure the NativeAOT leg (only the cases marked [BenchmarkCategory("Aot")]).
+        type: boolean
+        default: false
   repository_dispatch:
     types: [cohesion-main]
 
@@ -79,6 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       suites: ${{ steps.plan.outputs.suites }}
+      legs: ${{ steps.plan.outputs.legs }}
       profile: ${{ steps.plan.outputs.profile }}
       record: ${{ steps.plan.outputs.record }}
       cohesion-version: ${{ steps.plan.outputs.cohesion-version }}
@@ -95,6 +104,8 @@ jobs:
           INPUT_PROFILE: ${{ inputs.profile }}
           INPUT_VERSION: ${{ inputs.cohesion-version }}
           INPUT_AREAS: ${{ inputs.areas }}
+          INPUT_ALL_OS: ${{ inputs.all-os }}
+          INPUT_AOT: ${{ inputs.aot }}
           DISPATCH_VERSION: ${{ github.event.client_payload.version }}
         run: |
           $profile = switch ($env:EVENT) {
@@ -139,24 +150,100 @@ jobs:
           "cohesion-commit=$($build.Commit)" >> $env:GITHUB_OUTPUT
           "suites=$suites" >> $env:GITHUB_OUTPUT
 
+          # ---- the measurement legs -------------------------------------------------------------------------
+          # A leg is one (os, framework, runtime) the suites are measured on. The baseline leg -- Linux, the first
+          # framework, the JIT -- carries no label, so its series keep the names they have recorded under since the
+          # beginning; every other leg appends "(label)" to the series name and records alongside rather than into
+          # it. Mixing two machines into one series would make every point a comparison between runners.
+          $multiOs = $env:EVENT -in @('schedule', 'repository_dispatch') -or
+                     $env:GITHUB_REF -eq 'refs/heads/main' -or
+                     $env:INPUT_ALL_OS -eq 'true'
+          $wantAot = $env:EVENT -in @('schedule', 'repository_dispatch') -or
+                     $env:GITHUB_REF -eq 'refs/heads/main' -or
+                     $env:INPUT_AOT -eq 'true'
+
+          # Only the monikers cohesion actually ships resolve; the list lives with the build so adding the next
+          # framework is one edit there rather than one here.
+          $tfms = @((Select-Xml -Path Directory.Build.props -XPath '//BenchmarkTargetFrameworks').Node.InnerText.Trim() -split ';' |
+                    Where-Object { $_ })
+          if (-not $tfms) { $tfms = @('net10.0') }
+
+          $osLegs = @([pscustomobject]@{ os = 'ubuntu-latest'; name = 'linux' })
+          if ($multiOs) {
+            $osLegs += [pscustomobject]@{ os = 'windows-latest'; name = 'windows' }
+            $osLegs += [pscustomobject]@{ os = 'macos-latest';   name = 'macos' }
+          }
+
+          # NativeAOT compiles a project per benchmark case, so it runs only where a case opted in, and only on
+          # Linux: three native toolchains for the same question is not worth the runner time.
+          $aotAreas = @()
+          if ($wantAot) {
+            $aotAreas = @(Get-ChildItem benchmarks -Recurse -Filter '*.cs' -File |
+              Select-String -SimpleMatch 'BenchmarkRuntimes.Category' -List |
+              # Non-greedy, and anchored on the scope segment rather than on "benchmarks": the repository itself
+              # is called cohesion-benchmarks and every suite has a second "benchmarks" folder inside the area,
+              # so a greedy match lands on the wrong one and yields the whole path.
+              ForEach-Object { $_.Path -replace '^.*?[\\/](?:libraries|resources)[\\/]([^\\/]+)[\\/].*$', '$1' } |
+              Sort-Object -Unique)
+            Write-Host "AOT cases found in: $($aotAreas -join ', ')"
+          }
+
+          $jobs = foreach ($suite in ($suites | ConvertFrom-Json)) {
+            foreach ($tfm in $tfms) {
+              foreach ($leg in $osLegs) {
+                foreach ($runtime in @('jit', 'aot')) {
+                  if ($runtime -eq 'aot' -and ($leg.name -ne 'linux' -or $suite.area -notin $aotAreas)) { continue }
+
+                  # The baseline combination keeps the unlabelled series name it has always recorded under.
+                  $parts = @()
+                  if ($leg.name -ne 'linux') { $parts += $leg.name }
+                  if ($tfm -ne $tfms[0]) { $parts += $tfm }
+                  if ($runtime -ne 'jit') { $parts += $runtime }
+
+                  [pscustomobject]@{
+                    scope   = $suite.scope
+                    area    = $suite.area
+                    name    = $suite.name
+                    os      = $leg.os
+                    tfm     = $tfm
+                    runtime = $runtime
+                    variant = ($parts -join ', ')
+                    id      = (@($leg.name, $tfm, $runtime) -join '-')
+                  }
+                }
+              }
+            }
+          }
+
+          $jobsJson = ConvertTo-Json -InputObject @($jobs) -Compress -Depth 4
+          "legs=$jobsJson" >> $env:GITHUB_OUTPUT
+
           $source = if ($build.RunUrl) { "[$($build.Version)]($($build.RunUrl))" } else { $build.Version }
+          $legNames = (@($jobs) | ForEach-Object { $_.id } | Sort-Object -Unique) -join ', '
           "Cohesion $source (commit ``$($build.Commit)``), profile ``$profile``, $(if ($record) { 'recorded' } else { 'not recorded' })" >> $env:GITHUB_STEP_SUMMARY
+          "`n$(@($suites | ConvertFrom-Json).Count) suites x legs ``$legNames`` = $(@($jobs).Count) measuring jobs." >> $env:GITHUB_STEP_SUMMARY
           Write-Host "profile=$profile record=$record cohesion=$($build.Version) ($($build.Commit))"
+          Write-Host "legs=$legNames jobs=$(@($jobs).Count)"
           Write-Host $suites
 
   run:
     needs: plan
-    if: needs.plan.outputs.suites != '[]'
-    name: ${{ matrix.suite.scope }}/${{ matrix.suite.area }}
-    runs-on: ${{ vars.BENCHMARK_RUNNER || 'ubuntu-latest' }}
+    if: needs.plan.outputs.legs != '[]'
+    name: ${{ matrix.leg.scope }}/${{ matrix.leg.area }} [${{ matrix.leg.id }}]
+    # BENCHMARK_RUNNER (a self-hosted machine, for steadier numbers) replaces the Linux leg only: the whole point
+    # of the Windows and macOS legs is the platform they run on.
+    runs-on: ${{ (matrix.leg.os == 'ubuntu-latest' && vars.BENCHMARK_RUNNER) || matrix.leg.os }}
     timeout-minutes: 90
     permissions:
       contents: read
       packages: read
     strategy:
       fail-fast: false
+      # The organization's plan runs at most 20 jobs at once, 5 of them macOS; a full main run is over a hundred
+      # legs, so cap the fan-out rather than letting the queue decide which areas get measured first.
+      max-parallel: 12
       matrix:
-        suite: ${{ fromJson(needs.plan.outputs.suites) }}
+        leg: ${{ fromJson(needs.plan.outputs.legs) }}
     env:
       # GitHub Packages needs a token with read:packages even to read (nuget.config's `assimalign` source).
       NuGetPackageSourceCredentials_assimalign: Username=${{ github.actor }};Password=${{ secrets.COHESION_PACKAGES_TOKEN || github.token }}
@@ -169,16 +256,30 @@ jobs:
         with:
           global-json-file: global.json
 
-      - name: Run ${{ matrix.suite.name }} (${{ needs.plan.outputs.profile }})
+      # NativeAOT links with the platform toolchain. The Linux images carry clang but not the objwriter headers
+      # ILCompiler links against, and a missing one fails late, inside the generated child build.
+      - name: Install the NativeAOT prerequisites
+        if: matrix.leg.runtime == 'aot' && startsWith(matrix.leg.os, 'ubuntu')
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends clang zlib1g-dev
+
+      - name: Run ${{ matrix.leg.name }} (${{ needs.plan.outputs.profile }}, ${{ matrix.leg.id }})
         shell: pwsh
-        run: ./scripts/Invoke-Benchmarks.ps1 -Scope ${{ matrix.suite.scope }} -Area ${{ matrix.suite.area }} -Profile ${{ needs.plan.outputs.profile }} -CohesionVersion $env:COHESION_VERSION -Output results
+        run: >
+          ./scripts/Invoke-Benchmarks.ps1
+          -Scope ${{ matrix.leg.scope }}
+          -Area ${{ matrix.leg.area }}
+          -Profile ${{ needs.plan.outputs.profile }}
+          -Runtime ${{ matrix.leg.runtime }}
+          -Tfm ${{ matrix.leg.tfm }}
+          -CohesionVersion $env:COHESION_VERSION
+          -Output results
 
       - name: Summarize
         if: always()
         shell: pwsh
         run: |
           $commit = $env:COHESION_COMMIT.Substring(0, [Math]::Min(12, $env:COHESION_COMMIT.Length))
-          "### ${{ matrix.suite.name }} (${{ needs.plan.outputs.profile }}, cohesion $env:COHESION_VERSION, $commit)" >> $env:GITHUB_STEP_SUMMARY
+          "### ${{ matrix.leg.name }} [${{ matrix.leg.id }}] (${{ needs.plan.outputs.profile }}, cohesion $env:COHESION_VERSION, $commit)" >> $env:GITHUB_STEP_SUMMARY
           if (Test-Path results) {
             Get-ChildItem results -Recurse -Filter '*-report-github.md' | ForEach-Object {
               Get-Content $_.FullName | Where-Object { $_ -match '^\|' } >> $env:GITHUB_STEP_SUMMARY
@@ -189,16 +290,16 @@ jobs:
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
-          name: results-${{ matrix.suite.scope }}-${{ matrix.suite.area }}
+          name: results-${{ matrix.leg.scope }}-${{ matrix.leg.area }}-${{ matrix.leg.id }}
           path: results
           if-no-files-found: ignore
           retention-days: 30
 
-  # One writer at a time: every suite appends to the same gh-pages branch.
+  # One writer at a time: every leg appends to the same gh-pages branch.
   record:
     needs: [plan, run]
-    if: always() && needs.plan.outputs.record == 'true' && needs.plan.outputs.suites != '[]'
-    name: record ${{ matrix.suite.scope }}/${{ matrix.suite.area }}
+    if: always() && needs.plan.outputs.record == 'true' && needs.plan.outputs.legs != '[]'
+    name: record ${{ matrix.leg.scope }}/${{ matrix.leg.area }} [${{ matrix.leg.id }}]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -206,7 +307,7 @@ jobs:
       fail-fast: false
       max-parallel: 1
       matrix:
-        suite: ${{ fromJson(needs.plan.outputs.suites) }}
+        leg: ${{ fromJson(needs.plan.outputs.legs) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -214,7 +315,7 @@ jobs:
         id: download
         continue-on-error: true
         with:
-          name: results-${{ matrix.suite.scope }}-${{ matrix.suite.area }}
+          name: results-${{ matrix.leg.scope }}-${{ matrix.leg.area }}-${{ matrix.leg.id }}
           path: results
 
       - name: Convert to history series
@@ -225,7 +326,7 @@ jobs:
           COHESION_VERSION: ${{ needs.plan.outputs.cohesion-version }}
           COHESION_COMMIT: ${{ needs.plan.outputs.cohesion-commit }}
         run: |
-          $path = "results/${{ matrix.suite.scope }}/${{ matrix.suite.area }}"
+          $path = "results/${{ matrix.leg.scope }}/${{ matrix.leg.area }}"
           if (-not (Test-Path $path)) { Write-Host "No results for this suite (it failed to build or run)."; exit 0 }
           ./scripts/ConvertTo-BenchmarkHistory.ps1 -Path $path -TimeOutput time.json -AllocationOutput allocations.json -CohesionVersion $env:COHESION_VERSION -CohesionCommit $env:COHESION_COMMIT
           "ready=true" >> $env:GITHUB_OUTPUT
@@ -250,7 +351,10 @@ jobs:
         continue-on-error: true
         uses: benchmark-action/github-action-benchmark@4322e5726e6334590d251fc4f92bec0efafc45dc # v1.22.2
         with:
-          name: ${{ matrix.suite.scope }}/${{ matrix.suite.area }} - time
+          # The baseline leg records under the bare area name, as it always has; every other leg appends its
+          # label, so "libraries/Http (windows)" and "libraries/Http (aot)" are series of their own rather than
+          # extra points in the Linux one.
+          name: ${{ matrix.leg.scope }}/${{ matrix.leg.area }}${{ matrix.leg.variant != '' && format(' ({0})', matrix.leg.variant) || '' }} - time
           tool: customSmallerIsBetter
           output-file-path: time.json
           gh-pages-branch: gh-pages
@@ -270,7 +374,7 @@ jobs:
         continue-on-error: true
         uses: benchmark-action/github-action-benchmark@4322e5726e6334590d251fc4f92bec0efafc45dc # v1.22.2
         with:
-          name: ${{ matrix.suite.scope }}/${{ matrix.suite.area }} - allocations
+          name: ${{ matrix.leg.scope }}/${{ matrix.leg.area }}${{ matrix.leg.variant != '' && format(' ({0})', matrix.leg.variant) || '' }} - allocations
           tool: customSmallerIsBetter
           output-file-path: allocations.json
           gh-pages-branch: gh-pages

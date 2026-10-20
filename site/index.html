@@ -102,7 +102,10 @@ a:hover { text-decoration: underline; }
    than clipping its right-hand columns; `overflow-y: hidden` keeps the sticky header sticking to the page.
    The min-width stops the columns squashing into each other before the scrollbar appears. */
 .card { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; overflow-y: hidden; }
-.card table { min-width: 680px; }
+.card table { min-width: 760px; }
+/* The benchmark name is the one column you cannot skim when it is wrapped to three lines. Give it room and
+   let the card scroll instead; before the card scrolled, this would have clipped the right-hand columns. */
+td.bench-name { min-width: 260px; }
 table { width: 100%; border-collapse: collapse; }
 th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--line); }
 th { vertical-align: middle; }
@@ -149,6 +152,20 @@ td.name .scope { color: var(--fg-faint); font-weight: 400; font-size: 11.5px; }
    another, so several counterparts read down the column instead of staggering with the name lengths. */
 .vslist { display: inline-grid; grid-template-columns: auto auto; column-gap: 6px; row-gap: 3px; align-items: center; }
 .vslist .rival { justify-self: start; text-align: left; }
+
+/* ---------- leg picker ---------- */
+.variants { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 10px 0 2px; }
+.vlabel { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-faint); margin-right: 2px; }
+.vchip {
+  font: inherit; font-size: 12px; padding: 3px 10px; cursor: pointer; border-radius: 999px;
+  border: 1px solid var(--line-strong); background: var(--panel-2); color: var(--fg-dim); font-family: var(--mono);
+}
+.vchip:hover { color: var(--fg); }
+.vchip.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.vcount { opacity: .65; font-size: 10.5px; margin-left: 3px; }
+.alsoon { font-size: 12px; color: var(--fg-dim); margin: 8px 0 0; }
+.alsoon a { color: var(--accent); text-decoration: none; }
+.alsoon a:hover { text-decoration: underline; }
 
 /* ---------- metric toggle ---------- */
 .toggle { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 6px; overflow: hidden; margin-left: auto; }
@@ -248,6 +265,17 @@ function metricOf(key) {
 }
 function areaOf(key) { return key.replace(/ - (time|allocations?)$/, ""); }
 
+// CI measures each suite on more than one machine and runtime. The baseline leg -- Linux, the first framework,
+// the JIT -- records under the bare area name, as it always has; every other leg appends its label, so
+// "libraries/Http (windows)" and "libraries/Http (aot)" are separate series rather than extra points in the
+// Linux one. Mixing runners into one series would make every point a comparison between machines.
+var BASELINE_VARIANT = "linux · net10.0 · jit";
+function splitVariant(id) {
+  var m = /^(.*?)\s*\(([^()]*)\)\s*$/.exec(id);
+  return m ? { base: m[1], variant: m[2] } : { base: id, variant: "" };
+}
+function variantLabel(v) { return v === "" ? BASELINE_VARIANT : v; }
+
 var AREAS = (function () {
   var map = new Map();
   Object.keys(RAW).forEach(function (key) {
@@ -255,16 +283,38 @@ var AREAS = (function () {
     if (!metric) return;
     var id = areaOf(key);
     if (!map.has(id)) {
-      var bits = id.split("/");
-      map.set(id, { id: id, scope: bits[0] || "", name: bits.slice(1).join("/") || id, time: [], alloc: [] });
+      var split = splitVariant(id);
+      var bits = split.base.split("/");
+      map.set(id, {
+        id: id, base: split.base, variant: split.variant,
+        scope: bits[0] || "", name: bits.slice(1).join("/") || split.base,
+        time: [], alloc: [],
+      });
     }
     // Oldest first, so the last element is always the newest run.
     map.get(id)[metric] = (RAW[key] || []).slice().sort(function (a, b) { return a.date - b.date; });
   });
   return Array.from(map.values()).sort(function (a, b) {
-    return a.scope.localeCompare(b.scope) || a.name.localeCompare(b.name);
+    return a.scope.localeCompare(b.scope) || a.name.localeCompare(b.name) || a.variant.localeCompare(b.variant);
   });
 })();
+
+// Every leg that has recorded anything, baseline first. One entry means CI has only ever run the baseline, and
+// the selector stays hidden rather than offering a choice of one.
+var VARIANTS = (function () {
+  var seen = [];
+  AREAS.forEach(function (a) { if (seen.indexOf(a.variant) < 0) seen.push(a.variant); });
+  return seen.sort(function (a, b) { return a === "" ? -1 : b === "" ? 1 : a.localeCompare(b); });
+})();
+
+// The leg the dashboard is showing. Everything below reads this rather than filtering AREAS directly, so a
+// deep link into a non-baseline area selects that leg on load.
+var VARIANT = "";
+function visibleAreas() { return AREAS.filter(function (a) { return a.variant === VARIANT; }); }
+// The same area measured on the other legs, for the "also measured on" line in an area view.
+function siblingVariants(area) {
+  return AREAS.filter(function (a) { return a.base === area.base && a.variant !== area.variant; });
+}
 
 function runsOf(area, metric) { return area[metric] || []; }
 function latestRun(area, metric) { var r = runsOf(area, metric); return r.length ? r[r.length - 1] : null; }
@@ -525,7 +575,7 @@ function renderOverview() {
   var moved = { time: { up: 0, down: 0 }, alloc: { up: 0, down: 0 } };
   var alerts = { time: 0, alloc: 0 };
 
-  var rows = AREAS.map(function (a) {
+  var rows = visibleAreas().map(function (a) {
     var names = benchNames(a);
     var groups = benchGroups(a);
     var compared = groups.filter(function (g) { return g.kind === "compared"; }).length;
@@ -558,8 +608,9 @@ function renderOverview() {
     return qr - pr || p.area.id.localeCompare(q.area.id);
   });
 
-  var html = '<div class="head"><h2>Overview</h2><span class="sub">' + AREAS.length + " areas · " + totalBench +
+  var html = '<div class="head"><h2>Overview</h2><span class="sub">' + visibleAreas().length + " areas · " + totalBench +
     " benchmarks · " + totalCompared + " measured against a counterpart · lower is better</span>" + metricToggle() + "</div>" +
+    variantPicker() +
     '<p class="note">Time and allocations both read as the change from the previous recorded run. An area\'s figure is ' +
     'the <strong>median</strong> across its benchmarks, so one noisy outlier cannot move it. A red dot marks a ' +
     'benchmark past the workflow\'s alert threshold (time ' + Math.round(ALERT.time * 100) + '%, allocations ' +
@@ -567,7 +618,7 @@ function renderOverview() {
     'is noisy, though allocations are exact and a real move there is worth a look however small.</p>';
 
   html += '<div class="kpis">' +
-    kpi("Areas", AREAS.length, totalCompared + " comparisons") +
+    kpi("Areas", visibleAreas().length, totalCompared + " comparisons") +
     kpi("Benchmarks", totalBench, "") +
     kpi("Time", "+" + moved.time.up + " / −" + moved.time.down, "areas slower / faster") +
     kpi("Allocations", "+" + moved.alloc.up + " / −" + moved.alloc.down, "areas up / down") +
@@ -657,6 +708,22 @@ function metricToggle() {
     "</span>";
 }
 
+// The legs CI measured on. Hidden until there is more than one, so a repository that only ever runs the
+// baseline shows no choice of one. Each chip says how many areas recorded on that leg, because the
+// non-baseline legs are partial by design: AOT measures only the opted-in cases.
+function variantPicker() {
+  if (VARIANTS.length < 2) return "";
+  return '<div class="variants" role="group" aria-label="Measured on">' +
+    '<span class="vlabel">Measured on</span>' +
+    VARIANTS.map(function (v) {
+      var n = AREAS.filter(function (a) { return a.variant === v; }).length;
+      return '<button type="button" data-variant="' + esc(v) + '" class="vchip' + (v === VARIANT ? " on" : "") +
+        '" title="' + esc(variantLabel(v)) + ' · ' + n + ' areas">' + esc(variantLabel(v)) +
+        ' <span class="vcount">' + n + "</span></button>";
+    }).join("") +
+    "</div>";
+}
+
 function kpi(k, v, sub) {
   return '<div class="kpi"><div class="k">' + esc(k) + '</div><div class="v">' + esc(String(v)) +
     (sub ? " <small>" + esc(sub) + "</small>" : "") + "</div></div>";
@@ -675,7 +742,18 @@ function renderArea(id) {
   var soloCount = gs.length - comparedCount;
   var html = '<div class="head"><h2>' + esc(area.name) + '</h2><span class="sub">' + esc(area.scope) + " · " +
     names.length + " benchmarks · " + comparedCount + " compared, " + soloCount + " on their own · " +
-    runsOf(area, "time").length + " recorded runs</span>" + metricToggle() + "</div>";
+    runsOf(area, "time").length + " recorded runs · measured on " + esc(variantLabel(area.variant)) +
+    "</span>" + metricToggle() + "</div>";
+
+  // The same area on the other legs. Numbers are not comparable across legs -- different machine, different
+  // runtime -- so these are links, not another column.
+  var siblings = siblingVariants(area);
+  if (siblings.length) {
+    html += '<p class="alsoon">Also measured on ' + siblings.map(function (s) {
+      return '<a href="#' + encodeURIComponent(s.id) + '">' + esc(variantLabel(s.variant)) + "</a>";
+    }).join(", ") + ". Each leg is its own series: a number here and a number there are different machines, " +
+      "so compare each against its own history rather than against the other.</p>";
+  }
 
   html += '<div class="kpis">' +
     kpi("Median time", deltaPlain(t.ratio), "vs previous run") +
@@ -765,7 +843,7 @@ function renderNav(current, filter) {
   var html = '<a href="#" data-route="" class="' + (current ? "" : "on") + '"><span class="nm">Overview</span></a>';
   var scope = null;
   var shown = 0;
-  AREAS.forEach(function (a) {
+  visibleAreas().forEach(function (a) {
     if (q && a.id.toLowerCase().indexOf(q) === -1) return;
     shown++;
     if (a.scope !== scope) { scope = a.scope; html += '<div class="nav-group">' + esc(scope) + "</div>"; }
@@ -781,6 +859,9 @@ function route() {
   var id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
   var main = document.getElementById("main");
   var valid = id && AREAS.some(function (a) { return a.id === id; });
+  // A deep link carries the leg in the id, so following one from another leg selects it rather than
+  // landing on an area the sidebar is not showing.
+  if (valid) { VARIANT = splitVariant(id).variant; }
   main.innerHTML = valid ? renderArea(id) : renderOverview();
   document.getElementById("nav").innerHTML = renderNav(valid ? id : "", document.getElementById("filter").value);
   main.scrollTop = 0;
@@ -832,6 +913,20 @@ document.addEventListener("click", function (e) {
   route();
 });
 
+// Switching leg goes back to the overview: the area being viewed may not have recorded on the new leg,
+// and silently showing a different area would be worse than showing the list.
+document.addEventListener("click", function (e) {
+  var btn = e.target.closest && e.target.closest(".vchip");
+  if (!btn) return;
+  VARIANT = btn.dataset.variant || "";
+  var id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+  var here = AREAS.find(function (a) { return a.id === id; });
+  var moved = here && AREAS.find(function (a) { return a.base === here.base && a.variant === VARIANT; });
+  if (moved) { location.hash = "#" + encodeURIComponent(moved.id); return; }
+  if (location.hash && location.hash !== "#") { location.hash = ""; return; }
+  route();
+});
+
 document.getElementById("filter").addEventListener("input", function () {
   var id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
   var valid = id && AREAS.some(function (a) { return a.id === id; });
@@ -842,8 +937,11 @@ window.addEventListener("hashchange", route);
 
 (function init() {
   var bits = headerBits();
+  // Distinct areas, not area-leg pairs: the same area measured on three machines is still one area.
+  var bases = new Set(AREAS.map(function (a) { return a.base; }));
   document.getElementById("brandsub").textContent =
-    AREAS.length + " areas · " + (bits.newest ? sinceText(bits.newest.date) : "no runs yet");
+    bases.size + " areas · " + (VARIANTS.length > 1 ? VARIANTS.length + " legs · " : "") +
+    (bits.newest ? sinceText(bits.newest.date) : "no runs yet");
   if (!AREAS.length) {
     document.getElementById("main").innerHTML =
       '<div class="empty">No benchmark history yet. The nightly run records the first entries.</div>';
