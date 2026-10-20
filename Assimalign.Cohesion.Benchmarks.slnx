@@ -44,6 +44,7 @@
     <Project Path="benchmarks/libraries/Security/benchmarks/Assimalign.Cohesion.Security.Benchmarks/src/Assimalign.Cohesion.Security.Benchmarks.csproj" />
   </Folder>
   <Folder Name="/resources/">
+    <Project Path="benchmarks/resources/ConfigurationStore/benchmarks/Assimalign.Cohesion.ConfigurationStore.Benchmarks/src/Assimalign.Cohesion.ConfigurationStore.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/Database/benchmarks/Assimalign.Cohesion.Database.Benchmarks/src/Assimalign.Cohesion.Database.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/Database/benchmarks/Assimalign.Cohesion.Database.Benchmarks.Datasets/src/Assimalign.Cohesion.Database.Benchmarks.Datasets.csproj" />
     <Project Path="benchmarks/resources/Database/tests/Assimalign.Cohesion.Database.Benchmarks.Datasets.Tests/src/Assimalign.Cohesion.Database.Benchmarks.Datasets.Tests.csproj" />
