@@ -55,6 +55,7 @@
     <Project Path="benchmarks/resources/IoTHub/benchmarks/Assimalign.Cohesion.IoTHub.Benchmarks/src/Assimalign.Cohesion.IoTHub.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/LoadBalancer/benchmarks/Assimalign.Cohesion.LoadBalancer.Benchmarks/src/Assimalign.Cohesion.LoadBalancer.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/LogSpace/benchmarks/Assimalign.Cohesion.LogSpace.Benchmarks/src/Assimalign.Cohesion.LogSpace.Benchmarks.csproj" />
+    <Project Path="benchmarks/resources/MediaHub/benchmarks/Assimalign.Cohesion.MediaHub.Benchmarks/src/Assimalign.Cohesion.MediaHub.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/NatGateway/benchmarks/Assimalign.Cohesion.NatGateway.Benchmarks/src/Assimalign.Cohesion.NatGateway.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/Rezolvr/benchmarks/Assimalign.Cohesion.Rezolvr.Benchmarks/src/Assimalign.Cohesion.Rezolvr.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/Scheduler/benchmarks/Assimalign.Cohesion.Scheduler.Benchmarks/src/Assimalign.Cohesion.Scheduler.Benchmarks.csproj" />
