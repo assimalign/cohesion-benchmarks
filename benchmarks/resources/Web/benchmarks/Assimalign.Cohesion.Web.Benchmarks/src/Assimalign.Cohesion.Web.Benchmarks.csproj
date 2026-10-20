@@ -1,8 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.Web.Antiforgery" />
+		<CohesionReference Include="Assimalign.Cohesion.Web.Api" />
 		<CohesionReference Include="Assimalign.Cohesion.Web.Authentication.Bearer" />
 		<CohesionReference Include="Assimalign.Cohesion.Web.Authentication.Cookie" />
 		<CohesionReference Include="Assimalign.Cohesion.Web.Authorization" />
+		<CohesionReference Include="Assimalign.Cohesion.Web.Caching" />
+		<CohesionReference Include="Assimalign.Cohesion.Web.ErrorHandling" />
+		<CohesionReference Include="Assimalign.Cohesion.Web.Hosting" />
+		<CohesionReference Include="Assimalign.Cohesion.Web.RateLimiting" />
+		<CohesionReference Include="Assimalign.Cohesion.Web.Routing" />
+		<CohesionReference Include="Assimalign.Cohesion.Web.Serialization" />
+		<CohesionReference Include="Assimalign.Cohesion.Web.Validation" />
 	</ItemGroup>
 
 	<ItemGroup>

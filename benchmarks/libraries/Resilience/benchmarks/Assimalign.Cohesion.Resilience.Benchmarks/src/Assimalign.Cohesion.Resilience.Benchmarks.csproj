@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.Resilience" />
+		<CohesionReference Include="Assimalign.Cohesion.Resilience.Fallback" />
+		<CohesionReference Include="Assimalign.Cohesion.Resilience.Hedging" />
+		<CohesionReference Include="Assimalign.Cohesion.Resilience.RateLimiting" />
 		<CohesionReference Include="Assimalign.Cohesion.Resilience.Retry" />
 		<CohesionReference Include="Assimalign.Cohesion.Resilience.Timeout" />
 		<CohesionReference Include="Assimalign.Cohesion.Resilience.CircuitBreaker" />
@@ -8,5 +12,6 @@
 	<!-- Counterparts. -->
 	<ItemGroup>
 		<PackageReference Include="Polly.Core" />
+		<PackageReference Include="System.Threading.RateLimiting" />
 	</ItemGroup>
 </Project>

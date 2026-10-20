@@ -19,6 +19,7 @@ namespace Assimalign.Cohesion.Amqp.Benchmarks.Amqp.Connections;
 /// Encoding and decoding an AMQP 1.0 bare message (header, properties, three application properties and a
 /// 256-byte data section): the per-message cost on every send and every receive. The baseline is AMQPNetLite,
 /// the reference .NET AMQP 1.0 client (<c>Message.Encode</c> / <c>Message.Decode</c>), with the same sections.
+/// The baseline also accesses Body to force its deferred data copy, matching Cohesion's owned payload.
 /// </summary>
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 public class AmqpMessageBenchmarks
@@ -97,7 +98,11 @@ public class AmqpMessageBenchmarks
     [Benchmark(Baseline = true)]
     [BenchmarkCategory(decodeCategory)]
     public LiteMessage Decode_AmqpNetLite()
-        => LiteMessage.Decode(new LiteByteBuffer(_liteEncoded, 0, _liteEncoded.Length, _liteEncoded.Length));
+    {
+        LiteMessage message = LiteMessage.Decode(new LiteByteBuffer(_liteEncoded, 0, _liteEncoded.Length, _liteEncoded.Length));
+        GC.KeepAlive(message.Body);
+        return message;
+    }
 
     [Benchmark]
     [BenchmarkCategory(decodeCategory)]

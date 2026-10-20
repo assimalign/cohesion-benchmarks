@@ -1,7 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<CohesionReference Include="Assimalign.Cohesion.IdentityModel" />
+		<CohesionReference Include="Assimalign.Cohesion.IdentityModel.Protocols" />
+		<CohesionReference Include="Assimalign.Cohesion.IdentityModel.Protocols.OpenIdConnect" />
+		<CohesionReference Include="Assimalign.Cohesion.IdentityModel.Protocols.Saml" />
+		<CohesionReference Include="Assimalign.Cohesion.IdentityModel.Token" />
 		<CohesionReference Include="Assimalign.Cohesion.IdentityModel.Token.JsonWebToken" />
+		<CohesionReference Include="Assimalign.Cohesion.IdentityModel.Token.Saml" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

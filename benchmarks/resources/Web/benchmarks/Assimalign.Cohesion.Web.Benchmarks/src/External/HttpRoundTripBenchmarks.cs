@@ -32,8 +32,8 @@ public class HttpRoundTripBenchmarks
     private Socket _socket = null!;
     private readonly byte[] _buffer = new byte[4096];
 
-    public IEnumerable<string> Targets => WebTargets.Catalog.AvailableIds(ExternalTargetKind.Process)
-        .Concat(WebTargets.Catalog.AvailableIds(ExternalTargetKind.Container));
+    public IEnumerable<string> Targets => WebTargets.AvailableIds(ExternalTargetKind.Process)
+        .Concat(WebTargets.AvailableIds(ExternalTargetKind.Container));
 
     [ParamsSource(nameof(Targets))]
     public string Target { get; set; } = string.Empty;

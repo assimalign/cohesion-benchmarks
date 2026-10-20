@@ -1,5 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<CohesionReference Include="Assimalign.Cohesion.ApplicationModel" />
+		<CohesionReference Include="Assimalign.Cohesion.ApplicationModel.Gateway" />
+		<CohesionReference Include="Assimalign.Cohesion.ApplicationModel.Gateway.ControlPlane" />
+		<CohesionReference Include="Assimalign.Cohesion.ApplicationModel.Gateway.InProcess" />
 	</ItemGroup>
 </Project>

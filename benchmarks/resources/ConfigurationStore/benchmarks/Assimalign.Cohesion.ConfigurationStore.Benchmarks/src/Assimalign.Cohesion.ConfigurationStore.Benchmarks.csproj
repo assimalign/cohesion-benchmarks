@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <CohesionReference Include="Assimalign.Cohesion.ConfigurationStore.Hosting" />
+    <CohesionReference Include="Assimalign.Cohesion.ConfigurationStore.Client" />
+    <CohesionReference Include="Assimalign.Cohesion.ConfigurationStore.ApplicationModel.Orchestration" />
+  </ItemGroup>
+</Project>

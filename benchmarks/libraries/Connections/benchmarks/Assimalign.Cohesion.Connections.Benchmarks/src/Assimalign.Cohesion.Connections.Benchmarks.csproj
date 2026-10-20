@@ -3,5 +3,8 @@
 	<ItemGroup>
 		<CohesionReference Include="Assimalign.Cohesion.Connections" />
 		<CohesionReference Include="Assimalign.Cohesion.Connections.InMemory" />
+		<CohesionReference Include="Assimalign.Cohesion.Connections.StreamAbort" />
+		<CohesionReference Include="Assimalign.Cohesion.Connections.StreamLimits" />
+		<CohesionReference Include="Assimalign.Cohesion.Connections.Tls" />
 	</ItemGroup>
 </Project>

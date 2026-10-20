@@ -3,6 +3,13 @@
 		<CohesionReference Include="Assimalign.Cohesion.Http" />
 		<CohesionReference Include="Assimalign.Cohesion.Http.Cookies" />
 		<CohesionReference Include="Assimalign.Cohesion.Http.Connections" />
+		<CohesionReference Include="Assimalign.Cohesion.Http.Antiforgery" />
+		<CohesionReference Include="Assimalign.Cohesion.Http.DigestFields" />
+		<CohesionReference Include="Assimalign.Cohesion.Http.Forms" />
+		<CohesionReference Include="Assimalign.Cohesion.Http.RequestLimits" />
+		<CohesionReference Include="Assimalign.Cohesion.Http.ServerSentEvents" />
+		<CohesionReference Include="Assimalign.Cohesion.Http.Sessions" />
+		<CohesionReference Include="Assimalign.Cohesion.Http.Streaming" />
 		<CohesionReference Include="Assimalign.Cohesion.Connections.InMemory" />
 	</ItemGroup>
 

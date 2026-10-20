@@ -37,7 +37,7 @@ public class ConfigurationLookupBenchmarks
     [GlobalCleanup]
     public void Cleanup()
     {
-        (_cohesion as IDisposable)?.Dispose();
+        (_cohesion as CohesionConfiguration.Configuration)?.Dispose();
         (_extensions as IDisposable)?.Dispose();
     }
 

@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<CohesionReference Include="Assimalign.Cohesion.Scheduler.Cron" />
+		<CohesionReference Include="Assimalign.Cohesion.Scheduler.Hosting" />
+		<CohesionReference Include="Assimalign.Cohesion.Scheduler.Timer" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->

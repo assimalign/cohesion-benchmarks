@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+using Assimalign.Cohesion.IdentityModel.Token;
 using Assimalign.Cohesion.IdentityModel.Token.JsonWebToken;
 
 using BenchmarkDotNet.Attributes;
@@ -31,7 +32,9 @@ namespace Assimalign.Cohesion.IdentityModel.Benchmarks.IdentityModel.Token.JsonW
 /// <remarks>
 /// Parse and validate read the same token (written by Cohesion, accepted by both libraries), so they compare the
 /// same bytes. Each library issues its own token with the same header, registered claims and two custom claims.
-/// Tokens are issued for one hour from setup, which outlasts any run of one benchmark.
+/// Validation uses a fixed instant on both sides. Microsoft's lifetime callback also applies Cohesion's
+/// required-claim and maximum-lifetime rules; Cohesion explicitly checks audience membership after validation.
+/// Both return parsed-token results; the Microsoft result's lazy ClaimsIdentity is not forced.
 /// </remarks>
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 public class JsonWebTokenBenchmarks
@@ -58,6 +61,7 @@ public class JsonWebTokenBenchmarks
     private MicrosoftTokenValidationParameters _validationParameters = null!;
 
     private string _token = null!;
+    private DateTimeOffset _now;
 
     [GlobalSetup]
     public async Task Setup()
@@ -66,7 +70,8 @@ public class JsonWebTokenBenchmarks
         ECParameters publicParameters = _signingKey.ExportParameters(includePrivateParameters: false);
         _verificationKey = ECDsa.Create(publicParameters);
 
-        DateTimeOffset now = DateTimeOffset.FromUnixTimeSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+        DateTimeOffset now = new(2026, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        _now = now;
 
         // Cohesion: the issuer's public key arrives as a JWK, as it would from a JWKS document.
         string jwk =
@@ -123,6 +128,19 @@ public class JsonWebTokenBenchmarks
             ValidAudience = audience,
             ValidAlgorithms = [MicrosoftSecurityAlgorithms.EcdsaSha256],
             IssuerSigningKey = new MicrosoftEcdsaSecurityKey(_verificationKey) { KeyId = keyId },
+            LifetimeValidator = (notBefore, expires, securityToken, parameters) =>
+                securityToken is MicrosoftJsonWebToken jwt &&
+                notBefore.HasValue && expires.HasValue &&
+                jwt.TryGetPayloadValue<long>("iat", out long issuedAt) &&
+                jwt.TryGetPayloadValue<string>("sub", out string sub) && !string.IsNullOrEmpty(sub) &&
+                jwt.TryGetPayloadValue<string>("jti", out string id) && !string.IsNullOrWhiteSpace(id) &&
+                jwt.TryGetPayloadValue<object>("aud", out _) &&
+                notBefore.Value <= now.UtcDateTime + parameters.ClockSkew &&
+                expires.Value > now.UtcDateTime - parameters.ClockSkew &&
+                issuedAt <= now.ToUnixTimeSeconds() + (long)parameters.ClockSkew.TotalSeconds &&
+                expires.Value > DateTimeOffset.FromUnixTimeSeconds(issuedAt).UtcDateTime &&
+                expires.Value > notBefore.Value &&
+                expires.Value - DateTimeOffset.FromUnixTimeSeconds(issuedAt).UtcDateTime <= TimeSpan.FromHours(24),
         };
 
         _token = _writer.Write(_descriptor);
@@ -163,8 +181,9 @@ public class JsonWebTokenBenchmarks
     [BenchmarkCategory(validateCategory)]
     public CohesionJsonWebToken? Validate()
     {
-        _validator.TryValidate(_token, DateTimeOffset.UtcNow, out CohesionJsonWebToken? token);
-        return token;
+        return _validator.TryValidate(_token, _now, out CohesionJsonWebToken? token) && token.HasAudience(audience)
+            ? token
+            : null;
     }
 
     [Benchmark(Baseline = true)]

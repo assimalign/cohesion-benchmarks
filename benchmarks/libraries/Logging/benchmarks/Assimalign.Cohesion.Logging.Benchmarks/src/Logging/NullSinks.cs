@@ -11,9 +11,9 @@ namespace Assimalign.Cohesion.Logging.Benchmarks.Logging;
 /// </summary>
 internal static class NullSinks
 {
-    public sealed class CohesionProvider : LoggerProvider
+    public sealed class CohesionProvider(string name = "null") : LoggerProvider
     {
-        public override string Name => "null";
+        public override string Name => name;
 
         protected override Logger CreateCore(string category) => new CohesionLogger(category);
     }

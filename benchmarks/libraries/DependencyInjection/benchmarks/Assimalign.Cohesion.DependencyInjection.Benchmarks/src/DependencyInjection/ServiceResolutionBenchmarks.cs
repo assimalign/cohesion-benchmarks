@@ -14,8 +14,8 @@ namespace Assimalign.Cohesion.DependencyInjection.Benchmarks.DependencyInjection
 /// scope, and the per-request pattern of creating a scope, resolving from it and disposing it.
 /// </summary>
 /// <remarks>
-/// Both providers use their defaults, so both may switch a hot call site to a compiled resolver after the first
-/// resolutions; the measured steady state is what a long-running host pays. Each side is called through its own
+/// Both providers use explicit factories. Cohesion disables dynamic code, as in framework registrations.
+/// The measured steady state is what a long-running host pays. Each side is called through its own
 /// <c>GetRequiredService</c> and <c>CreateScope</c> helpers.
 /// </remarks>
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
@@ -33,6 +33,10 @@ public class ServiceResolutionBenchmarks
         _extensions = ServiceGraph.BuildExtensions();
         _cohesionScope = CohesionDI.ServiceProviderExtensions.CreateScope(_cohesion);
         _extensionsScope = ExtensionsDI.ServiceProviderServiceExtensions.CreateScope(_extensions);
+        ResolveSingleton();
+        ResolveSingleton_MicrosoftExtensions();
+        ResolveTransient();
+        ResolveTransient_MicrosoftExtensions();
     }
 
     [GlobalCleanup]

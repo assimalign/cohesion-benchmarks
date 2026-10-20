@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.Caching" />
 		<CohesionReference Include="Assimalign.Cohesion.Caching.InMemory" />
 	</ItemGroup>
 

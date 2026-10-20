@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 
 using BenchmarkDotNet.Attributes;
@@ -45,6 +46,10 @@ public class DataProtectorBenchmarks
         // Creates the active key outside the measurement and gives Unprotect a valid payload.
         _cohesionProtected = _cohesion.Protect(_plaintext);
         _aspNetProtected = _aspNet.Protect(_plaintext);
+        if (!Unprotect().SequenceEqual(_plaintext) || !Unprotect_AspNetCore().SequenceEqual(_plaintext))
+        {
+            throw new InvalidOperationException("Both protectors must recover the original bytes.");
+        }
     }
 
     [Benchmark(Baseline = true)]
@@ -62,6 +67,14 @@ public class DataProtectorBenchmarks
     [Benchmark]
     [BenchmarkCategory("Unprotect")]
     public byte[] Unprotect() => _cohesion.Unprotect(_cohesionProtected);
+
+    [Benchmark(Baseline = true)]
+    [BenchmarkCategory("RoundTrip")]
+    public byte[] RoundTrip_AspNetCore() => _aspNet.Unprotect(_aspNet.Protect(_plaintext));
+
+    [Benchmark]
+    [BenchmarkCategory("RoundTrip")]
+    public byte[] RoundTrip() => _cohesion.Unprotect(_cohesion.Protect(_plaintext));
 
     /// <summary>The key ring's backing store, kept in memory so no file I/O enters the measurement.</summary>
     private sealed class InMemoryKeyRepository : CohesionProtection.IKeyRepository

@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <CohesionReference Include="Assimalign.Cohesion.Rezolvr.ApplicationModel" />
+    <CohesionReference Include="Assimalign.Cohesion.Rezolvr.Hosting" />
+  </ItemGroup>
+</Project>

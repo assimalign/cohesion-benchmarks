@@ -9,18 +9,18 @@ using Assimalign.Cohesion.Http;
 namespace Assimalign.Cohesion.Web.Benchmarks.Fixtures;
 
 /// <summary>
-/// A minimal request context without a server or transport, so a benchmark measures an authentication handler or
-/// policy and not connection handling. Adapted from the Web.Authentication.Bearer tests' TestHttpContext.
+/// A minimal request context without a server or transport, for in-process handlers, middleware and policies.
+/// Adapted from the Web.Authentication.Bearer tests' TestHttpContext.
 /// </summary>
 internal sealed class BenchmarkHttpContext : HttpContext
 {
-    private BenchmarkHttpContext(BenchmarkHttpRequest request, BenchmarkHttpResponse response)
+    private BenchmarkHttpContext(BenchmarkHttpRequest request, BenchmarkHttpResponse response, int featureCapacity)
     {
         Version = HttpVersion.Http11;
         Request = request;
         Response = response;
         ConnectionInfo = HttpConnectionInfo.Empty;
-        Features = new HttpFeatureCollection();
+        Features = new HttpFeatureCollection(featureCapacity);
         Items = new Dictionary<string, object?>(StringComparer.Ordinal);
         RequestCancelled = CancellationToken.None;
 
@@ -42,7 +42,10 @@ internal sealed class BenchmarkHttpContext : HttpContext
 
     public override CancellationToken RequestCancelled { get; }
 
-    public static BenchmarkHttpContext Create() => new(new BenchmarkHttpRequest(), new BenchmarkHttpResponse());
+    public static BenchmarkHttpContext Create() => Create(featureCapacity: 0);
+
+    public static BenchmarkHttpContext Create(int featureCapacity)
+        => new(new BenchmarkHttpRequest(), new BenchmarkHttpResponse(), featureCapacity);
 
     public void SetAuthorization(string value) => Request.Headers[HttpHeaderKey.Authorization] = value;
 

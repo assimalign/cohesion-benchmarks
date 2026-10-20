@@ -1,7 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<CohesionReference Include="Assimalign.Cohesion.OpenApi" />
+		<CohesionReference Include="Assimalign.Cohesion.OpenApi.Attributes" />
+		<CohesionReference Include="Assimalign.Cohesion.OpenApi.Fluent" />
+		<CohesionReference Include="Assimalign.Cohesion.OpenApi.Generation" />
+		<CohesionReference Include="Assimalign.Cohesion.OpenApi.Integration" />
 		<CohesionReference Include="Assimalign.Cohesion.OpenApi.Serialization" />
+		<CohesionReference Include="Assimalign.Cohesion.OpenApi.Validation" />
+		<CohesionReference Include="Assimalign.Cohesion.OpenApi.Versioning" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -12,5 +18,6 @@
 	<!-- Counterparts. -->
 	<ItemGroup>
 		<PackageReference Include="Microsoft.OpenApi" />
+		<PackageReference Include="Microsoft.OpenApi.YamlReader" />
 	</ItemGroup>
 </Project>

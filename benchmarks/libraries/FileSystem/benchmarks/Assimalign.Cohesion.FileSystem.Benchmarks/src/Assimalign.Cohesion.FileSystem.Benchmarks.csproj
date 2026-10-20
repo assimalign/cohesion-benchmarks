@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.FileSystem" />
+		<CohesionReference Include="Assimalign.Cohesion.FileSystem.Aggregate" />
 		<CohesionReference Include="Assimalign.Cohesion.FileSystem.Globbing" />
 		<CohesionReference Include="Assimalign.Cohesion.FileSystem.InMemory" />
 		<CohesionReference Include="Assimalign.Cohesion.FileSystem.Physical" />
