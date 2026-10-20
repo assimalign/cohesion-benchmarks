@@ -6,8 +6,10 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Exporters.Json;
+using BenchmarkDotNet.Filters;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Toolchains.InProcess.Emit;
+using BenchmarkDotNet.Toolchains.NativeAot;
 
 namespace Assimalign.Cohesion.Benchmarks;
 
@@ -46,13 +48,25 @@ public static class BenchmarkProfiles
     /// <param name="addProfileJob">False when the command line already chose a job (<c>--job</c>, <c>--inProcess</c>).</param>
     /// <param name="outOfProcess">True to rebuild and run the suite in a child process (BenchmarkDotNet's default toolchain).</param>
     /// <returns>The configuration.</returns>
-    public static IConfig CreateConfig(string profile, Assembly assembly, bool addProfileJob = true, bool outOfProcess = false)
+    public static IConfig CreateConfig(
+        string profile,
+        Assembly assembly,
+        bool addProfileJob = true,
+        bool outOfProcess = false,
+        string? runtime = null)
     {
         ArgumentNullException.ThrowIfNull(profile);
         ArgumentNullException.ThrowIfNull(assembly);
 
+        string resolved = BenchmarkRuntimes.Normalize(runtime);
+
+        // Each runtime writes to its own artifacts folder, so a JIT run and an AOT run of the same suite on one
+        // machine do not overwrite each other's reports -- CI uploads both from the same checkout.
         string artifacts = Path.Combine(
-            BenchmarkEnvironment.GetBenchmarksRoot(assembly), ".artifacts", "results", assembly.GetName().Name!);
+            BenchmarkEnvironment.GetBenchmarksRoot(assembly),
+            ".artifacts",
+            "results",
+            resolved == BenchmarkRuntimes.Jit ? assembly.GetName().Name! : $"{assembly.GetName().Name}.{resolved}");
 
         ManualConfig config = ManualConfig.Create(DefaultConfig.Instance)
             .WithArtifactsPath(artifacts)
@@ -61,9 +75,15 @@ public static class BenchmarkProfiles
             .AddExporter(MarkdownExporter.GitHub)
             .WithOptions(ConfigOptions.DisableLogFile);
 
+        // An AOT run measures only the cases that opted in; see BenchmarkRuntimes for why it cannot measure them all.
+        if (resolved == BenchmarkRuntimes.Aot)
+        {
+            config.AddFilter(new AnyCategoriesFilter([BenchmarkRuntimes.Category]));
+        }
+
         if (addProfileJob)
         {
-            config.AddJob(CreateJob(profile, assembly, outOfProcess));
+            config.AddJob(CreateJob(profile, assembly, outOfProcess, resolved));
         }
 
         return config;
@@ -74,7 +94,7 @@ public static class BenchmarkProfiles
     /// <param name="assembly">The benchmark assembly.</param>
     /// <param name="outOfProcess">True to use BenchmarkDotNet's default (child process) toolchain.</param>
     /// <returns>The job.</returns>
-    public static Job CreateJob(string profile, Assembly assembly, bool outOfProcess = false)
+    public static Job CreateJob(string profile, Assembly assembly, bool outOfProcess = false, string? runtime = null)
     {
         Job job = profile.ToLowerInvariant() switch
         {
@@ -84,18 +104,24 @@ public static class BenchmarkProfiles
             _ => throw new ArgumentException($"Unknown benchmark profile '{profile}'. Use {Local}, {Ci} or {Dry}.", nameof(profile)),
         };
 
-        job = job.WithId(profile.ToLowerInvariant());
+        string resolved = BenchmarkRuntimes.Normalize(runtime);
+        job = job.WithId(resolved == BenchmarkRuntimes.Jit ? profile.ToLowerInvariant() : $"{profile.ToLowerInvariant()}-{resolved}");
+
+        // The child build has to restore the measured cohesion build, not the pinned default. Both out-of-process
+        // paths need it; NativeAOT additionally needs the ILCompiler package, which the suite csproj carries.
+        MsBuildArgument version = new($"/p:CohesionPackageVersion={BenchmarkEnvironment.GetCohesionVersion(assembly)}");
+
+        if (resolved == BenchmarkRuntimes.Aot)
+        {
+            // NativeAOT is always a child process: there is nothing to emit into in a natively compiled image.
+            return job.WithToolchain(NativeAotToolchain.CreateBuilder().UseNuGet().ToToolchain()).WithArguments([version]);
+        }
 
         if (!outOfProcess)
         {
             return job.WithToolchain(InProcessEmitToolchain.Instance);
         }
 
-        // The child project rebuilds the suite: forward the measured cohesion build, or it would restore the pinned
-        // default instead.
-        return job.WithArguments(
-        [
-            new MsBuildArgument($"/p:CohesionPackageVersion={BenchmarkEnvironment.GetCohesionVersion(assembly)}"),
-        ]);
+        return job.WithArguments([version]);
     }
 }

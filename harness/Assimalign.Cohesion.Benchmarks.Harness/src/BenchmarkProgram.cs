@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Reports;
@@ -17,7 +18,7 @@ namespace Assimalign.Cohesion.Benchmarks;
 /// <para>
 /// Arguments pass through to BenchmarkDotNet (<c>--filter</c>, <c>--list flat</c>, <c>--join</c>,
 /// <c>--inProcess</c>, ...), plus two of ours: <c>--profile local|ci|dry</c> (or the
-/// <c>COHESION_BENCHMARK_PROFILE</c> environment variable) and <c>--out-of-process</c> (see
+/// <c>COHESION_BENCHMARK_PROFILE</c> environment variable) and <c>--runtime jit|aot</c> (or <c>COHESION_BENCHMARK_RUNTIME</c>) and <c>--out-of-process</c> (see
 /// <see cref="BenchmarkProfiles"/>). With no filter the whole suite runs, so a
 /// non-interactive run never stops at BenchmarkDotNet's selection prompt.
 /// </para>
@@ -55,20 +56,36 @@ public static class BenchmarkProgram
         }
 
         bool outOfProcess = TakeFlag(arguments, "--out-of-process");
+        string runtime = BenchmarkRuntimes.Normalize(
+            TakeOption(arguments, "--runtime") ?? Environment.GetEnvironmentVariable("COHESION_BENCHMARK_RUNTIME"));
 
         // In-process is already the default; BenchmarkDotNet's own --inProcess would replace the profile's job with its
         // default job, so it is absorbed here instead.
         TakeFlag(arguments, "--inProcess");
         TakeFlag(arguments, "-i");
         bool jobFromCommandLine = arguments.Any(argument => argument is "--job" or "-j" or "--runtimes" or "-r");
-        IConfig config = BenchmarkProfiles.CreateConfig(profile, assembly, addProfileJob: !jobFromCommandLine, outOfProcess);
+        IConfig config = BenchmarkProfiles.CreateConfig(profile, assembly, addProfileJob: !jobFromCommandLine, outOfProcess, runtime);
 
-        Console.WriteLine($"// Cohesion benchmarks: profile={profile}, {(outOfProcess ? "out-of-process" : "in-process")}, cohesion={BenchmarkEnvironment.GetCohesionVersion(assembly)}");
+        string host = runtime == BenchmarkRuntimes.Aot
+            ? $"nativeaot ({BenchmarkRuntimes.Category} cases only)"
+            : outOfProcess ? "out-of-process" : "in-process";
+        Console.WriteLine(
+            $"// Cohesion benchmarks: profile={profile}, runtime={runtime}, {host}, "
+            + $"tfm={RuntimeInformation.FrameworkDescription}, os={RuntimeInformation.OSDescription}, "
+            + $"cohesion={BenchmarkEnvironment.GetCohesionVersion(assembly)}");
 
         Summary[] summaries = [.. BenchmarkSwitcher.FromAssembly(assembly).Run([.. arguments], config)];
 
         // A filter that matches nothing makes BenchmarkDotNet print suggestions and return no summaries; a run that
         // measured nothing must not pass as a success.
+        // An AOT run filters to the opt-in category, and most suites have no case in it. That is the designed
+        // outcome, not a broken filter, so it reports nothing and succeeds rather than failing the run.
+        if (summaries.All(summary => summary.Reports.Length == 0) && runtime == BenchmarkRuntimes.Aot)
+        {
+            Console.WriteLine($"// No benchmark in this suite is marked [BenchmarkCategory(\"{BenchmarkRuntimes.Category}\")]; nothing to measure on {runtime}.");
+            return 0;
+        }
+
         if (summaries.All(summary => summary.Reports.Length == 0)
             && !arguments.Any(argument => InformationOptions.Contains(argument, StringComparer.OrdinalIgnoreCase)))
         {
