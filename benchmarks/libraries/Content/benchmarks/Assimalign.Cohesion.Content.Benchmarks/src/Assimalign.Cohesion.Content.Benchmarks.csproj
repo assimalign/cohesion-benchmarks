@@ -1,14 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.Content" />
 		<CohesionReference Include="Assimalign.Cohesion.Content.Binary" />
 		<CohesionReference Include="Assimalign.Cohesion.Content.Bmff" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Ebml" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Exe" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Heif" />
 		<CohesionReference Include="Assimalign.Cohesion.Content.Markdown" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Media" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Mkv" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Mpeg" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Pdf" />
+		<CohesionReference Include="Assimalign.Cohesion.Content.Text" />
 		<CohesionReference Include="Assimalign.Cohesion.Content.Yaml" />
 	</ItemGroup>
 
 	<!-- Counterparts. -->
 	<ItemGroup>
 		<PackageReference Include="Markdig" />
+		<PackageReference Include="PdfPig" />
 		<PackageReference Include="YamlDotNet" />
 	</ItemGroup>
 </Project>
