@@ -98,11 +98,17 @@ a:hover { text-decoration: underline; }
 .kpi .v small { display: block; font-size: 12px; font-weight: 400; color: var(--fg-dim); }
 
 /* ---------- table ---------- */
-.card { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-/* Narrow screens: let the table scroll sideways inside the card instead of clipping its right-hand columns. */
-@media (max-width: 860px) { .card { overflow-x: auto; } .card table { min-width: 560px; } }
+/* The card scrolls sideways whenever the table needs more width than it has, at any window size, rather
+   than clipping its right-hand columns; `overflow-y: hidden` keeps the sticky header sticking to the page.
+   The min-width stops the columns squashing into each other before the scrollbar appears. */
+.card { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; overflow-y: hidden; }
+.card table { min-width: 680px; }
 table { width: 100%; border-collapse: collapse; }
-th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--line); }
+th { vertical-align: middle; }
+/* Top, not middle: a row with several counterparts is taller than one line, and centring its cells
+   would float the single-line values between the stacked ratios instead of beside the first one. */
+td { vertical-align: top; }
 th {
   font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-faint);
   background: var(--panel); position: sticky; top: 0; z-index: 1; white-space: nowrap; font-weight: 600;
@@ -139,6 +145,10 @@ td.name .scope { color: var(--fg-faint); font-weight: 400; font-size: 11.5px; }
 .d.none { color: var(--fg-faint); font-weight: 400; }
 .alertdot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--bad); margin-left: 6px; vertical-align: 1px; }
 .rival { font-size: 10.5px; color: var(--fg-faint); font-family: var(--sans); }
+/* Counterpart ratios stack one per line; the grid keeps the ratios in one column and the names in
+   another, so several counterparts read down the column instead of staggering with the name lengths. */
+.vslist { display: inline-grid; grid-template-columns: auto auto; column-gap: 6px; row-gap: 3px; align-items: center; }
+.vslist .rival { justify-self: start; text-align: left; }
 
 /* ---------- metric toggle ---------- */
 .toggle { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 6px; overflow: hidden; margin-left: auto; }
@@ -408,20 +418,22 @@ function versusCell(r, label) {
   var cls = Math.abs(r - 1) < NOISE ? "flat" : (r > 1 ? "up" : "down");
   var txt = (r >= 10 ? r.toFixed(0) : r.toFixed(2)) + "×";
   return '<span class="d ' + cls + '" title="Cohesion ÷ ' + esc(label) + '">' + txt + "</span>" +
-    ' <span class="rival">' + esc(label) + "</span>";
+    '<span class="rival">' + esc(label) + "</span>";
 }
 
-// One chip per counterpart, worst for Cohesion first.
+// One chip per counterpart, worst for Cohesion first. The rows go in a two-column grid rather than
+// being right-aligned individually: with one line per counterpart, right alignment lines up the ends
+// of the names and staggers the ratios, which is the wrong way round for comparing the ratios.
 function versusCells(area, metric, g) {
   if (!g.rivals.length) return '<span class="d none">—</span>';
-  return g.rivals.map(function (rv) {
+  return '<span class="vslist">' + g.rivals.map(function (rv) {
     var mine = seriesFor(area, metric, g.subject), theirs = seriesFor(area, metric, rv.name);
     var r = (mine.length && theirs.length && theirs[theirs.length - 1].value > 0)
       ? mine[mine.length - 1].value / theirs[theirs.length - 1].value : null;
     return { r: r, html: versusCell(r, rv.label) };
   }).sort(function (a, b) {
     return (b.r === null ? -Infinity : b.r) - (a.r === null ? -Infinity : a.r);
-  }).map(function (x) { return x.html; }).join('<br>');
+  }).map(function (x) { return x.html; }).join("") + "</span>";
 }
 
 // A ratio as a signed percentage chip. Lower is better for both metrics
