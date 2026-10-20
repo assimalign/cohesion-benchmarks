@@ -56,6 +56,7 @@
 		<PackageReference Update="Microsoft.OpenApi.YamlReader" Version="3.10.2" />
 		<PackageReference Update="PdfPig" Version="0.1.16" />
 		<PackageReference Update="Polly.Core" Version="8.6.4" />
+		<PackageReference Update="System.Threading.RateLimiting" Version="10.0.13" />
 		<PackageReference Update="YamlDotNet" Version="16.3.0" />
 	</ItemGroup>
 
