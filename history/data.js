@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792498189550,
+  "lastUpdate": 1792498193440,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -5585,6 +5585,274 @@ window.BENCHMARK_DATA = {
             "value": 0,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080635"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "699980c0cf28b76854e64dc51e4e45d2c5c05dee",
+          "message": "Merge pull request #8 from assimalign/feature/benchmark-suite-expansion\n\nBuild out the benchmark suites: 148 to 988 cases across every area but Database",
+          "timestamp": "2026-10-20T07:59:35Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/699980c0cf28b76854e64dc51e4e45d2c5c05dee"
+        },
+        "date": 1792498192803,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ConnectionFeatureLookupBenchmarks.NamedHit(Layers=1) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "ConnectionFeatureLookupBenchmarks.TypedHit(Layers=1) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "ConnectionFeatureLookupBenchmarks.NamedMiss(Layers=1) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "ConnectionFeatureLookupBenchmarks.TypedMiss(Layers=1) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "ConnectionFeatureLookupBenchmarks.NamedHit(Layers=4) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "ConnectionFeatureLookupBenchmarks.TypedHit(Layers=4) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "ConnectionFeatureLookupBenchmarks.NamedMiss(Layers=4) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "ConnectionFeatureLookupBenchmarks.TypedMiss(Layers=4) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "DuplexPipeStreamBenchmarks.Read(PayloadSize=64) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "DuplexPipeStreamBenchmarks.Read_SystemIOPipelines(PayloadSize=64) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "DuplexPipeStreamBenchmarks.Read(PayloadSize=16384) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "DuplexPipeStreamBenchmarks.Read_SystemIOPipelines(PayloadSize=16384) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "DuplexPipeStreamBenchmarks.Write(PayloadSize=64) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "DuplexPipeStreamBenchmarks.Write_SystemIOPipelines(PayloadSize=64) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "DuplexPipeStreamBenchmarks.Write(PayloadSize=16384) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "DuplexPipeStreamBenchmarks.Write_SystemIOPipelines(PayloadSize=16384) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryBufferBenchmarks.Transfer(PayloadSize=64) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryBufferBenchmarks.Transfer_SystemIOPipelines(PayloadSize=64) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryBufferBenchmarks.Transfer(PayloadSize=16384) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryBufferBenchmarks.Transfer_SystemIOPipelines(PayloadSize=16384) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryBufferBenchmarks.TryReadTransfer(PayloadSize=64) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryBufferBenchmarks.TryReadTransfer_SystemIOPipelines(PayloadSize=64) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryBufferBenchmarks.TryReadTransfer(PayloadSize=16384) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryBufferBenchmarks.TryReadTransfer_SystemIOPipelines(PayloadSize=16384) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryConnectionBenchmarks.RoundTrip_SystemIOPipelines(PayloadSize=64) - allocated",
+            "value": 144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryConnectionBenchmarks.RoundTrip(PayloadSize=64) - allocated",
+            "value": 144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryConnectionBenchmarks.RoundTrip_SystemIOPipelines(PayloadSize=4096) - allocated",
+            "value": 144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryConnectionBenchmarks.RoundTrip(PayloadSize=4096) - allocated",
+            "value": 144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryConnectionListenerBenchmarks.ConnectAccept - allocated",
+            "value": 1848,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryMultiplexedStreamBenchmarks.RoundTrip(PayloadSize=64) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryMultiplexedStreamBenchmarks.RoundTrip_SystemIOPipelines(PayloadSize=64) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryMultiplexedStreamBenchmarks.RoundTrip(PayloadSize=4096) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryMultiplexedStreamBenchmarks.RoundTrip_SystemIOPipelines(PayloadSize=4096) - allocated",
+            "value": 72,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryStreamLifecycleBenchmarks.OpenAccept(Direction=Bidirectional) - allocated",
+            "value": 1696,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "InMemoryStreamLifecycleBenchmarks.OpenAccept(Direction=WriteOnly) - allocated",
+            "value": 1728,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "StreamAbortReadBenchmarks.ReadAfterLocalAbort - allocated",
+            "value": 832,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "StreamAbortReadBenchmarks.ReadAfterPeerReset - allocated",
+            "value": 272,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "StreamLimitLookupBenchmarks.CheckStreamOrdinals(FeaturePresent=False) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "StreamLimitLookupBenchmarks.CheckStreamOrdinals(FeaturePresent=True) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "TlsFeatureLookupBenchmarks.SelectHttp2(FeaturePresent=False) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
+          },
+          {
+            "name": "TlsFeatureLookupBenchmarks.SelectHttp2(FeaturePresent=True) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080838"
           }
         ]
       }
