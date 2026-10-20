@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792498649992,
+  "lastUpdate": 1792498666216,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -32927,6 +32927,56 @@ window.BENCHMARK_DATA = {
             "range": "± 115.573",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080678\nmean 13708.15 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "699980c0cf28b76854e64dc51e4e45d2c5c05dee",
+          "message": "Merge pull request #8 from assimalign/feature/benchmark-suite-expansion\n\nBuild out the benchmark suites: 148 to 988 cases across every area but Database",
+          "timestamp": "2026-10-20T07:59:35Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/699980c0cf28b76854e64dc51e4e45d2c5c05dee"
+        },
+        "date": 1792498665198,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "LoadBalancerApplicationBenchmarks.Build(ServiceCount=1)",
+            "value": 2749.205,
+            "range": "± 13.551",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080868\nmean 2746.688 ns"
+          },
+          {
+            "name": "LoadBalancerApplicationBenchmarks.BuildStartStop(ServiceCount=1)",
+            "value": 3690.69,
+            "range": "± 35.254",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080868\nmean 3705.389 ns"
+          },
+          {
+            "name": "LoadBalancerApplicationBenchmarks.Build(ServiceCount=16)",
+            "value": 7246.434,
+            "range": "± 23.172",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080868\nmean 7245.729 ns"
+          },
+          {
+            "name": "LoadBalancerApplicationBenchmarks.BuildStartStop(ServiceCount=16)",
+            "value": 10284.75,
+            "range": "± 62.25",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080868\nmean 10260.775 ns"
           }
         ]
       }
