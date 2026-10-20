@@ -11,13 +11,20 @@ namespace Assimalign.Cohesion.Resilience.Benchmarks.Resilience.Fallback;
 
 /// <summary>
 /// The success-path predicate check and a handled exception returning a constant fallback. Both libraries
-/// handle only InvalidOperationException and produce the same integer. The exception is prepared in setup;
-/// propagating its failed ValueTask and dispatching the fallback are part of the measured work.
+/// handle only InvalidOperationException and produce the same integer. Propagating the failed ValueTask and
+/// dispatching the fallback are the measured work.
 /// </summary>
+/// <remarks>
+/// The failure is constructed per operation, not once in setup. A single exception instance rethrown by every
+/// operation accumulates stack-trace state, so the cost climbs with every invocation: the first version of this
+/// class measured 3.3 ms on its first iteration and 6.2 ms by its eighteenth, which is not a number about
+/// resilience at all, and it eventually tripped BenchmarkDotNet's "takes too long for an in-process toolchain"
+/// guard and failed the whole suite. Both sides allocate the same way, so the comparison stays fair.
+/// </remarks>
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 public class FallbackPipelineBenchmarks
 {
-    private readonly InvalidOperationException _failure = new("Dependency unavailable.");
+    private static InvalidOperationException Failure() => new("Dependency unavailable.");
     private IResiliencePipeline<int> _cohesion = null!;
     private Polly.ResiliencePipeline<int> _polly = null!;
 
@@ -45,9 +52,9 @@ public class FallbackPipelineBenchmarks
 
     [Benchmark, BenchmarkCategory("HandledFailure")]
     public ValueTask<int> HandledFailure() => _cohesion.ExecuteAsync<int, InvalidOperationException>(
-        static (_, failure) => ValueTask.FromException<int>(failure!), _failure);
+        static (_, failure) => ValueTask.FromException<int>(failure!), Failure());
 
     [Benchmark(Baseline = true), BenchmarkCategory("HandledFailure")]
     public ValueTask<int> HandledFailure_Polly() => _polly.ExecuteAsync(
-        static (failure, _) => ValueTask.FromException<int>(failure), _failure, CancellationToken.None);
+        static (failure, _) => ValueTask.FromException<int>(failure), Failure(), CancellationToken.None);
 }
