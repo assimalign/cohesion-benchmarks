@@ -62,6 +62,7 @@
     <Project Path="benchmarks/resources/Rezolvr/benchmarks/Assimalign.Cohesion.Rezolvr.Benchmarks/src/Assimalign.Cohesion.Rezolvr.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/Scheduler/benchmarks/Assimalign.Cohesion.Scheduler.Benchmarks/src/Assimalign.Cohesion.Scheduler.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/SecretStore/benchmarks/Assimalign.Cohesion.SecretStore.Benchmarks/src/Assimalign.Cohesion.SecretStore.Benchmarks.csproj" />
+    <Project Path="benchmarks/resources/VpnGateway/benchmarks/Assimalign.Cohesion.VpnGateway.Benchmarks/src/Assimalign.Cohesion.VpnGateway.Benchmarks.csproj" />
     <Project Path="benchmarks/resources/Web/benchmarks/Assimalign.Cohesion.Web.Benchmarks/src/Assimalign.Cohesion.Web.Benchmarks.csproj" />
   </Folder>
 </Solution>
