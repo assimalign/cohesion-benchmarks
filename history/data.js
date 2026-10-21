@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792592209695,
+  "lastUpdate": 1792592214970,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -46840,6 +46840,196 @@ window.BENCHMARK_DATA = {
             "value": 687768,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080869"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792592213265,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "FlushBenchmarks.FlushBatch(Records=1) - allocated",
+            "value": 7248,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "FlushBenchmarks.FlushBatch(Records=128) - allocated",
+            "value": 848072,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "IngestionBenchmarks.ReadParsedOtlp(Records=1&Structured=False) - allocated",
+            "value": 5760,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "IngestionBenchmarks.ParseAndReadOtlp(Records=1&Structured=False) - allocated",
+            "value": 5832,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "IngestionBenchmarks.ReadParsedOtlp(Records=1&Structured=True) - allocated",
+            "value": 6160,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "IngestionBenchmarks.ParseAndReadOtlp(Records=1&Structured=True) - allocated",
+            "value": 6232,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "IngestionBenchmarks.ReadParsedOtlp(Records=128&Structured=False) - allocated",
+            "value": 584955,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "IngestionBenchmarks.ParseAndReadOtlp(Records=128&Structured=False) - allocated",
+            "value": 585030,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "IngestionBenchmarks.ReadParsedOtlp(Records=128&Structured=True) - allocated",
+            "value": 636155,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "IngestionBenchmarks.ParseAndReadOtlp(Records=128&Structured=True) - allocated",
+            "value": 636230,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueryBenchmarks.All(Records=64) - allocated",
+            "value": 186444,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueryBenchmarks.FilterResource(Records=64) - allocated",
+            "value": 159676,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueryBenchmarks.FilterTime(Records=64) - allocated",
+            "value": 159836,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueryBenchmarks.MissingResource(Records=64) - allocated",
+            "value": 127027,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueryBenchmarks.ResumePage(Records=64) - allocated",
+            "value": 117146,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueryBenchmarks.All(Records=1024) - allocated",
+            "value": 2482294,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueryBenchmarks.FilterResource(Records=1024) - allocated",
+            "value": 2133223,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueryBenchmarks.FilterTime(Records=1024) - allocated",
+            "value": 2133383,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueryBenchmarks.MissingResource(Records=1024) - allocated",
+            "value": 1778260,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueryBenchmarks.ResumePage(Records=1024) - allocated",
+            "value": 109386,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueueBenchmarks.EnqueueBatch(Records=1&Structured=False) - allocated",
+            "value": 432,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueueBenchmarks.IngestBatch(Records=1&Structured=False) - allocated",
+            "value": 6264,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueueBenchmarks.EnqueueBatch(Records=1&Structured=True) - allocated",
+            "value": 432,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueueBenchmarks.IngestBatch(Records=1&Structured=True) - allocated",
+            "value": 13000,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueueBenchmarks.EnqueueBatch(Records=128&Structured=False) - allocated",
+            "value": 51544,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueueBenchmarks.IngestBatch(Records=128&Structured=False) - allocated",
+            "value": 636568,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueueBenchmarks.EnqueueBatch(Records=128&Structured=True) - allocated",
+            "value": 47512,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
+          },
+          {
+            "name": "QueueBenchmarks.IngestBatch(Records=128&Structured=True) - allocated",
+            "value": 687768,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082196"
           }
         ]
       }
