@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792591969907,
+  "lastUpdate": 1792591986387,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -71434,6 +71434,58 @@ window.BENCHMARK_DATA = {
             "value": 22897,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082168"
+          }
+        ]
+      }
+    ],
+    "resources/EventHub (windows) - time": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792591984565,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "EventHubApplicationBenchmarks.Build(ServiceCount=1)",
+            "value": 3027.604,
+            "range": "± 35.457",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082174\nmean 3024.616 ns"
+          },
+          {
+            "name": "EventHubApplicationBenchmarks.BuildStartStop(ServiceCount=1)",
+            "value": 4247.695,
+            "range": "± 65.682",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082174\nmean 4268.723 ns"
+          },
+          {
+            "name": "EventHubApplicationBenchmarks.Build(ServiceCount=16)",
+            "value": 9543.37,
+            "range": "± 120.319",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082174\nmean 9520.428 ns"
+          },
+          {
+            "name": "EventHubApplicationBenchmarks.BuildStartStop(ServiceCount=16)",
+            "value": 14187.115,
+            "range": "± 218.524",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082174\nmean 14206.944 ns"
           }
         ]
       }
