@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792591881054,
+  "lastUpdate": 1792591898204,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -44405,6 +44405,56 @@ window.BENCHMARK_DATA = {
             "range": "± 157.008",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080864\nmean 13490.28 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792591896488,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "EmailHubApplicationBenchmarks.Build(ServiceCount=1)",
+            "value": 3764.568,
+            "range": "± 60.634",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082161\nmean 3738.899 ns"
+          },
+          {
+            "name": "EmailHubApplicationBenchmarks.BuildStartStop(ServiceCount=1)",
+            "value": 5172.538,
+            "range": "± 45.135",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082161\nmean 5172.532 ns"
+          },
+          {
+            "name": "EmailHubApplicationBenchmarks.Build(ServiceCount=16)",
+            "value": 9924.386,
+            "range": "± 97.614",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082161\nmean 9897.66 ns"
+          },
+          {
+            "name": "EmailHubApplicationBenchmarks.BuildStartStop(ServiceCount=16)",
+            "value": 14609.989,
+            "range": "± 76.802",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082161\nmean 14586.619 ns"
           }
         ]
       }
