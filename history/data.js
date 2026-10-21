@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792590867749,
+  "lastUpdate": 1792590871083,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -51812,6 +51812,240 @@ window.BENCHMARK_DATA = {
             "range": "± 7.249",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060\nmean 125.297 ns"
+          }
+        ]
+      }
+    ],
+    "libraries/Dns (windows) - allocations": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792590870479,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "DnsCompressionBenchmarks.WriteSharedSuffixes(AnswerCount=4) - allocated",
+            "value": 4040,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.WriteDistinctSuffixes(AnswerCount=4) - allocated",
+            "value": 5984,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseCompressed(AnswerCount=4) - allocated",
+            "value": 1720,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseLiteral(AnswerCount=4) - allocated",
+            "value": 1720,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.WriteSharedSuffixes(AnswerCount=32) - allocated",
+            "value": 28952,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.WriteDistinctSuffixes(AnswerCount=32) - allocated",
+            "value": 49904,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseCompressed(AnswerCount=32) - allocated",
+            "value": 12248,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseLiteral(AnswerCount=32) - allocated",
+            "value": 12248,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsConstructionBenchmarks.ConstructQuery - allocated",
+            "value": 1016,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsConstructionBenchmarks.ConstructAnswer - allocated",
+            "value": 2960,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsMessageBenchmarks.WriteQuery - allocated",
+            "value": 848,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsMessageBenchmarks.ParseResponse - allocated",
+            "value": 2632,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsMessageBenchmarks.WriteResponse - allocated",
+            "value": 5520,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteA - allocated",
+            "value": 576,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseA - allocated",
+            "value": 456,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteAaaa - allocated",
+            "value": 576,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseAaaa - allocated",
+            "value": 496,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteCname - allocated",
+            "value": 1208,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseCname - allocated",
+            "value": 680,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteNs - allocated",
+            "value": 1104,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseNs - allocated",
+            "value": 576,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WritePtr - allocated",
+            "value": 2936,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParsePtr - allocated",
+            "value": 696,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteMx - allocated",
+            "value": 1208,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseMx - allocated",
+            "value": 688,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteTxt - allocated",
+            "value": 728,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseTxt - allocated",
+            "value": 736,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteSoa - allocated",
+            "value": 2024,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseSoa - allocated",
+            "value": 888,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteSrv - allocated",
+            "value": 2192,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseSrv - allocated",
+            "value": 824,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteEdnsOptions - allocated",
+            "value": 192,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseEdnsOptions - allocated",
+            "value": 800,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteUnknown - allocated",
+            "value": 576,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseUnknown - allocated",
+            "value": 448,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060"
           }
         ]
       }
