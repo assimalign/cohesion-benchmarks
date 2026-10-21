@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792590565540,
+  "lastUpdate": 1792590569353,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -44387,6 +44387,270 @@ window.BENCHMARK_DATA = {
             "range": "± 6224.988",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017\nmean 69585.734 ns"
+          }
+        ]
+      }
+    ],
+    "libraries/Configuration (macos) - allocations": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792590568621,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "CommandLineConfigurationBenchmarks.Build(KeyCount=8) - allocated",
+            "value": 14809,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "CommandLineConfigurationBenchmarks.Build_MicrosoftExtensions(KeyCount=8) - allocated",
+            "value": 3280,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "CommandLineConfigurationBenchmarks.Build(KeyCount=128) - allocated",
+            "value": 168557,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "CommandLineConfigurationBenchmarks.Build_MicrosoftExtensions(KeyCount=128) - allocated",
+            "value": 30704,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "ConfigurationBindingBenchmarks.Bind_MicrosoftExtensions - allocated",
+            "value": 11499,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "ConfigurationBindingBenchmarks.Bind - allocated",
+            "value": 18216,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "ConfigurationLookupBenchmarks.GetValue_MicrosoftExtensions - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "ConfigurationLookupBenchmarks.GetValue - allocated",
+            "value": 1088,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "EnvironmentConfigurationBenchmarks.Build(KeyCount=8) - allocated",
+            "value": 46660,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "EnvironmentConfigurationBenchmarks.Build_MicrosoftExtensions(KeyCount=8) - allocated",
+            "value": 31640,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "EnvironmentConfigurationBenchmarks.Build(KeyCount=128) - allocated",
+            "value": 231898,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "EnvironmentConfigurationBenchmarks.Build_MicrosoftExtensions(KeyCount=128) - allocated",
+            "value": 99176,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "FileConfigurationBenchmarks.Build(KeyCount=8) - allocated",
+            "value": 63933,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "FileConfigurationBenchmarks.Build_MicrosoftExtensions(KeyCount=8) - allocated",
+            "value": 8825,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "FileConfigurationBenchmarks.Build(KeyCount=128) - allocated",
+            "value": 164918,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "FileConfigurationBenchmarks.Build_MicrosoftExtensions(KeyCount=128) - allocated",
+            "value": 47011,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "FileConfigurationBenchmarks.Reload(KeyCount=8) - allocated",
+            "value": 31588,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "FileConfigurationBenchmarks.Reload_MicrosoftExtensions(KeyCount=8) - allocated",
+            "value": 7336,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "FileConfigurationBenchmarks.Reload(KeyCount=128) - allocated",
+            "value": 132567,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "FileConfigurationBenchmarks.Reload_MicrosoftExtensions(KeyCount=128) - allocated",
+            "value": 45522,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "IniConfigurationBenchmarks.Build(KeyCount=8) - allocated",
+            "value": 16440,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "IniConfigurationBenchmarks.Build_MicrosoftExtensions(KeyCount=8) - allocated",
+            "value": 6944,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "IniConfigurationBenchmarks.Build(KeyCount=128) - allocated",
+            "value": 132729,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "IniConfigurationBenchmarks.Build_MicrosoftExtensions(KeyCount=128) - allocated",
+            "value": 39137,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "JsonConfigurationBenchmarks.Build_MicrosoftExtensions - allocated",
+            "value": 12536,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "JsonConfigurationBenchmarks.Build - allocated",
+            "value": 26994,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "PathBenchmarks.Parse(value=/Serv(...)\\0:Url [23]) - allocated",
+            "value": 1000,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "PathBenchmarks.Parse(value=Servi(...)quest [24]) - allocated",
+            "value": 1000,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "SectionEnumerationBenchmarks.Enumerate(KeyCount=8) - allocated",
+            "value": 392,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "SectionEnumerationBenchmarks.Enumerate_MicrosoftExtensions(KeyCount=8) - allocated",
+            "value": 2136,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "SectionEnumerationBenchmarks.Enumerate(KeyCount=128) - allocated",
+            "value": 392,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "SectionEnumerationBenchmarks.Enumerate_MicrosoftExtensions(KeyCount=128) - allocated",
+            "value": 27056,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "SectionEnumerationBenchmarks.GetMissingValue(KeyCount=8) - allocated",
+            "value": 768,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "SectionEnumerationBenchmarks.GetMissingValue_MicrosoftExtensions(KeyCount=8) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "SectionEnumerationBenchmarks.GetMissingValue(KeyCount=128) - allocated",
+            "value": 768,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "SectionEnumerationBenchmarks.GetMissingValue_MicrosoftExtensions(KeyCount=128) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "XmlConfigurationBenchmarks.Build(KeyCount=8) - allocated",
+            "value": 27985,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "XmlConfigurationBenchmarks.Build_MicrosoftExtensions(KeyCount=8) - allocated",
+            "value": 19561,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "XmlConfigurationBenchmarks.Build(KeyCount=128) - allocated",
+            "value": 241027,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
+          },
+          {
+            "name": "XmlConfigurationBenchmarks.Build_MicrosoftExtensions(KeyCount=128) - allocated",
+            "value": 157142,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082017"
           }
         ]
       }
