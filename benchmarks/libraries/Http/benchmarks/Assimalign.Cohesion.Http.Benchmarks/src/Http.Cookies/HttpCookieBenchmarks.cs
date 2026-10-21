@@ -19,6 +19,8 @@ namespace Assimalign.Cohesion.Http.Benchmarks.Http.Cookies;
 /// RFC 6265 grammar and the RFC 6265bis size limits.
 /// </remarks>
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
+// Opted into NativeAOT runs: this path is reflection-free by design, so losing the JIT is a real question for it.
+[BenchmarkCategory(global::Assimalign.Cohesion.Benchmarks.BenchmarkRuntimes.Category)]
 public class HttpCookieBenchmarks
 {
     private const string parseCategory = "ParseCookieHeader";

@@ -15,7 +15,16 @@
 		another, and scripts/Update-CohesionVersion.ps1 to move the pin.
 	-->
 	<PropertyGroup>
-		<TargetFramework>net10.0</TargetFramework>
+		<!--
+			The framework the suites are measured on. Every Cohesion package ships net10.0 and nothing else today, so
+			this is the only value that resolves; it is a property rather than a literal so that measuring the next
+			framework is a matrix entry, not an edit to every project. When cohesion multi-targets, add the moniker to
+			BenchmarkTargetFrameworks below and the matrix picks it up: CI passes one leg per entry as
+			-p:BenchmarkTargetFramework=&lt;tfm&gt;, and each leg records its own history series.
+		-->
+		<BenchmarkTargetFrameworks Condition="'$(BenchmarkTargetFrameworks)' == ''">net10.0</BenchmarkTargetFrameworks>
+		<BenchmarkTargetFramework Condition="'$(BenchmarkTargetFramework)' == ''">net10.0</BenchmarkTargetFramework>
+		<TargetFramework>$(BenchmarkTargetFramework)</TargetFramework>
 		<LangVersion>preview</LangVersion>
 		<EnablePreviewFeatures>true</EnablePreviewFeatures>
 		<Nullable>enable</Nullable>

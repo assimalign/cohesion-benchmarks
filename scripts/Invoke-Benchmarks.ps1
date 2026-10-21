@@ -32,9 +32,19 @@ param(
     [ValidateSet('local', 'ci', 'dry')]
     [string]$Profile = 'local',
 
+    # jit measures in-process, the whole suite. aot natively compiles and measures only the cases marked
+    # [BenchmarkCategory('Aot')] -- NativeAOT compiles one project per case, so measuring them all is not viable.
+    # A suite with no marked case reports nothing on aot and still succeeds.
+    [ValidateSet('jit', 'aot')]
+    [string]$Runtime = 'jit',
+
     # The cohesion CI package version to measure (scripts/Resolve-CohesionVersion.ps1 finds one). Default: the pin
     # in Directory.Build.props.
     [string]$CohesionVersion,
+
+    # The framework to measure on. Only the monikers cohesion ships resolve (net10.0 today); see
+    # BenchmarkTargetFrameworks in Directory.Build.props.
+    [string]$Tfm,
 
     # Copy each suite's reports here, under <scope>/<Area>/.
     [string]$Output,
@@ -92,6 +102,14 @@ if ($CohesionVersion) {
     $msbuildArgs += "-p:CohesionPackageVersion=$CohesionVersion"
     Write-Host "Cohesion: $CohesionVersion"
 }
+# The property drives TargetFramework, so build and run have to agree on it or `dotnet run --no-build` looks in
+# the wrong output folder.
+$runArgs = @()
+if ($Tfm) {
+    $msbuildArgs += "-p:BenchmarkTargetFramework=$Tfm"
+    $runArgs += "-p:BenchmarkTargetFramework=$Tfm"
+    Write-Host "Framework: $Tfm"
+}
 
 if (-not $env:NuGetPackageSourceCredentials_assimalign) {
     Write-Warning ("NuGetPackageSourceCredentials_assimalign is not set; restoring Assimalign.Cohesion.* from GitHub Packages " +
@@ -102,19 +120,20 @@ $failed = @()
 foreach ($suite in $suites) {
     $project = Join-Path $root $suite.project
     Write-Host ''
-    Write-Host "=== $($suite.scope)/$($suite.area): $($suite.name) [$Profile]" -ForegroundColor Cyan
+    Write-Host "=== $($suite.scope)/$($suite.area): $($suite.name) [$Profile/$Runtime]" -ForegroundColor Cyan
 
     if (-not $NoBuild) {
         & dotnet build $project @msbuildArgs
         if ($LASTEXITCODE -ne 0) { $failed += "$($suite.name) (build)"; continue }
     }
 
-    $results = Join-Path $root '.artifacts' 'results' $suite.name
+    # The harness gives each runtime its own artifacts folder, so a jit and an aot run of one suite coexist.
+    $results = Join-Path $root '.artifacts' 'results' ($Runtime -eq 'jit' ? $suite.name : "$($suite.name).$Runtime")
     if (Test-Path $results) { Remove-Item $results -Recurse -Force }
 
     # "$Filter" is quoted on purpose: on Linux and macOS PowerShell expands an unquoted wildcard argument to a native
     # command into file names, so a bare $Filter of '*' reached BenchmarkDotNet as the repository's file list.
-    & dotnet run --project $project -c Release --no-build -- --profile $Profile --filter "$Filter" @BenchmarkArguments
+    & dotnet run --project $project -c Release --no-build @runArgs -- --profile $Profile --runtime $Runtime --filter "$Filter" @BenchmarkArguments
     if ($LASTEXITCODE -ne 0) { $failed += "$($suite.name) (run)" }
 
     if ($Output -and (Test-Path $results)) {

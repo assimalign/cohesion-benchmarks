@@ -13,6 +13,8 @@ namespace Assimalign.Cohesion.Configuration.Benchmarks.Configuration;
 /// objects), against Microsoft.Extensions.Configuration.Binder's reflection binder (the baseline). Every options type
 /// an application reads from configuration pays this at startup, and again on every reload.
 /// </summary>
+// Opted into NativeAOT runs: this path is reflection-free by design, so losing the JIT is a real question for it.
+[BenchmarkCategory(global::Assimalign.Cohesion.Benchmarks.BenchmarkRuntimes.Category)]
 public class ConfigurationBindingBenchmarks
 {
     private const string Section = "Service";
