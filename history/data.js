@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792591082023,
+  "lastUpdate": 1792591103015,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -57259,6 +57259,352 @@ window.BENCHMARK_DATA = {
             "value": 3792,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082071"
+          }
+        ]
+      }
+    ],
+    "libraries/Http (macos) - time": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792591101214,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "HttpAntiforgeryBenchmarks.Issue",
+            "value": 1113.639,
+            "range": "± 20.533",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1107.027 ns"
+          },
+          {
+            "name": "HttpAntiforgeryBenchmarks.Validate",
+            "value": 1080.711,
+            "range": "± 32.871",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1084.203 ns"
+          },
+          {
+            "name": "Http1RequestBenchmarks.ServeRequest(Header=bearer)",
+            "value": 1838.411,
+            "range": "± 259.575",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1981.604 ns"
+          },
+          {
+            "name": "Http1RequestBenchmarks.ServeRequest(Header=cookie)",
+            "value": 1936.509,
+            "range": "± 84.516",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1966.282 ns"
+          },
+          {
+            "name": "Http1RequestBenchmarks.ServeRequest(Header=none)",
+            "value": 1514.323,
+            "range": "± 33.781",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1518.733 ns"
+          },
+          {
+            "name": "HttpCookieBenchmarks.FormatSetCookie_AspNetCore",
+            "value": 91.798,
+            "range": "± 1.307",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 91.704 ns"
+          },
+          {
+            "name": "HttpCookieBenchmarks.FormatSetCookie",
+            "value": 164.945,
+            "range": "± 3.001",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 164.128 ns"
+          },
+          {
+            "name": "HttpCookieBenchmarks.ParseCookieHeader_AspNetCore",
+            "value": 465.486,
+            "range": "± 10.407",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 466.458 ns"
+          },
+          {
+            "name": "HttpCookieBenchmarks.ParseCookieHeader",
+            "value": 456.37,
+            "range": "± 6.965",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 453.922 ns"
+          },
+          {
+            "name": "HttpDigestFieldBenchmarks.Parse",
+            "value": 553.766,
+            "range": "± 8.738",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 552.112 ns"
+          },
+          {
+            "name": "HttpDigestFieldBenchmarks.Format",
+            "value": 206.258,
+            "range": "± 3.585",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 205.927 ns"
+          },
+          {
+            "name": "HttpDigestFieldBenchmarks.ParsePreferences",
+            "value": 305.524,
+            "range": "± 5.031",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 303.506 ns"
+          },
+          {
+            "name": "HttpDigestFieldBenchmarks.Verify",
+            "value": 5622.155,
+            "range": "± 87.752",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 5628.78 ns"
+          },
+          {
+            "name": "HttpDigestFieldBenchmarks.Compute",
+            "value": 2109.844,
+            "range": "± 38.838",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 2110.056 ns"
+          },
+          {
+            "name": "HttpFormBenchmarks.DecodeMultipart(Fields=4)",
+            "value": 5575.571,
+            "range": "± 82.369",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 5574.607 ns"
+          },
+          {
+            "name": "HttpFormBenchmarks.DecodeMultipart_AspNetCore(Fields=4)",
+            "value": 9275.937,
+            "range": "± 184.937",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 9178.286 ns"
+          },
+          {
+            "name": "HttpFormBenchmarks.DecodeMultipart(Fields=32)",
+            "value": 42221.611,
+            "range": "± 640.155",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 42039.561 ns"
+          },
+          {
+            "name": "HttpFormBenchmarks.DecodeMultipart_AspNetCore(Fields=32)",
+            "value": 67691.027,
+            "range": "± 1361.758",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 67318.475 ns"
+          },
+          {
+            "name": "HttpFormBenchmarks.DecodeUrlEncoded(Fields=4)",
+            "value": 2123.964,
+            "range": "± 40.735",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 2128.152 ns"
+          },
+          {
+            "name": "HttpFormBenchmarks.DecodeUrlEncoded_AspNetCore(Fields=4)",
+            "value": 1483.594,
+            "range": "± 26.631",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1481.12 ns"
+          },
+          {
+            "name": "HttpFormBenchmarks.DecodeUrlEncoded(Fields=32)",
+            "value": 12468.078,
+            "range": "± 168.578",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 12509.935 ns"
+          },
+          {
+            "name": "HttpFormBenchmarks.DecodeUrlEncoded_AspNetCore(Fields=32)",
+            "value": 7038.932,
+            "range": "± 104.216",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 7052.684 ns"
+          },
+          {
+            "name": "HttpAcceptParserBenchmarks.ParseAccept_AspNetCore",
+            "value": 1200.285,
+            "range": "± 71.325",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1195.327 ns"
+          },
+          {
+            "name": "HttpAcceptParserBenchmarks.ParseAccept",
+            "value": 1260.617,
+            "range": "± 37.723",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1271.591 ns"
+          },
+          {
+            "name": "HttpForwardedBenchmarks.ParseForwarded",
+            "value": 998.735,
+            "range": "± 41.406",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1015.114 ns"
+          },
+          {
+            "name": "HttpForwardedBenchmarks.ParseXForwardedFor",
+            "value": 331.654,
+            "range": "± 9.229",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 329.361 ns"
+          },
+          {
+            "name": "HttpHeaderParserBenchmarks.ParseContentType",
+            "value": 255.871,
+            "range": "± 12.927",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 258.505 ns"
+          },
+          {
+            "name": "HttpHeaderParserBenchmarks.ParseContentType_AspNetCore",
+            "value": 155.181,
+            "range": "± 3.582",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 155.398 ns"
+          },
+          {
+            "name": "HttpHeaderParserBenchmarks.ParseContentType_SystemNetHttp",
+            "value": 142.511,
+            "range": "± 1.849",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 142.158 ns"
+          },
+          {
+            "name": "HttpHeaderParserBenchmarks.ParseRange",
+            "value": 114.352,
+            "range": "± 2.296",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 114.339 ns"
+          },
+          {
+            "name": "HttpHeaderParserBenchmarks.ParseRange_AspNetCore",
+            "value": 165.818,
+            "range": "± 3.199",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 165.551 ns"
+          },
+          {
+            "name": "HttpHeaderParserBenchmarks.ParseRange_SystemNetHttp",
+            "value": 123.193,
+            "range": "± 2.194",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 122.731 ns"
+          },
+          {
+            "name": "HttpRequestLimitsBenchmarks.ReadLimitedBody(Bounded=False)",
+            "value": 7032.321,
+            "range": "± 107.944",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 7045.648 ns"
+          },
+          {
+            "name": "HttpRequestLimitsBenchmarks.ReadLimitedBody(Bounded=True)",
+            "value": 7075.525,
+            "range": "± 104.788",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 7050.536 ns"
+          },
+          {
+            "name": "ServerSentEventBenchmarks.Format(Multiline=False)",
+            "value": 146.374,
+            "range": "± 2.845",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 146.068 ns"
+          },
+          {
+            "name": "ServerSentEventBenchmarks.Write(Multiline=False)",
+            "value": 108.891,
+            "range": "± 1.734",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 109.194 ns"
+          },
+          {
+            "name": "ServerSentEventBenchmarks.Format(Multiline=True)",
+            "value": 224.063,
+            "range": "± 2.808",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 224.498 ns"
+          },
+          {
+            "name": "ServerSentEventBenchmarks.Write(Multiline=True)",
+            "value": 186.902,
+            "range": "± 2.715",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 186.332 ns"
+          },
+          {
+            "name": "ServerSentEventStreamBenchmarks.FormatBatch",
+            "value": 1637.659,
+            "range": "± 19.481",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1637.489 ns"
+          },
+          {
+            "name": "ServerSentEventStreamBenchmarks.FormatBatch_SystemNetServerSentEvents",
+            "value": 1141.754,
+            "range": "± 21.018",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1144.187 ns"
+          },
+          {
+            "name": "HttpSessionSerializerBenchmarks.Serialize(Entries=4)",
+            "value": 212.119,
+            "range": "± 3.84",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 212.767 ns"
+          },
+          {
+            "name": "HttpSessionSerializerBenchmarks.Deserialize(Entries=4)",
+            "value": 198.889,
+            "range": "± 3.353",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 198.282 ns"
+          },
+          {
+            "name": "HttpSessionSerializerBenchmarks.Serialize(Entries=32)",
+            "value": 1446.882,
+            "range": "± 24.642",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1443.757 ns"
+          },
+          {
+            "name": "HttpSessionSerializerBenchmarks.Deserialize(Entries=32)",
+            "value": 1467.616,
+            "range": "± 28.856",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 1458.785 ns"
+          },
+          {
+            "name": "HttpResponseStreamingBenchmarks.StreamResponse(Writes=1)",
+            "value": 2484.635,
+            "range": "± 50.625",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 2467.826 ns"
+          },
+          {
+            "name": "HttpResponseStreamingBenchmarks.StreamResponse(Writes=16)",
+            "value": 6173.17,
+            "range": "± 70.836",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082074\nmean 6159.258 ns"
           }
         ]
       }
