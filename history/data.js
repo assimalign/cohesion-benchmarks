@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792590973221,
+  "lastUpdate": 1792590977071,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -19280,6 +19280,232 @@ window.BENCHMARK_DATA = {
             "value": 1848,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080844"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792590976726,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "HealthEvaluationBenchmarks.Evaluate(ContributorCount=1&Degraded=False) - allocated",
+            "value": 408,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HealthEvaluationBenchmarks.Evaluate_MicrosoftExtensions(ContributorCount=1&Degraded=False) - allocated",
+            "value": 1637,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HealthEvaluationBenchmarks.Evaluate(ContributorCount=1&Degraded=True) - allocated",
+            "value": 408,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HealthEvaluationBenchmarks.Evaluate_MicrosoftExtensions(ContributorCount=1&Degraded=True) - allocated",
+            "value": 1637,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HealthEvaluationBenchmarks.Evaluate(ContributorCount=16&Degraded=False) - allocated",
+            "value": 1744,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HealthEvaluationBenchmarks.Evaluate_MicrosoftExtensions(ContributorCount=16&Degraded=False) - allocated",
+            "value": 15616,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HealthEvaluationBenchmarks.Evaluate(ContributorCount=16&Degraded=True) - allocated",
+            "value": 1744,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HealthEvaluationBenchmarks.Evaluate_MicrosoftExtensions(ContributorCount=16&Degraded=True) - allocated",
+            "value": 15616,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HostLifecycleBenchmarks.BuildStartStop_MicrosoftExtensions(ServiceCount=1) - allocated",
+            "value": 69716,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HostLifecycleBenchmarks.BuildStartStop(ServiceCount=1) - allocated",
+            "value": 2312,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HostLifecycleBenchmarks.BuildStartStop_MicrosoftExtensions(ServiceCount=16) - allocated",
+            "value": 92151,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "HostLifecycleBenchmarks.BuildStartStop(ServiceCount=16) - allocated",
+            "value": 9032,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceContextBenchmarks.ParseEnvironment(ResourceCount=4) - allocated",
+            "value": 9384,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceContextBenchmarks.ResolveBindings(ResourceCount=4) - allocated",
+            "value": 2816,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceContextBenchmarks.ResolveFallbacks(ResourceCount=4) - allocated",
+            "value": 5184,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceContextBenchmarks.ScopedResolution(ResourceCount=4) - allocated",
+            "value": 168,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceContextBenchmarks.ParseEnvironment(ResourceCount=32) - allocated",
+            "value": 59560,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceContextBenchmarks.ResolveBindings(ResourceCount=32) - allocated",
+            "value": 22704,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceContextBenchmarks.ResolveFallbacks(ResourceCount=32) - allocated",
+            "value": 42352,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceContextBenchmarks.ScopedResolution(ResourceCount=32) - allocated",
+            "value": 168,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceMountBenchmarks.ReadAllBytes(ByteCount=256) - allocated",
+            "value": 280,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceMountBenchmarks.ReadStream(ByteCount=256) - allocated",
+            "value": 64,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceMountBenchmarks.ReadAllBytes(ByteCount=65536) - allocated",
+            "value": 65560,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ResourceMountBenchmarks.ReadStream(ByteCount=65536) - allocated",
+            "value": 64,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ServiceLifecycleBenchmarks.StartStop(ServiceCount=1&Concurrent=False) - allocated",
+            "value": 6496,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ServiceLifecycleBenchmarks.StartStop_MicrosoftExtensions(ServiceCount=1&Concurrent=False) - allocated",
+            "value": 46848,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ServiceLifecycleBenchmarks.StartStop(ServiceCount=1&Concurrent=True) - allocated",
+            "value": 2128,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ServiceLifecycleBenchmarks.StartStop_MicrosoftExtensions(ServiceCount=1&Concurrent=True) - allocated",
+            "value": 46848,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ServiceLifecycleBenchmarks.StartStop(ServiceCount=16&Concurrent=False) - allocated",
+            "value": 7960,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ServiceLifecycleBenchmarks.StartStop_MicrosoftExtensions(ServiceCount=16&Concurrent=False) - allocated",
+            "value": 50496,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ServiceLifecycleBenchmarks.StartStop(ServiceCount=16&Concurrent=True) - allocated",
+            "value": 2920,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "ServiceLifecycleBenchmarks.StartStop_MicrosoftExtensions(ServiceCount=16&Concurrent=True) - allocated",
+            "value": 50496,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "JsonConsoleFormattingBenchmarks.Format(AttributeCount=0) - allocated",
+            "value": 616,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
+          },
+          {
+            "name": "JsonConsoleFormattingBenchmarks.Format(AttributeCount=8) - allocated",
+            "value": 1848,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082065"
           }
         ]
       }
