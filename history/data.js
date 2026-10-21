@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792590674745,
+  "lastUpdate": 1792590677860,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -47249,6 +47249,318 @@ window.BENCHMARK_DATA = {
             "range": "± 1897.179",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036\nmean 78246.781 ns"
+          }
+        ]
+      }
+    ],
+    "libraries/Content (windows) - allocations": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792590677225,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "BinaryReaderBenchmarks.ReadRecords(Records=8) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "BinaryReaderBenchmarks.WriteRecords(Records=8) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "BinaryReaderBenchmarks.ReadRecords(Records=128) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "BinaryReaderBenchmarks.WriteRecords(Records=128) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "BmffCursorBenchmarks.WalkHeaders - allocated",
+            "value": 7784,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "BmffDocumentBenchmarks.Load - allocated",
+            "value": 19168,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "CompositeContentBenchmarks.ReadParts - allocated",
+            "value": 3064,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "EbmlReaderBenchmarks.ReadValues - allocated",
+            "value": 4840,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "EbmlReaderBenchmarks.Load - allocated",
+            "value": 11480,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "ExecutableReaderBenchmarks.Read(Format=ELF) - allocated",
+            "value": 496,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "ExecutableReaderBenchmarks.Read(Format=MachO) - allocated",
+            "value": 408,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "ExecutableReaderBenchmarks.Read(Format=PE) - allocated",
+            "value": 664,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "HeifDocumentBenchmarks.Load(Brand=avif) - allocated",
+            "value": 41976,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "HeifDocumentBenchmarks.Load(Brand=heic) - allocated",
+            "value": 41976,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownBenchmarks.Parse_Markdig - allocated",
+            "value": 20008,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownBenchmarks.Parse - allocated",
+            "value": 128745,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownBenchmarks.ToHtml_Markdig - allocated",
+            "value": 24248,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownBenchmarks.ToHtml - allocated",
+            "value": 148753,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownShapeBenchmarks.Parse(Shape=Blocks) - allocated",
+            "value": 238449,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownShapeBenchmarks.Parse_Markdig(Shape=Blocks) - allocated",
+            "value": 32120,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownShapeBenchmarks.Parse(Shape=Inline) - allocated",
+            "value": 139569,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownShapeBenchmarks.Parse_Markdig(Shape=Inline) - allocated",
+            "value": 27752,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownShapeBenchmarks.Render(Shape=Blocks) - allocated",
+            "value": 24792,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownShapeBenchmarks.Render_Markdig(Shape=Blocks) - allocated",
+            "value": 4248,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownShapeBenchmarks.Render(Shape=Inline) - allocated",
+            "value": 16776,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MarkdownShapeBenchmarks.Render_Markdig(Shape=Inline) - allocated",
+            "value": 3336,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MediaSampleBenchmarks.GetSample - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MediaSampleBenchmarks.FindSample - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MediaSampleBenchmarks.Seek - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MkvBlockBenchmarks.Parse(Lacing=Xiph) - allocated",
+            "value": 456,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MkvBlockBenchmarks.Parse(Lacing=FixedSize) - allocated",
+            "value": 456,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MkvBlockBenchmarks.Parse(Lacing=Ebml) - allocated",
+            "value": 456,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MkvDocumentBenchmarks.Load - allocated",
+            "value": 101721,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "MkvDocumentBenchmarks.ReadSamples - allocated",
+            "value": 6008,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "Mp4FileBenchmarks.Load - allocated",
+            "value": 58144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "PdfPageBenchmarks.ReadGeometry(Pages=1) - allocated",
+            "value": 18688,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "PdfPageBenchmarks.ReadGeometry_PdfPig(Pages=1) - allocated",
+            "value": 2136978,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "PdfPageBenchmarks.ReadGeometry(Pages=8) - allocated",
+            "value": 44360,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "PdfPageBenchmarks.ReadGeometry_PdfPig(Pages=8) - allocated",
+            "value": 2163333,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "TextParsingBenchmarks.DecodeDetected - allocated",
+            "value": 16832,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "TextParsingBenchmarks.ReadLines - allocated",
+            "value": 5504,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "TextParsingBenchmarks.Tokenize - allocated",
+            "value": 2553,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "YamlBenchmarks.Parse_YamlDotNet - allocated",
+            "value": 55928,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "YamlBenchmarks.Parse - allocated",
+            "value": 47968,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "YamlEventBenchmarks.ParseEvents(Shape=Flow) - allocated",
+            "value": 68792,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "YamlEventBenchmarks.ParseEvents_YamlDotNet(Shape=Flow) - allocated",
+            "value": 67977,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "YamlEventBenchmarks.ParseEvents(Shape=Scalars) - allocated",
+            "value": 61624,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
+          },
+          {
+            "name": "YamlEventBenchmarks.ParseEvents_YamlDotNet(Shape=Scalars) - allocated",
+            "value": 54537,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082036"
           }
         ]
       }
