@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792592075273,
+  "lastUpdate": 1792592094245,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -45320,6 +45320,56 @@ window.BENCHMARK_DATA = {
             "range": "± 153.939",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.47 (321a43d7e084) on GitHub Actions 1000080867\nmean 14005.285 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792592092263,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "IoTHubApplicationBenchmarks.Build(ServiceCount=1)",
+            "value": 3527.486,
+            "range": "± 27.697",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082190\nmean 3532.18 ns"
+          },
+          {
+            "name": "IoTHubApplicationBenchmarks.BuildStartStop(ServiceCount=1)",
+            "value": 5102.428,
+            "range": "± 96.99",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082190\nmean 5107.608 ns"
+          },
+          {
+            "name": "IoTHubApplicationBenchmarks.Build(ServiceCount=16)",
+            "value": 9707.538,
+            "range": "± 104.212",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082190\nmean 9683.546 ns"
+          },
+          {
+            "name": "IoTHubApplicationBenchmarks.BuildStartStop(ServiceCount=16)",
+            "value": 14467.408,
+            "range": "± 247.41",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082190\nmean 14394.956 ns"
           }
         ]
       }
