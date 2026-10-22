@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792678313610,
+  "lastUpdate": 1792678330601,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -60490,6 +60490,56 @@ window.BENCHMARK_DATA = {
             "range": "± 27.771",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082199\nmean 12955.864 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792678326946,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "MediaHubApplicationBenchmarks.Build(ServiceCount=1)",
+            "value": 3348.146,
+            "range": "± 22.007",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083108\nmean 3356.967 ns"
+          },
+          {
+            "name": "MediaHubApplicationBenchmarks.BuildStartStop(ServiceCount=1)",
+            "value": 4688.172,
+            "range": "± 12.281",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083108\nmean 4689.416 ns"
+          },
+          {
+            "name": "MediaHubApplicationBenchmarks.Build(ServiceCount=16)",
+            "value": 9496.007,
+            "range": "± 30.531",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083108\nmean 9497.657 ns"
+          },
+          {
+            "name": "MediaHubApplicationBenchmarks.BuildStartStop(ServiceCount=16)",
+            "value": 14597.065,
+            "range": "± 33.452",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083108\nmean 14593.375 ns"
           }
         ]
       }
