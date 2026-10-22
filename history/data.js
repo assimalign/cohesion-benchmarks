@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792677474793,
+  "lastUpdate": 1792677491529,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -96183,6 +96183,210 @@ window.BENCHMARK_DATA = {
             "range": "± 224.894",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082108\nmean 4160.854 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792677489136,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "CollectionValidationBenchmarks.Validate(Count=4&Valid=False)",
+            "value": 5399.227,
+            "range": "± 425.839",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 5342.11 ns"
+          },
+          {
+            "name": "CollectionValidationBenchmarks.Validate_FluentValidation(Count=4&Valid=False)",
+            "value": 2312.658,
+            "range": "± 256.95",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 2341.209 ns"
+          },
+          {
+            "name": "CollectionValidationBenchmarks.Validate(Count=4&Valid=True)",
+            "value": 5050.114,
+            "range": "± 295.076",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 5008.597 ns"
+          },
+          {
+            "name": "CollectionValidationBenchmarks.Validate_FluentValidation(Count=4&Valid=True)",
+            "value": 1224.044,
+            "range": "± 136.337",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 1261.301 ns"
+          },
+          {
+            "name": "CollectionValidationBenchmarks.Validate(Count=32&Valid=False)",
+            "value": 35417.241,
+            "range": "± 3107.034",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 35986.443 ns"
+          },
+          {
+            "name": "CollectionValidationBenchmarks.Validate_FluentValidation(Count=32&Valid=False)",
+            "value": 13567.753,
+            "range": "± 956.634",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 13591.523 ns"
+          },
+          {
+            "name": "CollectionValidationBenchmarks.Validate(Count=32&Valid=True)",
+            "value": 36334.45,
+            "range": "± 4463.793",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 36648.302 ns"
+          },
+          {
+            "name": "CollectionValidationBenchmarks.Validate_FluentValidation(Count=32&Valid=True)",
+            "value": 6827.376,
+            "range": "± 893.906",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 6912.506 ns"
+          },
+          {
+            "name": "NestedValidationBenchmarks.ValidateCollection(Valid=False)",
+            "value": 36524.885,
+            "range": "± 3997.079",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 35781.421 ns"
+          },
+          {
+            "name": "NestedValidationBenchmarks.ValidateCollection_FluentValidation(Valid=False)",
+            "value": 23659.428,
+            "range": "± 1566.547",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 23346.504 ns"
+          },
+          {
+            "name": "NestedValidationBenchmarks.ValidateCollection(Valid=True)",
+            "value": 26334.907,
+            "range": "± 3009.645",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 26900.444 ns"
+          },
+          {
+            "name": "NestedValidationBenchmarks.ValidateCollection_FluentValidation(Valid=True)",
+            "value": 5964.008,
+            "range": "± 655.487",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 6139.087 ns"
+          },
+          {
+            "name": "NestedValidationBenchmarks.ValidateNested(Valid=False)",
+            "value": 4734.859,
+            "range": "± 399.366",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 4739.605 ns"
+          },
+          {
+            "name": "NestedValidationBenchmarks.ValidateNested_FluentValidation(Valid=False)",
+            "value": 2664.776,
+            "range": "± 477.725",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 2771.904 ns"
+          },
+          {
+            "name": "NestedValidationBenchmarks.ValidateNested(Valid=True)",
+            "value": 2933.103,
+            "range": "± 269.994",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 2959.279 ns"
+          },
+          {
+            "name": "NestedValidationBenchmarks.ValidateNested_FluentValidation(Valid=True)",
+            "value": 742.655,
+            "range": "± 40.035",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 740.175 ns"
+          },
+          {
+            "name": "ProfileBuildBenchmarks.Build(IncludeCollection=False)",
+            "value": 2545.823,
+            "range": "± 256.858",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 2577.367 ns"
+          },
+          {
+            "name": "ProfileBuildBenchmarks.Build_FluentValidation(IncludeCollection=False)",
+            "value": 2338.383,
+            "range": "± 169.923",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 2360.291 ns"
+          },
+          {
+            "name": "ProfileBuildBenchmarks.Build(IncludeCollection=True)",
+            "value": 4826.137,
+            "range": "± 545.264",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 4917.871 ns"
+          },
+          {
+            "name": "ProfileBuildBenchmarks.Build_FluentValidation(IncludeCollection=True)",
+            "value": 4781.577,
+            "range": "± 257.231",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 4692.108 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.ValidateComparisons_FluentValidation",
+            "value": 4001.966,
+            "range": "± 237.081",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 3985.647 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.ValidateComparisons",
+            "value": 3960.265,
+            "range": "± 450.88",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 4065.285 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.ValidateInvalid_FluentValidation",
+            "value": 4056.924,
+            "range": "± 366.075",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 4047.392 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.ValidateInvalid",
+            "value": 4136.303,
+            "range": "± 289.101",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 4124.899 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.Validate_FluentValidation",
+            "value": 1168.492,
+            "range": "± 63.418",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 1162.131 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.Validate",
+            "value": 4673.94,
+            "range": "± 421.063",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082995\nmean 4682.356 ns"
           }
         ]
       }
