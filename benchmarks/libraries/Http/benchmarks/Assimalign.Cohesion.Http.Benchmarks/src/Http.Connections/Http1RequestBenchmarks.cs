@@ -20,9 +20,8 @@ namespace Assimalign.Cohesion.Http.Benchmarks.Http.Connections;
 /// </summary>
 /// <remarks>
 /// <c>Header</c> varies the size of one request header the way authentication does: none, an HS256 bearer token
-/// (a 307-byte <c>Authorization</c> line), a data-protected cookie (484 bytes). Until 2026-10 the head was read one
-/// octet at a time, so those lines cost 24 µs and 37 µs per request (results/2026-10-18-auth-triage in the Web
-/// area); this benchmark is the guard against that coming back. There is no counterpart: Kestrel's in-memory
+/// (a 307-byte <c>Authorization</c> line), a data-protected cookie (484 bytes). Historically the head was read one
+/// octet at a time; this benchmark guards against that cost returning. There is no counterpart: Kestrel's in-memory
 /// transport is not public.
 /// </remarks>
 public class Http1RequestBenchmarks

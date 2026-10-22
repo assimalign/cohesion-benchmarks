@@ -1,6 +1,7 @@
 # ObjectMapping benchmarks
 
-Latest measurements: [iteration 9 execution results](results/2026-10-22-performance-iteration-09/README.md).
+Measurements are published through the nightly workflow artifacts and dashboard; see the
+[repository guide](../../../README.md).
 
 32 cases for Assimalign.Cohesion.ObjectMapping: four original cases plus 28 additions.
 

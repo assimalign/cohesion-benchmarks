@@ -23,8 +23,8 @@ Inputs are deterministic and generated in global setup. Media payloads are tiny 
 not playable bitstreams. No downloaded corpus, checked-in binary fixtures or temporary files are needed.
 The existing BMFF loading benchmark retains its original generated 1 MiB lazy payload.
 
-[Performance iteration 7](results/2026-10-22-performance-iteration-07/README.md) records the
-BMFF prefix measurements and the companion mapping, DNS, token and nested-validation investigations.
+Measurements are published through the nightly workflow artifacts and dashboard; see the
+[repository guide](../../../README.md).
 
 The existing Markdig and YamlDotNet dependencies also baseline the added Markdown and YAML cases.
 Markdown setup verifies identical HTML; rendering reuses trees parsed in setup. The YAML baseline

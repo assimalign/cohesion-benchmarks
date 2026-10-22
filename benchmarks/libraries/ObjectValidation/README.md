@@ -1,6 +1,7 @@
 # ObjectValidation benchmarks
 
-Latest measurements: [iteration 10 execution results](results/2026-10-22-performance-iteration-10/README.md).
+Measurements are published through the nightly workflow artifacts and dashboard; see the
+[repository guide](../../../README.md).
 
 26 package-only cases compare Cohesion with the existing FluentValidation 11.11.0 pin.
 Both sides validate the same fixtures and setup checks equal error counts. Validators are
@@ -34,4 +35,4 @@ pwsh ./scripts/Invoke-Benchmarks.ps1 -Area ObjectValidation -Profile ci
 
 For before/after work, consume uniquely versioned local packages through the
 `CohesionPackageVersion` override. Keep counterpart versions, cases, warmups, measurement
-counts and affinity matched, and preserve raw reports and comparison flags.
+counts and affinity matched, and preserve raw reports and comparison flags in local or CI artifacts.

@@ -5,10 +5,8 @@ sixteen media-type parsing/rendering cases and eight media-type equality control
 Existing benchmark names are retained.
 Inputs are prepared in global setup, which also checks decoded values or exercises the transport.
 
-Accept sorting evidence, including the rejected initial cutoff and unchanged parser controls,
-is in [performance iteration 4](results/2026-10-21-performance-iteration-04/README.md).
-Media-type allocation and equality evidence is in
-[performance iteration 5](results/2026-10-21-performance-iteration-05/README.md).
+Measurements are published through the nightly workflow artifacts and dashboard; see the
+[repository guide](../../../README.md).
 
 | Package | Added cases | Work |
 | --- | ---: | --- |
