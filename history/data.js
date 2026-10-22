@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792678802129,
+  "lastUpdate": 1792678820478,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -121329,6 +121329,56 @@ window.BENCHMARK_DATA = {
             "range": "± 258.359",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082259\nmean 11509.636 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792678816603,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "VpnGatewayApplicationBenchmarks.Build(ServiceCount=1)",
+            "value": 3091.597,
+            "range": "± 24.771",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083161\nmean 3090.93 ns"
+          },
+          {
+            "name": "VpnGatewayApplicationBenchmarks.BuildStartStop(ServiceCount=1)",
+            "value": 4249.033,
+            "range": "± 44.685",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083161\nmean 4239.484 ns"
+          },
+          {
+            "name": "VpnGatewayApplicationBenchmarks.Build(ServiceCount=16)",
+            "value": 9419.566,
+            "range": "± 61.048",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083161\nmean 9420.461 ns"
+          },
+          {
+            "name": "VpnGatewayApplicationBenchmarks.BuildStartStop(ServiceCount=16)",
+            "value": 13763.969,
+            "range": "± 110.257",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083161\nmean 13800.824 ns"
           }
         ]
       }
