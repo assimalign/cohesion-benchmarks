@@ -1,11 +1,11 @@
 # Connections benchmarks
 
-The suite has 41 cases: the original five plus 36 additions. Cases count benchmark
+The suite has 45 cases: the original five plus 40 additions. Cases count benchmark
 methods multiplied by their parameter combinations.
 
 | Package | Added cases | Work measured |
 | --- | ---: | --- |
-| Connections | 16 | Duplex stream reads/writes; named and typed feature lookup through wrappers, including shadowing and hidden features |
+| Connections | 20 | Duplex stream reads/writes; named and typed feature lookup through wrappers, including shadowing, hidden features, and fully absent names through 0/1/4/16 layers |
 | Connections.InMemory | 14 | Batched buffer writes, segmented copies, async/TryRead consumption, multiplexed echo, stream open/accept/disposal |
 | Connections.StreamAbort | 2 | Rejected local reads and coded peer reset reads after directional abort |
 | Connections.StreamLimits | 2 | Optional allowance discovery and stream ordinal checks, feature present/absent |
@@ -37,5 +37,9 @@ not measure a TLS handshake or encryption.
   guards run in multiplexed echo, and failure reads run on streams aborted during setup.
 - The pinned connection API exposes Features, not a separate connection-items bag.
 
-Validation: Release area build, all 41 cases under the dry profile, and the full Release
-solution build. Dry results verify execution; they are not performance conclusions.
+Initial validation covered the first 41 cases under the dry profile and a full Release solution
+build. The four absent-name cases are added by performance iteration 3 and measured alongside the
+eight existing named/typed lookup cases. Dry results verify execution; they are not performance conclusions.
+
+The [iteration 3 results](results/2026-10-21-performance-iteration-03/README.md) retain package-based
+before/after measurements and a reverse-order repeat for all 12 lookup cases.

@@ -18,10 +18,9 @@ namespace Assimalign.Cohesion.Resilience.Benchmarks.Resilience.Timeout;
 /// reads "Cohesion relative to the counterpart".
 /// </summary>
 /// <remarks>
-/// The budget is one second rather than the 30-second default. Cohesion's strategy races the callback against an
-/// uncancelled <c>Task.Delay(timeout)</c>, so every call leaves a timer pending for the full budget; at benchmark call
-/// rates a 30-second budget keeps tens of millions of timers alive (gigabytes of heap), which makes the measurement
-/// unstable. One second still pays the per-call timer and allocations while bounding what accumulates.
+/// The one-second budget preserves the historical workload. Before the timer-lifetime fix, successful calls left
+/// an uncancelled delay timer pending for the full budget; a 30-second budget made that version unstable at benchmark
+/// call rates. Keep this input unchanged when comparing versions with and without the fix.
 /// </remarks>
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 [BenchmarkCategory("Timeout")]
