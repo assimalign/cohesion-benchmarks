@@ -1,0 +1,90 @@
+{
+  "SchemaVersion": 1,
+  "Date": "2026-10-22",
+  "Branch": "codex/library-performance",
+  "SourceBaseline": "Existing performance branch before iteration 10; ObjectValidation restored after the two rejected iteration 7 source-composition candidates.",
+  "RetainedPackage": "10.0.0-preview.1.perf.validation10.strings",
+  "Counterpart": "FluentValidation 11.11.0",
+  "Sdk": "10.0.402",
+  "Runtime": "10.0.13",
+  "Architecture": "Windows ARM64",
+  "Cpu": "Snapdragon X X1E80100",
+  "Harness": "BenchmarkDotNet 0.15.8 InProcessEmitToolchain",
+  "AffinityMask": 4095,
+  "AffinityVerification": "Normal-affinity runs; child masks 4095 verified in intermediate full confirmation, nested baseline and final-string baseline. Final-string candidate not separately sampled; commands do not change affinity.",
+  "WarmExecutionGate": "No repeatable slowdown accepted; full invocation diagnostics remain enabled",
+  "Runs": [
+    {
+      "Warmup": 3,
+      "CohesionPackageVersion": "10.0.0-preview.1.perf.validation10.before",
+      "Reports": 4,
+      "Directory": "initial/before",
+      "Order": 1,
+      "Iterations": 8,
+      "Cases": 26
+    },
+    {
+      "Warmup": 3,
+      "CohesionPackageVersion": "10.0.0-preview.1.perf.validation10.candidate1",
+      "Reports": 4,
+      "Directory": "initial/candidate1",
+      "Order": 2,
+      "Iterations": 8,
+      "Cases": 26
+    },
+    {
+      "Warmup": 5,
+      "CohesionPackageVersion": "10.0.0-preview.1.perf.validation10.final",
+      "Reports": 4,
+      "Directory": "confirmation/after",
+      "Order": 1,
+      "Iterations": 12,
+      "Cases": 26
+    },
+    {
+      "Warmup": 5,
+      "CohesionPackageVersion": "10.0.0-preview.1.perf.validation10.before",
+      "Reports": 4,
+      "Directory": "confirmation/before",
+      "Order": 2,
+      "Iterations": 12,
+      "Cases": 26
+    },
+    {
+      "Directory": "nested-recheck/before",
+      "CohesionPackageVersion": "10.0.0-preview.1.perf.validation10.before",
+      "Cases": 8,
+      "Reports": 1,
+      "Warmup": 5,
+      "Iterations": 20,
+      "Order": 1
+    },
+    {
+      "Directory": "nested-recheck/after",
+      "CohesionPackageVersion": "10.0.0-preview.1.perf.validation10.final",
+      "Cases": 8,
+      "Reports": 1,
+      "Warmup": 5,
+      "Iterations": 20,
+      "Order": 2
+    },
+    {
+      "Directory": "final-strings/after",
+      "CohesionPackageVersion": "10.0.0-preview.1.perf.validation10.strings",
+      "Cases": 26,
+      "Reports": 4,
+      "Warmup": 5,
+      "Iterations": 12,
+      "Order": 1
+    },
+    {
+      "Directory": "final-strings/before",
+      "CohesionPackageVersion": "10.0.0-preview.1.perf.validation10.before",
+      "Cases": 26,
+      "Reports": 4,
+      "Warmup": 5,
+      "Iterations": 12,
+      "Order": 2
+    }
+  ]
+}

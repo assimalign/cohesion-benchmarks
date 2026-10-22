@@ -1,11 +1,21 @@
 # Http benchmarks
 
-The suite has 46 cases, including 35 added request-path cases. Existing benchmark names are retained.
+The suite has 82 cases, including 35 added request-path cases, twelve Accept ordering cases,
+sixteen media-type parsing/rendering cases and eight media-type equality controls.
+Existing benchmark names are retained.
 Inputs are prepared in global setup, which also checks decoded values or exercises the transport.
+
+Accept sorting evidence, including the rejected initial cutoff and unchanged parser controls,
+is in [performance iteration 4](results/2026-10-21-performance-iteration-04/README.md).
+Media-type allocation and equality evidence is in
+[performance iteration 5](results/2026-10-21-performance-iteration-05/README.md).
 
 | Package | Added cases | Work |
 | --- | ---: | --- |
 | Http | 6 | Content-Type and byte-range parsing against ASP.NET Core and System.Net.Http |
+| Http | 12 | Media/token preference ordering at 1, 8, 9, 16, 17 and 64 entries |
+| Http | 16 | Media-type parsing/rendering for plain, charset, multiple and escaped inputs, against ASP.NET Core |
+| Http | 8 | Unique-name parameter equality in original/reversed order at 1, 2, 65 and 4,097 parameters |
 | Http.Antiforgery | 2 | Request-token issue with an existing cookie and signed cookie/header validation |
 | Http.DigestFields | 5 | Digest and preference parsing, canonical formatting, SHA-256 generation, dual-hash verification |
 | Http.Forms | 8 | URL-encoded and multipart text decoding, repeated fields and UTF-8, against ASP.NET Core FormFeature |

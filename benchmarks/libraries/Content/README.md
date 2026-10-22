@@ -1,13 +1,13 @@
 # Content benchmarks
 
-The suite has 48 cases: the original seven plus 41 added cases. A case is one benchmark method
+The suite has 52 cases: the original seven plus 45 added cases. A case is one benchmark method
 for one parameter combination. Existing benchmark identities are preserved.
 
 | Package (without `Assimalign.Cohesion.`) | Added cases | Work measured |
 | --- | ---: | --- |
 | Content | 1 | Enumerate a composite and drain its eight content parts |
 | Content.Binary | 4 | Checked packed-record reads and writes, 8/128 records |
-| Content.Bmff | 1 | Recursive header cursor with lazy leaf skipping |
+| Content.Bmff | 5 | Recursive header cursor with lazy leaf skipping; saving 1/16 containers with zero/nonzero prefixes |
 | Content.Ebml | 2 | Schema-aware typed element walking and document loading |
 | Content.Exe | 3 | Detect and inspect PE64, ELF64 and Mach-O64, including native tables |
 | Content.Heif | 2 | HEIC/AVIF item locations and image-property associations |
@@ -22,6 +22,9 @@ for one parameter combination. Existing benchmark identities are preserved.
 Inputs are deterministic and generated in global setup. Media payloads are tiny placeholder bytes,
 not playable bitstreams. No downloaded corpus, checked-in binary fixtures or temporary files are needed.
 The existing BMFF loading benchmark retains its original generated 1 MiB lazy payload.
+
+[Performance iteration 7](results/2026-10-22-performance-iteration-07/README.md) records the
+BMFF prefix measurements and the companion mapping, DNS, token and nested-validation investigations.
 
 The existing Markdig and YamlDotNet dependencies also baseline the added Markdown and YAML cases.
 Markdown setup verifies identical HTML; rendering reuses trees parsed in setup. The YAML baseline

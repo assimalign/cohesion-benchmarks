@@ -211,6 +211,10 @@ Not covered yet, and why:
 
 ## BenchmarkDotNet suite
 
+[Serialization iteration 6](results/2026-10-21-performance-iteration-06/README.md) records
+registry traversal, negotiation and Vary improvements with package-only before/after
+measurements and longer timing rechecks. These are in-process costs, not new end-to-end results.
+
 `benchmarks/Assimalign.Cohesion.Web.Benchmarks` measures per-operation costs the end-to-end runner can only show
 in aggregate, following the repository conventions ([CONVENTIONS.md](../../../CONVENTIONS.md)). Like every suite, it
 measures the cohesion CI packages at the repository's `CohesionPackageVersion`:
@@ -222,6 +226,7 @@ measures the cohesion CI packages at the repository's `CohesionPackageVersion`:
 | `Web.Hosting` | Production application-feature stamping and aggregate consumption, 4 or 16 features (2 cases) | Standalone |
 | `Web.Routing` | Endpoint selection, integer constraint and value capture, hit/miss over 1 or 100 routes (8 cases) | ASP.NET Core routing middleware |
 | `Web.Serialization` | HTTP JSON read/write with identical source-generated web contracts, 32 or 4096 text characters (8 cases) | ASP.NET Core HTTP JSON extensions |
+| `Web.Serialization` | Registry reader/writer lookup over 1 or 8 registrations (4 cases); exact, absent, suffix and rejected Accept negotiation (8 cases); negotiated no-op writes over six Vary shapes (6 cases) | Standalone public serialization seams |
 | `Web.Authentication.Bearer` | One request authenticated with an HS256 bearer token (service, handler, principal) | ASP.NET Core JwtBearer |
 | `Web.Authentication.Cookie` | One request authenticated with a data-protected cookie | ASP.NET Core cookies |
 | `Web.Authorization` | A `RequireRole` policy evaluation | ASP.NET Core authorization |
@@ -232,7 +237,8 @@ measures the cohesion CI packages at the repository's `CohesionPackageVersion`:
 | `Web.ErrorHandling` | Exception-boundary success or thrown fault rendered as 500 problem+json (2 cases) | Standalone |
 | `External` | Existing HTTP/1.1 round trip and process-startup series; explicit opt-in only | — |
 
-The default suite has **46 in-process cases**, including **40 added cases across 10 classes**. It reuses
+The suite includes **18 serialization traversal cases across 3 classes**, alongside the existing
+JSON and other component workloads. It reuses
 `Fixtures/BenchmarkHttpContext.cs`; `PipelineFixture` builds the public production Web pipeline without starting
 the host. Registered application features are stamped by that pipeline. The feature-stamping benchmark uses a
 fresh, capacity-sized exchange; most component benchmarks reuse prepared exchanges and reset their output state.

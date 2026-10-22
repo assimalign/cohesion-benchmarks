@@ -1,9 +1,13 @@
 # OpenApi benchmarks
 
-32 cases cover all eight packages: the root document model through construction and document pipelines;
+36 cases cover all eight packages: the root document model through construction and document pipelines;
 Attributes mapping; Fluent construction; Generation from schema/endpoint metadata; JSON and YAML
 Serialization; default and official-schema Validation; Versioning transforms; and Integration import
 and retargeted export. The suite adds 28 cases to the original four JSON cases, preserving their names.
+
+Four further pointer-traversal cases cover nested item depths 1/16 and same-version copy controls.
+The [iteration 8 investigation](results/2026-10-22-performance-iteration-08/README.md) records
+the package-only before/after measurements alongside form and signed-token parsing.
 
 Microsoft.OpenApi is the baseline for JSON/YAML parsing, integration import, writing and common document construction.
 Microsoft.OpenApi.YamlReader 3.10.2 adds YAML ingestion at the existing Microsoft.OpenApi version
