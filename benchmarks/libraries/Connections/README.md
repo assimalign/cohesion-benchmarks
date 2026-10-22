@@ -41,5 +41,5 @@ Initial validation covered the first 41 cases under the dry profile and a full R
 build. The four absent-name cases are added by performance iteration 3 and measured alongside the
 eight existing named/typed lookup cases. Dry results verify execution; they are not performance conclusions.
 
-The [iteration 3 results](results/2026-10-21-performance-iteration-03/README.md) retain package-based
-before/after measurements and a reverse-order repeat for all 12 lookup cases.
+Measurements are published through the nightly workflow artifacts and dashboard; see the
+[repository guide](../../../README.md).

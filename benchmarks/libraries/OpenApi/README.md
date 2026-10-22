@@ -6,8 +6,8 @@ Serialization; default and official-schema Validation; Versioning transforms; an
 and retargeted export. The suite adds 28 cases to the original four JSON cases, preserving their names.
 
 Four further pointer-traversal cases cover nested item depths 1/16 and same-version copy controls.
-The [iteration 8 investigation](results/2026-10-22-performance-iteration-08/README.md) records
-the package-only before/after measurements alongside form and signed-token parsing.
+Measurements are published through the nightly workflow artifacts and dashboard; see the
+[repository guide](../../../README.md).
 
 Microsoft.OpenApi is the baseline for JSON/YAML parsing, integration import, writing and common document construction.
 Microsoft.OpenApi.YamlReader 3.10.2 adds YAML ingestion at the existing Microsoft.OpenApi version

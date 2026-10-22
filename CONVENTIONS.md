@@ -23,7 +23,6 @@ cohesion-benchmarks/
 │       │   ├── Assimalign.Cohesion.<Area>.Benchmarks/src/   the area's BenchmarkDotNet suite
 │       │   └── Assimalign.Cohesion.<Area>.Benchmarks.<Role>/src/   end-to-end harness parts (servers, runners)
 │       ├── targets/catalog.json          external applications the area compares against (optional)
-│       ├── results/<date>-<what>/        checked-in results worth keeping (optional)
 │       └── README.md
 ├── scripts/                              Invoke-Benchmarks, Compare-Benchmarks, ConvertTo-BenchmarkHistory
 └── .github/workflows/
@@ -174,6 +173,10 @@ dotnet run -c Release --project benchmarks/libraries/ObjectPool/benchmarks/Assim
 Profiles (`--profile`, `-Profile`, or `COHESION_BENCHMARK_PROFILE`): `local` (BenchmarkDotNet's default job, for
 investigations), `ci` (1 launch, 5 warmups, 20 iterations: bounded and comparable run to run), `dry` (one
 invocation: proves it runs). Results land in `.artifacts/results/<suite>/` (git-ignored).
+
+Result folders and exported measurements are not committed. The nightly workflow uploads raw
+results as run artifacts and publishes time/allocation history to `gh-pages`; use those artifacts
+and the dashboard for measurements. Local `results/` folders are also git-ignored.
 
 ## Legs: operating system, framework and runtime
 

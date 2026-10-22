@@ -6,46 +6,8 @@ same runtime, the same JIT and a counterpart for almost every Web package. Two s
 implement the same scenarios, one per framework; a runner starts one server process per scenario,
 checks that it answers correctly, and measures it under load with a raw-socket HTTP/1.1 client.
 
-Latest results: [results/2026-10-17-win-arm64/results.md](results/2026-10-17-win-arm64/results.md).
-
-## Latest results (2026-10-17, cohesion `74976cdc5`)
-
-Surface Laptop 7 (Snapdragon X Elite, 12 cores), Windows 11 on AC power, loopback, server on 4
-cores and load generator on 8, 64 connections, 3 iterations of 10 s each (medians), JIT, Server GC
-forced on both. All 222 runs passed validation with zero socket errors. Iteration-to-iteration
-spread was up to about 14%, so treat ratio differences under 0.1 as noise.
-
-| | Throughput, Cohesion ÷ ASP.NET Core (geometric mean) |
-| --- | ---: |
-| Core request path (10 scenarios) | 0.60× |
-| Web packages (27 scenarios) | 0.78× |
-| All 37 | 0.72× (efficiency per CPU-second: 0.73×) |
-
-What stands out:
-
-- **Cohesion is behind in 35 of 37 scenarios.** On the plain request path it reaches 0.75–0.82× of
-  Kestrel (plaintext 102k vs 124k req/s, JSON 93k vs 125k), with p99 latency about 1.5× higher.
-  The servers ran at the same CPU utilization (90–95%), so this is cost per request, not pacing.
-- **HTTP/1.1 pipelining: 0.24×** (349k vs 1.46M req/s at depth 16). The gap is four times the
-  non-pipelined one, so it sits in the HTTP/1.1 connection layer, not the pipeline.
-- **Large responses: 0.38×.** A 64 KiB body written in one call: 30k vs 78k req/s, with the
-  Cohesion server at only 77–80% CPU, p99 of 14–19 ms and a peak working set of 385–452 MB
-  (ASP.NET Core: 112–116 MB). It looks like the body is buffered per request rather than written
-  through, but that is not yet confirmed.
-- **Authentication is about half as fast:** JWT bearer 0.50×, bearer plus role policy 0.51×,
-  cookie 0.41×. The per-request validation or decryption work is roughly twice ASP.NET Core's.
-- **Router scale:** 0.77× with one route but 0.61× with 100 routes. Matching cost grows with the
-  route table in Cohesion; it doesn't in ASP.NET Core.
-- **Where Cohesion wins or ties:** OpenAPI document serving is **21.8×** (Cohesion builds the
-  document once and serves it with an ETag; ASP.NET Core regenerates it on every request).
-  WebSocket echo is at parity (1.00×).
-- **Startup is at parity** (about 600–700 ms to first response for both, JIT). The working set is
-  higher for Cohesion on minimal pipelines (78 vs 47 MB for plaintext) and lower once ASP.NET Core
-  loads its feature services (77 vs 94–100 MB for the auth, antiforgery and session scenarios).
-- **Defaults worth knowing:** `Sdk.Web` does not enable Server GC (ASP.NET Core's Web SDK does);
-  the benchmark forces it on for both. The first launch of a freshly published Cohesion app took
-  about 7.4 s against 1.1 s for ASP.NET Core; later launches were about 600 ms for both. That points
-  at first-load scanning of the 93 unsigned Assimalign assemblies, which is not yet verified.
+Measurements are published through the nightly workflow artifacts and dashboard; see the
+[repository guide](../../../README.md). Local results are git-ignored.
 
 ## Running it
 
@@ -70,7 +32,7 @@ Then, from this folder:
 
 ```powershell
 ./run.ps1                                            # every scenario, 1 iteration (~25 min)
-./run.ps1 -Iterations 3 -Label "my machine"          # what the checked-in results use (~70 min)
+./run.ps1 -Iterations 3 -Label "my machine"          # three measurement iterations (~70 min)
 ./run.ps1 -Scenarios plaintext,json,full-stack       # a subset; also: core, feature
 ./run.ps1 -ValidateOnly                              # start each server, record its response, no load
 ./run.ps1 -SkipPublish -- --server-cores 6 --gc workstation   # anything after -- goes to the runner
@@ -207,13 +169,9 @@ Not covered yet, and why:
 | `Web.Diagnostics` (HTTP logging) | The cost is the sink's. A fair comparison needs both frameworks writing the same access-log format to the same kind of sink. |
 | `Web.Testing` | An in-memory test host, not a request path; a BenchmarkDotNet comparison against `TestServer` fits it better. |
 | `Web.ApplicationModel` | Orchestration, not the request path. |
-| NativeAOT | `run.ps1 -Aot` publishes both servers with `PublishAot=true`; not part of the checked-in results yet. |
+| NativeAOT | `run.ps1 -Aot` publishes both servers with `PublishAot=true`; not part of the nightly end-to-end measurements. |
 
 ## BenchmarkDotNet suite
-
-[Serialization iteration 6](results/2026-10-21-performance-iteration-06/README.md) records
-registry traversal, negotiation and Vary improvements with package-only before/after
-measurements and longer timing rechecks. These are in-process costs, not new end-to-end results.
 
 `benchmarks/Assimalign.Cohesion.Web.Benchmarks` measures per-operation costs the end-to-end runner can only show
 in aggregate, following the repository conventions ([CONVENTIONS.md](../../../CONVENTIONS.md)). Like every suite, it
@@ -275,9 +233,6 @@ $env:COHESION_BENCHMARK_TARGETS = 'cohesion,aspnetcore,node'   # opt into existi
 Leave `COHESION_BENCHMARK_TARGETS` unset for the default, socket-free suite and CI dry verification. Existing
 external benchmark names are preserved; they enumerate no targets until explicitly selected.
 
-[results/2026-10-18-auth-triage](results/2026-10-18-auth-triage/triage-report.md) is the investigation behind
-the authentication rows of the 2026-10-17 results: the HTTP/1.1 request head was read one octet at a time.
-
 ## Layout
 
 ```
@@ -292,8 +247,7 @@ benchmarks/resources/Web/
 │   ├── Assimalign.Cohesion.Web.Benchmarks.AspNetCoreServer/src  Microsoft.NET.Sdk.Web application, the same pipelines
 │   └── Assimalign.Cohesion.Web.Benchmarks.Runner/src            load generator, server launcher, report writer
 ├── targets/                           external servers the suite compares against (catalog.json, node, python)
-├── run.ps1                            end-to-end: publish both servers, measure under load
-└── results/<date>-<what>/             checked-in results and investigations
+└── run.ps1                            end-to-end: publish both servers, measure under load
 ```
 
 Adding a scenario takes three edits: a pipeline name in `shared/BenchmarkShared.cs`
