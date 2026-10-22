@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792676916468,
+  "lastUpdate": 1792676931359,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -75245,6 +75245,273 @@ window.BENCHMARK_DATA = {
             "range": "± 7.249",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.63 (cf06e9a8bde3) on GitHub Actions 1000082060\nmean 125.297 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "581674163356578c7a85351fc2ddb1ae95a32e0b",
+          "message": "Merge pull request #11 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.59",
+          "timestamp": "2026-10-21T11:52:54Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/581674163356578c7a85351fc2ddb1ae95a32e0b"
+        },
+        "date": 1792676929372,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "DnsCompressionBenchmarks.WriteSharedSuffixes(AnswerCount=4)",
+            "value": 1575.501,
+            "range": "± 11.343",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 1577.937 ns"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.WriteDistinctSuffixes(AnswerCount=4)",
+            "value": 2330.194,
+            "range": "± 68.463",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 2350.289 ns"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseCompressed(AnswerCount=4)",
+            "value": 634.605,
+            "range": "± 6.416",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 636.614 ns"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseLiteral(AnswerCount=4)",
+            "value": 691.728,
+            "range": "± 6.204",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 693.112 ns"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.WriteSharedSuffixes(AnswerCount=32)",
+            "value": 11704.821,
+            "range": "± 121.161",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 11688.199 ns"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.WriteDistinctSuffixes(AnswerCount=32)",
+            "value": 18544.159,
+            "range": "± 104.326",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 18570.439 ns"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseCompressed(AnswerCount=32)",
+            "value": 5026.414,
+            "range": "± 22.723",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 5028.937 ns"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseLiteral(AnswerCount=32)",
+            "value": 4668.573,
+            "range": "± 46.894",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 4673.177 ns"
+          },
+          {
+            "name": "DnsConstructionBenchmarks.ConstructQuery",
+            "value": 419.267,
+            "range": "± 3.96",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 419.262 ns"
+          },
+          {
+            "name": "DnsConstructionBenchmarks.ConstructAnswer",
+            "value": 1182.848,
+            "range": "± 7.414",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 1182.894 ns"
+          },
+          {
+            "name": "DnsMessageBenchmarks.WriteQuery",
+            "value": 380.069,
+            "range": "± 2.701",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 379.422 ns"
+          },
+          {
+            "name": "DnsMessageBenchmarks.ParseResponse",
+            "value": 1059.322,
+            "range": "± 12.426",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 1058.256 ns"
+          },
+          {
+            "name": "DnsMessageBenchmarks.WriteResponse",
+            "value": 2230.896,
+            "range": "± 27.915",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 2226.994 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteA",
+            "value": 256.968,
+            "range": "± 1.749",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 256.584 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseA",
+            "value": 172.69,
+            "range": "± 1.069",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 172.958 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteAaaa",
+            "value": 261.125,
+            "range": "± 2.153",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 260.641 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseAaaa",
+            "value": 182.495,
+            "range": "± 4.451",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 184.744 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteCname",
+            "value": 510.762,
+            "range": "± 6.509",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 510.754 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseCname",
+            "value": 306.342,
+            "range": "± 7.007",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 307.58 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteNs",
+            "value": 491.031,
+            "range": "± 15.9",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 495.308 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseNs",
+            "value": 255.694,
+            "range": "± 5.662",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 255.877 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WritePtr",
+            "value": 1153.573,
+            "range": "± 53.101",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 1164.583 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParsePtr",
+            "value": 285.929,
+            "range": "± 2.394",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 286.248 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteMx",
+            "value": 520.382,
+            "range": "± 11.81",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 524.767 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseMx",
+            "value": 258.706,
+            "range": "± 2.859",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 259.397 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteTxt",
+            "value": 306.838,
+            "range": "± 6.178",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 309.394 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseTxt",
+            "value": 255.14,
+            "range": "± 6.763",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 257.708 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteSoa",
+            "value": 813.285,
+            "range": "± 4.432",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 813.813 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseSoa",
+            "value": 388.603,
+            "range": "± 2.941",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 388.834 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteSrv",
+            "value": 828.6,
+            "range": "± 12.719",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 832.175 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseSrv",
+            "value": 324.772,
+            "range": "± 1.774",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 324.288 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteEdnsOptions",
+            "value": 187.543,
+            "range": "± 2.547",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 188.501 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseEdnsOptions",
+            "value": 274.753,
+            "range": "± 2.943",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 274.06 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteUnknown",
+            "value": 259.075,
+            "range": "± 3.975",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 260.701 ns"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseUnknown",
+            "value": 171.383,
+            "range": "± 5.409",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082912\nmean 174.129 ns"
           }
         ]
       }
