@@ -36,8 +36,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<!-- The pinned cohesion CI build (main, cohesion 8d92a0fa1be0). Moved by scripts/Update-CohesionVersion.ps1. -->
-		<CohesionPackageVersion Condition="'$(CohesionPackageVersion)' == ''">10.0.0-preview.0.ci.76</CohesionPackageVersion>
+		<!-- The pinned cohesion CI build (main, cohesion 37c053689940). Moved by scripts/Update-CohesionVersion.ps1. -->
+		<CohesionPackageVersion Condition="'$(CohesionPackageVersion)' == ''">10.0.0-preview.0.ci.82</CohesionPackageVersion>
 		<BenchmarksRoot>$(MSBuildThisFileDirectory)</BenchmarksRoot>
 		<BenchmarksHarnessProject>$(MSBuildThisFileDirectory)harness\Assimalign.Cohesion.Benchmarks.Harness\src\Assimalign.Cohesion.Benchmarks.Harness.csproj</BenchmarksHarnessProject>
 	</PropertyGroup>
