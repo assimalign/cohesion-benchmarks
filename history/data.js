@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792765627000,
+  "lastUpdate": 1792765646691,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -160638,6 +160638,294 @@ window.BENCHMARK_DATA = {
             "range": "± 2416.215",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083156\nmean 47055.9 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "388e93da49286872a58db2dd7711605198432b97",
+          "message": "Merge pull request #14 from assimalign/codex/remove-benchmark-results\n\nRemove checked-in benchmark results and keep measurements in nightly artifacts",
+          "timestamp": "2026-10-22T15:54:09Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/388e93da49286872a58db2dd7711605198432b97"
+        },
+        "date": 1792765642705,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "CrontabBenchmarks.NextOccurrence_Cronos(Expression=*/5 * * * *)",
+            "value": 33.322,
+            "range": "± 2.457",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 33.944 ns"
+          },
+          {
+            "name": "CrontabBenchmarks.NextOccurrence(Expression=*/5 * * * *)",
+            "value": 256.916,
+            "range": "± 24.802",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 252.396 ns"
+          },
+          {
+            "name": "CrontabBenchmarks.NextOccurrence_Cronos(Expression=0 9 * * 1-5)",
+            "value": 94.06,
+            "range": "± 6.103",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 93.059 ns"
+          },
+          {
+            "name": "CrontabBenchmarks.NextOccurrence(Expression=0 9 * * 1-5)",
+            "value": 1289.435,
+            "range": "± 143.958",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 1309.54 ns"
+          },
+          {
+            "name": "CrontabBenchmarks.Parse_Cronos(Expression=*/5 * * * *)",
+            "value": 31.967,
+            "range": "± 4.918",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 32.799 ns"
+          },
+          {
+            "name": "CrontabBenchmarks.Parse(Expression=*/5 * * * *)",
+            "value": 3457.695,
+            "range": "± 394.715",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 3509.593 ns"
+          },
+          {
+            "name": "CrontabBenchmarks.Parse_Cronos(Expression=0 9 * * 1-5)",
+            "value": 44.706,
+            "range": "± 3.799",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 44.636 ns"
+          },
+          {
+            "name": "CrontabBenchmarks.Parse(Expression=0 9 * * 1-5)",
+            "value": 2345.641,
+            "range": "± 150.744",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 2354.285 ns"
+          },
+          {
+            "name": "ProviderBenchmarks.Lookup(Trigger=Cron)",
+            "value": 2.24,
+            "range": "± 0.333",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 2.257 ns"
+          },
+          {
+            "name": "ProviderBenchmarks.ValidateEnabledJob(Trigger=Cron)",
+            "value": 36.367,
+            "range": "± 6.423",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 38.749 ns"
+          },
+          {
+            "name": "ProviderBenchmarks.DisableAndEnable(Trigger=Cron)",
+            "value": 136.948,
+            "range": "± 17.454",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 142.485 ns"
+          },
+          {
+            "name": "ProviderBenchmarks.Lookup(Trigger=Timer)",
+            "value": 3.27,
+            "range": "± 0.161",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 3.329 ns"
+          },
+          {
+            "name": "ProviderBenchmarks.ValidateEnabledJob(Trigger=Timer)",
+            "value": 35.785,
+            "range": "± 3.008",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 36.543 ns"
+          },
+          {
+            "name": "ProviderBenchmarks.DisableAndEnable(Trigger=Timer)",
+            "value": 164.49,
+            "range": "± 17.179",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 167.049 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Evaluate(Expression=*/5 * * * *&Days=1)",
+            "value": 69965.97,
+            "range": "± 4587.248",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 70539.72 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Evaluate_Cronos(Expression=*/5 * * * *&Days=1)",
+            "value": 41366.269,
+            "range": "± 3021.863",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 42035.943 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Evaluate(Expression=*/5 * * * *&Days=7)",
+            "value": 518051.371,
+            "range": "± 27150.672",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 520972.718 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Evaluate_Cronos(Expression=*/5 * * * *&Days=7)",
+            "value": 337013.194,
+            "range": "± 20268.986",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 339345.259 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Evaluate(Expression=0 9 * * 1-5&Days=1)",
+            "value": 36787.888,
+            "range": "± 3785.721",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 37046.412 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Evaluate_Cronos(Expression=0 9 * * 1-5&Days=1)",
+            "value": 88584.951,
+            "range": "± 9204.004",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 89736.562 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Evaluate(Expression=0 9 * * 1-5&Days=7)",
+            "value": 269159.037,
+            "range": "± 13756.833",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 273638.813 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Evaluate_Cronos(Expression=0 9 * * 1-5&Days=7)",
+            "value": 467288.747,
+            "range": "± 29583.684",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 476640.172 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Occurrences(Expression=*/5 * * * *&Days=1)",
+            "value": 79003.599,
+            "range": "± 6509.755",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 78425.028 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Occurrences_Cronos(Expression=*/5 * * * *&Days=1)",
+            "value": 11190.097,
+            "range": "± 387.717",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 11210.584 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Occurrences(Expression=*/5 * * * *&Days=7)",
+            "value": 592573.384,
+            "range": "± 28928.326",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 595359.191 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Occurrences_Cronos(Expression=*/5 * * * *&Days=7)",
+            "value": 85112.203,
+            "range": "± 6949.184",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 85498.745 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Occurrences(Expression=0 9 * * 1-5&Days=1)",
+            "value": 3088.213,
+            "range": "± 199.949",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 3161.634 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Occurrences_Cronos(Expression=0 9 * * 1-5&Days=1)",
+            "value": 107.133,
+            "range": "± 10.955",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 111.413 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Occurrences(Expression=0 9 * * 1-5&Days=7)",
+            "value": 16338.256,
+            "range": "± 1039.375",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 16344.63 ns"
+          },
+          {
+            "name": "WindowBenchmarks.Occurrences_Cronos(Expression=0 9 * * 1-5&Days=7)",
+            "value": 359.394,
+            "range": "± 39.532",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 363.435 ns"
+          },
+          {
+            "name": "RegistryBenchmarks.RegisterExisting(Jobs=1)",
+            "value": 5354.5,
+            "range": "± 2382.97",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 5867.395 ns"
+          },
+          {
+            "name": "RegistryBenchmarks.RegisterBatch(Jobs=1)",
+            "value": 2416.5,
+            "range": "± 1167.848",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 2633.605 ns"
+          },
+          {
+            "name": "RegistryBenchmarks.RegisterExisting(Jobs=64)",
+            "value": 11062,
+            "range": "± 1710.768",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 11482.95 ns"
+          },
+          {
+            "name": "RegistryBenchmarks.RegisterBatch(Jobs=64)",
+            "value": 200166,
+            "range": "± 10781.22",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 204882.176 ns"
+          },
+          {
+            "name": "DispatchBenchmarks.Dispatch(Trigger=Cron&Occurrences=1)",
+            "value": 57875,
+            "range": "± 46152.347",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 79397.75 ns"
+          },
+          {
+            "name": "DispatchBenchmarks.Dispatch(Trigger=Cron&Occurrences=16)",
+            "value": 150166.5,
+            "range": "± 42279.45",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 158287.8 ns"
+          },
+          {
+            "name": "DispatchBenchmarks.Dispatch(Trigger=Timer&Occurrences=1)",
+            "value": 61895.5,
+            "range": "± 8552.863",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 60362.921 ns"
+          },
+          {
+            "name": "DispatchBenchmarks.Dispatch(Trigger=Timer&Occurrences=16)",
+            "value": 167771.5,
+            "range": "± 56208.966",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084900\nmean 180331.65 ns"
           }
         ]
       }
