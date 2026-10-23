@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792765418968,
+  "lastUpdate": 1792765443803,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -154922,6 +154922,56 @@ window.BENCHMARK_DATA = {
             "range": "± 101.642",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083146\nmean 16284.34 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "388e93da49286872a58db2dd7711605198432b97",
+          "message": "Merge pull request #14 from assimalign/codex/remove-benchmark-results\n\nRemove checked-in benchmark results and keep measurements in nightly artifacts",
+          "timestamp": "2026-10-22T15:54:09Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/388e93da49286872a58db2dd7711605198432b97"
+        },
+        "date": 1792765436361,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "NotificationHubApplicationBenchmarks.Build(ServiceCount=1)",
+            "value": 2094.148,
+            "range": "± 52.123",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084871\nmean 2103.748 ns"
+          },
+          {
+            "name": "NotificationHubApplicationBenchmarks.BuildStartStop(ServiceCount=1)",
+            "value": 3292.454,
+            "range": "± 80.013",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084871\nmean 3309.216 ns"
+          },
+          {
+            "name": "NotificationHubApplicationBenchmarks.Build(ServiceCount=16)",
+            "value": 6993.798,
+            "range": "± 265.207",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084871\nmean 6957.459 ns"
+          },
+          {
+            "name": "NotificationHubApplicationBenchmarks.BuildStartStop(ServiceCount=16)",
+            "value": 10950.732,
+            "range": "± 102.12",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084871\nmean 10962.482 ns"
           }
         ]
       }
