@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792762687297,
+  "lastUpdate": 1792762712144,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -67924,6 +67924,336 @@ window.BENCHMARK_DATA = {
             "range": "± 10.928",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082856\nmean 470.782 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "388e93da49286872a58db2dd7711605198432b97",
+          "message": "Merge pull request #14 from assimalign/codex/remove-benchmark-results\n\nRemove checked-in benchmark results and keep measurements in nightly artifacts",
+          "timestamp": "2026-10-22T15:54:09Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/388e93da49286872a58db2dd7711605198432b97"
+        },
+        "date": 1792762708113,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "AmqpDataMessageBenchmarks.Decode(PayloadSize=64)",
+            "value": 40.29,
+            "range": "± 0.813",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 40.374 ns"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Decode_AmqpNetLite(PayloadSize=64)",
+            "value": 34.205,
+            "range": "± 0.761",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 34.239 ns"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Decode(PayloadSize=16384)",
+            "value": 438.844,
+            "range": "± 23.158",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 444.121 ns"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Decode_AmqpNetLite(PayloadSize=16384)",
+            "value": 425.804,
+            "range": "± 23.614",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 427.144 ns"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Encode(PayloadSize=64)",
+            "value": 45.017,
+            "range": "± 0.956",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 45.084 ns"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Encode_AmqpNetLite(PayloadSize=64)",
+            "value": 19.516,
+            "range": "± 0.563",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 19.539 ns"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Encode(PayloadSize=16384)",
+            "value": 855.652,
+            "range": "± 19.451",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 859.762 ns"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Encode_AmqpNetLite(PayloadSize=16384)",
+            "value": 413.022,
+            "range": "± 25.068",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 422.959 ns"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Encode(Kind=Credit)",
+            "value": 183.249,
+            "range": "± 2.756",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 183.893 ns"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Decode(Kind=Credit)",
+            "value": 105.311,
+            "range": "± 1.657",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 105.604 ns"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Encode(Kind=Disposition)",
+            "value": 197.134,
+            "range": "± 5.329",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 197.998 ns"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Decode(Kind=Disposition)",
+            "value": 94.847,
+            "range": "± 1.647",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 94.674 ns"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Encode(Kind=Drain)",
+            "value": 312.685,
+            "range": "± 8.181",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 312.739 ns"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Decode(Kind=Drain)",
+            "value": 312.596,
+            "range": "± 8.47",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 311.266 ns"
+          },
+          {
+            "name": "AmqpFrameBenchmarks.EncodeTransferFrame",
+            "value": 264.632,
+            "range": "± 6.273",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 265.573 ns"
+          },
+          {
+            "name": "AmqpFrameBenchmarks.DecodeTransferFrame",
+            "value": 106.322,
+            "range": "± 3.046",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 106.665 ns"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Decode_AmqpNetLite",
+            "value": 333.836,
+            "range": "± 7.819",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 335.072 ns"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Decode",
+            "value": 475.071,
+            "range": "± 9.131",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 473 ns"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Encode_AmqpNetLite",
+            "value": 408.112,
+            "range": "± 7.27",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 408.898 ns"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Encode",
+            "value": 502.694,
+            "range": "± 10.441",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 504.961 ns"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Decode(Sections=Annotations)",
+            "value": 524.424,
+            "range": "± 9.089",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 525.872 ns"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Decode_AmqpNetLite(Sections=Annotations)",
+            "value": 345.2,
+            "range": "± 7.079",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 345.46 ns"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Decode(Sections=Sequence)",
+            "value": 91.433,
+            "range": "± 1.66",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 91.633 ns"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Decode_AmqpNetLite(Sections=Sequence)",
+            "value": 83.333,
+            "range": "± 2.667",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 83.771 ns"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Encode(Sections=Annotations)",
+            "value": 357.959,
+            "range": "± 30.418",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 366.863 ns"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Encode_AmqpNetLite(Sections=Annotations)",
+            "value": 390.289,
+            "range": "± 10.188",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 392.447 ns"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Encode(Sections=Sequence)",
+            "value": 130.149,
+            "range": "± 2.549",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 129.107 ns"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Encode_AmqpNetLite(Sections=Sequence)",
+            "value": 102.395,
+            "range": "± 1.631",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 102.463 ns"
+          },
+          {
+            "name": "AmqpTransferPayloadBenchmarks.Encode(PayloadSize=64)",
+            "value": 184.934,
+            "range": "± 1.32",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 185.237 ns"
+          },
+          {
+            "name": "AmqpTransferPayloadBenchmarks.Decode(PayloadSize=64)",
+            "value": 91.085,
+            "range": "± 1.246",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 91.196 ns"
+          },
+          {
+            "name": "AmqpTransferPayloadBenchmarks.Encode(PayloadSize=16384)",
+            "value": 1364.087,
+            "range": "± 20.733",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 1364.781 ns"
+          },
+          {
+            "name": "AmqpTransferPayloadBenchmarks.Decode(PayloadSize=16384)",
+            "value": 431.877,
+            "range": "± 8.855",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 431.524 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode(Shape=Nested)",
+            "value": 484.236,
+            "range": "± 6.957",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 484.96 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode_AmqpNetLite(Shape=Nested)",
+            "value": 555.966,
+            "range": "± 8.228",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 555.997 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode(Shape=Numeric)",
+            "value": 128.86,
+            "range": "± 1.115",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 128.917 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode_AmqpNetLite(Shape=Numeric)",
+            "value": 167.174,
+            "range": "± 2.806",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 166.817 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode(Shape=TextBinary)",
+            "value": 154.193,
+            "range": "± 2.356",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 154.335 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode_AmqpNetLite(Shape=TextBinary)",
+            "value": 168.511,
+            "range": "± 3.736",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 169.119 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode(Shape=Nested)",
+            "value": 948.955,
+            "range": "± 7.742",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 949.023 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode_AmqpNetLite(Shape=Nested)",
+            "value": 804.013,
+            "range": "± 5.741",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 804.664 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode(Shape=Numeric)",
+            "value": 185.67,
+            "range": "± 2.34",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 186.538 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode_AmqpNetLite(Shape=Numeric)",
+            "value": 256.606,
+            "range": "± 3.353",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 255.996 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode(Shape=TextBinary)",
+            "value": 341.863,
+            "range": "± 7.546",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 344.037 ns"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode_AmqpNetLite(Shape=TextBinary)",
+            "value": 250.865,
+            "range": "± 4.082",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084475\nmean 252.183 ns"
           }
         ]
       }
