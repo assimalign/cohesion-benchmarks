@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792764603507,
+  "lastUpdate": 1792764626336,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -144527,6 +144527,266 @@ window.BENCHMARK_DATA = {
             "range": "± 142707.977",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083056\nmean 623080.516 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "388e93da49286872a58db2dd7711605198432b97",
+          "message": "Merge pull request #14 from assimalign/codex/remove-benchmark-results\n\nRemove checked-in benchmark results and keep measurements in nightly artifacts",
+          "timestamp": "2026-10-22T15:54:09Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/388e93da49286872a58db2dd7711605198432b97"
+        },
+        "date": 1792764621063,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ClientBenchmarks.GetNamespace(EntryCount=8)",
+            "value": 3027.495,
+            "range": "± 377.507",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 3095.736 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ListNamespaces(EntryCount=8)",
+            "value": 1576.486,
+            "range": "± 312.477",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 1608.8 ns"
+          },
+          {
+            "name": "ClientBenchmarks.SendCommand(EntryCount=8)",
+            "value": 2212.154,
+            "range": "± 165.499",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 2195.991 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveAppliedCommand(EntryCount=8)",
+            "value": 2745.664,
+            "range": "± 306.796",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 2625.142 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveRejectedCommand(EntryCount=8)",
+            "value": 2095.631,
+            "range": "± 337.126",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 2041.609 ns"
+          },
+          {
+            "name": "ClientBenchmarks.DeleteCommand(EntryCount=8)",
+            "value": 1829.784,
+            "range": "± 324.847",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 1905.854 ns"
+          },
+          {
+            "name": "ClientBenchmarks.GetNamespace(EntryCount=128)",
+            "value": 20076.605,
+            "range": "± 2814.901",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 20997.455 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ListNamespaces(EntryCount=128)",
+            "value": 6834.258,
+            "range": "± 932.447",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 6893.573 ns"
+          },
+          {
+            "name": "ClientBenchmarks.SendCommand(EntryCount=128)",
+            "value": 3028.619,
+            "range": "± 323.579",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 3019.257 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveAppliedCommand(EntryCount=128)",
+            "value": 4263.665,
+            "range": "± 761.799",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 4311.778 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveRejectedCommand(EntryCount=128)",
+            "value": 3178.013,
+            "range": "± 523.995",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 3340.748 ns"
+          },
+          {
+            "name": "ClientBenchmarks.DeleteCommand(EntryCount=128)",
+            "value": 2932.326,
+            "range": "± 178.497",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 2993.193 ns"
+          },
+          {
+            "name": "SourceProviderBenchmarks.ReadConfigurationMount(EntryCount=8)",
+            "value": 1939.457,
+            "range": "± 156.362",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 1968.206 ns"
+          },
+          {
+            "name": "SourceProviderBenchmarks.ReadConfigurationMount(EntryCount=128)",
+            "value": 16335.687,
+            "range": "± 1658.605",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 16677.562 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadNamespace(EntryCount=8)",
+            "value": 199.627,
+            "range": "± 30.302",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 197.556 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadMissingNamespace(EntryCount=8)",
+            "value": 34.015,
+            "range": "± 1.8",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 34.501 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ListNamespaces(EntryCount=8)",
+            "value": 352.21,
+            "range": "± 24.858",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 352.963 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadAndLookupKey(EntryCount=8)",
+            "value": 184.914,
+            "range": "± 9.902",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 187.553 ns"
+          },
+          {
+            "name": "StoreBenchmarks.SetValue(EntryCount=8)",
+            "value": 359155.549,
+            "range": "± 23656.368",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 360759.14 ns"
+          },
+          {
+            "name": "StoreBenchmarks.SetAndRemoveValue(EntryCount=8)",
+            "value": 630702.882,
+            "range": "± 67878.577",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 658101.925 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReplayNamespaceCommand(EntryCount=8)",
+            "value": 2424.118,
+            "range": "± 184.56",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 2431.93 ns"
+          },
+          {
+            "name": "StoreBenchmarks.CreateAndDeleteNamespaceCommand(EntryCount=8)",
+            "value": 379621.613,
+            "range": "± 39212.369",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 371411.201 ns"
+          },
+          {
+            "name": "StoreBenchmarks.SetValueCommand(EntryCount=8)",
+            "value": 349664.307,
+            "range": "± 40250.655",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 347078.023 ns"
+          },
+          {
+            "name": "StoreBenchmarks.SetAndRemoveValueCommand(EntryCount=8)",
+            "value": 486996.399,
+            "range": "± 74999.072",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 475090.058 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadNamespace(EntryCount=128)",
+            "value": 1331.934,
+            "range": "± 122.96",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 1314.632 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadMissingNamespace(EntryCount=128)",
+            "value": 36.248,
+            "range": "± 5.109",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 37.562 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ListNamespaces(EntryCount=128)",
+            "value": 8987.066,
+            "range": "± 568.948",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 9001.551 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadAndLookupKey(EntryCount=128)",
+            "value": 1056.67,
+            "range": "± 72.353",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 1053.684 ns"
+          },
+          {
+            "name": "StoreBenchmarks.SetValue(EntryCount=128)",
+            "value": 250449.686,
+            "range": "± 51032.628",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 275284.35 ns"
+          },
+          {
+            "name": "StoreBenchmarks.SetAndRemoveValue(EntryCount=128)",
+            "value": 682106.325,
+            "range": "± 57321.969",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 691038.744 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReplayNamespaceCommand(EntryCount=128)",
+            "value": 36993.097,
+            "range": "± 2782.162",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 35665.507 ns"
+          },
+          {
+            "name": "StoreBenchmarks.CreateAndDeleteNamespaceCommand(EntryCount=128)",
+            "value": 365162.089,
+            "range": "± 36421.75",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 375426.632 ns"
+          },
+          {
+            "name": "StoreBenchmarks.SetValueCommand(EntryCount=128)",
+            "value": 378274.984,
+            "range": "± 84932.453",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 395727.696 ns"
+          },
+          {
+            "name": "StoreBenchmarks.SetAndRemoveValueCommand(EntryCount=128)",
+            "value": 547322.367,
+            "range": "± 47966.781",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084745\nmean 548957.565 ns"
           }
         ]
       }
