@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792764129025,
+  "lastUpdate": 1792764132761,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -153084,6 +153084,66 @@ window.BENCHMARK_DATA = {
             "range": "± 7.999",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700\nmean 969.369 ns"
+          }
+        ]
+      }
+    ],
+    "libraries/ObjectValidation (aot) - allocations": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "388e93da49286872a58db2dd7711605198432b97",
+          "message": "Merge pull request #14 from assimalign/codex/remove-benchmark-results\n\nRemove checked-in benchmark results and keep measurements in nightly artifacts",
+          "timestamp": "2026-10-22T15:54:09Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/388e93da49286872a58db2dd7711605198432b97"
+        },
+        "date": 1792764132031,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ValidatorBenchmarks.ValidateComparisons_FluentValidation - allocated",
+            "value": 10344,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700"
+          },
+          {
+            "name": "ValidatorBenchmarks.ValidateComparisons - allocated",
+            "value": 7432,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700"
+          },
+          {
+            "name": "ValidatorBenchmarks.ValidateInvalid_FluentValidation - allocated",
+            "value": 9480,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700"
+          },
+          {
+            "name": "ValidatorBenchmarks.ValidateInvalid - allocated",
+            "value": 5984,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700"
+          },
+          {
+            "name": "ValidatorBenchmarks.Validate_FluentValidation - allocated",
+            "value": 2408,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700"
+          },
+          {
+            "name": "ValidatorBenchmarks.Validate - allocated",
+            "value": 3144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700"
           }
         ]
       }
