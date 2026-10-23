@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792763969669,
+  "lastUpdate": 1792763992542,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -124744,6 +124744,252 @@ window.BENCHMARK_DATA = {
             "range": "± 69.584",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082972\nmean 1248.928 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "388e93da49286872a58db2dd7711605198432b97",
+          "message": "Merge pull request #14 from assimalign/codex/remove-benchmark-results\n\nRemove checked-in benchmark results and keep measurements in nightly artifacts",
+          "timestamp": "2026-10-22T15:54:09Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/388e93da49286872a58db2dd7711605198432b97"
+        },
+        "date": 1792763988743,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "CollectionMappingBenchmarks.MapCollection(Count=1)",
+            "value": 66.954,
+            "range": "± 2.736",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 68.343 ns"
+          },
+          {
+            "name": "CollectionMappingBenchmarks.MapCollection_AutoMapper(Count=1)",
+            "value": 78.886,
+            "range": "± 5.872",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 80.929 ns"
+          },
+          {
+            "name": "CollectionMappingBenchmarks.MapCollection(Count=100)",
+            "value": 4850.326,
+            "range": "± 412.542",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 4841.287 ns"
+          },
+          {
+            "name": "CollectionMappingBenchmarks.MapCollection_AutoMapper(Count=100)",
+            "value": 1960.635,
+            "range": "± 502.943",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 2141.284 ns"
+          },
+          {
+            "name": "MapperBenchmarks.MapFlat_AutoMapper",
+            "value": 87.528,
+            "range": "± 13.069",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 89.384 ns"
+          },
+          {
+            "name": "MapperBenchmarks.MapFlat",
+            "value": 55.775,
+            "range": "± 3.46",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 57.342 ns"
+          },
+          {
+            "name": "MapperBenchmarks.MapNested_AutoMapper",
+            "value": 233.448,
+            "range": "± 13.213",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 235.425 ns"
+          },
+          {
+            "name": "MapperBenchmarks.MapNested",
+            "value": 658.251,
+            "range": "± 30.242",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 660.457 ns"
+          },
+          {
+            "name": "MappingCallbackBenchmarks.MapCallback(Mode=ContextCallback)",
+            "value": 21.557,
+            "range": "± 1.915",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 22.334 ns"
+          },
+          {
+            "name": "MappingCallbackBenchmarks.MapCallback_AutoMapper(Mode=ContextCallback)",
+            "value": 58.357,
+            "range": "± 1.85",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 58.186 ns"
+          },
+          {
+            "name": "MappingCallbackBenchmarks.MapCallback(Mode=CustomProfile)",
+            "value": 40.165,
+            "range": "± 2.422",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 39.609 ns"
+          },
+          {
+            "name": "MappingCallbackBenchmarks.MapCallback_AutoMapper(Mode=CustomProfile)",
+            "value": 66.434,
+            "range": "± 6.251",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 66.791 ns"
+          },
+          {
+            "name": "MappingCallbackBenchmarks.MapCallback(Mode=OverriddenProfile)",
+            "value": 47.777,
+            "range": "± 6.468",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 49.885 ns"
+          },
+          {
+            "name": "MappingCallbackBenchmarks.MapCallback_AutoMapper(Mode=OverriddenProfile)",
+            "value": 57.009,
+            "range": "± 3.288",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 57.78 ns"
+          },
+          {
+            "name": "MappingCallbackBenchmarks.MapCallback(Mode=TypedCallback)",
+            "value": 10.873,
+            "range": "± 0.612",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 10.774 ns"
+          },
+          {
+            "name": "MappingCallbackBenchmarks.MapCallback_AutoMapper(Mode=TypedCallback)",
+            "value": 56.076,
+            "range": "± 2.76",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 56.409 ns"
+          },
+          {
+            "name": "MappingConfigurationBenchmarks.Configure(Graph=False)",
+            "value": 111.337,
+            "range": "± 7.561",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 110.361 ns"
+          },
+          {
+            "name": "MappingConfigurationBenchmarks.Configure_AutoMapper(Graph=False)",
+            "value": 85609.723,
+            "range": "± 4245.59",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 86735.674 ns"
+          },
+          {
+            "name": "MappingConfigurationBenchmarks.Configure(Graph=True)",
+            "value": 310.699,
+            "range": "± 12.628",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 312.074 ns"
+          },
+          {
+            "name": "MappingConfigurationBenchmarks.Configure_AutoMapper(Graph=True)",
+            "value": 200984.858,
+            "range": "± 30269.188",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 209061.495 ns"
+          },
+          {
+            "name": "MappingConfigurationBenchmarks.ConfigureAndMap(Graph=False)",
+            "value": 149.864,
+            "range": "± 4.532",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 150.305 ns"
+          },
+          {
+            "name": "MappingConfigurationBenchmarks.ConfigureAndMap_AutoMapper(Graph=False)",
+            "value": 261304.616,
+            "range": "± 12065.876",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 263015.899 ns"
+          },
+          {
+            "name": "MappingConfigurationBenchmarks.ConfigureAndMap(Graph=True)",
+            "value": 1172.387,
+            "range": "± 90.126",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 1208.529 ns"
+          },
+          {
+            "name": "MappingConfigurationBenchmarks.ConfigureAndMap_AutoMapper(Graph=True)",
+            "value": 1742619.262,
+            "range": "± 108111.342",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 1784072.362 ns"
+          },
+          {
+            "name": "MappingDispatchBenchmarks.MapExisting",
+            "value": 24.147,
+            "range": "± 0.931",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 24.262 ns"
+          },
+          {
+            "name": "MappingDispatchBenchmarks.MapExisting_AutoMapper",
+            "value": 46.461,
+            "range": "± 2.037",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 46.701 ns"
+          },
+          {
+            "name": "MappingDispatchBenchmarks.MapRuntime",
+            "value": 50.095,
+            "range": "± 7.313",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 52.121 ns"
+          },
+          {
+            "name": "MappingDispatchBenchmarks.MapRuntime_AutoMapper",
+            "value": 57.071,
+            "range": "± 5.793",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 56.32 ns"
+          },
+          {
+            "name": "NestedMappingBenchmarks.MapGraph(Items=1)",
+            "value": 292.482,
+            "range": "± 28.108",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 306.232 ns"
+          },
+          {
+            "name": "NestedMappingBenchmarks.MapGraph_AutoMapper(Items=1)",
+            "value": 92.356,
+            "range": "± 6.647",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 92.533 ns"
+          },
+          {
+            "name": "NestedMappingBenchmarks.MapGraph(Items=100)",
+            "value": 4804.013,
+            "range": "± 211.051",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 4750.338 ns"
+          },
+          {
+            "name": "NestedMappingBenchmarks.MapGraph_AutoMapper(Items=100)",
+            "value": 1285.225,
+            "range": "± 90.357",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084695\nmean 1289.234 ns"
           }
         ]
       }
