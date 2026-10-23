@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792764090108,
+  "lastUpdate": 1792764129025,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -153018,6 +153018,72 @@ window.BENCHMARK_DATA = {
             "value": 560,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083026"
+          }
+        ]
+      }
+    ],
+    "libraries/ObjectValidation (aot) - time": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "388e93da49286872a58db2dd7711605198432b97",
+          "message": "Merge pull request #14 from assimalign/codex/remove-benchmark-results\n\nRemove checked-in benchmark results and keep measurements in nightly artifacts",
+          "timestamp": "2026-10-22T15:54:09Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/388e93da49286872a58db2dd7711605198432b97"
+        },
+        "date": 1792764123591,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ValidatorBenchmarks.ValidateComparisons_FluentValidation",
+            "value": 5137.752,
+            "range": "± 21.359",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700\nmean 5139.064 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.ValidateComparisons",
+            "value": 1684.16,
+            "range": "± 37.875",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700\nmean 1674.959 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.ValidateInvalid_FluentValidation",
+            "value": 4172.143,
+            "range": "± 22.611",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700\nmean 4176.15 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.ValidateInvalid",
+            "value": 1296.238,
+            "range": "± 42.327",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700\nmean 1310.299 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.Validate_FluentValidation",
+            "value": 1190.425,
+            "range": "± 9.474",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700\nmean 1190.662 ns"
+          },
+          {
+            "name": "ValidatorBenchmarks.Validate",
+            "value": 969.066,
+            "range": "± 7.999",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084700\nmean 969.369 ns"
           }
         ]
       }
