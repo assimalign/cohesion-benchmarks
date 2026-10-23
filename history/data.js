@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792762813226,
+  "lastUpdate": 1792762828799,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -4544,6 +4544,294 @@ window.BENCHMARK_DATA = {
             "range": "± 0.019",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000082872\nmean 33.668 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "388e93da49286872a58db2dd7711605198432b97",
+          "message": "Merge pull request #14 from assimalign/codex/remove-benchmark-results\n\nRemove checked-in benchmark results and keep measurements in nightly artifacts",
+          "timestamp": "2026-10-22T15:54:09Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/388e93da49286872a58db2dd7711605198432b97"
+        },
+        "date": 1792762825865,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "GetOrCreateBenchmarks.Create",
+            "value": 8192,
+            "range": "± 187.83",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 8171.588 ns"
+          },
+          {
+            "name": "GetOrCreateBenchmarks.Create_MicrosoftExtensions",
+            "value": 6153,
+            "range": "± 152.55",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 6168.158 ns"
+          },
+          {
+            "name": "GetOrCreateHitBenchmarks.Hit",
+            "value": 61.851,
+            "range": "± 0.455",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 61.974 ns"
+          },
+          {
+            "name": "GetOrCreateHitBenchmarks.Hit_MicrosoftExtensions",
+            "value": 33.66,
+            "range": "± 0.297",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 33.767 ns"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.Miss",
+            "value": 31.93,
+            "range": "± 0.287",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 32.038 ns"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.Miss_MicrosoftExtensions",
+            "value": 30.77,
+            "range": "± 0.044",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 30.788 ns"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SetSized",
+            "value": 120.225,
+            "range": "± 2.352",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 120.217 ns"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SetSized_MicrosoftExtensions",
+            "value": 75.671,
+            "range": "± 0.739",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 75.837 ns"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SetWithoutExpiration",
+            "value": 110.77,
+            "range": "± 2.997",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 111.25 ns"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SetWithoutExpiration_MicrosoftExtensions",
+            "value": 71.321,
+            "range": "± 0.38",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 71.318 ns"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SlidingHit",
+            "value": 59.847,
+            "range": "± 0.852",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 60.197 ns"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SlidingHit_MicrosoftExtensions",
+            "value": 34.697,
+            "range": "± 0.214",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 34.776 ns"
+          },
+          {
+            "name": "MemoryCacheBenchmarks.TryGetValue_MicrosoftExtensions",
+            "value": 34.814,
+            "range": "± 0.085",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 34.828 ns"
+          },
+          {
+            "name": "MemoryCacheBenchmarks.TryGetValue",
+            "value": 67.401,
+            "range": "± 0.166",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 67.397 ns"
+          },
+          {
+            "name": "MemoryCacheBenchmarks.Set_MicrosoftExtensions",
+            "value": 77.54,
+            "range": "± 0.256",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 77.6 ns"
+          },
+          {
+            "name": "MemoryCacheBenchmarks.Set",
+            "value": 122.015,
+            "range": "± 2.6",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 122.172 ns"
+          },
+          {
+            "name": "MemoryCacheCapacityBenchmarks.InsertWithEviction(EntryCount=32)",
+            "value": 17962,
+            "range": "± 1376.455",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 18623 ns"
+          },
+          {
+            "name": "MemoryCacheCapacityBenchmarks.InsertWithEviction(EntryCount=1024)",
+            "value": 312660.5,
+            "range": "± 21109.661",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 308372.9 ns"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Clear(EntryCount=32)",
+            "value": 12872,
+            "range": "± 365.254",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 12801.35 ns"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Clear_MicrosoftExtensions(EntryCount=32)",
+            "value": 8486,
+            "range": "± 895.648",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 8782.579 ns"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Clear(EntryCount=1024)",
+            "value": 130939,
+            "range": "± 2150.068",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 130748.706 ns"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Clear_MicrosoftExtensions(EntryCount=1024)",
+            "value": 117691.5,
+            "range": "± 2754.84",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 117697.559 ns"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Remove(EntryCount=32)",
+            "value": 5666.5,
+            "range": "± 269.177",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 5624.711 ns"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Remove_MicrosoftExtensions(EntryCount=32)",
+            "value": 6193,
+            "range": "± 427.612",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 6059.474 ns"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Remove(EntryCount=1024)",
+            "value": 86158.5,
+            "range": "± 14154.733",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 90270.447 ns"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Remove_MicrosoftExtensions(EntryCount=1024)",
+            "value": 117552,
+            "range": "± 12455.982",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 116320.947 ns"
+          },
+          {
+            "name": "MemoryCacheExpirationBenchmarks.ScanLive(EntryCount=32)",
+            "value": 4435,
+            "range": "± 142.523",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 4434.95 ns"
+          },
+          {
+            "name": "MemoryCacheExpirationBenchmarks.ScanExpired(EntryCount=32)",
+            "value": 7829,
+            "range": "± 219.949",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 7818.947 ns"
+          },
+          {
+            "name": "MemoryCacheExpirationBenchmarks.ScanLive(EntryCount=1024)",
+            "value": 82255.5,
+            "range": "± 8575.435",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 82543.658 ns"
+          },
+          {
+            "name": "MemoryCacheExpirationBenchmarks.ScanExpired(EntryCount=1024)",
+            "value": 136627,
+            "range": "± 5845.7",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 138034.15 ns"
+          },
+          {
+            "name": "TypedCacheBenchmarks.GetTyped(Hit=False)",
+            "value": 37.589,
+            "range": "± 0.193",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 37.654 ns"
+          },
+          {
+            "name": "TypedCacheBenchmarks.GetTyped_MicrosoftExtensions(Hit=False)",
+            "value": 31.104,
+            "range": "± 0.182",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 31.177 ns"
+          },
+          {
+            "name": "TypedCacheBenchmarks.GetTyped(Hit=True)",
+            "value": 61.828,
+            "range": "± 0.568",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 62.036 ns"
+          },
+          {
+            "name": "TypedCacheBenchmarks.GetTyped_MicrosoftExtensions(Hit=True)",
+            "value": 35.808,
+            "range": "± 0.318",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 35.847 ns"
+          },
+          {
+            "name": "TypedCacheBenchmarks.TryGetTyped(Hit=False)",
+            "value": 37.652,
+            "range": "± 0.159",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 37.627 ns"
+          },
+          {
+            "name": "TypedCacheBenchmarks.TryGetTyped_MicrosoftExtensions(Hit=False)",
+            "value": 31.001,
+            "range": "± 0.107",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 31.025 ns"
+          },
+          {
+            "name": "TypedCacheBenchmarks.TryGetTyped(Hit=True)",
+            "value": 62.298,
+            "range": "± 0.433",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 62.325 ns"
+          },
+          {
+            "name": "TypedCacheBenchmarks.TryGetTyped_MicrosoftExtensions(Hit=True)",
+            "value": 35.564,
+            "range": "± 0.256",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084484\nmean 35.633 ns"
           }
         ]
       }
