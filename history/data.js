@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792764455102,
+  "lastUpdate": 1792764458202,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -139779,6 +139779,220 @@ window.BENCHMARK_DATA = {
             "value": 664,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.76 (8d92a0fa1be0) on GitHub Actions 1000083035"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "388e93da49286872a58db2dd7711605198432b97",
+          "message": "Merge pull request #14 from assimalign/codex/remove-benchmark-results\n\nRemove checked-in benchmark results and keep measurements in nightly artifacts",
+          "timestamp": "2026-10-22T15:54:09Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/388e93da49286872a58db2dd7711605198432b97"
+        },
+        "date": 1792764457561,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPem(WithPrivateKey=False) - allocated",
+            "value": 12104,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPem_SystemSecurityCryptography(WithPrivateKey=False) - allocated",
+            "value": 12104,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPem(WithPrivateKey=True) - allocated",
+            "value": 34082,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPem_SystemSecurityCryptography(WithPrivateKey=True) - allocated",
+            "value": 34080,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPkcs12(WithPrivateKey=False) - allocated",
+            "value": 4894,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPkcs12_SystemSecurityCryptography(WithPrivateKey=False) - allocated",
+            "value": 4861,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPkcs12(WithPrivateKey=True) - allocated",
+            "value": 15596,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPkcs12_SystemSecurityCryptography(WithPrivateKey=True) - allocated",
+            "value": 15564,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPkcs12File(WithPrivateKey=False) - allocated",
+            "value": 9227,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPkcs12File_SystemSecurityCryptography(WithPrivateKey=False) - allocated",
+            "value": 9227,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPkcs12File(WithPrivateKey=True) - allocated",
+            "value": 19906,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "CertificateLoadingBenchmarks.LoadPkcs12File_SystemSecurityCryptography(WithPrivateKey=True) - allocated",
+            "value": 19923,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.Protect_AspNetCore(PayloadSize=64) - allocated",
+            "value": 192,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.Protect(PayloadSize=64) - allocated",
+            "value": 464,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.Protect_AspNetCore(PayloadSize=1024) - allocated",
+            "value": 1152,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.Protect(PayloadSize=1024) - allocated",
+            "value": 1424,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.RoundTrip_AspNetCore(PayloadSize=64) - allocated",
+            "value": 320,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.RoundTrip(PayloadSize=64) - allocated",
+            "value": 880,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.RoundTrip_AspNetCore(PayloadSize=1024) - allocated",
+            "value": 2240,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.RoundTrip(PayloadSize=1024) - allocated",
+            "value": 2800,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.Unprotect_AspNetCore(PayloadSize=64) - allocated",
+            "value": 128,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.Unprotect(PayloadSize=64) - allocated",
+            "value": 416,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.Unprotect_AspNetCore(PayloadSize=1024) - allocated",
+            "value": 1088,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "DataProtectorBenchmarks.Unprotect(PayloadSize=1024) - allocated",
+            "value": 1376,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "PurposeChainBenchmarks.CreateAndRoundTrip(Depth=1) - allocated",
+            "value": 1056,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "PurposeChainBenchmarks.CreateAndRoundTrip_AspNetCore(Depth=1) - allocated",
+            "value": 456,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "PurposeChainBenchmarks.CreateAndRoundTrip(Depth=4) - allocated",
+            "value": 1720,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "PurposeChainBenchmarks.CreateAndRoundTrip_AspNetCore(Depth=4) - allocated",
+            "value": 984,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "PurposeChainBenchmarks.CreateChain(Depth=1) - allocated",
+            "value": 176,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "PurposeChainBenchmarks.CreateChain_AspNetCore(Depth=1) - allocated",
+            "value": 136,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "PurposeChainBenchmarks.CreateChain(Depth=4) - allocated",
+            "value": 840,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
+          },
+          {
+            "name": "PurposeChainBenchmarks.CreateChain_AspNetCore(Depth=4) - allocated",
+            "value": 664,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084738"
           }
         ]
       }
