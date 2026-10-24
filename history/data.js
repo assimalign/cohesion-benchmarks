@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792849856005,
+  "lastUpdate": 1792849858263,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -210289,6 +210289,52 @@ window.BENCHMARK_DATA = {
             "value": 22897,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084918"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "63f19c2b606ec28a342d6e8808104d91aa69e24b",
+          "message": "Merge pull request #15 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.82",
+          "timestamp": "2026-10-23T18:21:29Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/63f19c2b606ec28a342d6e8808104d91aa69e24b"
+        },
+        "date": 1792849857897,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "VpnGatewayApplicationBenchmarks.Build(ServiceCount=1) - allocated",
+            "value": 6032,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086128"
+          },
+          {
+            "name": "VpnGatewayApplicationBenchmarks.BuildStartStop(ServiceCount=1) - allocated",
+            "value": 8008,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086128"
+          },
+          {
+            "name": "VpnGatewayApplicationBenchmarks.Build(ServiceCount=16) - allocated",
+            "value": 15040,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086128"
+          },
+          {
+            "name": "VpnGatewayApplicationBenchmarks.BuildStartStop(ServiceCount=16) - allocated",
+            "value": 22897,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086128"
           }
         ]
       }
