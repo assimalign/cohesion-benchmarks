@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792847834015,
+  "lastUpdate": 1792847857229,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -149354,6 +149354,322 @@ window.BENCHMARK_DATA = {
             "range": "± 9.645",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084675\nmean 116.523 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "63f19c2b606ec28a342d6e8808104d91aa69e24b",
+          "message": "Merge pull request #15 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.82",
+          "timestamp": "2026-10-23T18:21:29Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/63f19c2b606ec28a342d6e8808104d91aa69e24b"
+        },
+        "date": 1792847850319,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "IdentitySubjectBenchmarks.Materialize(ClaimCount=8)",
+            "value": 134.451,
+            "range": "± 3.133",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 134.931 ns"
+          },
+          {
+            "name": "IdentitySubjectBenchmarks.Canonicalize(ClaimCount=8)",
+            "value": 179.92,
+            "range": "± 4.491",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 180.55 ns"
+          },
+          {
+            "name": "IdentitySubjectBenchmarks.HasClaim(ClaimCount=8)",
+            "value": 15.034,
+            "range": "± 0.475",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 15.269 ns"
+          },
+          {
+            "name": "IdentitySubjectBenchmarks.Materialize(ClaimCount=32)",
+            "value": 275.676,
+            "range": "± 10.645",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 281.163 ns"
+          },
+          {
+            "name": "IdentitySubjectBenchmarks.Canonicalize(ClaimCount=32)",
+            "value": 532.087,
+            "range": "± 21.106",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 527.704 ns"
+          },
+          {
+            "name": "IdentitySubjectBenchmarks.HasClaim(ClaimCount=32)",
+            "value": 63.572,
+            "range": "± 1.515",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 63.993 ns"
+          },
+          {
+            "name": "OpenIdConnectBenchmarks.MaterializeMetadata",
+            "value": 1320.247,
+            "range": "± 16.482",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 1319.536 ns"
+          },
+          {
+            "name": "OpenIdConnectBenchmarks.ValidateMetadata",
+            "value": 547.64,
+            "range": "± 9.053",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 550.545 ns"
+          },
+          {
+            "name": "OpenIdConnectBenchmarks.MaterializeAuthorizationRequest",
+            "value": 79.814,
+            "range": "± 2.109",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 80.272 ns"
+          },
+          {
+            "name": "OpenIdConnectBenchmarks.ValidateAuthorizationRequest",
+            "value": 108.15,
+            "range": "± 1.053",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 108.346 ns"
+          },
+          {
+            "name": "ProtocolMetadataBenchmarks.Materialize(EndpointCount=4)",
+            "value": 167.675,
+            "range": "± 4.751",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 168.615 ns"
+          },
+          {
+            "name": "ProtocolMetadataBenchmarks.Materialize(EndpointCount=16)",
+            "value": 446.545,
+            "range": "± 5.415",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 446.266 ns"
+          },
+          {
+            "name": "SamlAssertionBenchmarks.Materialize(Expired=False)",
+            "value": 254.789,
+            "range": "± 6.273",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 257.645 ns"
+          },
+          {
+            "name": "SamlAssertionBenchmarks.Validate(Expired=False)",
+            "value": 58.941,
+            "range": "± 1.527",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 59.481 ns"
+          },
+          {
+            "name": "SamlAssertionBenchmarks.Materialize(Expired=True)",
+            "value": 253.457,
+            "range": "± 2.04",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 253.994 ns"
+          },
+          {
+            "name": "SamlAssertionBenchmarks.Validate(Expired=True)",
+            "value": 145.944,
+            "range": "± 2.231",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 146.177 ns"
+          },
+          {
+            "name": "JsonWebKeyBenchmarks.Parse",
+            "value": 1235.72,
+            "range": "± 32.774",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 1252.112 ns"
+          },
+          {
+            "name": "JsonWebKeyBenchmarks.Parse_MicrosoftIdentityModel",
+            "value": 427.096,
+            "range": "± 9.123",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 429.508 ns"
+          },
+          {
+            "name": "JsonWebKeyBenchmarks.Thumbprint",
+            "value": 383.733,
+            "range": "± 2.49",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 384.73 ns"
+          },
+          {
+            "name": "JsonWebKeyBenchmarks.Thumbprint_MicrosoftIdentityModel",
+            "value": 367.431,
+            "range": "± 5.167",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 369.751 ns"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Parse_MicrosoftIdentityModel",
+            "value": 1014.627,
+            "range": "± 3.471",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 1015.164 ns"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Parse",
+            "value": 1990.403,
+            "range": "± 34.254",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 1995.655 ns"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Validate_MicrosoftIdentityModel",
+            "value": 105296.01,
+            "range": "± 1611.151",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 105269.966 ns"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Validate",
+            "value": 122611.135,
+            "range": "± 2744.482",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 123209.552 ns"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Write_MicrosoftIdentityModel",
+            "value": 114389.389,
+            "range": "± 2122.873",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 114868.914 ns"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Write",
+            "value": 114074.135,
+            "range": "± 2891.057",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 115331.642 ns"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify(Algorithm=ES256)",
+            "value": 102875.941,
+            "range": "± 2616.896",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 103535.252 ns"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify_SystemSecurityCryptography(Algorithm=ES256)",
+            "value": 105056.544,
+            "range": "± 1184.914",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 105362.833 ns"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify(Algorithm=PS256)",
+            "value": 25876.795,
+            "range": "± 1503.825",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 25947.91 ns"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify_SystemSecurityCryptography(Algorithm=PS256)",
+            "value": 26363.38,
+            "range": "± 808.909",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 26453.032 ns"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify(Algorithm=RS256)",
+            "value": 21825.921,
+            "range": "± 641.389",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 21830.871 ns"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify_SystemSecurityCryptography(Algorithm=RS256)",
+            "value": 19871.272,
+            "range": "± 952.881",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 19995.694 ns"
+          },
+          {
+            "name": "SignedTokenParsingBenchmarks.Parse(Algorithm=HS256)",
+            "value": 2372.52,
+            "range": "± 169.125",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 2340.196 ns"
+          },
+          {
+            "name": "SignedTokenParsingBenchmarks.Parse_MicrosoftIdentityModel(Algorithm=HS256)",
+            "value": 1269.34,
+            "range": "± 37.496",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 1270.454 ns"
+          },
+          {
+            "name": "SignedTokenParsingBenchmarks.Parse(Algorithm=RS256)",
+            "value": 2322.184,
+            "range": "± 84.804",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 2330.872 ns"
+          },
+          {
+            "name": "SignedTokenParsingBenchmarks.Parse_MicrosoftIdentityModel(Algorithm=RS256)",
+            "value": 1270.678,
+            "range": "± 32.019",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 1277.418 ns"
+          },
+          {
+            "name": "SamlTokenBenchmarks.Materialize(AttributeCount=8)",
+            "value": 1107.204,
+            "range": "± 23.324",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 1104.877 ns"
+          },
+          {
+            "name": "SamlTokenBenchmarks.Validate(AttributeCount=8)",
+            "value": 82.394,
+            "range": "± 3.631",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 83.323 ns"
+          },
+          {
+            "name": "SamlTokenBenchmarks.Materialize(AttributeCount=32)",
+            "value": 3428.433,
+            "range": "± 165.519",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 3449.571 ns"
+          },
+          {
+            "name": "SamlTokenBenchmarks.Validate(AttributeCount=32)",
+            "value": 83.871,
+            "range": "± 3.833",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 84.484 ns"
+          },
+          {
+            "name": "TokenValidationBenchmarks.Validate(Expired=False)",
+            "value": 3.235,
+            "range": "± 0.1",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 3.26 ns"
+          },
+          {
+            "name": "TokenValidationBenchmarks.Validate(Expired=True)",
+            "value": 92.38,
+            "range": "± 2.957",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085897\nmean 93.57 ns"
           }
         ]
       }
