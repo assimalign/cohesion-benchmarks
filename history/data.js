@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792846886050,
+  "lastUpdate": 1792846908984,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -89195,6 +89195,322 @@ window.BENCHMARK_DATA = {
             "range": "± 1667.685",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084482\nmean 488222.805 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "63f19c2b606ec28a342d6e8808104d91aa69e24b",
+          "message": "Merge pull request #15 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.82",
+          "timestamp": "2026-10-23T18:21:29Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/63f19c2b606ec28a342d6e8808104d91aa69e24b"
+        },
+        "date": 1792846902648,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ApplicationGraphBenchmarks.ParseManifests(ResourceCount=4)",
+            "value": 38669.141,
+            "range": "± 424.02",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 38805.227 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ValidateManifests(ResourceCount=4)",
+            "value": 2023.023,
+            "range": "± 16.05",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 2028.274 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.CreatePlans(ResourceCount=4)",
+            "value": 4452.143,
+            "range": "± 80.29",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 4443.63 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ValidatePlans(ResourceCount=4)",
+            "value": 17727.136,
+            "range": "± 277.83",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 17761.709 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.Build(ResourceCount=4)",
+            "value": 38484.998,
+            "range": "± 310.67",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 38471.479 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ComputeManifestHashes(ResourceCount=4)",
+            "value": 115235.095,
+            "range": "± 1897.105",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 115803.578 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ParseManifests(ResourceCount=24)",
+            "value": 273544.751,
+            "range": "± 15578.862",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 280221.088 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ValidateManifests(ResourceCount=24)",
+            "value": 14667.181,
+            "range": "± 147.373",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 14709.523 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.CreatePlans(ResourceCount=24)",
+            "value": 26807.664,
+            "range": "± 169.96",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 26815.886 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ValidatePlans(ResourceCount=24)",
+            "value": 125787.86,
+            "range": "± 6038.944",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 125769.083 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.Build(ResourceCount=24)",
+            "value": 250196.606,
+            "range": "± 11673.681",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 252194.323 ns"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ComputeManifestHashes(ResourceCount=24)",
+            "value": 861298.389,
+            "range": "± 20913.132",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 859927.656 ns"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.CreateDocument(ResourceCount=4)",
+            "value": 2780.742,
+            "range": "± 39.879",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 2794.154 ns"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.ParseDocument(ResourceCount=4)",
+            "value": 161778.418,
+            "range": "± 1641.427",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 161774.773 ns"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.ReconstructModel(ResourceCount=4)",
+            "value": 27552.853,
+            "range": "± 354.982",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 27692.387 ns"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.CreateDocument(ResourceCount=24)",
+            "value": 18110.663,
+            "range": "± 200.731",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 18146.315 ns"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.ParseDocument(ResourceCount=24)",
+            "value": 989285.156,
+            "range": "± 9341.998",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 989204.463 ns"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.ReconstructModel(ResourceCount=24)",
+            "value": 179087.585,
+            "range": "± 1982.085",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 179044.759 ns"
+          },
+          {
+            "name": "ApplicationSetBenchmarks.ComposeApplications(ResourcesPerApplication=4)",
+            "value": 1856.259,
+            "range": "± 24.368",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 1861.88 ns"
+          },
+          {
+            "name": "ApplicationSetBenchmarks.ComposeApplications(ResourcesPerApplication=24)",
+            "value": 9208.16,
+            "range": "± 91.204",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 9168.279 ns"
+          },
+          {
+            "name": "GenericPlannerBenchmarks.CreatePlan",
+            "value": 1220.378,
+            "range": "± 13.774",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 1219.084 ns"
+          },
+          {
+            "name": "GenericPlannerBenchmarks.ValidatePlan",
+            "value": 5447.707,
+            "range": "± 87.573",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 5475.145 ns"
+          },
+          {
+            "name": "ResourceManifestBenchmarks.Parse",
+            "value": 8796.579,
+            "range": "± 83.919",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 8824.143 ns"
+          },
+          {
+            "name": "ResourceManifestBenchmarks.ComputeHash",
+            "value": 27269.757,
+            "range": "± 670.467",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 27345.862 ns"
+          },
+          {
+            "name": "DirectCommandBenchmarks.ReconcileRepeatedCommands(ResourceCount=4)",
+            "value": 1795859.766,
+            "range": "± 17146.299",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 1798208.34 ns"
+          },
+          {
+            "name": "DirectCommandBenchmarks.ReplaceCommands(ResourceCount=4)",
+            "value": 2483803.516,
+            "range": "± 19744.034",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 2485534.807 ns"
+          },
+          {
+            "name": "DirectCommandBenchmarks.ReconcileRepeatedCommands(ResourceCount=24)",
+            "value": 10993331.25,
+            "range": "± 73195.835",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 11001357.812 ns"
+          },
+          {
+            "name": "DirectCommandBenchmarks.ReplaceCommands(ResourceCount=24)",
+            "value": 15076754.688,
+            "range": "± 162169.138",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 15078913.542 ns"
+          },
+          {
+            "name": "ResourceResolutionBenchmarks.ValidateGraph(ResourceCount=4)",
+            "value": 399.56,
+            "range": "± 4.633",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 399.175 ns"
+          },
+          {
+            "name": "ResourceResolutionBenchmarks.ResolveMountSources(ResourceCount=4)",
+            "value": 63978.058,
+            "range": "± 647.869",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 64085.677 ns"
+          },
+          {
+            "name": "ResourceResolutionBenchmarks.ValidateGraph(ResourceCount=24)",
+            "value": 1698.708,
+            "range": "± 21.07",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 1703.411 ns"
+          },
+          {
+            "name": "ResourceResolutionBenchmarks.ResolveMountSources(ResourceCount=24)",
+            "value": 416591.846,
+            "range": "± 2910.174",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 416784.655 ns"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.MatchApplication",
+            "value": 135.197,
+            "range": "± 1.498",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 135.342 ns"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.MatchCommand",
+            "value": 278.752,
+            "range": "± 2.855",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 279.504 ns"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.MatchCommandDeletion",
+            "value": 417.389,
+            "range": "± 3.455",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 418.407 ns"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.MatchHead",
+            "value": 137.035,
+            "range": "± 2.961",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 137.33 ns"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.RejectMethod",
+            "value": 452.961,
+            "range": "± 4.325",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 453.981 ns"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.MissPath",
+            "value": 137.817,
+            "range": "± 1.234",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 138.619 ns"
+          },
+          {
+            "name": "InProcessPlanBenchmarks.ValidateBindings(ResourceCount=4)",
+            "value": 1180.236,
+            "range": "± 9.395",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 1181.473 ns"
+          },
+          {
+            "name": "InProcessPlanBenchmarks.RenderPlan(ResourceCount=4)",
+            "value": 28675.61,
+            "range": "± 269.508",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 28731.465 ns"
+          },
+          {
+            "name": "InProcessPlanBenchmarks.ValidateBindings(ResourceCount=24)",
+            "value": 6615.715,
+            "range": "± 68.257",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 6634.462 ns"
+          },
+          {
+            "name": "InProcessPlanBenchmarks.RenderPlan(ResourceCount=24)",
+            "value": 591220.068,
+            "range": "± 6931.978",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789\nmean 592486.826 ns"
           }
         ]
       }
