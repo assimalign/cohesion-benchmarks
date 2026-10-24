@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792848272045,
+  "lastUpdate": 1792848299527,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -59863,6 +59863,168 @@ window.BENCHMARK_DATA = {
             "range": "± 5953.208",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084712\nmean 296019.65 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "63f19c2b606ec28a342d6e8808104d91aa69e24b",
+          "message": "Merge pull request #15 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.82",
+          "timestamp": "2026-10-23T18:21:29Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/63f19c2b606ec28a342d6e8808104d91aa69e24b"
+        },
+        "date": 1792848291850,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "OtlpCollectorResponseBenchmarks.ExportAcknowledged(BatchSize=1)",
+            "value": 4291.061,
+            "range": "± 36.71",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 4296.442 ns"
+          },
+          {
+            "name": "OtlpCollectorResponseBenchmarks.ExportPartiallyRejected(BatchSize=1)",
+            "value": 4316.086,
+            "range": "± 24.879",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 4316.089 ns"
+          },
+          {
+            "name": "OtlpCollectorResponseBenchmarks.ExportPermanentlyRejected(BatchSize=1)",
+            "value": 3742.371,
+            "range": "± 17.823",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 3741.591 ns"
+          },
+          {
+            "name": "OtlpCollectorResponseBenchmarks.ExportAcknowledged(BatchSize=64)",
+            "value": 85060.204,
+            "range": "± 741.195",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 85209.746 ns"
+          },
+          {
+            "name": "OtlpCollectorResponseBenchmarks.ExportPartiallyRejected(BatchSize=64)",
+            "value": 84691.237,
+            "range": "± 556.457",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 84792.228 ns"
+          },
+          {
+            "name": "OtlpCollectorResponseBenchmarks.ExportPermanentlyRejected(BatchSize=64)",
+            "value": 84185.547,
+            "range": "± 649.775",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 84217.57 ns"
+          },
+          {
+            "name": "OtlpLogExporterBenchmarks.ExportAsync(BatchSize=1)",
+            "value": 3434.162,
+            "range": "± 20.132",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 3435.393 ns"
+          },
+          {
+            "name": "OtlpLogExporterBenchmarks.EnqueueThenFlush(BatchSize=1)",
+            "value": 3977.968,
+            "range": "± 20.775",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 3983.112 ns"
+          },
+          {
+            "name": "OtlpLogExporterBenchmarks.ExportAsync(BatchSize=64)",
+            "value": 74748.832,
+            "range": "± 325.781",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 74709.752 ns"
+          },
+          {
+            "name": "OtlpLogExporterBenchmarks.EnqueueThenFlush(BatchSize=64)",
+            "value": 78757.17,
+            "range": "± 352.903",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 78724.001 ns"
+          },
+          {
+            "name": "OtlpQueueBenchmarks.EnqueueThenDrain(MaxBatchSize=16)",
+            "value": 193523.544,
+            "range": "± 953.571",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 193779.813 ns"
+          },
+          {
+            "name": "OtlpQueueBenchmarks.OverflowThenDrain(MaxBatchSize=16)",
+            "value": 99579.284,
+            "range": "± 496.255",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 99657.541 ns"
+          },
+          {
+            "name": "OtlpQueueBenchmarks.EnqueueThenDrain(MaxBatchSize=128)",
+            "value": 173643.104,
+            "range": "± 860.645",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 173892.612 ns"
+          },
+          {
+            "name": "OtlpQueueBenchmarks.OverflowThenDrain(MaxBatchSize=128)",
+            "value": 89893.983,
+            "range": "± 345.78",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 89949.728 ns"
+          },
+          {
+            "name": "OtlpSaturatedQueueBenchmarks.EnqueueFullQueue(BurstSize=16)",
+            "value": 500.205,
+            "range": "± 0.203",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 500.206 ns"
+          },
+          {
+            "name": "OtlpSaturatedQueueBenchmarks.EnqueueFullQueue(BurstSize=128)",
+            "value": 3989.974,
+            "range": "± 2.249",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 3990.038 ns"
+          },
+          {
+            "name": "OtlpStructuredExportBenchmarks.ExportNestedAttributes(BatchSize=16)",
+            "value": 44564.142,
+            "range": "± 344.757",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 44676.483 ns"
+          },
+          {
+            "name": "OtlpStructuredExportBenchmarks.ExportManyScopes(BatchSize=16)",
+            "value": 26825.448,
+            "range": "± 159.24",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 26854.039 ns"
+          },
+          {
+            "name": "OtlpStructuredExportBenchmarks.ExportNestedAttributes(BatchSize=256)",
+            "value": 1179065.359,
+            "range": "± 3320.072",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 1179397.802 ns"
+          },
+          {
+            "name": "OtlpStructuredExportBenchmarks.ExportManyScopes(BatchSize=256)",
+            "value": 545943.708,
+            "range": "± 2901.644",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085951\nmean 547337.904 ns"
           }
         ]
       }
