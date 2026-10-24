@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792848268262,
+  "lastUpdate": 1792848272045,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -169593,6 +169593,244 @@ window.BENCHMARK_DATA = {
             "value": 328357,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084710"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "63f19c2b606ec28a342d6e8808104d91aa69e24b",
+          "message": "Merge pull request #15 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.82",
+          "timestamp": "2026-10-23T18:21:29Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/63f19c2b606ec28a342d6e8808104d91aa69e24b"
+        },
+        "date": 1792848271406,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "OpenApiAttributeBenchmarks.MapSchema(MemberCount=4) - allocated",
+            "value": 440,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiAttributeBenchmarks.MapOperation(MemberCount=4) - allocated",
+            "value": 760,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiAttributeBenchmarks.MapSchema(MemberCount=32) - allocated",
+            "value": 2752,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiAttributeBenchmarks.MapOperation(MemberCount=32) - allocated",
+            "value": 3072,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiBuildBenchmarks.Build(PathCount=4) - allocated",
+            "value": 15952,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiBuildBenchmarks.Build_MicrosoftOpenApi(PathCount=4) - allocated",
+            "value": 8976,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiBuildBenchmarks.Build(PathCount=32) - allocated",
+            "value": 120384,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiBuildBenchmarks.Build_MicrosoftOpenApi(PathCount=32) - allocated",
+            "value": 60320,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiGenerationBenchmarks.GenerateSchemas(ItemCount=4) - allocated",
+            "value": 30144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiGenerationBenchmarks.GenerateDocument(ItemCount=4) - allocated",
+            "value": 51712,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiGenerationBenchmarks.GenerateSchemas(ItemCount=32) - allocated",
+            "value": 227536,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiGenerationBenchmarks.GenerateDocument(ItemCount=32) - allocated",
+            "value": 397440,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.ExportRetargeted(Format=Json) - allocated",
+            "value": 394901,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.ExportRetargeted(Format=Yaml) - allocated",
+            "value": 459425,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.Import(Format=Json) - allocated",
+            "value": 102144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.Import_MicrosoftOpenApi(Format=Json) - allocated",
+            "value": 149512,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.Import(Format=Yaml) - allocated",
+            "value": 267105,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.Import_MicrosoftOpenApi(Format=Yaml) - allocated",
+            "value": 236459,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Parse_MicrosoftOpenApi - allocated",
+            "value": 149513,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Parse - allocated",
+            "value": 102145,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Serialize_MicrosoftOpenApi - allocated",
+            "value": 63800,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Serialize - allocated",
+            "value": 74800,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiYamlBenchmarks.Parse - allocated",
+            "value": 267105,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiYamlBenchmarks.Parse_MicrosoftOpenApi - allocated",
+            "value": 236457,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiYamlBenchmarks.Serialize - allocated",
+            "value": 139320,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiYamlBenchmarks.Serialize_MicrosoftOpenApi - allocated",
+            "value": 85504,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiValidationBenchmarks.Validate(Invalid=False) - allocated",
+            "value": 94376,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiValidationBenchmarks.ValidateWithOfficialSchema(Invalid=False) - allocated",
+            "value": 364387,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiValidationBenchmarks.Validate(Invalid=True) - allocated",
+            "value": 97456,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiValidationBenchmarks.ValidateWithOfficialSchema(Invalid=True) - allocated",
+            "value": 369099,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiPointerBenchmarks.Transform(Depth=1&SameVersion=False) - allocated",
+            "value": 24360,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiPointerBenchmarks.Transform(Depth=1&SameVersion=True) - allocated",
+            "value": 12400,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiPointerBenchmarks.Transform(Depth=16&SameVersion=False) - allocated",
+            "value": 125168,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiPointerBenchmarks.Transform(Depth=16&SameVersion=True) - allocated",
+            "value": 57008,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiTransformBenchmarks.Transform(Target=V3_0) - allocated",
+            "value": 329117,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
+          },
+          {
+            "name": "OpenApiTransformBenchmarks.Transform(Target=V3_2) - allocated",
+            "value": 328357,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085950"
           }
         ]
       }
