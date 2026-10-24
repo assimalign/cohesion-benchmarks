@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792847564872,
+  "lastUpdate": 1792847568306,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -32139,6 +32139,292 @@ window.BENCHMARK_DATA = {
             "value": 8936,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.82 (37c053689940) on GitHub Actions 1000084620"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "63f19c2b606ec28a342d6e8808104d91aa69e24b",
+          "message": "Merge pull request #15 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.82",
+          "timestamp": "2026-10-23T18:21:29Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/63f19c2b606ec28a342d6e8808104d91aa69e24b"
+        },
+        "date": 1792847567530,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "AggregateFileSystemBenchmarks.Lookup(Sources=4) - allocated",
+            "value": 14712,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "AggregateFileSystemBenchmarks.ExistsMiss(Sources=4) - allocated",
+            "value": 6184,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "AggregateFileSystemBenchmarks.Enumerate(Sources=4) - allocated",
+            "value": 68664,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "AggregateFileSystemBenchmarks.Lookup(Sources=16) - allocated",
+            "value": 14840,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "AggregateFileSystemBenchmarks.ExistsMiss(Sources=16) - allocated",
+            "value": 6184,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "AggregateFileSystemBenchmarks.Enumerate(Sources=16) - allocated",
+            "value": 274169,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "DirectoryResolutionBenchmarks.Resolve(RelativePath=neste(...)d.bin [26]) - allocated",
+            "value": 29592,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "DirectoryResolutionBenchmarks.Resolve(RelativePath=payload.bin) - allocated",
+            "value": 14208,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobConstructionBenchmarks.BuildAndMatch(Pattern=**/*.cs) - allocated",
+            "value": 4072,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobConstructionBenchmarks.BuildAndMatch_MicrosoftExtensions(Pattern=**/*.cs) - allocated",
+            "value": 5808,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobConstructionBenchmarks.BuildAndMatch(Pattern=src/**/Handler.*) - allocated",
+            "value": 4072,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobConstructionBenchmarks.BuildAndMatch_MicrosoftExtensions(Pattern=src/**/Handler.*) - allocated",
+            "value": 6072,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobConstructionBenchmarks.Match(Pattern=**/*.cs) - allocated",
+            "value": 3816,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobConstructionBenchmarks.Match_MicrosoftExtensions(Pattern=**/*.cs) - allocated",
+            "value": 5184,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobConstructionBenchmarks.Match(Pattern=src/**/Handler.*) - allocated",
+            "value": 3816,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobConstructionBenchmarks.Match_MicrosoftExtensions(Pattern=src/**/Handler.*) - allocated",
+            "value": 5312,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobMatcherBenchmarks.Filter_MicrosoftExtensions - allocated",
+            "value": 186417,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobMatcherBenchmarks.Filter - allocated",
+            "value": 13760,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "GlobMatcherBenchmarks.Filter_FromStrings - allocated",
+            "value": 883137,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "InMemoryFileSystemBenchmarks.ReadFile - allocated",
+            "value": 23872,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "InMemoryOperationsBenchmarks.ReadFile(Size=4096) - allocated",
+            "value": 23872,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "InMemoryOperationsBenchmarks.WriteFile(Size=4096) - allocated",
+            "value": 47328,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "InMemoryOperationsBenchmarks.CreateWriteDelete(Size=4096) - allocated",
+            "value": 91992,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "InMemoryOperationsBenchmarks.ReadFile(Size=1048576) - allocated",
+            "value": 23872,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "InMemoryOperationsBenchmarks.WriteFile(Size=1048576) - allocated",
+            "value": 47328,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "InMemoryOperationsBenchmarks.CreateWriteDelete(Size=1048576) - allocated",
+            "value": 1137192,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalDirectoryBenchmarks.Enumerate - allocated",
+            "value": 106011,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalDirectoryBenchmarks.Enumerate_SystemIO - allocated",
+            "value": 52171,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalDirectoryBenchmarks.ResolveFile - allocated",
+            "value": 3736,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalDirectoryBenchmarks.ResolveFile_SystemIO - allocated",
+            "value": 192,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.ReadCachedFile(Size=4096) - allocated",
+            "value": 8096,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.ReadCachedFile_SystemIO(Size=4096) - allocated",
+            "value": 232,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.ReadCachedFile(Size=1048576) - allocated",
+            "value": 8096,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.ReadCachedFile_SystemIO(Size=1048576) - allocated",
+            "value": 232,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.ReadFile(Size=4096) - allocated",
+            "value": 12872,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.ReadFile_SystemIO(Size=4096) - allocated",
+            "value": 232,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.ReadFile(Size=1048576) - allocated",
+            "value": 12872,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.ReadFile_SystemIO(Size=1048576) - allocated",
+            "value": 232,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.WriteFile(Size=4096) - allocated",
+            "value": 12874,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.WriteFile_SystemIO(Size=4096) - allocated",
+            "value": 234,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.WriteFile(Size=1048576) - allocated",
+            "value": 12898,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileOperationsBenchmarks.WriteFile_SystemIO(Size=1048576) - allocated",
+            "value": 258,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileSystemBenchmarks.ReadFile_SystemIO - allocated",
+            "value": 232,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
+          },
+          {
+            "name": "PhysicalFileSystemBenchmarks.ReadFile - allocated",
+            "value": 8936,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085849"
           }
         ]
       }
