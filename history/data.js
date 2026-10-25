@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792935140953,
+  "lastUpdate": 1792935143138,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -107614,6 +107614,280 @@ window.BENCHMARK_DATA = {
             "value": 755699,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085789"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "63f19c2b606ec28a342d6e8808104d91aa69e24b",
+          "message": "Merge pull request #15 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.82",
+          "timestamp": "2026-10-23T18:21:29Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/63f19c2b606ec28a342d6e8808104d91aa69e24b"
+        },
+        "date": 1792935142823,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ApplicationGraphBenchmarks.ParseManifests(ResourceCount=4) - allocated",
+            "value": 22657,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ValidateManifests(ResourceCount=4) - allocated",
+            "value": 3720,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.CreatePlans(ResourceCount=4) - allocated",
+            "value": 13200,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ValidatePlans(ResourceCount=4) - allocated",
+            "value": 48507,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.Build(ResourceCount=4) - allocated",
+            "value": 82342,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ComputeManifestHashes(ResourceCount=4) - allocated",
+            "value": 135532,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ParseManifests(ResourceCount=24) - allocated",
+            "value": 155781,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ValidateManifests(ResourceCount=24) - allocated",
+            "value": 25641,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.CreatePlans(ResourceCount=24) - allocated",
+            "value": 81200,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ValidatePlans(ResourceCount=24) - allocated",
+            "value": 307209,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.Build(ResourceCount=24) - allocated",
+            "value": 510724,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationGraphBenchmarks.ComputeManifestHashes(ResourceCount=24) - allocated",
+            "value": 893316,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.CreateDocument(ResourceCount=4) - allocated",
+            "value": 7184,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.ParseDocument(ResourceCount=4) - allocated",
+            "value": 111212,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.ReconstructModel(ResourceCount=4) - allocated",
+            "value": 60630,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.CreateDocument(ResourceCount=24) - allocated",
+            "value": 47346,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.ParseDocument(ResourceCount=24) - allocated",
+            "value": 708491,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationModelDocumentBenchmarks.ReconstructModel(ResourceCount=24) - allocated",
+            "value": 383528,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationSetBenchmarks.ComposeApplications(ResourcesPerApplication=4) - allocated",
+            "value": 3440,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ApplicationSetBenchmarks.ComposeApplications(ResourcesPerApplication=24) - allocated",
+            "value": 12720,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "GenericPlannerBenchmarks.CreatePlan - allocated",
+            "value": 3512,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "GenericPlannerBenchmarks.ValidatePlan - allocated",
+            "value": 14353,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ResourceManifestBenchmarks.Parse - allocated",
+            "value": 5208,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ResourceManifestBenchmarks.ComputeHash - allocated",
+            "value": 33057,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "DirectCommandBenchmarks.ReconcileRepeatedCommands(ResourceCount=4) - allocated",
+            "value": 420673,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "DirectCommandBenchmarks.ReplaceCommands(ResourceCount=4) - allocated",
+            "value": 791390,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "DirectCommandBenchmarks.ReconcileRepeatedCommands(ResourceCount=24) - allocated",
+            "value": 2918786,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "DirectCommandBenchmarks.ReplaceCommands(ResourceCount=24) - allocated",
+            "value": 5823748,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ResourceResolutionBenchmarks.ValidateGraph(ResourceCount=4) - allocated",
+            "value": 592,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ResourceResolutionBenchmarks.ResolveMountSources(ResourceCount=4) - allocated",
+            "value": 15640,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ResourceResolutionBenchmarks.ValidateGraph(ResourceCount=24) - allocated",
+            "value": 2192,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ResourceResolutionBenchmarks.ResolveMountSources(ResourceCount=24) - allocated",
+            "value": 118203,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.MatchApplication - allocated",
+            "value": 240,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.MatchCommand - allocated",
+            "value": 688,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.MatchCommandDeletion - allocated",
+            "value": 992,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.MatchHead - allocated",
+            "value": 240,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.RejectMethod - allocated",
+            "value": 992,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "ControlPlaneRoutingBenchmarks.MissPath - allocated",
+            "value": 304,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "InProcessPlanBenchmarks.ValidateBindings(ResourceCount=4) - allocated",
+            "value": 1232,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "InProcessPlanBenchmarks.RenderPlan(ResourceCount=4) - allocated",
+            "value": 118464,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "InProcessPlanBenchmarks.ValidateBindings(ResourceCount=24) - allocated",
+            "value": 6032,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
+          },
+          {
+            "name": "InProcessPlanBenchmarks.RenderPlan(ResourceCount=24) - allocated",
+            "value": 755704,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086412"
           }
         ]
       }
