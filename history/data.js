@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792936873574,
+  "lastUpdate": 1792936895202,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -217433,6 +217433,56 @@ window.BENCHMARK_DATA = {
             "range": "± 1779.034",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085965\nmean 12942.339 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "63f19c2b606ec28a342d6e8808104d91aa69e24b",
+          "message": "Merge pull request #15 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.82",
+          "timestamp": "2026-10-23T18:21:29Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/63f19c2b606ec28a342d6e8808104d91aa69e24b"
+        },
+        "date": 1792936889285,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ApiManagerApplicationBenchmarks.Build(ServiceCount=1)",
+            "value": 2578.496,
+            "range": "± 387.085",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086618\nmean 2621.445 ns"
+          },
+          {
+            "name": "ApiManagerApplicationBenchmarks.BuildStartStop(ServiceCount=1)",
+            "value": 3011.068,
+            "range": "± 218.755",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086618\nmean 3066.156 ns"
+          },
+          {
+            "name": "ApiManagerApplicationBenchmarks.Build(ServiceCount=16)",
+            "value": 8072.282,
+            "range": "± 746.494",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086618\nmean 8026.087 ns"
+          },
+          {
+            "name": "ApiManagerApplicationBenchmarks.BuildStartStop(ServiceCount=16)",
+            "value": 11164.007,
+            "range": "± 2277.507",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086618\nmean 12228.444 ns"
           }
         ]
       }
