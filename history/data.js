@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792938031541,
+  "lastUpdate": 1792938061303,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -109653,6 +109653,280 @@ window.BENCHMARK_DATA = {
             "range": "± 14.857",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086107\nmean 7727.683 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "63f19c2b606ec28a342d6e8808104d91aa69e24b",
+          "message": "Merge pull request #15 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.82",
+          "timestamp": "2026-10-23T18:21:29Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/63f19c2b606ec28a342d6e8808104d91aa69e24b"
+        },
+        "date": 1792938049372,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ClientBenchmarks.GetSecret(ValueBytes=32)",
+            "value": 1465.535,
+            "range": "± 8.486",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 1465.729 ns"
+          },
+          {
+            "name": "ClientBenchmarks.GetCertificate(ValueBytes=32)",
+            "value": 1125.016,
+            "range": "± 3.938",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 1125.815 ns"
+          },
+          {
+            "name": "ClientBenchmarks.SendCommand(ValueBytes=32)",
+            "value": 1360.137,
+            "range": "± 4.459",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 1360.684 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveAppliedCommand(ValueBytes=32)",
+            "value": 1904.874,
+            "range": "± 6.747",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 1906.064 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveRejectedCommand(ValueBytes=32)",
+            "value": 1953.369,
+            "range": "± 4.566",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 1953.91 ns"
+          },
+          {
+            "name": "ClientBenchmarks.DeleteCommand(ValueBytes=32)",
+            "value": 1925.927,
+            "range": "± 12.941",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 1928.574 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveEmptyResponse(ValueBytes=32)",
+            "value": 1472.992,
+            "range": "± 4.281",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 1473.211 ns"
+          },
+          {
+            "name": "ClientBenchmarks.GetSecret(ValueBytes=4096)",
+            "value": 2293.426,
+            "range": "± 32.422",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 2300.185 ns"
+          },
+          {
+            "name": "ClientBenchmarks.GetCertificate(ValueBytes=4096)",
+            "value": 2361.341,
+            "range": "± 24.292",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 2361.433 ns"
+          },
+          {
+            "name": "ClientBenchmarks.SendCommand(ValueBytes=4096)",
+            "value": 3290.555,
+            "range": "± 132.822",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 3310.777 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveAppliedCommand(ValueBytes=4096)",
+            "value": 3673.676,
+            "range": "± 171.038",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 3678.286 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveRejectedCommand(ValueBytes=4096)",
+            "value": 3790.083,
+            "range": "± 138.439",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 3774.29 ns"
+          },
+          {
+            "name": "ClientBenchmarks.DeleteCommand(ValueBytes=4096)",
+            "value": 3505.657,
+            "range": "± 120.022",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 3492.793 ns"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveEmptyResponse(ValueBytes=4096)",
+            "value": 2998.162,
+            "range": "± 87.388",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 3027.681 ns"
+          },
+          {
+            "name": "CommandInputBenchmarks.ResolveParameterSource(ValueBytes=32)",
+            "value": 405.162,
+            "range": "± 3.398",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 404.624 ns"
+          },
+          {
+            "name": "CommandInputBenchmarks.ResolveStoreSource(ValueBytes=32)",
+            "value": 431.174,
+            "range": "± 1.302",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 430.877 ns"
+          },
+          {
+            "name": "CommandInputBenchmarks.ResolveParameterSource(ValueBytes=4096)",
+            "value": 1237.532,
+            "range": "± 45.348",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 1241.891 ns"
+          },
+          {
+            "name": "CommandInputBenchmarks.ResolveStoreSource(ValueBytes=4096)",
+            "value": 1330.009,
+            "range": "± 55.393",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 1332.001 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadSeededSecret(ValueBytes=32)",
+            "value": 19738.19,
+            "range": "± 75.515",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 19747.165 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadDeclaredSecret(ValueBytes=32)",
+            "value": 20881.582,
+            "range": "± 152.61",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 20848.146 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadMissingSecret(ValueBytes=32)",
+            "value": 2040.149,
+            "range": "± 3.47",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 2039.599 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReplayDeclaration(ValueBytes=32)",
+            "value": 734674.085,
+            "range": "± 148180.191",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 776331.986 ns"
+          },
+          {
+            "name": "StoreBenchmarks.StoreAndDeleteSecret(ValueBytes=32)",
+            "value": 608363.33,
+            "range": "± 56157.218",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 615917.052 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReplayAddSecretCommand(ValueBytes=32)",
+            "value": 559917.04,
+            "range": "± 40111.659",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 573331.85 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ExecuteAndDeleteSecretCommand(ValueBytes=32)",
+            "value": 731841.244,
+            "range": "± 184997.867",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 787663.436 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ProtectSecretValue(ValueBytes=32)",
+            "value": 5494.277,
+            "range": "± 25.165",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 5502.508 ns"
+          },
+          {
+            "name": "StoreBenchmarks.UnprotectSecretValue(ValueBytes=32)",
+            "value": 4333.959,
+            "range": "± 6.247",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 4333.338 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadSeededSecret(ValueBytes=4096)",
+            "value": 23178.499,
+            "range": "± 44.111",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 23186.827 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadDeclaredSecret(ValueBytes=4096)",
+            "value": 25540.044,
+            "range": "± 75.589",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 25546.157 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadMissingSecret(ValueBytes=4096)",
+            "value": 2033.77,
+            "range": "± 11.255",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 2035.274 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReplayDeclaration(ValueBytes=4096)",
+            "value": 747630.505,
+            "range": "± 267828.315",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 809992.111 ns"
+          },
+          {
+            "name": "StoreBenchmarks.StoreAndDeleteSecret(ValueBytes=4096)",
+            "value": 605119.589,
+            "range": "± 196325.754",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 684440.935 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReplayAddSecretCommand(ValueBytes=4096)",
+            "value": 629023.936,
+            "range": "± 98700.881",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 669706.161 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ExecuteAndDeleteSecretCommand(ValueBytes=4096)",
+            "value": 622685.714,
+            "range": "± 171365.527",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 733449.494 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ProtectSecretValue(ValueBytes=4096)",
+            "value": 6477.993,
+            "range": "± 14.001",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 6477.384 ns"
+          },
+          {
+            "name": "StoreBenchmarks.UnprotectSecretValue(ValueBytes=4096)",
+            "value": 5290.041,
+            "range": "± 28.741",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719\nmean 5286.893 ns"
           }
         ]
       }
