@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792937212663,
+  "lastUpdate": 1792937234153,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -98214,6 +98214,63 @@ window.BENCHMARK_DATA = {
             "range": "± 0.272",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000085994\nmean 348.129 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "63f19c2b606ec28a342d6e8808104d91aa69e24b",
+          "message": "Merge pull request #15 from assimalign/chore/cohesion-pin\n\nchore: pin cohesion 10.0.0-preview.0.ci.82",
+          "timestamp": "2026-10-23T18:21:29Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/63f19c2b606ec28a342d6e8808104d91aa69e24b"
+        },
+        "date": 1792937225607,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "IdentityHubApplicationBenchmarks.Build(ClientCount=1)",
+            "value": 19169.745,
+            "range": "± 232.332",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086645\nmean 19241.754 ns"
+          },
+          {
+            "name": "IdentityHubApplicationBenchmarks.Build(ClientCount=16)",
+            "value": 37538.08,
+            "range": "± 239.1",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086645\nmean 37580.38 ns"
+          },
+          {
+            "name": "IdentitySigningBenchmarks.IssueAccessToken",
+            "value": 32574.384,
+            "range": "± 48.33",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086645\nmean 32562.912 ns"
+          },
+          {
+            "name": "IdentitySigningBenchmarks.IssueIdentityToken",
+            "value": 32389.083,
+            "range": "± 99.255",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086645\nmean 32385.072 ns"
+          },
+          {
+            "name": "IdentitySigningBenchmarks.WriteJwks",
+            "value": 362.683,
+            "range": "± 1.404",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086645\nmean 363.276 ns"
           }
         ]
       }
