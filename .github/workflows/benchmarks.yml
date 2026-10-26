@@ -6,7 +6,7 @@
 # - Pull requests and pushes that touch the suites: every suite under the `dry` profile, against the pinned build
 #   (CohesionPackageVersion in Directory.Build.props). A benchmark that no longer builds or throws fails the check.
 #   Nothing is recorded.
-# - Nightly, on demand (workflow_dispatch), and when cohesion signals a new main build (repository_dispatch
+# - Weekly, on demand (workflow_dispatch), and when cohesion signals a new main build (repository_dispatch
 #   `cohesion-main`, optional client_payload.version): the `ci` profile against the newest main build unless told
 #   otherwise. Each suite's results become two series per benchmark, median time and allocated bytes, appended to the
 #   history on the gh-pages branch (history/, charted by GitHub Pages). A regression past the threshold comments on the
@@ -17,9 +17,15 @@
 #                                    and cohesion's run history when the workflow token cannot
 #
 # Repository variables (Settings -> Secrets and variables -> Actions -> Variables), all optional:
-#   BENCHMARK_RUNNER                 runner label for measuring jobs (default ubuntu-latest; a dedicated self-hosted
-#                                    machine gives far steadier time series)
-#   BENCHMARK_TIME_THRESHOLD         alert when median time grows past this (default 150%; shared runners are noisy)
+#   BENCHMARK_RUNNER                 self-hosted runner label for the Linux legs (benchmark-linux-x64)
+#   BENCHMARK_RUNNER_WINDOWS         self-hosted runner label for the Windows legs (benchmark-windows-x64)
+#                                    Used only by the weekly schedule and by pushes, and only on main; every other
+#                                    event, and every event when unset, runs on the GitHub-hosted image. The
+#                                    self-hosted machines are on Mondays 00:00-08:00 UTC only, so a push to main
+#                                    outside that window queues until Monday and fails if that is over 24 hours away.
+#                                    Their results record under their own series, "(self-hosted)", never into the
+#                                    hosted ones. macOS always runs hosted.
+#   BENCHMARK_TIME_THRESHOLD        alert when median time grows past this (default 150%; shared runners are noisy)
 #   BENCHMARK_ALLOCATION_THRESHOLD   alert when allocated bytes grow past this (default 110%; allocations are exact)
 #   BENCHMARK_ALERT_USERS            "@user1,@user2" to mention in regression comments
 name: benchmarks
@@ -45,7 +51,9 @@ on:
       - "nuget.config"
       - ".github/workflows/benchmarks.yml"
   schedule:
-    - cron: "17 6 * * *"
+    # Mondays, inside the self-hosted runners' 02:00-08:00 UTC measuring window; off the top of the hour, when
+    # GitHub delays scheduled runs.
+    - cron: "17 2 * * 1"
   workflow_dispatch:
     inputs:
       cohesion-version:
@@ -107,6 +115,8 @@ jobs:
           INPUT_ALL_OS: ${{ inputs.all-os }}
           INPUT_AOT: ${{ inputs.aot }}
           DISPATCH_VERSION: ${{ github.event.client_payload.version }}
+          LINUX_RUNNER: ${{ vars.BENCHMARK_RUNNER }}
+          WINDOWS_RUNNER: ${{ vars.BENCHMARK_RUNNER_WINDOWS }}
         run: |
           $profile = switch ($env:EVENT) {
             'workflow_dispatch' { $env:INPUT_PROFILE }
@@ -168,10 +178,16 @@ jobs:
                     Where-Object { $_ })
           if (-not $tfms) { $tfms = @('net10.0') }
 
-          $osLegs = @([pscustomobject]@{ os = 'ubuntu-latest'; name = 'linux' })
+          # The self-hosted machines take the Linux and Windows legs of the weekly schedule and of pushes, on main
+          # only. Pull requests, dispatches, repository_dispatch, and other branches always run hosted, and so does
+          # everything when the variables are unset. A self-hosted leg records under its own "(self-hosted)" series:
+          # its numbers are a different machine's, and mixing them into the hosted history would read as a step change.
+          $selfHosted = $env:GITHUB_REF -eq 'refs/heads/main' -and $env:EVENT -in @('schedule', 'push')
+
+          $osLegs = @([pscustomobject]@{ os = 'ubuntu-latest'; name = 'linux'; runner = $env:LINUX_RUNNER })
           if ($multiOs) {
-            $osLegs += [pscustomobject]@{ os = 'windows-latest'; name = 'windows' }
-            $osLegs += [pscustomobject]@{ os = 'macos-latest';   name = 'macos' }
+            $osLegs += [pscustomobject]@{ os = 'windows-latest'; name = 'windows'; runner = $env:WINDOWS_RUNNER }
+            $osLegs += [pscustomobject]@{ os = 'macos-latest';   name = 'macos';   runner = '' }
           }
 
           # NativeAOT compiles a project per benchmark case, so it runs only where a case opted in, and only on
@@ -194,17 +210,21 @@ jobs:
                 foreach ($runtime in @('jit', 'aot')) {
                   if ($runtime -eq 'aot' -and ($leg.name -ne 'linux' -or $suite.area -notin $aotAreas)) { continue }
 
+                  $onSelfHosted = $selfHosted -and $leg.runner
+
                   # The baseline combination keeps the unlabelled series name it has always recorded under.
                   $parts = @()
                   if ($leg.name -ne 'linux') { $parts += $leg.name }
                   if ($tfm -ne $tfms[0]) { $parts += $tfm }
                   if ($runtime -ne 'jit') { $parts += $runtime }
+                  if ($onSelfHosted) { $parts += 'self-hosted' }
 
                   [pscustomobject]@{
                     scope   = $suite.scope
                     area    = $suite.area
                     name    = $suite.name
                     os      = $leg.os
+                    runs_on = if ($onSelfHosted) { $leg.runner } else { $leg.os }
                     tfm     = $tfm
                     runtime = $runtime
                     variant = ($parts -join ', ')
@@ -230,9 +250,9 @@ jobs:
     needs: plan
     if: needs.plan.outputs.legs != '[]'
     name: ${{ matrix.leg.scope }}/${{ matrix.leg.area }} [${{ matrix.leg.id }}]
-    # BENCHMARK_RUNNER (a self-hosted machine, for steadier numbers) replaces the Linux leg only: the whole point
-    # of the Windows and macOS legs is the platform they run on.
-    runs-on: ${{ (matrix.leg.os == 'ubuntu-latest' && vars.BENCHMARK_RUNNER) || matrix.leg.os }}
+    # Chosen per leg by the plan job: a self-hosted label for the Linux and Windows legs of the weekly schedule and
+    # of pushes to main, the hosted image for everything else.
+    runs-on: ${{ matrix.leg.runs_on }}
     timeout-minutes: 90
     permissions:
       contents: read
