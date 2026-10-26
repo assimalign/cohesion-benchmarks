@@ -207,7 +207,11 @@ The profile decides how hard a benchmark is measured; the leg decides what it is
   finds the areas that have one by scanning for it. Mark a case when "is this different once the JIT is gone" is
   a real question for it — reflection-free composition, generic dispatch, devirtualization-sensitive paths — and
   not otherwise. A suite with no marked case measures nothing on the AOT leg and still succeeds. AOT runs on
-  Linux only.
+  Linux only. The leg trims, so two things a JIT run never shows bite here: a counterpart that cannot run natively
+  compiled (AutoMapper) keeps its cases out with `[global::Assimalign.Cohesion.Benchmarks.JitOnly]`, and setup
+  skips building it when `RuntimeFeature.IsDynamicCodeSupported` is false; and a reflection API (either
+  configuration binder) only reaches the members the build kept, so keep the types it walks with
+  `[DynamicDependency]`, the way an AOT application has to.
 
 **Each leg is its own history series, and the baseline leg is unlabelled.** Linux + the first framework + the JIT
 records under the bare area name, exactly as it always has; every other leg appends its label, so
