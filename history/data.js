@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793028453596,
+  "lastUpdate": 1793028457109,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -36995,6 +36995,238 @@ window.BENCHMARK_DATA = {
             "value": 448,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086507"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "ccrawford@assimalign.com"
+          },
+          "committer": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "ccrawford@assimalign.com"
+          },
+          "id": "692c68dc38d98ebc79fe735bb680b9d4f29411be",
+          "message": "ci(benchmarks): measure on the self-hosted machines, weekly\n\n- The Linux and Windows legs of the weekly schedule and of pushes to main run\n  on the assimalign self-hosted benchmark machines (BENCHMARK_RUNNER,\n  BENCHMARK_RUNNER_WINDOWS). Pull requests, dispatches, repository_dispatch,\n  and other branches stay on GitHub-hosted runners, as does everything when\n  the variables are unset. macOS always runs hosted.\n- Self-hosted legs record under their own \"(self-hosted)\" series, so the\n  hosted history is never mixed with another machine's numbers.\n- The schedule moves from nightly to Mondays 02:17 UTC, inside the machines'\n  02:00-08:00 UTC window.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-10-26T14:42:57Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/692c68dc38d98ebc79fe735bb680b9d4f29411be"
+        },
+        "date": 1793028456716,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "DnsCompressionBenchmarks.WriteSharedSuffixes(AnswerCount=4) - allocated",
+            "value": 1952,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.WriteDistinctSuffixes(AnswerCount=4) - allocated",
+            "value": 2784,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseCompressed(AnswerCount=4) - allocated",
+            "value": 1720,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseLiteral(AnswerCount=4) - allocated",
+            "value": 1720,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.WriteSharedSuffixes(AnswerCount=32) - allocated",
+            "value": 13424,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.WriteDistinctSuffixes(AnswerCount=32) - allocated",
+            "value": 24304,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseCompressed(AnswerCount=32) - allocated",
+            "value": 12248,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsCompressionBenchmarks.ParseLiteral(AnswerCount=32) - allocated",
+            "value": 12248,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsConstructionBenchmarks.ConstructQuery - allocated",
+            "value": 712,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsConstructionBenchmarks.ConstructAnswer - allocated",
+            "value": 1976,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsMessageBenchmarks.WriteQuery - allocated",
+            "value": 544,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsMessageBenchmarks.ParseResponse - allocated",
+            "value": 2632,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsMessageBenchmarks.WriteResponse - allocated",
+            "value": 3336,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteA - allocated",
+            "value": 408,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseA - allocated",
+            "value": 456,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteAaaa - allocated",
+            "value": 408,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseAaaa - allocated",
+            "value": 496,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteCname - allocated",
+            "value": 664,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseCname - allocated",
+            "value": 680,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteNs - allocated",
+            "value": 664,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseNs - allocated",
+            "value": 576,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WritePtr - allocated",
+            "value": 1744,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParsePtr - allocated",
+            "value": 696,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteMx - allocated",
+            "value": 664,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseMx - allocated",
+            "value": 688,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteTxt - allocated",
+            "value": 560,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseTxt - allocated",
+            "value": 736,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteSoa - allocated",
+            "value": 1200,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseSoa - allocated",
+            "value": 888,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteSrv - allocated",
+            "value": 1136,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseSrv - allocated",
+            "value": 824,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteEdnsOptions - allocated",
+            "value": 192,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseEdnsOptions - allocated",
+            "value": 800,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.WriteUnknown - allocated",
+            "value": 408,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
+          },
+          {
+            "name": "DnsRecordBenchmarks.ParseUnknown - allocated",
+            "value": 448,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087406"
           }
         ]
       }
