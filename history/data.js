@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793029045002,
+  "lastUpdate": 1793029048555,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -218608,6 +218608,208 @@ window.BENCHMARK_DATA = {
             "value": 184,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086551"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "ccrawford@assimalign.com"
+          },
+          "committer": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "ccrawford@assimalign.com"
+          },
+          "id": "692c68dc38d98ebc79fe735bb680b9d4f29411be",
+          "message": "ci(benchmarks): measure on the self-hosted machines, weekly\n\n- The Linux and Windows legs of the weekly schedule and of pushes to main run\n  on the assimalign self-hosted benchmark machines (BENCHMARK_RUNNER,\n  BENCHMARK_RUNNER_WINDOWS). Pull requests, dispatches, repository_dispatch,\n  and other branches stay on GitHub-hosted runners, as does everything when\n  the variables are unset. macOS always runs hosted.\n- Self-hosted legs record under their own \"(self-hosted)\" series, so the\n  hosted history is never mixed with another machine's numbers.\n- The schedule moves from nightly to Mondays 02:17 UTC, inside the machines'\n  02:00-08:00 UTC window.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-10-26T14:42:57Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/692c68dc38d98ebc79fe735bb680b9d4f29411be"
+        },
+        "date": 1793029047997,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ConsoleProviderBenchmarks.Write(IncludeAttributes=False) - allocated",
+            "value": 80,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "ConsoleProviderBenchmarks.WriteError(IncludeAttributes=False) - allocated",
+            "value": 80,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "ConsoleProviderBenchmarks.Format(IncludeAttributes=False) - allocated",
+            "value": 80,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "ConsoleProviderBenchmarks.Write(IncludeAttributes=True) - allocated",
+            "value": 168,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "ConsoleProviderBenchmarks.WriteError(IncludeAttributes=True) - allocated",
+            "value": 168,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "ConsoleProviderBenchmarks.Format(IncludeAttributes=True) - allocated",
+            "value": 168,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "DebugProviderBenchmarks.Write(IncludeAttributes=False) - allocated",
+            "value": 816,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "DebugProviderBenchmarks.WriteError(IncludeAttributes=False) - allocated",
+            "value": 936,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "DebugProviderBenchmarks.Write(IncludeAttributes=True) - allocated",
+            "value": 960,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "DebugProviderBenchmarks.WriteError(IncludeAttributes=True) - allocated",
+            "value": 1080,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "EventForwardingBenchmarks.Emit(Enabled=False) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "EventForwardingBenchmarks.Emit(Enabled=True) - allocated",
+            "value": 656,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "LoggerBenchmarks.LogDisabled_MicrosoftExtensions - allocated",
+            "value": 32,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "LoggerBenchmarks.LogDisabled - allocated",
+            "value": 216,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "LoggerBenchmarks.LogEnabled_MicrosoftExtensions - allocated",
+            "value": 88,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "LoggerBenchmarks.LogEnabled - allocated",
+            "value": 368,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "LoggerBenchmarks.Scope_MicrosoftExtensions - allocated",
+            "value": 24,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "LoggerBenchmarks.Scope - allocated",
+            "value": 456,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.LogDisabled(Providers=1) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.LogDisabled_MicrosoftExtensions(Providers=1) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.LogDisabled(Providers=4) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.LogDisabled_MicrosoftExtensions(Providers=4) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.Dispatch(Providers=1) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.Dispatch_MicrosoftExtensions(Providers=1) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.Dispatch(Providers=4) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.Dispatch_MicrosoftExtensions(Providers=4) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.PushAndPopScope(Providers=1) - allocated",
+            "value": 144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.PushAndPopScope_MicrosoftExtensions(Providers=1) - allocated",
+            "value": 24,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.PushAndPopScope(Providers=4) - allocated",
+            "value": 312,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
+          },
+          {
+            "name": "PipelineBenchmarks.PushAndPopScope_MicrosoftExtensions(Providers=4) - allocated",
+            "value": 184,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087475"
           }
         ]
       }
