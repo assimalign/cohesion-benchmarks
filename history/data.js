@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793031612272,
+  "lastUpdate": 1793031616641,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -126887,6 +126887,244 @@ window.BENCHMARK_DATA = {
             "value": 4152,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086719"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "ccrawford@assimalign.com"
+          },
+          "committer": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "ccrawford@assimalign.com"
+          },
+          "id": "692c68dc38d98ebc79fe735bb680b9d4f29411be",
+          "message": "ci(benchmarks): measure on the self-hosted machines, weekly\n\n- The Linux and Windows legs of the weekly schedule and of pushes to main run\n  on the assimalign self-hosted benchmark machines (BENCHMARK_RUNNER,\n  BENCHMARK_RUNNER_WINDOWS). Pull requests, dispatches, repository_dispatch,\n  and other branches stay on GitHub-hosted runners, as does everything when\n  the variables are unset. macOS always runs hosted.\n- Self-hosted legs record under their own \"(self-hosted)\" series, so the\n  hosted history is never mixed with another machine's numbers.\n- The schedule moves from nightly to Mondays 02:17 UTC, inside the machines'\n  02:00-08:00 UTC window.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-10-26T14:42:57Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/692c68dc38d98ebc79fe735bb680b9d4f29411be"
+        },
+        "date": 1793031615929,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ClientBenchmarks.GetSecret(ValueBytes=32) - allocated",
+            "value": 3144,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.GetCertificate(ValueBytes=32) - allocated",
+            "value": 2552,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.SendCommand(ValueBytes=32) - allocated",
+            "value": 3112,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveAppliedCommand(ValueBytes=32) - allocated",
+            "value": 3672,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveRejectedCommand(ValueBytes=32) - allocated",
+            "value": 3904,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.DeleteCommand(ValueBytes=32) - allocated",
+            "value": 3672,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveEmptyResponse(ValueBytes=32) - allocated",
+            "value": 3304,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.GetSecret(ValueBytes=4096) - allocated",
+            "value": 11272,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.GetCertificate(ValueBytes=4096) - allocated",
+            "value": 18808,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.SendCommand(ValueBytes=4096) - allocated",
+            "value": 26536,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveAppliedCommand(ValueBytes=4096) - allocated",
+            "value": 27096,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveRejectedCommand(ValueBytes=4096) - allocated",
+            "value": 27328,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.DeleteCommand(ValueBytes=4096) - allocated",
+            "value": 27096,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "ClientBenchmarks.ObserveEmptyResponse(ValueBytes=4096) - allocated",
+            "value": 26728,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "CommandInputBenchmarks.ResolveParameterSource(ValueBytes=32) - allocated",
+            "value": 824,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "CommandInputBenchmarks.ResolveStoreSource(ValueBytes=32) - allocated",
+            "value": 776,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "CommandInputBenchmarks.ResolveParameterSource(ValueBytes=4096) - allocated",
+            "value": 12032,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "CommandInputBenchmarks.ResolveStoreSource(ValueBytes=4096) - allocated",
+            "value": 11984,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ReadSeededSecret(ValueBytes=32) - allocated",
+            "value": 1674,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ReadDeclaredSecret(ValueBytes=32) - allocated",
+            "value": 2501,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ReadMissingSecret(ValueBytes=32) - allocated",
+            "value": 680,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ReplayDeclaration(ValueBytes=32) - allocated",
+            "value": 9115,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.StoreAndDeleteSecret(ValueBytes=32) - allocated",
+            "value": 10067,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ReplayAddSecretCommand(ValueBytes=32) - allocated",
+            "value": 9643,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ExecuteAndDeleteSecretCommand(ValueBytes=32) - allocated",
+            "value": 10835,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ProtectSecretValue(ValueBytes=32) - allocated",
+            "value": 136,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.UnprotectSecretValue(ValueBytes=32) - allocated",
+            "value": 88,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ReadSeededSecret(ValueBytes=4096) - allocated",
+            "value": 13875,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ReadDeclaredSecret(ValueBytes=4096) - allocated",
+            "value": 22832,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ReadMissingSecret(ValueBytes=4096) - allocated",
+            "value": 680,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ReplayDeclaration(ValueBytes=4096) - allocated",
+            "value": 45500,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.StoreAndDeleteSecret(ValueBytes=4096) - allocated",
+            "value": 46452,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ReplayAddSecretCommand(ValueBytes=4096) - allocated",
+            "value": 50092,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ExecuteAndDeleteSecretCommand(ValueBytes=4096) - allocated",
+            "value": 51281,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.ProtectSecretValue(ValueBytes=4096) - allocated",
+            "value": 4200,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
+          },
+          {
+            "name": "StoreBenchmarks.UnprotectSecretValue(ValueBytes=4096) - allocated",
+            "value": 4152,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087797"
           }
         ]
       }
