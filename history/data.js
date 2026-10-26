@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793031813835,
+  "lastUpdate": 1793031845500,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -302303,6 +302303,497 @@ window.BENCHMARK_DATA = {
             "range": "± 27.969",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086730\nmean 969.94 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "ccrawford@assimalign.com"
+          },
+          "committer": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "ccrawford@assimalign.com"
+          },
+          "id": "692c68dc38d98ebc79fe735bb680b9d4f29411be",
+          "message": "ci(benchmarks): measure on the self-hosted machines, weekly\n\n- The Linux and Windows legs of the weekly schedule and of pushes to main run\n  on the assimalign self-hosted benchmark machines (BENCHMARK_RUNNER,\n  BENCHMARK_RUNNER_WINDOWS). Pull requests, dispatches, repository_dispatch,\n  and other branches stay on GitHub-hosted runners, as does everything when\n  the variables are unset. macOS always runs hosted.\n- Self-hosted legs record under their own \"(self-hosted)\" series, so the\n  hosted history is never mixed with another machine's numbers.\n- The schedule moves from nightly to Mondays 02:17 UTC, inside the machines'\n  02:00-08:00 UTC window.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-10-26T14:42:57Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/692c68dc38d98ebc79fe735bb680b9d4f29411be"
+        },
+        "date": 1793031829517,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "AntiforgeryTokenBenchmarks.Issue",
+            "value": 4618.683,
+            "range": "± 180.572",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 4681.794 ns"
+          },
+          {
+            "name": "AntiforgeryTokenBenchmarks.Issue_AspNetCore",
+            "value": 6066.874,
+            "range": "± 223.747",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 6113.46 ns"
+          },
+          {
+            "name": "AntiforgeryTokenBenchmarks.Validate",
+            "value": 4870.633,
+            "range": "± 26.776",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 4860.202 ns"
+          },
+          {
+            "name": "AntiforgeryTokenBenchmarks.Validate_AspNetCore",
+            "value": 6436.351,
+            "range": "± 111.044",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 6455.426 ns"
+          },
+          {
+            "name": "ParameterBindingBenchmarks.Bind",
+            "value": 49.85,
+            "range": "± 0.706",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 49.689 ns"
+          },
+          {
+            "name": "ParameterBindingBenchmarks.Bind_AspNetCore",
+            "value": 43.923,
+            "range": "± 0.676",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 43.815 ns"
+          },
+          {
+            "name": "JwtBearerAuthenticationBenchmarks.Authenticate_AspNetCore",
+            "value": 5197.826,
+            "range": "± 88.018",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 5176.164 ns"
+          },
+          {
+            "name": "JwtBearerAuthenticationBenchmarks.Authenticate",
+            "value": 4204.159,
+            "range": "± 139.657",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 4212.524 ns"
+          },
+          {
+            "name": "CookieAuthenticationBenchmarks.Authenticate_AspNetCore",
+            "value": 5633.829,
+            "range": "± 117.617",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 5656.315 ns"
+          },
+          {
+            "name": "CookieAuthenticationBenchmarks.Authenticate",
+            "value": 3801.96,
+            "range": "± 78.613",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 3796.382 ns"
+          },
+          {
+            "name": "RolePolicyBenchmarks.Evaluate_AspNetCore",
+            "value": 258.311,
+            "range": "± 7.034",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 260.112 ns"
+          },
+          {
+            "name": "RolePolicyBenchmarks.Evaluate",
+            "value": 44.871,
+            "range": "± 1.407",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 45.219 ns"
+          },
+          {
+            "name": "OutputCacheBenchmarks.Serve(Bypass=False)",
+            "value": 432.191,
+            "range": "± 8.604",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 434.441 ns"
+          },
+          {
+            "name": "OutputCacheBenchmarks.Serve_AspNetCore(Bypass=False)",
+            "value": 1188.789,
+            "range": "± 33.979",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 1198.097 ns"
+          },
+          {
+            "name": "OutputCacheBenchmarks.Serve(Bypass=True)",
+            "value": 118.548,
+            "range": "± 1.588",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 119.017 ns"
+          },
+          {
+            "name": "OutputCacheBenchmarks.Serve_AspNetCore(Bypass=True)",
+            "value": 394.493,
+            "range": "± 9.196",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 395.904 ns"
+          },
+          {
+            "name": "ErrorHandlingBenchmarks.Execute(Throw=False)",
+            "value": 21.967,
+            "range": "± 0.991",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 22.283 ns"
+          },
+          {
+            "name": "ErrorHandlingBenchmarks.Execute(Throw=True)",
+            "value": 1876.766,
+            "range": "± 6.355",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 1877.791 ns"
+          },
+          {
+            "name": "FeatureStampingBenchmarks.Dispatch(FeatureCount=4)",
+            "value": 297.196,
+            "range": "± 8.936",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 296.528 ns"
+          },
+          {
+            "name": "FeatureStampingBenchmarks.Dispatch(FeatureCount=16)",
+            "value": 609.303,
+            "range": "± 10.131",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 607.178 ns"
+          },
+          {
+            "name": "PipelineDispatchBenchmarks.Dispatch(MiddlewareCount=1)",
+            "value": 13.023,
+            "range": "± 0.76",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 12.926 ns"
+          },
+          {
+            "name": "PipelineDispatchBenchmarks.Dispatch_AspNetCore(MiddlewareCount=1)",
+            "value": 15.127,
+            "range": "± 0.679",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 15.145 ns"
+          },
+          {
+            "name": "PipelineDispatchBenchmarks.Dispatch(MiddlewareCount=10)",
+            "value": 32.43,
+            "range": "± 0.908",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 32.408 ns"
+          },
+          {
+            "name": "PipelineDispatchBenchmarks.Dispatch_AspNetCore(MiddlewareCount=10)",
+            "value": 32.249,
+            "range": "± 0.666",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 32.442 ns"
+          },
+          {
+            "name": "RateLimitingBenchmarks.Gate(Reject=False)",
+            "value": 229.459,
+            "range": "± 5.121",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 231.071 ns"
+          },
+          {
+            "name": "RateLimitingBenchmarks.Gate_AspNetCore(Reject=False)",
+            "value": 297.077,
+            "range": "± 1.983",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 297.779 ns"
+          },
+          {
+            "name": "RateLimitingBenchmarks.Gate(Reject=True)",
+            "value": 170.438,
+            "range": "± 7.41",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 170.896 ns"
+          },
+          {
+            "name": "RateLimitingBenchmarks.Gate_AspNetCore(Reject=True)",
+            "value": 228.413,
+            "range": "± 2.621",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 228.515 ns"
+          },
+          {
+            "name": "RouteMatchingBenchmarks.Select(RouteCount=1&Match=False)",
+            "value": 231.458,
+            "range": "± 12.339",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 233.455 ns"
+          },
+          {
+            "name": "RouteMatchingBenchmarks.Select_AspNetCore(RouteCount=1&Match=False)",
+            "value": 125.461,
+            "range": "± 4.709",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 126.744 ns"
+          },
+          {
+            "name": "RouteMatchingBenchmarks.Select(RouteCount=1&Match=True)",
+            "value": 315.386,
+            "range": "± 2.502",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 315.047 ns"
+          },
+          {
+            "name": "RouteMatchingBenchmarks.Select_AspNetCore(RouteCount=1&Match=True)",
+            "value": 215.233,
+            "range": "± 2.275",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 215.002 ns"
+          },
+          {
+            "name": "RouteMatchingBenchmarks.Select(RouteCount=100&Match=False)",
+            "value": 8657.611,
+            "range": "± 150.463",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 8669.298 ns"
+          },
+          {
+            "name": "RouteMatchingBenchmarks.Select_AspNetCore(RouteCount=100&Match=False)",
+            "value": 130.496,
+            "range": "± 4.24",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 131.925 ns"
+          },
+          {
+            "name": "RouteMatchingBenchmarks.Select(RouteCount=100&Match=True)",
+            "value": 8252.361,
+            "range": "± 563.453",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 8473.065 ns"
+          },
+          {
+            "name": "RouteMatchingBenchmarks.Select_AspNetCore(RouteCount=100&Match=True)",
+            "value": 224.034,
+            "range": "± 2.496",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 223.169 ns"
+          },
+          {
+            "name": "RoutePathBenchmarks.Match(Shape=catchall)",
+            "value": 176.83,
+            "range": "± 5.701",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 176.694 ns"
+          },
+          {
+            "name": "RoutePathBenchmarks.Match(Shape=literal)",
+            "value": 91.164,
+            "range": "± 1.417",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 91.468 ns"
+          },
+          {
+            "name": "RoutePathBenchmarks.Match(Shape=parameter)",
+            "value": 155.132,
+            "range": "± 1.768",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 154.959 ns"
+          },
+          {
+            "name": "ContentNegotiationBenchmarks.Negotiate(Registrations=1&Scenario=Exact)",
+            "value": 212.417,
+            "range": "± 2.879",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 213.409 ns"
+          },
+          {
+            "name": "ContentNegotiationBenchmarks.Negotiate(Registrations=1&Scenario=None)",
+            "value": 46.076,
+            "range": "± 0.731",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 46.194 ns"
+          },
+          {
+            "name": "ContentNegotiationBenchmarks.Negotiate(Registrations=1&Scenario=Rejected)",
+            "value": 162.137,
+            "range": "± 1.74",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 161.996 ns"
+          },
+          {
+            "name": "ContentNegotiationBenchmarks.Negotiate(Registrations=1&Scenario=Suffix)",
+            "value": 260.033,
+            "range": "± 2.278",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 260.486 ns"
+          },
+          {
+            "name": "ContentNegotiationBenchmarks.Negotiate(Registrations=8&Scenario=Exact)",
+            "value": 1249.804,
+            "range": "± 41.545",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 1259.976 ns"
+          },
+          {
+            "name": "ContentNegotiationBenchmarks.Negotiate(Registrations=8&Scenario=None)",
+            "value": 903.165,
+            "range": "± 10.787",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 905.966 ns"
+          },
+          {
+            "name": "ContentNegotiationBenchmarks.Negotiate(Registrations=8&Scenario=Rejected)",
+            "value": 1117.279,
+            "range": "± 5.239",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 1118.13 ns"
+          },
+          {
+            "name": "ContentNegotiationBenchmarks.Negotiate(Registrations=8&Scenario=Suffix)",
+            "value": 1482.372,
+            "range": "± 51.098",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 1508.643 ns"
+          },
+          {
+            "name": "ContentRegistryBenchmarks.Reader(Registrations=1)",
+            "value": 9.554,
+            "range": "± 0.093",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 9.534 ns"
+          },
+          {
+            "name": "ContentRegistryBenchmarks.Writer(Registrations=1)",
+            "value": 9.452,
+            "range": "± 0.452",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 9.595 ns"
+          },
+          {
+            "name": "ContentRegistryBenchmarks.Reader(Registrations=8)",
+            "value": 124.202,
+            "range": "± 2.85",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 125.252 ns"
+          },
+          {
+            "name": "ContentRegistryBenchmarks.Writer(Registrations=8)",
+            "value": 124.163,
+            "range": "± 2.213",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 124.94 ns"
+          },
+          {
+            "name": "JsonContentBenchmarks.Read(TextLength=32)",
+            "value": 540.341,
+            "range": "± 5.228",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 541.47 ns"
+          },
+          {
+            "name": "JsonContentBenchmarks.Read_AspNetCore(TextLength=32)",
+            "value": 910.784,
+            "range": "± 7.322",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 911.688 ns"
+          },
+          {
+            "name": "JsonContentBenchmarks.Read(TextLength=4096)",
+            "value": 1888.199,
+            "range": "± 130.185",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 1861.567 ns"
+          },
+          {
+            "name": "JsonContentBenchmarks.Read_AspNetCore(TextLength=4096)",
+            "value": 3112.538,
+            "range": "± 247.774",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 3075.034 ns"
+          },
+          {
+            "name": "JsonContentBenchmarks.Write(TextLength=32)",
+            "value": 444.394,
+            "range": "± 10.423",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 444.657 ns"
+          },
+          {
+            "name": "JsonContentBenchmarks.Write_AspNetCore(TextLength=32)",
+            "value": 161.781,
+            "range": "± 2.379",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 161.567 ns"
+          },
+          {
+            "name": "JsonContentBenchmarks.Write(TextLength=4096)",
+            "value": 672.527,
+            "range": "± 7.458",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 672.088 ns"
+          },
+          {
+            "name": "JsonContentBenchmarks.Write_AspNetCore(TextLength=4096)",
+            "value": 456.208,
+            "range": "± 12.314",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 462.659 ns"
+          },
+          {
+            "name": "NegotiatedWriteBenchmarks.Write(Vary=)",
+            "value": 280.959,
+            "range": "± 2.564",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 280.825 ns"
+          },
+          {
+            "name": "NegotiatedWriteBenchmarks.Write(Vary=Accept)",
+            "value": 305.773,
+            "range": "± 3.613",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 305.554 ns"
+          },
+          {
+            "name": "NegotiatedWriteBenchmarks.Write(Vary=Origin)",
+            "value": 320.132,
+            "range": "± 9.13",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 319.759 ns"
+          },
+          {
+            "name": "NegotiatedWriteBenchmarks.Write(Vary=Origin, *)",
+            "value": 314.944,
+            "range": "± 5.444",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 314.29 ns"
+          },
+          {
+            "name": "NegotiatedWriteBenchmarks.Write(Vary=Origi(...)oding [23])",
+            "value": 366.02,
+            "range": "± 14.982",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 366.713 ns"
+          },
+          {
+            "name": "NegotiatedWriteBenchmarks.Write(Vary=Origi(...)CCEPT [31])",
+            "value": 347.669,
+            "range": "± 5.594",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 348.682 ns"
+          },
+          {
+            "name": "RequestValidationBenchmarks.Validate(Valid=False)",
+            "value": 3296.619,
+            "range": "± 165.187",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 3293.046 ns"
+          },
+          {
+            "name": "RequestValidationBenchmarks.Validate(Valid=True)",
+            "value": 689.598,
+            "range": "± 34.351",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087830\nmean 697.839 ns"
           }
         ]
       }
