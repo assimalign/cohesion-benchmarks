@@ -76,9 +76,12 @@ public static class BenchmarkProfiles
             .WithOptions(ConfigOptions.DisableLogFile);
 
         // An AOT run measures only the cases that opted in; see BenchmarkRuntimes for why it cannot measure them all.
+        // Filters combine with AND, so a [JitOnly] case of an opted-in class stays out.
         if (resolved == BenchmarkRuntimes.Aot)
         {
             config.AddFilter(new AnyCategoriesFilter([BenchmarkRuntimes.Category]));
+            config.AddFilter(new SimpleFilter(benchmark =>
+                !benchmark.Descriptor.WorkloadMethod.IsDefined(typeof(JitOnlyAttribute), inherit: true)));
         }
 
         if (addProfileJob)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
@@ -22,6 +23,11 @@ namespace Assimalign.Cohesion.ObjectMapping.Benchmarks.ObjectMapping;
 /// Cohesion profiles are written with the delegate overloads (<c>MapMember(getter, setter)</c> and friends), which is
 /// what the ObjectMapping source generator emits for a class-based or intercepted inline profile, so the measured
 /// path is the AOT-safe one a consumer gets with the generator. Both mappers are built once in setup.
+/// </para>
+/// <para>
+/// AutoMapper does not run natively compiled: it builds its maps from expression trees and reflects over members the
+/// trimmer removes, so its static initializer throws. Its cases are <c>[JitOnly]</c>, and a NativeAOT run measures
+/// Cohesion alone, checked against the expected values rather than against AutoMapper.
 /// </para>
 /// </remarks>
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
@@ -63,13 +69,17 @@ public class MapperBenchmarks
                 .MapMember(static source => source.Price, static (target, value) => target.Price = value))
             .Build();
 
-        _autoMapper = new AM.MapperConfiguration(configuration =>
+        // Natively compiled, only the Cohesion cases run (the AutoMapper ones are [JitOnly]), so AutoMapper is not built.
+        if (RuntimeFeature.IsDynamicCodeSupported)
         {
-            configuration.CreateMap<FlatSource, FlatTarget>();
-            configuration.CreateMap<OrderSource, OrderTarget>();
-            configuration.CreateMap<CustomerSource, CustomerTarget>();
-            configuration.CreateMap<LineItemSource, LineItemTarget>();
-        }).CreateMapper();
+            _autoMapper = new AM.MapperConfiguration(configuration =>
+            {
+                configuration.CreateMap<FlatSource, FlatTarget>();
+                configuration.CreateMap<OrderSource, OrderTarget>();
+                configuration.CreateMap<CustomerSource, CustomerTarget>();
+                configuration.CreateMap<LineItemSource, LineItemTarget>();
+            }).CreateMapper();
+        }
 
         _flat = new FlatSource { Str = "TestString1", Num1 = 1, Num2 = 2, Num3 = 3 };
         _order = new OrderSource
@@ -81,16 +91,26 @@ public class MapperBenchmarks
         };
 
         OrderTarget cohesion = MapNested();
-        OrderTarget autoMapper = MapNested_AutoMapper();
-        if (cohesion.Items.Count != 10 || cohesion.Items[9].Sku != autoMapper.Items[9].Sku
-            || cohesion.Customer.Email != autoMapper.Customer.Email || MapFlat().Num3 != MapFlat_AutoMapper().Num3)
+        if (cohesion.Items.Count != 10 || cohesion.Items[9].Sku != "SKU-010"
+            || cohesion.Customer.Email != _order.Customer.Email || MapFlat().Num3 != _flat.Num3)
         {
-            throw new InvalidOperationException("The two mappers produced different targets.");
+            throw new InvalidOperationException("The Cohesion mapper produced the wrong targets.");
+        }
+
+        if (_autoMapper is not null)
+        {
+            OrderTarget autoMapper = MapNested_AutoMapper();
+            if (autoMapper.Items[9].Sku != cohesion.Items[9].Sku
+                || autoMapper.Customer.Email != cohesion.Customer.Email || MapFlat_AutoMapper().Num3 != _flat.Num3)
+            {
+                throw new InvalidOperationException("The two mappers produced different targets.");
+            }
         }
     }
 
     [Benchmark(Baseline = true)]
     [BenchmarkCategory("Flat")]
+    [global::Assimalign.Cohesion.Benchmarks.JitOnly]
     public FlatTarget MapFlat_AutoMapper() => _autoMapper.Map<FlatTarget>(_flat);
 
     [Benchmark]
@@ -99,6 +119,7 @@ public class MapperBenchmarks
 
     [Benchmark(Baseline = true)]
     [BenchmarkCategory("Nested")]
+    [global::Assimalign.Cohesion.Benchmarks.JitOnly]
     public OrderTarget MapNested_AutoMapper() => _autoMapper.Map<OrderTarget>(_order);
 
     [Benchmark]
