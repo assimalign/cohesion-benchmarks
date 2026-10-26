@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793031354615,
+  "lastUpdate": 1793031390455,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -280975,6 +280975,196 @@ window.BENCHMARK_DATA = {
             "range": "± 27984.825",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.89 (2029e5f13608) on GitHub Actions 1000086696\nmean 461052.632 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "ccrawford@assimalign.com"
+          },
+          "committer": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "ccrawford@assimalign.com"
+          },
+          "id": "692c68dc38d98ebc79fe735bb680b9d4f29411be",
+          "message": "ci(benchmarks): measure on the self-hosted machines, weekly\n\n- The Linux and Windows legs of the weekly schedule and of pushes to main run\n  on the assimalign self-hosted benchmark machines (BENCHMARK_RUNNER,\n  BENCHMARK_RUNNER_WINDOWS). Pull requests, dispatches, repository_dispatch,\n  and other branches stay on GitHub-hosted runners, as does everything when\n  the variables are unset. macOS always runs hosted.\n- Self-hosted legs record under their own \"(self-hosted)\" series, so the\n  hosted history is never mixed with another machine's numbers.\n- The schedule moves from nightly to Mondays 02:17 UTC, inside the machines'\n  02:00-08:00 UTC window.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-10-26T14:42:57Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/692c68dc38d98ebc79fe735bb680b9d4f29411be"
+        },
+        "date": 1793031370564,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "DeclarationBenchmarks.DeclareBatch(Type=A&Records=1)",
+            "value": 15850,
+            "range": "± 1847.804",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 16644.444 ns"
+          },
+          {
+            "name": "DeclarationBenchmarks.DeclareBatch(Type=A&Records=64)",
+            "value": 272850,
+            "range": "± 14338.035",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 280765 ns"
+          },
+          {
+            "name": "DeclarationBenchmarks.DeclareBatch(Type=CNAME&Records=1)",
+            "value": 14600,
+            "range": "± 2262.47",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 14810.526 ns"
+          },
+          {
+            "name": "DeclarationBenchmarks.DeclareBatch(Type=CNAME&Records=64)",
+            "value": 409100,
+            "range": "± 18554.443",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 405000 ns"
+          },
+          {
+            "name": "RecordBenchmarks.ReadSnapshot(Type=A&Records=16)",
+            "value": 269.58,
+            "range": "± 2.351",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 269.977 ns"
+          },
+          {
+            "name": "RecordBenchmarks.ReapplyRecord(Type=A&Records=16)",
+            "value": 524164.282,
+            "range": "± 109755.622",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 536267.942 ns"
+          },
+          {
+            "name": "RecordBenchmarks.DeleteAndRestore(Type=A&Records=16)",
+            "value": 1145509.424,
+            "range": "± 220398.483",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 1100902.158 ns"
+          },
+          {
+            "name": "RecordBenchmarks.DeleteMissingRecord(Type=A&Records=16)",
+            "value": 430.731,
+            "range": "± 19.352",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 429.055 ns"
+          },
+          {
+            "name": "RecordBenchmarks.ReadSnapshot(Type=A&Records=256)",
+            "value": 3606.894,
+            "range": "± 145.486",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 3619.935 ns"
+          },
+          {
+            "name": "RecordBenchmarks.ReapplyRecord(Type=A&Records=256)",
+            "value": 460707.227,
+            "range": "± 19679.961",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 465136.66 ns"
+          },
+          {
+            "name": "RecordBenchmarks.DeleteAndRestore(Type=A&Records=256)",
+            "value": 968969.824,
+            "range": "± 71587.335",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 993115.674 ns"
+          },
+          {
+            "name": "RecordBenchmarks.DeleteMissingRecord(Type=A&Records=256)",
+            "value": 416.834,
+            "range": "± 6.285",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 417.166 ns"
+          },
+          {
+            "name": "RecordBenchmarks.ReadSnapshot(Type=CNAME&Records=16)",
+            "value": 267.375,
+            "range": "± 9.941",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 269.841 ns"
+          },
+          {
+            "name": "RecordBenchmarks.ReapplyRecord(Type=CNAME&Records=16)",
+            "value": 408426.27,
+            "range": "± 253934.96",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 576172.498 ns"
+          },
+          {
+            "name": "RecordBenchmarks.DeleteAndRestore(Type=CNAME&Records=16)",
+            "value": 817425.195,
+            "range": "± 471171.776",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 1151994.229 ns"
+          },
+          {
+            "name": "RecordBenchmarks.DeleteMissingRecord(Type=CNAME&Records=16)",
+            "value": 365.696,
+            "range": "± 5.451",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 366.919 ns"
+          },
+          {
+            "name": "RecordBenchmarks.ReadSnapshot(Type=CNAME&Records=256)",
+            "value": 3643.484,
+            "range": "± 153.097",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 3656.436 ns"
+          },
+          {
+            "name": "RecordBenchmarks.ReapplyRecord(Type=CNAME&Records=256)",
+            "value": 624537.842,
+            "range": "± 153223.344",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 659537.41 ns"
+          },
+          {
+            "name": "RecordBenchmarks.DeleteAndRestore(Type=CNAME&Records=256)",
+            "value": 1210148.34,
+            "range": "± 222270.417",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 1259584.144 ns"
+          },
+          {
+            "name": "RecordBenchmarks.DeleteMissingRecord(Type=CNAME&Records=256)",
+            "value": 392.774,
+            "range": "± 9.267",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 392.508 ns"
+          },
+          {
+            "name": "RecoveryBenchmarks.LoadSnapshot(Type=A&Records=16)",
+            "value": 153000,
+            "range": "± 21473.002",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 154753.333 ns"
+          },
+          {
+            "name": "RecoveryBenchmarks.LoadSnapshot(Type=A&Records=256)",
+            "value": 1380800,
+            "range": "± 528991.669",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 1234400 ns"
+          },
+          {
+            "name": "RecoveryBenchmarks.LoadSnapshot(Type=CNAME&Records=16)",
+            "value": 131400,
+            "range": "± 17108.798",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 138918.75 ns"
+          },
+          {
+            "name": "RecoveryBenchmarks.LoadSnapshot(Type=CNAME&Records=256)",
+            "value": 296450,
+            "range": "± 66065.836",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087734\nmean 303600 ns"
           }
         ]
       }
