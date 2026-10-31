@@ -4,7 +4,7 @@
     "rollForward": "latestFeature"
   },
   "msbuild-sdks": {
-    "Assimalign.Cohesion.Sdk": "10.0.0-preview.0.ci.97",
-    "Assimalign.Cohesion.Sdk.Web": "10.0.0-preview.0.ci.97"
+    "Assimalign.Cohesion.Sdk": "10.0.0-preview.0.ci.164",
+    "Assimalign.Cohesion.Sdk.Web": "10.0.0-preview.0.ci.164"
   }
 }
