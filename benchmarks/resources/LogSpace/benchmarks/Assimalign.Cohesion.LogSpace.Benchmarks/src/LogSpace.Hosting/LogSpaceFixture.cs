@@ -18,12 +18,18 @@ internal static class LogSpaceFixture
     private static readonly Type Store = Assembly.GetType("Assimalign.Cohesion.LogSpace.Hosting.Internal.LogSegmentStore", true)!;
     internal static readonly DateTimeOffset Start = new(2026, 10, 16, 0, 0, 0, TimeSpan.Zero);
 
+    // cohesion dropped the reader's authenticated-resource parameter with the OTLP trust gate; bind
+    // whichever arity the pinned package ships so the suite runs on either side of that change.
     internal static Func<JsonElement, string?, IList> BindReader()
     {
         var root = Expression.Parameter(typeof(JsonElement));
         var resource = Expression.Parameter(typeof(string));
+        MethodInfo read = Reader.GetMethod("Read", BindingFlags.Static | BindingFlags.NonPublic)!;
+        Expression call = read.GetParameters().Length == 1
+            ? Expression.Call(read, root)
+            : Expression.Call(read, root, resource);
         return Expression.Lambda<Func<JsonElement, string?, IList>>(
-            Expression.Convert(Expression.Call(Reader.GetMethod("Read", BindingFlags.Static | BindingFlags.NonPublic)!, root, resource), typeof(IList)),
+            Expression.Convert(call, typeof(IList)),
             root, resource).Compile();
     }
 
