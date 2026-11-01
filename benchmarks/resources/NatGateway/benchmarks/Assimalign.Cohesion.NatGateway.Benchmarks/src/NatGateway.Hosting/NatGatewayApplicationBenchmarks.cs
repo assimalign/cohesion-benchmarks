@@ -12,8 +12,8 @@ namespace Assimalign.Cohesion.NatGateway.Benchmarks.NatGateway.Hosting;
 /// The NAT gateway resource's composition root, end to end: create the builder, register background services, build
 /// (container, provider, hosted-service snapshot), start, stop, dispose. This is the area's only executable code
 /// today: translation, sessions and port allocation are still a placeholder data plane, so there is no packet or
-/// lookup hot path to measure yet. Run outside an orchestrated resource context, so no control plane or listener
-/// is composed.
+/// lookup hot path to measure yet. Run unmanaged, with no <c>AddResource</c> registration, so no resource control plane or
+/// listener is composed.
 /// </summary>
 public class NatGatewayApplicationBenchmarks
 {

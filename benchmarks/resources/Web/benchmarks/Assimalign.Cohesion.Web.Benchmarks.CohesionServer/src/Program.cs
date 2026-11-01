@@ -84,6 +84,8 @@ static class CohesionScenarios
                 break;
 
             case ServerScenarios.FullStack:
+                // Every feature whose Use verb the pipeline places with non-default configuration is configured
+                // here, on its Add verb ("Add configures, Use places"); the rest take their defaults.
                 builder.Services
                     .AddRouting()
                     .AddJsonSerialization(BenchmarkJsonContext.Default)
@@ -94,7 +96,64 @@ static class CohesionScenarios
                         authentication.AddJwtBearer(ConfigureJwtBearer);
                     })
                     .AddAuthorization(authorization => authorization.Options.AddPolicy(BenchmarkPayloads.AdminPolicy, policy => policy.RequireRole(BenchmarkPayloads.JwtRole)))
-                    .AddAntiforgery();
+                    .AddAntiforgery()
+                    .AddForwardedHeaders(ConfigureForwardedHeaders)
+                    .AddHostFiltering(ConfigureHostFiltering)
+                    .AddRewrite(rewrite => rewrite.Options.AddRewrite(@"^/legacy/items/(\d+)$", "/items/$1"))
+                    .AddCors(ConfigureCors)
+                    .AddRequestTimeouts(ConfigureRequestTimeouts)
+                    .AddRateLimiting(ConfigureRateLimiting);
+                break;
+
+            case ServerScenarios.ForwardedHeaders:
+                builder.Services
+                    .AddRouting()
+                    .AddForwardedHeaders(ConfigureForwardedHeaders);
+                break;
+
+            case ServerScenarios.HostFiltering:
+                builder.Services
+                    .AddRouting()
+                    .AddHostFiltering(ConfigureHostFiltering);
+                break;
+
+            case ServerScenarios.Rewrite:
+                builder.Services
+                    .AddRouting()
+                    .AddRewrite(rewrite => rewrite.Options
+                        .AddRedirect("^/old-greeting$", "/greeting", HttpStatusCode.MovedPermanently)
+                        .AddRewrite(@"^/legacy/items/(\d+)$", "/items/$1"));
+                break;
+
+            case ServerScenarios.Compression:
+                // Gzip and Brotli both offered at the fastest level; the request's Accept-Encoding picks one.
+                builder.Services
+                    .AddRouting()
+                    .AddResponseCompression(compression => compression.Options.Level = CompressionLevel.Fastest);
+                break;
+
+            case ServerScenarios.Cors:
+                builder.Services
+                    .AddRouting()
+                    .AddCors(ConfigureCors);
+                break;
+
+            case ServerScenarios.RequestTimeouts:
+                builder.Services
+                    .AddRouting()
+                    .AddRequestTimeouts(ConfigureRequestTimeouts);
+                break;
+
+            case ServerScenarios.RateLimiting:
+                builder.Services
+                    .AddRouting()
+                    .AddRateLimiting(ConfigureRateLimiting);
+                break;
+
+            case ServerScenarios.OutputCache:
+                builder.Services
+                    .AddRouting()
+                    .AddOutputCache(cache => cache.Options.AddBasePolicy(policy => policy.Duration = TimeSpan.FromMinutes(5)));
                 break;
 
             case ServerScenarios.ErrorHandling:
@@ -222,14 +281,10 @@ static class CohesionScenarios
                 // carries no credentials, cookies, origin or compression headers, so every middleware takes
                 // its pass-through path: this is the price of composition on an ordinary request.
                 app.UseSecurityHeaders();
-                app.UseForwardedHeaders(options => options.Headers = ForwardedHeaderNames.XForwarded);
-                app.UseHostFiltering(options =>
-                {
-                    options.AllowedHosts.Add("localhost");
-                    options.AllowedHosts.Add("127.0.0.1");
-                });
+                app.UseForwardedHeaders();
+                app.UseHostFiltering();
                 app.UseErrorHandling();
-                app.UseRewrite(rules => rules.AddRewrite(@"^/legacy/items/(\d+)$", "/items/$1"));
+                app.UseRewrite();
                 app.UseCookiePolicy();
                 app.UseResponseCompression();
                 app.UseRequestDecompression();
@@ -237,10 +292,10 @@ static class CohesionScenarios
                 app.UseAuthentication();
                 app.UseSessions();
                 app.UseRouting();
-                app.UseCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins(BenchmarkPayloads.CorsOrigin)));
+                app.UseCors();
                 app.UseAuthorization();
-                app.UseRequestTimeouts(TimeSpan.FromSeconds(30));
-                app.UseRateLimiting(options => options.GlobalPolicy = UnlimitedPolicy());
+                app.UseRequestTimeouts();
+                app.UseRateLimiting();
                 app.UseAntiforgery();
                 app.UseOutputCache();
                 app.UseWebSockets();
@@ -254,17 +309,13 @@ static class CohesionScenarios
                 break;
 
             case ServerScenarios.ForwardedHeaders:
-                app.UseForwardedHeaders(options => options.Headers = ForwardedHeaderNames.XForwarded);
+                app.UseForwardedHeaders();
                 app.UseRouting();
                 app.MapGet("/whoami", static (IHttpContext context) => $"{context.EffectiveScheme}|{context.EffectiveRemoteIp}");
                 break;
 
             case ServerScenarios.HostFiltering:
-                app.UseHostFiltering(options =>
-                {
-                    options.AllowedHosts.Add("localhost");
-                    options.AllowedHosts.Add("127.0.0.1");
-                });
+                app.UseHostFiltering();
                 app.UseRouting();
                 app.MapGet("/", () => "ok");
                 break;
@@ -283,9 +334,7 @@ static class CohesionScenarios
                 break;
 
             case ServerScenarios.Rewrite:
-                app.UseRewrite(rules => rules
-                    .AddRedirect("^/old-greeting$", "/greeting", HttpStatusCode.MovedPermanently)
-                    .AddRewrite(@"^/legacy/items/(\d+)$", "/items/$1"));
+                app.UseRewrite();
                 app.UseRouting();
                 app.MapGet("/items/{id:int}", (int id) => $"Item {id}");
                 break;
@@ -301,8 +350,7 @@ static class CohesionScenarios
                 break;
 
             case ServerScenarios.Compression:
-                // Gzip and Brotli both offered at the fastest level; the request's Accept-Encoding picks one.
-                app.UseResponseCompression(options => options.Level = CompressionLevel.Fastest);
+                app.UseResponseCompression();
                 app.UseRouting();
                 app.MapGet("/compressible", () => BenchmarkPayloads.Compressible);
                 break;
@@ -356,19 +404,19 @@ static class CohesionScenarios
 
             case ServerScenarios.Cors:
                 app.UseRouting();
-                app.UseCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins(BenchmarkPayloads.CorsOrigin)));
+                app.UseCors();
                 app.MapGet("/products", () => "products");
                 break;
 
             case ServerScenarios.RequestTimeouts:
                 app.UseRouting();
-                app.UseRequestTimeouts(TimeSpan.FromSeconds(30));
+                app.UseRequestTimeouts();
                 app.MapGet("/fast", () => "ok");
                 break;
 
             case ServerScenarios.RateLimiting:
                 app.UseRouting();
-                app.UseRateLimiting(options => options.GlobalPolicy = UnlimitedPolicy());
+                app.UseRateLimiting();
                 app.MapGet("/limited", () => "ok");
                 break;
 
@@ -384,7 +432,7 @@ static class CohesionScenarios
 
             case ServerScenarios.OutputCache:
                 app.UseRouting();
-                app.UseOutputCache(options => options.AddBasePolicy(policy => policy.Duration = TimeSpan.FromMinutes(5)));
+                app.UseOutputCache();
                 app.MapGet("/cached", () => "cached");
                 break;
 
@@ -401,7 +449,7 @@ static class CohesionScenarios
                 break;
 
             case ServerScenarios.Health:
-                app.MapHealthChecks(HealthChecks.CreateBuilder()
+                app.MapHealthChecks(new HealthChecksBuilder()
                     .AddCheck("self", () => HealthCheckResult.Healthy("The application is running."))
                     .Build());
                 break;
@@ -448,6 +496,24 @@ static class CohesionScenarios
         // The token carries a single "role" claim; Cohesion's default role claim type is "roles".
         options.RoleClaimType = "role";
     }
+
+    private static void ConfigureForwardedHeaders(ForwardedHeadersBuilder forwarded) =>
+        forwarded.Options.Headers = ForwardedHeaderNames.XForwarded;
+
+    private static void ConfigureHostFiltering(HostFilteringBuilder hosts)
+    {
+        hosts.Options.AllowedHosts.Add("localhost");
+        hosts.Options.AllowedHosts.Add("127.0.0.1");
+    }
+
+    private static void ConfigureCors(CorsBuilder cors) =>
+        cors.Options.AddDefaultPolicy(policy => policy.WithOrigins(BenchmarkPayloads.CorsOrigin));
+
+    private static void ConfigureRequestTimeouts(RequestTimeoutsBuilder timeouts) =>
+        timeouts.Options.DefaultPolicy = new RequestTimeoutPolicy { Timeout = TimeSpan.FromSeconds(30) };
+
+    private static void ConfigureRateLimiting(RateLimitingBuilder rateLimiting) =>
+        rateLimiting.Options.GlobalPolicy = UnlimitedPolicy();
 
     // One partition, a window that never runs out: the limiter is consulted on every request and never rejects.
     private static RateLimitingPolicy UnlimitedPolicy() => RateLimitingPolicy.Create(

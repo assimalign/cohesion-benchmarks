@@ -168,7 +168,7 @@ Not covered yet, and why:
 | `Web.Query` | The QUERY method has no ASP.NET Core counterpart to compare against. |
 | `Web.Diagnostics` (HTTP logging) | The cost is the sink's. A fair comparison needs both frameworks writing the same access-log format to the same kind of sink. |
 | `Web.Testing` | An in-memory test host, not a request path; a BenchmarkDotNet comparison against `TestServer` fits it better. |
-| `Web.ApplicationModel` | Orchestration, not the request path. |
+| `Web.Hosting.ApplicationModel` | Makes the application a managed resource (`AddResource`); not the request path. |
 | NativeAOT | `run.ps1 -Aot` publishes both servers with `PublishAot=true`; not part of the nightly end-to-end measurements. |
 
 ## BenchmarkDotNet suite
@@ -198,7 +198,11 @@ measures the cohesion CI packages at the repository's `CohesionPackageVersion`:
 The suite includes **18 serialization traversal cases across 3 classes**, alongside the existing
 JSON and other component workloads. It reuses
 `Fixtures/BenchmarkHttpContext.cs`; `PipelineFixture` builds the public production Web pipeline without starting
-the host. Registered application features are stamped by that pipeline. The feature-stamping benchmark uses a
+the host. Registered application features are stamped by that pipeline. Output caching and rate limiting follow
+"Add configures, Use places": setup configures them with `builder.Services.AddOutputCache(...)` and
+`AddRateLimiting(...)`, the verbs Cohesion's source generator projects (the suite references
+`Assimalign.Cohesion.Core` directly because the generator does not flow transitively from the feature packages),
+and the parameterless `UseOutputCache()` / `UseRateLimiting()` place them. The feature-stamping benchmark uses a
 fresh, capacity-sized exchange; most component benchmarks reuse prepared exchanges and reset their output state.
 Authentication and antiforgery use fresh exchanges where per-request handler caches would otherwise skip work.
 
@@ -222,7 +226,7 @@ composite authorization policies; authenticated/form antiforgery and antiforgery
 named endpoint rate limits; cache fill, expiration, Vary variants, tag eviction and concurrent coalescing; nested
 validation and status-code pages. No new cases cover Query, HostFiltering, HttpsPolicy, Rewrite, SecurityHeaders,
 RequestTimeouts, ForwardedHeaders, Sessions, Forms, Health, CookiePolicy, Cors, WebSockets, StaticFiles,
-Compression, Diagnostics, OpenApi, Testing, ApplicationModel or transport/server lifecycle. Many of these still
+Compression, Diagnostics, OpenApi, Testing, Hosting.ApplicationModel or transport/server lifecycle. Many of these still
 have end-to-end scenarios above; those do not substitute for isolated in-process measurements.
 
 ```powershell

@@ -15,8 +15,8 @@ would omit this resource's application context, registration closure and host-se
 so neither is used as a substitute comparison.
 
 Not covered: device sessions, telemetry ingestion or protocol framing; the pinned area does not implement
-those operations. ApplicationModel manifest/planner metadata, Refs/Runtime packaging, ambient
-orchestrator control-plane endpoints and telemetry are outside this standalone composition suite.
+those operations. The resource integration (`Hosting.ApplicationModel`, `AddResource`), Refs/Runtime
+packaging and telemetry are outside this standalone composition suite.
 No operational throughput or data-plane performance is claimed.
 
 ```powershell

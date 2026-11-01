@@ -10,12 +10,21 @@ namespace Assimalign.Cohesion.Web.Benchmarks.Fixtures;
 internal sealed class PipelineFixture : IDisposable
 {
     public PipelineFixture(params IHttpFeature[] features)
+        : this(configure: null, features)
+    {
+    }
+
+    /// <param name="configure">Registrations made on the builder before it builds, such as a feature's
+    /// <c>builder.Services.Add&lt;Feature&gt;(...)</c> verb.</param>
+    /// <param name="features">Request features registered through the raw <c>AddFeature</c> path.</param>
+    public PipelineFixture(Action<WebApplicationBuilder>? configure, params IHttpFeature[] features)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder();
         foreach (IHttpFeature feature in features)
         {
             ((IWebApplicationBuilder)builder).AddFeature(feature);
         }
+        configure?.Invoke(builder);
         Application = builder.Build();
     }
 

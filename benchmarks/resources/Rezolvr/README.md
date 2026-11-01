@@ -1,25 +1,19 @@
 # Rezolvr benchmarks
 
-**DNS resolution is not implemented in the pinned build.** `ResolverEndpointService.ExecuteAsync`
-contains a TODO and waits for cancellation. There is no authoritative/recursive lookup, cache,
-forwarder, or answer path to benchmark. This suite does not label generic dictionary work as resolution.
+No benchmark suite at the moment. Nothing Rezolvr ships at the pinned build does measurable work:
 
-24 standalone cases measure the functionality that does ship:
+- **DNS resolution is not implemented.** `ResolverEndpointService.ExecuteAsync` contains a TODO and
+  waits for cancellation. There is no authoritative/recursive lookup, cache, forwarder or answer path.
+- **Record storage is unreachable.** The internal `RezolvrRecordRepository` (A/CNAME declarations
+  persisted to `records.json`) was driven by the resource command path that cohesion removed in its
+  application-model rebuild (assimalign/cohesion#1759). At the pinned build nothing constructs it, and
+  its read and mutate methods have no caller outside its own tests.
 
-- `Rezolvr.ApplicationModel`: public A/CNAME declaration, DNS/address/TTL validation, canonical
-  payload serialization and command identity generation (1/64 records).
-- `Rezolvr.Hosting`: persisted A/CNAME record snapshots, validated command replay, delete/restore,
-  missing-record deletion, and initial recovery from `records.json` (16/256 records).
+The previous suite's 20 cases (record snapshots, declaration replay, delete/restore, missing-record
+deletion, and recovery from `records.json`) measured that repository, so they were removed rather
+than kept as measurements of code no shipped path runs. A generic dictionary or DNS client would not
+measure Rezolvr either, so no counterpart replaces them.
 
-The repository/handler are internal. Setup constructs the actual packaged types and binds delegates;
-measured calls use the public command-handler interface or a pre-bound repository delegate. The
-suite starts no server/container. All disk data is seeded in unique temporary directories and cleaned
-up. Recovery includes file I/O but does not flush the OS cache; mutation includes atomic file replacement.
-
-No counterpart is introduced. DNS clients such as DnsClient perform network queries, which Rezolvr
-cannot yet answer; a generic dictionary/database does not provide the same declaration ownership,
-conflict validation, payload and persistence semantics. Not covered: resolution (unimplemented),
-network protocol, authentication/control-plane transport, concurrent mutations, rejected ownership
-conflicts, host lifecycle, or full model planning/deployment. The root package is contracts/scaffolding.
-
-Run: `pwsh ./scripts/Invoke-Benchmarks.ps1 -Area Rezolvr -Profile dry`
+A new suite belongs here once Rezolvr answers queries or its records are reachable through a shipped
+path, such as a resource action of `Rezolvr.Hosting.ApplicationModel`. It starts new history series;
+nothing carries over from the removed cases.
