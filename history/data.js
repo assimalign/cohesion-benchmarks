@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793617596756,
+  "lastUpdate": 1793617600009,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -17350,6 +17350,292 @@ window.BENCHMARK_DATA = {
             "value": 2168,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087353"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "de272ff20d4a4d404afa58146ab1ef488d1528a5",
+          "message": "Merge pull request #18 from assimalign/fix/aot-legs\n\nfix: make the Configuration and ObjectMapping NativeAOT legs pass",
+          "timestamp": "2026-10-26T20:04:03Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/de272ff20d4a4d404afa58146ab1ef488d1528a5"
+        },
+        "date": 1793617599394,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "AmqpDataMessageBenchmarks.Decode(PayloadSize=64) - allocated",
+            "value": 496,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Decode_AmqpNetLite(PayloadSize=64) - allocated",
+            "value": 312,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Decode(PayloadSize=16384) - allocated",
+            "value": 16816,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Decode_AmqpNetLite(PayloadSize=16384) - allocated",
+            "value": 16632,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Encode(PayloadSize=64) - allocated",
+            "value": 464,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Encode_AmqpNetLite(PayloadSize=64) - allocated",
+            "value": 200,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Encode(PayloadSize=16384) - allocated",
+            "value": 33448,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDataMessageBenchmarks.Encode_AmqpNetLite(PayloadSize=16384) - allocated",
+            "value": 16736,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Encode(Kind=Credit) - allocated",
+            "value": 1200,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Decode(Kind=Credit) - allocated",
+            "value": 432,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Encode(Kind=Disposition) - allocated",
+            "value": 1184,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Decode(Kind=Disposition) - allocated",
+            "value": 392,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Encode(Kind=Drain) - allocated",
+            "value": 1720,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpDeliveryFrameBenchmarks.Decode(Kind=Drain) - allocated",
+            "value": 1104,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpFrameBenchmarks.EncodeTransferFrame - allocated",
+            "value": 3352,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpFrameBenchmarks.DecodeTransferFrame - allocated",
+            "value": 888,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Decode_AmqpNetLite - allocated",
+            "value": 1464,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Decode - allocated",
+            "value": 1856,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Encode_AmqpNetLite - allocated",
+            "value": 1056,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageBenchmarks.Encode - allocated",
+            "value": 2872,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Decode(Sections=Annotations) - allocated",
+            "value": 2120,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Decode_AmqpNetLite(Sections=Annotations) - allocated",
+            "value": 1632,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Decode(Sections=Sequence) - allocated",
+            "value": 584,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Decode_AmqpNetLite(Sections=Sequence) - allocated",
+            "value": 408,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Encode(Sections=Annotations) - allocated",
+            "value": 1808,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Encode_AmqpNetLite(Sections=Annotations) - allocated",
+            "value": 368,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Encode(Sections=Sequence) - allocated",
+            "value": 776,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpMessageSectionBenchmarks.Encode_AmqpNetLite(Sections=Sequence) - allocated",
+            "value": 200,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpTransferPayloadBenchmarks.Encode(PayloadSize=64) - allocated",
+            "value": 1320,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpTransferPayloadBenchmarks.Decode(PayloadSize=64) - allocated",
+            "value": 472,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpTransferPayloadBenchmarks.Encode(PayloadSize=16384) - allocated",
+            "value": 50992,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpTransferPayloadBenchmarks.Decode(PayloadSize=16384) - allocated",
+            "value": 16792,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode(Shape=Nested) - allocated",
+            "value": 3352,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode_AmqpNetLite(Shape=Nested) - allocated",
+            "value": 3392,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode(Shape=Numeric) - allocated",
+            "value": 824,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode_AmqpNetLite(Shape=Numeric) - allocated",
+            "value": 800,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode(Shape=TextBinary) - allocated",
+            "value": 2048,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Decode_AmqpNetLite(Shape=TextBinary) - allocated",
+            "value": 2024,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode(Shape=Nested) - allocated",
+            "value": 10648,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode_AmqpNetLite(Shape=Nested) - allocated",
+            "value": 2832,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode(Shape=Numeric) - allocated",
+            "value": 744,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode_AmqpNetLite(Shape=Numeric) - allocated",
+            "value": 200,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode(Shape=TextBinary) - allocated",
+            "value": 6056,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
+          },
+          {
+            "name": "AmqpValueBenchmarks.Encode_AmqpNetLite(Shape=TextBinary) - allocated",
+            "value": 2168,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091135"
           }
         ]
       }
