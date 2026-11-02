@@ -11,7 +11,7 @@ namespace Assimalign.Cohesion.MediaHub.Benchmarks.MediaHub.Hosting;
 /// <summary>
 /// Standalone composition: builder creation, service registration, validated container build,
 /// host-service factory resolution and disposal; the lifecycle case also starts and stops the host.
-/// Services wait only for cancellation. No orchestrated context, control-plane endpoint or data
+/// Services wait only for cancellation. No managed-resource registration (<c>AddResource</c>) or data
 /// plane is composed. These area-specific composition contracts have no honest third-party counterpart.
 /// </summary>
 public class MediaHubApplicationBenchmarks

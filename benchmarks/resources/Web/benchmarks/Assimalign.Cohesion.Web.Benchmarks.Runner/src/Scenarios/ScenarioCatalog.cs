@@ -13,7 +13,7 @@ namespace Assimalign.Cohesion.Web.Benchmarks.Runner.Scenarios;
 
 /// <summary>
 /// Every measured workload. The Web packages with no ASP.NET Core counterpart or no plaintext HTTP/1.1
-/// shape (Query, Authentication.Certificate, HSTS, HTTP logging, Testing, ApplicationModel) are listed
+/// shape (Query, Authentication.Certificate, HSTS, HTTP logging, Testing, Hosting.ApplicationModel) are listed
 /// in the README with the reason they are not here.
 /// </summary>
 internal static class ScenarioCatalog

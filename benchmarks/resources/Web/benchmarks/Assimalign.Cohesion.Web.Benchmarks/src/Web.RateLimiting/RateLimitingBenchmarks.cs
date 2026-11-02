@@ -39,9 +39,10 @@ public class RateLimitingBenchmarks
     {
         _policy = RateLimitingPolicy.Create(_ => RateLimitPartition.GetConcurrencyLimiter("global", _ => Options()));
         _aspLimiter = PartitionedRateLimiter.Create<HttpContext, string>(_ => RateLimitPartition.GetConcurrencyLimiter("global", _ => Options()));
-        _fixture = new PipelineFixture();
+        // AddRateLimiting configures; UseRateLimiting() places.
+        _fixture = new PipelineFixture(builder => builder.Services.AddRateLimiting(rateLimiting => rateLimiting.Options.GlobalPolicy = _policy));
         _context = _fixture.CreateContext();
-        _fixture.Builder.UseRateLimiting(options => options.GlobalPolicy = _policy);
+        _fixture.Builder.UseRateLimiting();
         _fixture.Builder.Run(_ => Task.CompletedTask);
         _pipeline = _fixture.Build();
 

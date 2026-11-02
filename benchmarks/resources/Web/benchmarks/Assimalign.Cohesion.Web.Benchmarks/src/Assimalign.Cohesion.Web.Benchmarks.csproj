@@ -1,5 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<!--
+		Core carries Cohesion's source generator (analyzers/dotnet/cs). Feature packages pack their dependencies with
+		exclude="Build,Analyzers", so it does not flow transitively; the direct reference lets the generator project the
+		features' builder.Services.Add<Feature>(...) component-integration verbs into this suite.
+	-->
 	<ItemGroup>
+		<CohesionReference Include="Assimalign.Cohesion.Core" />
 		<CohesionReference Include="Assimalign.Cohesion.Web.Antiforgery" />
 		<CohesionReference Include="Assimalign.Cohesion.Web.Api" />
 		<CohesionReference Include="Assimalign.Cohesion.Web.Authentication.Bearer" />

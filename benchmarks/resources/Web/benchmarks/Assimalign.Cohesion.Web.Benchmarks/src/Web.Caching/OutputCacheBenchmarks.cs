@@ -42,8 +42,13 @@ public class OutputCacheBenchmarks
     public void Setup()
     {
         _store = new InMemoryOutputCacheStore();
-        _fixture = new PipelineFixture();
-        _fixture.Builder.UseOutputCache(_store, options => options.AddBasePolicy(policy => policy.Duration = TimeSpan.FromDays(1)));
+        // AddOutputCache configures; UseOutputCache() places.
+        _fixture = new PipelineFixture(builder => builder.Services.AddOutputCache(cache =>
+        {
+            cache.UseStore(_store);
+            cache.Options.AddBasePolicy(policy => policy.Duration = TimeSpan.FromDays(1));
+        }));
+        _fixture.Builder.UseOutputCache();
         _fixture.Builder.Run(async context =>
         {
             _calls++;
