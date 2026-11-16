@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794790779518,
+  "lastUpdate": 1794790783109,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -31693,6 +31693,196 @@ window.BENCHMARK_DATA = {
             "value": 32,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087405"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1794790782653,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "AggregateBenchmarks.ResolveAggregate(Contributors=4) - allocated",
+            "value": 152,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "AggregateBenchmarks.ResolveAggregate_MicrosoftExtensions(Contributors=4) - allocated",
+            "value": 152,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "AggregateBenchmarks.ResolveAggregate(Contributors=16) - allocated",
+            "value": 536,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "AggregateBenchmarks.ResolveAggregate_MicrosoftExtensions(Contributors=16) - allocated",
+            "value": 536,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ContainerBuildBenchmarks.Build(RegistrationCount=32&Validate=False) - allocated",
+            "value": 5288,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ContainerBuildBenchmarks.Build_MicrosoftExtensions(RegistrationCount=32&Validate=False) - allocated",
+            "value": 6712,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ContainerBuildBenchmarks.Build(RegistrationCount=32&Validate=True) - allocated",
+            "value": 17952,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ContainerBuildBenchmarks.Build_MicrosoftExtensions(RegistrationCount=32&Validate=True) - allocated",
+            "value": 20184,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ContainerBuildBenchmarks.Build(RegistrationCount=128&Validate=False) - allocated",
+            "value": 8872,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ContainerBuildBenchmarks.Build_MicrosoftExtensions(RegistrationCount=128&Validate=False) - allocated",
+            "value": 10296,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ContainerBuildBenchmarks.Build(RegistrationCount=128&Validate=True) - allocated",
+            "value": 64360,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ContainerBuildBenchmarks.Build_MicrosoftExtensions(RegistrationCount=128&Validate=True) - allocated",
+            "value": 68800,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ScopeLifetimeBenchmarks.CreateAndDisposeScope - allocated",
+            "value": 128,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ScopeLifetimeBenchmarks.CreateAndDisposeScope_MicrosoftExtensions - allocated",
+            "value": 128,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ScopeLifetimeBenchmarks.ResolveInstance - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ScopeLifetimeBenchmarks.ResolveInstance_MicrosoftExtensions - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ScopeLifetimeBenchmarks.ActivateAndDisposeScope - allocated",
+            "value": 400,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ScopeLifetimeBenchmarks.ActivateAndDisposeScope_MicrosoftExtensions - allocated",
+            "value": 424,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ScopeLifetimeBenchmarks.ResolveScoped - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ScopeLifetimeBenchmarks.ResolveScoped_MicrosoftExtensions - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ServiceProviderBuildBenchmarks.BuildAndResolve_MicrosoftExtensions - allocated",
+            "value": 6232,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ServiceProviderBuildBenchmarks.BuildAndResolve - allocated",
+            "value": 5136,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ServiceResolutionBenchmarks.CreateScopeAndResolve_MicrosoftExtensions - allocated",
+            "value": 368,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ServiceResolutionBenchmarks.CreateScopeAndResolve - allocated",
+            "value": 344,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ServiceResolutionBenchmarks.ResolveSingleton_MicrosoftExtensions - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ServiceResolutionBenchmarks.ResolveSingleton - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ServiceResolutionBenchmarks.ResolveTransient_MicrosoftExtensions - allocated",
+            "value": 32,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
+          },
+          {
+            "name": "ServiceResolutionBenchmarks.ResolveTransient - allocated",
+            "value": 32,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092511"
           }
         ]
       }
