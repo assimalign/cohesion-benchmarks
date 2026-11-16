@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794791559882,
+  "lastUpdate": 1794791562723,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -51581,6 +51581,100 @@ window.BENCHMARK_DATA = {
             "value": 30739,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087583"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1794791562270,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ClientBenchmarks.GetNamespace(EntryCount=8) - allocated",
+            "value": 5024,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "ClientBenchmarks.ListNamespaces(EntryCount=8) - allocated",
+            "value": 2904,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "ClientBenchmarks.GetNamespace(EntryCount=128) - allocated",
+            "value": 29648,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "ClientBenchmarks.ListNamespaces(EntryCount=128) - allocated",
+            "value": 15720,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "StoreBenchmarks.ReadNamespace(EntryCount=8) - allocated",
+            "value": 552,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "StoreBenchmarks.ReadMissingNamespace(EntryCount=8) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "StoreBenchmarks.ListNamespaces(EntryCount=8) - allocated",
+            "value": 656,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "StoreBenchmarks.ReadAndLookupKey(EntryCount=8) - allocated",
+            "value": 624,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "StoreBenchmarks.ReadNamespace(EntryCount=128) - allocated",
+            "value": 3912,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "StoreBenchmarks.ReadMissingNamespace(EntryCount=128) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "StoreBenchmarks.ListNamespaces(EntryCount=128) - allocated",
+            "value": 4016,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
+          },
+          {
+            "name": "StoreBenchmarks.ReadAndLookupKey(EntryCount=128) - allocated",
+            "value": 3984,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092600"
           }
         ]
       }
