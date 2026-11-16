@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794791037448,
+  "lastUpdate": 1794791039937,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -56430,6 +56430,282 @@ window.BENCHMARK_DATA = {
             "range": "± 19.795",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527\nmean 118.765 ns"
+          }
+        ]
+      }
+    ],
+    "libraries/IdentityModel (macos) - allocations": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1794791039505,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "IdentitySubjectBenchmarks.Materialize(ClaimCount=8) - allocated",
+            "value": 440,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "IdentitySubjectBenchmarks.Canonicalize(ClaimCount=8) - allocated",
+            "value": 480,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "IdentitySubjectBenchmarks.HasClaim(ClaimCount=8) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "IdentitySubjectBenchmarks.Materialize(ClaimCount=32) - allocated",
+            "value": 824,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "IdentitySubjectBenchmarks.Canonicalize(ClaimCount=32) - allocated",
+            "value": 1056,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "IdentitySubjectBenchmarks.HasClaim(ClaimCount=32) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "OpenIdConnectBenchmarks.MaterializeMetadata - allocated",
+            "value": 3464,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "OpenIdConnectBenchmarks.ValidateMetadata - allocated",
+            "value": 640,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "OpenIdConnectBenchmarks.MaterializeAuthorizationRequest - allocated",
+            "value": 368,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "OpenIdConnectBenchmarks.ValidateAuthorizationRequest - allocated",
+            "value": 184,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "ProtocolMetadataBenchmarks.Materialize(EndpointCount=4) - allocated",
+            "value": 808,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "ProtocolMetadataBenchmarks.Materialize(EndpointCount=16) - allocated",
+            "value": 1344,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SamlAssertionBenchmarks.Materialize(Expired=False) - allocated",
+            "value": 1128,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SamlAssertionBenchmarks.Validate(Expired=False) - allocated",
+            "value": 160,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SamlAssertionBenchmarks.Materialize(Expired=True) - allocated",
+            "value": 1128,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SamlAssertionBenchmarks.Validate(Expired=True) - allocated",
+            "value": 568,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "JsonWebKeyBenchmarks.Parse - allocated",
+            "value": 1896,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "JsonWebKeyBenchmarks.Parse_MicrosoftIdentityModel - allocated",
+            "value": 872,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "JsonWebKeyBenchmarks.Thumbprint - allocated",
+            "value": 616,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "JsonWebKeyBenchmarks.Thumbprint_MicrosoftIdentityModel - allocated",
+            "value": 600,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Parse_MicrosoftIdentityModel - allocated",
+            "value": 2536,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Parse - allocated",
+            "value": 5800,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Validate_MicrosoftIdentityModel - allocated",
+            "value": 5218,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Validate - allocated",
+            "value": 10371,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Write_MicrosoftIdentityModel - allocated",
+            "value": 2304,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "JsonWebTokenBenchmarks.Write - allocated",
+            "value": 5138,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify(Algorithm=ES256) - allocated",
+            "value": 1488,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify_SystemSecurityCryptography(Algorithm=ES256) - allocated",
+            "value": 1489,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify(Algorithm=PS256) - allocated",
+            "value": 32,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify_SystemSecurityCryptography(Algorithm=PS256) - allocated",
+            "value": 88,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify(Algorithm=RS256) - allocated",
+            "value": 32,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SignatureVerificationBenchmarks.Verify_SystemSecurityCryptography(Algorithm=RS256) - allocated",
+            "value": 88,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SignedTokenParsingBenchmarks.Parse(Algorithm=HS256) - allocated",
+            "value": 5624,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SignedTokenParsingBenchmarks.Parse_MicrosoftIdentityModel(Algorithm=HS256) - allocated",
+            "value": 2632,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SignedTokenParsingBenchmarks.Parse(Algorithm=RS256) - allocated",
+            "value": 6224,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SignedTokenParsingBenchmarks.Parse_MicrosoftIdentityModel(Algorithm=RS256) - allocated",
+            "value": 2632,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SamlTokenBenchmarks.Materialize(AttributeCount=8) - allocated",
+            "value": 4304,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SamlTokenBenchmarks.Validate(AttributeCount=8) - allocated",
+            "value": 216,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SamlTokenBenchmarks.Materialize(AttributeCount=32) - allocated",
+            "value": 13568,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "SamlTokenBenchmarks.Validate(AttributeCount=32) - allocated",
+            "value": 216,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "TokenValidationBenchmarks.Validate(Expired=False) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
+          },
+          {
+            "name": "TokenValidationBenchmarks.Validate(Expired=True) - allocated",
+            "value": 432,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092527"
           }
         ]
       }
