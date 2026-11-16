@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794791715791,
+  "lastUpdate": 1794791718168,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -52595,6 +52595,52 @@ window.BENCHMARK_DATA = {
             "value": 22897,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087617"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1794791717724,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "EventHubApplicationBenchmarks.Build(ServiceCount=1) - allocated",
+            "value": 6016,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092621"
+          },
+          {
+            "name": "EventHubApplicationBenchmarks.BuildStartStop(ServiceCount=1) - allocated",
+            "value": 7992,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092621"
+          },
+          {
+            "name": "EventHubApplicationBenchmarks.Build(ServiceCount=16) - allocated",
+            "value": 15024,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092621"
+          },
+          {
+            "name": "EventHubApplicationBenchmarks.BuildStartStop(ServiceCount=16) - allocated",
+            "value": 22881,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092621"
           }
         ]
       }
