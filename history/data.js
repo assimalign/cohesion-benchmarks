@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794792228964,
+  "lastUpdate": 1794792253056,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -63065,6 +63065,114 @@ window.BENCHMARK_DATA = {
             "value": 4152,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092691"
+          }
+        ]
+      }
+    ],
+    "resources/SecretStore (windows, self-hosted) - time": [
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1794792241424,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ClientBenchmarks.GetSecret(ValueBytes=32)",
+            "value": 1030.099,
+            "range": "± 11.43",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 1030.394 ns"
+          },
+          {
+            "name": "ClientBenchmarks.GetCertificate(ValueBytes=32)",
+            "value": 800.829,
+            "range": "± 10.473",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 800.583 ns"
+          },
+          {
+            "name": "ClientBenchmarks.GetSecret(ValueBytes=4096)",
+            "value": 1320.914,
+            "range": "± 34.154",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 1306.999 ns"
+          },
+          {
+            "name": "ClientBenchmarks.GetCertificate(ValueBytes=4096)",
+            "value": 1261.31,
+            "range": "± 31.575",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 1260.783 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadSeededSecret(ValueBytes=32)",
+            "value": 48748.734,
+            "range": "± 274.547",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 48822.38 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadMissingSecret(ValueBytes=32)",
+            "value": 5540.11,
+            "range": "± 20.743",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 5545.096 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ProtectSecretValue(ValueBytes=32)",
+            "value": 1762.693,
+            "range": "± 20.054",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 1764.783 ns"
+          },
+          {
+            "name": "StoreBenchmarks.UnprotectSecretValue(ValueBytes=32)",
+            "value": 1679.929,
+            "range": "± 10.319",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 1683.091 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadSeededSecret(ValueBytes=4096)",
+            "value": 51491.135,
+            "range": "± 161.965",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 51476.006 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ReadMissingSecret(ValueBytes=4096)",
+            "value": 5533.234,
+            "range": "± 49.352",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 5539.062 ns"
+          },
+          {
+            "name": "StoreBenchmarks.ProtectSecretValue(ValueBytes=4096)",
+            "value": 2274.649,
+            "range": "± 20.671",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 2273.186 ns"
+          },
+          {
+            "name": "StoreBenchmarks.UnprotectSecretValue(ValueBytes=4096)",
+            "value": 2217.836,
+            "range": "± 14.296",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092695\nmean 2219.183 ns"
           }
         ]
       }
