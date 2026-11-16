@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794791239395,
+  "lastUpdate": 1794791288007,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -46293,6 +46293,280 @@ window.BENCHMARK_DATA = {
             "range": "± 11799.204",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.97 (f42f15cac9bb) on GitHub Actions 1000087514\nmean 132887.719 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1794791274309,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "OpenApiAttributeBenchmarks.MapSchema(MemberCount=4)",
+            "value": 102.142,
+            "range": "± 15.166",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 107.756 ns"
+          },
+          {
+            "name": "OpenApiAttributeBenchmarks.MapOperation(MemberCount=4)",
+            "value": 312.909,
+            "range": "± 40.81",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 308.057 ns"
+          },
+          {
+            "name": "OpenApiAttributeBenchmarks.MapSchema(MemberCount=32)",
+            "value": 1099.501,
+            "range": "± 85.278",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 1092.04 ns"
+          },
+          {
+            "name": "OpenApiAttributeBenchmarks.MapOperation(MemberCount=32)",
+            "value": 1185.482,
+            "range": "± 146.05",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 1133.472 ns"
+          },
+          {
+            "name": "OpenApiBuildBenchmarks.Build(PathCount=4)",
+            "value": 2736.712,
+            "range": "± 130.055",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 2743.646 ns"
+          },
+          {
+            "name": "OpenApiBuildBenchmarks.Build_MicrosoftOpenApi(PathCount=4)",
+            "value": 1878.421,
+            "range": "± 267.799",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 1958.608 ns"
+          },
+          {
+            "name": "OpenApiBuildBenchmarks.Build(PathCount=32)",
+            "value": 24601.866,
+            "range": "± 2547.454",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 24129.307 ns"
+          },
+          {
+            "name": "OpenApiBuildBenchmarks.Build_MicrosoftOpenApi(PathCount=32)",
+            "value": 10448.71,
+            "range": "± 1134.99",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 10180.813 ns"
+          },
+          {
+            "name": "OpenApiGenerationBenchmarks.GenerateSchemas(ItemCount=4)",
+            "value": 5525.921,
+            "range": "± 674.682",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 5737.219 ns"
+          },
+          {
+            "name": "OpenApiGenerationBenchmarks.GenerateDocument(ItemCount=4)",
+            "value": 8379.172,
+            "range": "± 1072.484",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 8520.122 ns"
+          },
+          {
+            "name": "OpenApiGenerationBenchmarks.GenerateSchemas(ItemCount=32)",
+            "value": 59211.519,
+            "range": "± 9286.062",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 59458.492 ns"
+          },
+          {
+            "name": "OpenApiGenerationBenchmarks.GenerateDocument(ItemCount=32)",
+            "value": 100222.41,
+            "range": "± 15920.782",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 103256.492 ns"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.ExportRetargeted(Format=Json)",
+            "value": 268382.283,
+            "range": "± 27364.064",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 274663.38 ns"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.ExportRetargeted(Format=Yaml)",
+            "value": 242005.819,
+            "range": "± 25280.889",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 248474.253 ns"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.Import(Format=Json)",
+            "value": 103338.13,
+            "range": "± 32988.36",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 116834.835 ns"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.Import_MicrosoftOpenApi(Format=Json)",
+            "value": 118303.82,
+            "range": "± 18319.517",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 118141.891 ns"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.Import(Format=Yaml)",
+            "value": 116626.968,
+            "range": "± 13472.885",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 120604.714 ns"
+          },
+          {
+            "name": "OpenApiExportBenchmarks.Import_MicrosoftOpenApi(Format=Yaml)",
+            "value": 278106.75,
+            "range": "± 30157.556",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 287086.475 ns"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Parse_MicrosoftOpenApi",
+            "value": 94227.481,
+            "range": "± 12145.386",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 93918.863 ns"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Parse",
+            "value": 59246.91,
+            "range": "± 3284.031",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 59879.271 ns"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Serialize_MicrosoftOpenApi",
+            "value": 37498.578,
+            "range": "± 2505.134",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 37618.581 ns"
+          },
+          {
+            "name": "OpenApiJsonBenchmarks.Serialize",
+            "value": 38870.716,
+            "range": "± 2795.03",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 38949.412 ns"
+          },
+          {
+            "name": "OpenApiYamlBenchmarks.Parse",
+            "value": 113637.833,
+            "range": "± 10991.074",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 117902.514 ns"
+          },
+          {
+            "name": "OpenApiYamlBenchmarks.Parse_MicrosoftOpenApi",
+            "value": 255844.34,
+            "range": "± 22990.007",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 255237.052 ns"
+          },
+          {
+            "name": "OpenApiYamlBenchmarks.Serialize",
+            "value": 66671.389,
+            "range": "± 3152.933",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 67206.689 ns"
+          },
+          {
+            "name": "OpenApiYamlBenchmarks.Serialize_MicrosoftOpenApi",
+            "value": 204859.99,
+            "range": "± 29541.968",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 205058.231 ns"
+          },
+          {
+            "name": "OpenApiValidationBenchmarks.Validate(Invalid=False)",
+            "value": 28923.677,
+            "range": "± 2356.247",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 29252.726 ns"
+          },
+          {
+            "name": "OpenApiValidationBenchmarks.ValidateWithOfficialSchema(Invalid=False)",
+            "value": 490804.729,
+            "range": "± 72548.63",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 524365.768 ns"
+          },
+          {
+            "name": "OpenApiValidationBenchmarks.Validate(Invalid=True)",
+            "value": 27662.341,
+            "range": "± 3010.699",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 27724.38 ns"
+          },
+          {
+            "name": "OpenApiValidationBenchmarks.ValidateWithOfficialSchema(Invalid=True)",
+            "value": 627342.509,
+            "range": "± 69902.527",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 615837.24 ns"
+          },
+          {
+            "name": "OpenApiPointerBenchmarks.Transform(Depth=1&SameVersion=False)",
+            "value": 9472.51,
+            "range": "± 1192.907",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 9962.91 ns"
+          },
+          {
+            "name": "OpenApiPointerBenchmarks.Transform(Depth=1&SameVersion=True)",
+            "value": 5989.713,
+            "range": "± 612.046",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 6066.418 ns"
+          },
+          {
+            "name": "OpenApiPointerBenchmarks.Transform(Depth=16&SameVersion=False)",
+            "value": 49473.328,
+            "range": "± 4597.374",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 48084.783 ns"
+          },
+          {
+            "name": "OpenApiPointerBenchmarks.Transform(Depth=16&SameVersion=True)",
+            "value": 25695.726,
+            "range": "± 1920.371",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 26213.654 ns"
+          },
+          {
+            "name": "OpenApiTransformBenchmarks.Transform(Target=V3_0)",
+            "value": 172160.054,
+            "range": "± 24645.404",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 176238.895 ns"
+          },
+          {
+            "name": "OpenApiTransformBenchmarks.Transform(Target=V3_2)",
+            "value": 169497.05,
+            "range": "± 17931.899",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092564\nmean 172120.627 ns"
           }
         ]
       }
