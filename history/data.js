@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794790514689,
+  "lastUpdate": 1794790518769,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -21940,6 +21940,256 @@ window.BENCHMARK_DATA = {
             "value": 0,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.171 (e7f6f9f1d9ae) on GitHub Actions 1000091186"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1794790518328,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "GetOrCreateBenchmarks.Create - allocated",
+            "value": 416,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "GetOrCreateBenchmarks.Create_MicrosoftExtensions - allocated",
+            "value": 152,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "GetOrCreateHitBenchmarks.Hit - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "GetOrCreateHitBenchmarks.Hit_MicrosoftExtensions - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.Miss - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.Miss_MicrosoftExtensions - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SetSized - allocated",
+            "value": 304,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SetSized_MicrosoftExtensions - allocated",
+            "value": 104,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SetWithoutExpiration - allocated",
+            "value": 304,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SetWithoutExpiration_MicrosoftExtensions - allocated",
+            "value": 104,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SlidingHit - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheAccessBenchmarks.SlidingHit_MicrosoftExtensions - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheBenchmarks.TryGetValue_MicrosoftExtensions - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheBenchmarks.TryGetValue - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheBenchmarks.Set_MicrosoftExtensions - allocated",
+            "value": 104,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheBenchmarks.Set - allocated",
+            "value": 304,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheCapacityBenchmarks.InsertWithEviction(EntryCount=32) - allocated",
+            "value": 1024,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheCapacityBenchmarks.InsertWithEviction(EntryCount=1024) - allocated",
+            "value": 13328,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Clear(EntryCount=32) - allocated",
+            "value": 64,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Clear_MicrosoftExtensions(EntryCount=32) - allocated",
+            "value": 1624,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Clear(EntryCount=1024) - allocated",
+            "value": 4720,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Clear_MicrosoftExtensions(EntryCount=1024) - allocated",
+            "value": 5992,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Remove(EntryCount=32) - allocated",
+            "value": 4656,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Remove_MicrosoftExtensions(EntryCount=32) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Remove(EntryCount=1024) - allocated",
+            "value": 4656,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheEvictionBenchmarks.Remove_MicrosoftExtensions(EntryCount=1024) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheExpirationBenchmarks.ScanLive(EntryCount=32) - allocated",
+            "value": 64,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheExpirationBenchmarks.ScanExpired(EntryCount=32) - allocated",
+            "value": 64,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheExpirationBenchmarks.ScanLive(EntryCount=1024) - allocated",
+            "value": 5056,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "MemoryCacheExpirationBenchmarks.ScanExpired(EntryCount=1024) - allocated",
+            "value": 5056,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "TypedCacheBenchmarks.GetTyped(Hit=False) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "TypedCacheBenchmarks.GetTyped_MicrosoftExtensions(Hit=False) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "TypedCacheBenchmarks.GetTyped(Hit=True) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "TypedCacheBenchmarks.GetTyped_MicrosoftExtensions(Hit=True) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "TypedCacheBenchmarks.TryGetTyped(Hit=False) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "TypedCacheBenchmarks.TryGetTyped_MicrosoftExtensions(Hit=False) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "TypedCacheBenchmarks.TryGetTyped(Hit=True) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
+          },
+          {
+            "name": "TypedCacheBenchmarks.TryGetTyped_MicrosoftExtensions(Hit=True) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092477"
           }
         ]
       }
