@@ -45,7 +45,7 @@ concurrency:
 
 jobs:
   pin:
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.CI_RUNNERS || '{}')['ubuntu-latest'] || 'ubuntu-latest' }}
     timeout-minutes: 15
     # Used only without BENCHMARKS_BOT_TOKEN.
     permissions:

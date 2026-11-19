@@ -92,7 +92,7 @@ env:
 
 jobs:
   plan:
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.CI_RUNNERS || '{}')['ubuntu-latest'] || 'ubuntu-latest' }}
     outputs:
       suites: ${{ steps.plan.outputs.suites }}
       legs: ${{ steps.plan.outputs.legs }}
@@ -320,7 +320,7 @@ jobs:
     needs: [plan, run]
     if: always() && needs.plan.outputs.record == 'true' && needs.plan.outputs.legs != '[]'
     name: record ${{ matrix.leg.scope }}/${{ matrix.leg.area }} [${{ matrix.leg.id }}]
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.CI_RUNNERS || '{}')['ubuntu-latest'] || 'ubuntu-latest' }}
     permissions:
       contents: write
     strategy:
