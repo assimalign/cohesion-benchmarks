@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1795395613045,
+  "lastUpdate": 1795395616573,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -57909,6 +57909,202 @@ window.BENCHMARK_DATA = {
             "value": 240,
             "unit": "B",
             "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092579"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1795395615958,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "CircuitBreakerPipelineBenchmarks.Execute_Polly - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "CircuitBreakerPipelineBenchmarks.Execute - allocated",
+            "value": 200,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "OpenCircuitBenchmarks.Reject - allocated",
+            "value": 2840,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "CompositionBenchmarks.FirstSuccess(StrategyCount=2) - allocated",
+            "value": 112,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "CompositionBenchmarks.LastSuccess(StrategyCount=2) - allocated",
+            "value": 16779579,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "CompositionBenchmarks.FirstSuccess(StrategyCount=4) - allocated",
+            "value": 112,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "CompositionBenchmarks.LastSuccess(StrategyCount=4) - allocated",
+            "value": 50336238,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "FallbackPipelineBenchmarks.HandledFailure - allocated",
+            "value": 976,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "FallbackPipelineBenchmarks.HandledFailure_Polly - allocated",
+            "value": 864,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "FallbackPipelineBenchmarks.Success - allocated",
+            "value": 112,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "FallbackPipelineBenchmarks.Success_Polly - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "HedgingPipelineBenchmarks.Execute - allocated",
+            "value": 1016,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "HedgingPipelineBenchmarks.Execute_Polly - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "RateLimiterPipelineBenchmarks.Execute - allocated",
+            "value": 240,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "RateLimiterPipelineBenchmarks.Execute_SystemThreadingRateLimiting - allocated",
+            "value": 40,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "RateLimiterPipelineBenchmarks.ExecuteSync - allocated",
+            "value": 328,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "RateLimiterPipelineBenchmarks.ExecuteSync_SystemThreadingRateLimiting - allocated",
+            "value": 40,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "ImmediateRetryBenchmarks.Execute(Failures=0) - allocated",
+            "value": 112,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "ImmediateRetryBenchmarks.Execute_Polly(Failures=0) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "ImmediateRetryBenchmarks.Execute(Failures=1) - allocated",
+            "value": 136,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "ImmediateRetryBenchmarks.Execute_Polly(Failures=1) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "ImmediateRetryBenchmarks.Execute(Failures=3) - allocated",
+            "value": 184,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "ImmediateRetryBenchmarks.Execute_Polly(Failures=3) - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "RetryPipelineBenchmarks.Execute_Polly - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "RetryPipelineBenchmarks.Execute - allocated",
+            "value": 112,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "TimeoutCompletionBenchmarks.ExecuteVoid - allocated",
+            "value": 216,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "TimeoutCompletionBenchmarks.ExecuteAsyncValue - allocated",
+            "value": 1509,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "TimeoutPipelineBenchmarks.Execute_Polly - allocated",
+            "value": 0,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
+          },
+          {
+            "name": "TimeoutPipelineBenchmarks.Execute - allocated",
+            "value": 240,
+            "unit": "B",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095607"
           }
         ]
       }
