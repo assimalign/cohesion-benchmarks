@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1795395363253,
+  "lastUpdate": 1795395411922,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -51257,6 +51257,217 @@ window.BENCHMARK_DATA = {
             "range": "± 8.377",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092550\nmean 175.577 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1795395395634,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "ContendedPoolBenchmarks.RentReturn(Workers=2)",
+            "value": 96829.272,
+            "range": "± 6283.819",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 98310.466 ns"
+          },
+          {
+            "name": "ContendedPoolBenchmarks.RentReturn_MicrosoftExtensions(Workers=2)",
+            "value": 112327.865,
+            "range": "± 8769.769",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 115295.754 ns"
+          },
+          {
+            "name": "ContendedPoolBenchmarks.RentReturn(Workers=4)",
+            "value": 311087.799,
+            "range": "± 150844.558",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 365917.559 ns"
+          },
+          {
+            "name": "ContendedPoolBenchmarks.RentReturn_MicrosoftExtensions(Workers=4)",
+            "value": 311421.713,
+            "range": "± 49178.65",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 295173.693 ns"
+          },
+          {
+            "name": "DefaultObjectPoolBenchmarks.RentReturn_MicrosoftExtensions",
+            "value": 15.904,
+            "range": "± 1.349",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 15.919 ns"
+          },
+          {
+            "name": "DefaultObjectPoolBenchmarks.RentReturn",
+            "value": 16.331,
+            "range": "± 1.618",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 16.649 ns"
+          },
+          {
+            "name": "DefaultObjectPoolBenchmarks.RentTwoReturnTwo",
+            "value": 27.138,
+            "range": "± 3.451",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 27.341 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.Exhaustion(Retained=1)",
+            "value": 812.711,
+            "range": "± 59.901",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 832.544 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.Exhaustion_MicrosoftExtensions(Retained=1)",
+            "value": 1114.761,
+            "range": "± 108.001",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 1140.188 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.Exhaustion(Retained=16)",
+            "value": 1071.461,
+            "range": "± 86.65",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 1066.603 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.Exhaustion_MicrosoftExtensions(Retained=16)",
+            "value": 898.572,
+            "range": "± 58.474",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 895.794 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.RetainedBurst(Retained=1)",
+            "value": 20.216,
+            "range": "± 1.836",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 20.376 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.RetainedBurst_MicrosoftExtensions(Retained=1)",
+            "value": 16.901,
+            "range": "± 1.053",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 17.239 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.RetainedBurst(Retained=16)",
+            "value": 378.435,
+            "range": "± 16.872",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 375.572 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.RetainedBurst_MicrosoftExtensions(Retained=16)",
+            "value": 381.991,
+            "range": "± 21.221",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 386.751 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.RoundTrip(Retained=1)",
+            "value": 14.258,
+            "range": "± 0.797",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 14.331 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.RoundTrip_MicrosoftExtensions(Retained=1)",
+            "value": 12.686,
+            "range": "± 0.327",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 12.744 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.RoundTrip(Retained=16)",
+            "value": 13.058,
+            "range": "± 1.679",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 13.865 ns"
+          },
+          {
+            "name": "PoolWorkloadBenchmarks.RoundTrip_MicrosoftExtensions(Retained=16)",
+            "value": 12.638,
+            "range": "± 0.481",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 12.87 ns"
+          },
+          {
+            "name": "ResetPolicyBenchmarks.Reject(Length=64)",
+            "value": 1082.172,
+            "range": "± 58.576",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 1095.332 ns"
+          },
+          {
+            "name": "ResetPolicyBenchmarks.Reject_MicrosoftExtensions(Length=64)",
+            "value": 1124.011,
+            "range": "± 69.728",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 1119.646 ns"
+          },
+          {
+            "name": "ResetPolicyBenchmarks.Reject(Length=4096)",
+            "value": 1545.658,
+            "range": "± 139.084",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 1583.204 ns"
+          },
+          {
+            "name": "ResetPolicyBenchmarks.Reject_MicrosoftExtensions(Length=4096)",
+            "value": 2098.119,
+            "range": "± 179.307",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 2077.453 ns"
+          },
+          {
+            "name": "ResetPolicyBenchmarks.Reset(Length=64)",
+            "value": 20.661,
+            "range": "± 1.802",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 20.628 ns"
+          },
+          {
+            "name": "ResetPolicyBenchmarks.Reset_MicrosoftExtensions(Length=64)",
+            "value": 18.363,
+            "range": "± 2.365",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 18.641 ns"
+          },
+          {
+            "name": "ResetPolicyBenchmarks.Reset(Length=4096)",
+            "value": 161.787,
+            "range": "± 6.812",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 162.876 ns"
+          },
+          {
+            "name": "ResetPolicyBenchmarks.Reset_MicrosoftExtensions(Length=4096)",
+            "value": 166.28,
+            "range": "± 7.683",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095592\nmean 170.008 ns"
           }
         ]
       }
