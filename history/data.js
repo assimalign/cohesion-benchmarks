@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1795395778575,
+  "lastUpdate": 1795395825634,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -61981,6 +61981,70 @@ window.BENCHMARK_DATA = {
             "range": "± 2167.342",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092607\nmean 18384.992 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1795395812029,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "KeyValuePointBenchmarks.Get",
+            "value": 2503.22,
+            "range": "± 246.845",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095634\nmean 2485.303 ns"
+          },
+          {
+            "name": "SqlQueryParserBenchmarks.Parse(Statement=Insert)",
+            "value": 16002.429,
+            "range": "± 1245.714",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095634\nmean 15941.55 ns"
+          },
+          {
+            "name": "SqlQueryParserBenchmarks.Parse(Statement=Join)",
+            "value": 54521.187,
+            "range": "± 8338.819",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095634\nmean 54477.143 ns"
+          },
+          {
+            "name": "SqlQueryParserBenchmarks.Parse(Statement=PointSelect)",
+            "value": 14619.141,
+            "range": "± 1530.57",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095634\nmean 15030.609 ns"
+          },
+          {
+            "name": "SqlPointQueryBenchmarks.SelectById_Sqlite",
+            "value": 3327.759,
+            "range": "± 248.878",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095634\nmean 3259.654 ns"
+          },
+          {
+            "name": "SqlPointQueryBenchmarks.SelectById",
+            "value": 18366.229,
+            "range": "± 3089.91",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095634\nmean 19543.176 ns"
           }
         ]
       }
