@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1795396160148,
+  "lastUpdate": 1795396200766,
   "repoUrl": "https://github.com/assimalign/cohesion-benchmarks",
   "entries": {
     "libraries/ApplicationModel - time": [
@@ -66175,6 +66175,56 @@ window.BENCHMARK_DATA = {
             "range": "± 941.444",
             "unit": "ns",
             "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000092663\nmean 11867.217 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chase Crawford",
+            "username": "dotnetcadet",
+            "email": "56458944+dotnetcadet@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "a0bdacf76affb0dbc98baf8bd4c1122d52e19c01",
+          "message": "Merge pull request #20 from assimalign/feature/deployment-record-control-plane\n\nBenchmarks: follow cohesion's application-model restart",
+          "timestamp": "2026-11-02T11:41:59Z",
+          "url": "https://github.com/assimalign/cohesion-benchmarks/commit/a0bdacf76affb0dbc98baf8bd4c1122d52e19c01"
+        },
+        "date": 1795396184795,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "MessageHubApplicationBenchmarks.Build(ServiceCount=1)",
+            "value": 2307.713,
+            "range": "± 168.164",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095692\nmean 2355.953 ns"
+          },
+          {
+            "name": "MessageHubApplicationBenchmarks.BuildStartStop(ServiceCount=1)",
+            "value": 2826.37,
+            "range": "± 185.586",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095692\nmean 2881.183 ns"
+          },
+          {
+            "name": "MessageHubApplicationBenchmarks.Build(ServiceCount=16)",
+            "value": 6970.71,
+            "range": "± 758.013",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095692\nmean 6956.672 ns"
+          },
+          {
+            "name": "MessageHubApplicationBenchmarks.BuildStartStop(ServiceCount=16)",
+            "value": 8987.202,
+            "range": "± 492.951",
+            "unit": "ns",
+            "extra": "cohesion 10.0.0-preview.0.ci.192 (8ebf2f3fdd8b) on GitHub Actions 1000095692\nmean 9145.331 ns"
           }
         ]
       }
